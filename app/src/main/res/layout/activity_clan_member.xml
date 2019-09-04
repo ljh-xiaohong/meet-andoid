@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="32.0dip"
+        android:layout_marginBottom="@dimen/px_16"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginRight="@dimen/px_24"
+        android:layout_marginTop="@dimen/px_16"
+        android:background="@drawable/shape_clan_white">
+
+        <ImageButton
+            android:id="@+id/location_search"
+            android:layout_width="32.0dip"
+            android:layout_height="32.0dip"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:paddingTop="@dimen/dp_4"
+            android:src="@mipmap/ic_search"
+            android:visibility="visible" />
+
+        <com.yuejian.meet.widgets.CleanableEditText
+            android:id="@+id/et_clan_member_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="8.0dip"
+            android:background="@color/white"
+            android:drawableRight="@mipmap/ic_edit_clean"
+            android:hint="输入成员姓名"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="6.0dip"
+            android:singleLine="true"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/px_28"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/clan_member_spring"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:id="@+id/clan_member_list"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:divider="@color/vive_colors_wire_e6e6e6"
+            android:dividerHeight="@dimen/px_1" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+</LinearLayout>

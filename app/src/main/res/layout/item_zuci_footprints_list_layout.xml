@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/footprints_photo"
+        android:layout_width="@dimen/px_80"
+        android:layout_height="@dimen/px_80"
+        android:layout_marginBottom="@dimen/px_25"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginTop="@dimen/px_25"
+        android:src="@mipmap/ic_default" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/px_16"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/footprints_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:text="颜如玉"
+            android:textColor="#ff767676" />
+
+        <TextView
+            android:id="@+id/item_footprints_age"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_30"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/px_10"
+            android:background="@drawable/selector_item_sex_ll_bg"
+            android:drawableLeft="@drawable/selector_item_sex_img"
+            android:gravity="center"
+            android:paddingLeft="@dimen/px_8"
+            android:paddingRight="@dimen/px_8"
+            android:text=" 23"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px_24" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_footprints_tiem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_35"
+        android:layout_marginTop="@dimen/px_30"
+        android:drawableLeft="@mipmap/ic_zuci_timer"
+        android:text=" 14:33"
+        android:textColor="#ff767676"
+        android:textSize="@dimen/px_20" />
+
+    <View
+        android:layout_width="@dimen/px_1"
+        android:layout_height="1.0dip"
+        android:layout_weight="1.0" />
+
+    <TextView
+        android:id="@+id/item_footprints_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px_45"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/px_24"
+        android:background="@drawable/shape_zuci_footprints_badge_bg"
+        android:gravity="center"
+        android:paddingLeft="@dimen/px_18"
+        android:paddingRight="@dimen/px_18"
+        android:text="打招呼"
+        android:textColor="@color/white" />
+</LinearLayout>

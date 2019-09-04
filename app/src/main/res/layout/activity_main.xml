@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/maia_layout_title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="44.0dip"
+        android:background="@color/white"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/address_list"
+            android:layout_width="@dimen/px_40"
+            android:layout_height="@dimen/px_40"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_addresslist_top"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="@dimen/px_136"
+            android:layout_height="@dimen/px_54"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_titile_bar_search"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/navbar_search"
+                android:layout_width="@dimen/px_26"
+                android:layout_height="@dimen/px_26"
+                android:layout_marginRight="@dimen/px_8"
+                android:gravity="center"
+                android:src="@mipmap/navbar_search_min" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜索"
+                android:textColor="#fffbeceb"
+                android:textSize="13.0sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_232323"
+            android:textSize="@dimen/px_38"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/search_all_layout_bg"
+                android:layout_width="@dimen/px_64"
+                android:layout_height="@dimen/px_64"
+                android:layout_marginRight="@dimen/px_40"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/layout_search"
+                    android:layout_width="@dimen/px_38"
+                    android:layout_height="@dimen/px_48"
+                    android:src="@mipmap/navbar_search_min"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/more_all_alyout_bg"
+                android:layout_width="@dimen/px_64"
+                android:layout_height="@dimen/px_64"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/navbar_more"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:src="@mipmap/navbar_more" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/main_bottombar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/layout_bottombar_height"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:background="@color/txt_color_eeeeee" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/layout_bottombar_height"
+            android:layout_gravity="bottom"
+            android:paddingTop="@dimen/px_4"
+            android:orientation="horizontal">
+            <!-- 家圈 begin -->
+            <RelativeLayout
+                android:id="@+id/rlayout_one_to_one"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/rbtn_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:paddingTop="2dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center"
+                        android:src="@drawable/selector_tab_bar_icon_jiazu" />
+
+                    <TextView
+                        style="@style/bottombar"
+                        android:drawablePadding="2dip"
+                        android:gravity="center"
+                        android:text="家圈"
+                        android:textColor="@color/bottom_bar_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/img_city_tip"
+                    android:layout_width="12.0dip"
+                    android:layout_height="12.0dip"
+                    android:layout_marginLeft="-10.0dip"
+                    android:layout_marginTop="2.0dip"
+                    android:layout_toRightOf="@+id/rbtn_home"
+                    android:background="@drawable/shape_tips_back"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10.0sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <!-- 家圈 end -->
+            <!-- 商圈 begin -->
+            <RelativeLayout
+                android:id="@+id/rlayout_business"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/rbtn_business"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:paddingTop="2dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginBottom="3.0dip"
+                        android:gravity="center"
+                        android:src="@drawable/selector_tab_bar_icon_business" />
+
+                    <TextView
+                        style="@style/bottombar"
+                        android:drawablePadding="3.0dip"
+                        android:gravity="center"
+                        android:text="商圈"
+                        android:textColor="@color/bottom_bar_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/img_contact_tip"
+                    android:layout_width="14.0dip"
+                    android:layout_height="14.0dip"
+                    android:layout_marginLeft="-10.0dip"
+                    android:layout_marginTop="2.0dip"
+                    android:layout_toRightOf="@+id/rbtn_business"
+                    android:background="@drawable/shape_tips_back"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10.0sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <!-- 商圈 end -->
+            <!-- 创作 begin -->
+            <RelativeLayout
+                android:id="@+id/rlayout_creation"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:id="@+id/rbtn_creation"
+                    android:paddingTop="2dp"
+                    android:layout_width="39dp"
+                    android:layout_height="31dp"
+                    android:layout_marginBottom="3.0dip"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/selector_tab_bar_icon_create" />
+            </RelativeLayout>
+            <!-- 创作 end -->
+            <RelativeLayout
+                android:id="@+id/rlayout_msg"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/rbtn_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:paddingTop="2dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center"
+                        android:src="@drawable/selector_tab_bar_icon_xinxi" />
+
+                    <TextView
+                        style="@style/bottombar"
+                        android:drawablePadding="2.0dip"
+                        android:gravity="center"
+                        android:text="@string/main_message_name"
+                        android:textColor="@color/bottom_bar_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/img_msg_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="14.0dip"
+                    android:layout_marginLeft="-4.0dip"
+                    android:layout_marginTop="2.0dip"
+                    android:layout_toRightOf="@+id/rbtn_msg"
+                    android:background="@drawable/shape_tips_back"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10.0sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlayout_mine"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/rbtn_mine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:paddingTop="2dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="3dp"
+                        android:gravity="center"
+                        android:src="@drawable/selector_tab_bar_icon_wo" />
+
+                    <TextView
+                        style="@style/bottombar"
+                        android:drawablePadding="3.0dip"
+                        android:gravity="center"
+                        android:text="@string/main_mine_name"
+                        android:textColor="@color/bottom_bar_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/img_mine"
+                    android:layout_width="8.0dip"
+                    android:layout_height="8.0dip"
+                    android:layout_marginLeft="-4.0dip"
+                    android:layout_marginTop="4.0dip"
+                    android:layout_toRightOf="@+id/rbtn_mine"
+                    android:background="@drawable/shape_tips_back"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10.0sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/baijiaxing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/px_10"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_man_surname_circle">
+
+            <ImageView
+                android:id="@+id/circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/px_10"
+                android:src="@mipmap/bai" />
+
+            <TextView
+                android:id="@+id/baijiaxing_badge"
+                android:layout_width="@dimen/px_18"
+                android:layout_height="@dimen/px_18"
+                android:layout_alignRight="@+id/circle"
+                android:layout_marginRight="-10.0px"
+                android:background="@drawable/shape_badge_bg"
+                android:visibility="gone" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <TextView
+            android:id="@+id/baijiaxing_text"
+            style="@style/bottombar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="百家姓"
+            android:textColor="@color/color_radiobutton" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</LinearLayout>

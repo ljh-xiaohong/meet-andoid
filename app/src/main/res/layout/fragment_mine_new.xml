@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_diwen"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll">
+
+            <RelativeLayout
+                android:id="@+id/maia_layout_title_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="44.0dip"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_mine_setting_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@mipmap/icon_nav_setting" />
+
+                <ImageView
+                    android:id="@+id/iv_mine_share_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="16dp"
+                    android:src="@mipmap/icon_mine_share"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_mine_daily_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px_30"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@mipmap/icon_nav_day" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="每日任务"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.yuejian.meet.widgets.CircleImageView
+                    android:id="@+id/mine_user_header_img"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="32dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/mine_faqr"
+                    android:layout_width="98dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@mipmap/button_ccr_sel"
+                    app:layout_constraintEnd_toEndOf="@+id/mine_user_header_img"
+                    app:layout_constraintStart_toStartOf="@+id/mine_user_header_img"
+                    app:layout_constraintTop_toBottomOf="@+id/mine_user_header_img" />
+
+                <TextView
+                    android:id="@+id/mine_faqr_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="传承人 >"
+                    android:textColor="#AA8564"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/mine_faqr"
+                    app:layout_constraintStart_toStartOf="@+id/mine_faqr"
+                    app:layout_constraintTop_toTopOf="@+id/mine_faqr" />
+
+                <TextView
+                    android:id="@+id/mine_user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="约见号："
+                    android:textColor="#666666"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="@+id/mine_user_name"
+                    app:layout_constraintTop_toBottomOf="@+id/mine_user_name" />
+
+                <TextView
+                    android:id="@+id/mine_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="1"
+                    android:text="用户名"
+                    android:textColor="#333333"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/mine_user_header_img"
+                    app:layout_constraintTop_toTopOf="@+id/mine_user_header_img" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@mipmap/icon_v"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/mine_user_name"
+                    app:layout_constraintStart_toEndOf="@+id/mine_user_name"
+                    app:layout_constraintTop_toTopOf="@+id/mine_user_name" />
+
+                <ImageView
+                    android:id="@+id/iv_tab_mine_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:src="@mipmap/tab_mine_post"
+                    app:layout_constraintStart_toStartOf="@+id/mine_user_name"
+                    app:layout_constraintTop_toBottomOf="@+id/mine_user_name" />
+
+                <TextView
+                    android:id="@+id/tv_mine_post_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:maxLines="1"
+                    android:text="ID Card"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_tab_mine_post"
+                    app:layout_constraintStart_toEndOf="@+id/iv_tab_mine_post"
+                    app:layout_constraintTop_toTopOf="@+id/iv_tab_mine_post" />
+
+                <ImageView
+                    android:id="@+id/iv_tab_mine_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/tab_mine_position"
+                    app:layout_constraintStart_toStartOf="@+id/mine_user_name"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_tab_mine_post" />
+
+                <TextView
+                    android:id="@+id/tv_mine_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:maxLines="2"
+                    android:text="Location"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_tab_mine_position"
+                    app:layout_constraintStart_toEndOf="@+id/iv_tab_mine_position"
+                    app:layout_constraintTop_toTopOf="@+id/iv_tab_mine_position" />
+
+                <TextView
+                   android:visibility="gone"
+                    android:id="@+id/tv_mine_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_radiu_black_rect"
+                    android:text="+ 关注"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/mine_user_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/mine_user_name" />
+
+                <ImageView
+                    android:id="@+id/iv_share_qr_code"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="13dp"
+                    android:src="@mipmap/icon_erweima"
+                    app:layout_constraintBottom_toBottomOf="@+id/mine_user_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/mine_user_name" />
+
+                <ImageView
+
+                    android:id="@+id/iv_mine_share_myself_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/icon_mine_share"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_share_qr_code"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_share_qr_code"
+                    app:layout_constraintTop_toTopOf="@+id/iv_share_qr_code" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="27dp"
+                    android:background="#F3F5F6"
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="3dp"
+                    app:contentPadding="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mine_user_header_img">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/ll_mine_wallet"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@mipmap/icon_wallet" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="钱包" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="#B7B7B7" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_light_up_vip_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_mine_vip_icon"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@mipmap/icon_vip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="点亮VIP" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_mine_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                app:tabMode="scrollable">
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的创作"
+                    app:tabIndicatorColor="#AB3A34" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的商务"
+                    app:tabIndicatorColor="#AB3A34" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的动态"
+                    app:tabIndicatorColor="#AB3A34" />
+
+
+            </android.support.design.widget.TabLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+    <com.yuejian.meet.widgets.MyViewPager
+        android:id="@+id/mine_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></com.yuejian.meet.widgets.MyViewPager>
+
+
+</android.support.design.widget.CoordinatorLayout>

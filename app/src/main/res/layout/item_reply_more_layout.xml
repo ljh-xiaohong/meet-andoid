@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@+id/reply_content_layout" android:background="#fff6f6f6" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/layout_item_reply_header_title" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_144" android:layout_marginRight="@dimen/px_24">
+        <TextView android:id="@+id/txt_item_actioninfo_content" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_26" />
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_26">
+            <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/mes_reply" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="回复" />
+            <TextView android:textSize="@dimen/px_24" android:textColor="#ff2398db" android:id="@+id/mes_opposite_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="梁某" />
+            <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/txt_reply_partition" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=": " />
+            <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/messag_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="很有用" />
+        </LinearLayout>
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/px_44" android:layout_marginBottom="@dimen/px_16">
+            <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true">
+                <TextView android:textSize="@dimen/px_24" android:textColor="@color/txt_color_999999" android:layout_gravity="center" android:id="@+id/actioninfo_like_praise_count" android:padding="@dimen/px_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:text=" 0" android:drawableLeft="@drawable/selector_action_like_itme" />
+                <ImageView android:id="@+id/actioninfo_message" android:padding="@dimen/px_3" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_32" android:src="@mipmap/ic_message_chat" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

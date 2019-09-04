@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/divider_line_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_action_dialog_issue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px_30"
+        android:paddingTop="@dimen/px_30"
+        android:text="@string/title_send_dynamic"
+        android:textColor="@color/color_black_333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/video_bg" />
+
+    <TextView
+        android:id="@+id/txt_action_dialog_video"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px_30"
+        android:paddingTop="@dimen/px_30"
+        android:text="视频"
+        android:textColor="@color/color_black_333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/video_bg" />
+
+    <TextView
+        android:id="@+id/txt_action_dialog_photograph_img"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px_30"
+        android:paddingTop="@dimen/px_30"
+        android:text="拍照"
+        android:textColor="@color/color_black_333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/video_bg" />
+
+    <TextView
+        android:id="@+id/txt_action_dialog_select_img"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px_30"
+        android:paddingTop="@dimen/px_30"
+        android:text="@string/txt_edit_select_album"
+        android:textColor="@color/color_black_333333"
+        android:textSize="@dimen/px_30" />
+</LinearLayout>

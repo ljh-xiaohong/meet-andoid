@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- common -->
+    <string name="empty"></string>
+    <string name="ok">確定</string>
+    <string name="cancel">取消</string>
+    <string name="clear_empty">清空</string>
+    <string name="iknow">知道了</string>
+    <string name="search">搜索</string>
+    <string name="remove">移除</string>
+    <string name="add">添加</string>
+    <string name="create">新建</string>
+    <string name="without_content">暫無</string>
+    <string name="network_is_not_available">網絡連接失敗，請檢查妳的網絡設置</string>
+    <string name="open">開啟</string>
+    <string name="close">關閉</string>
+    <string name="menu">菜單</string>
+    <string name="now_allow_space">不能含有空格</string>
+    <string name="readed">已讀</string>
+
+    <!-- session -->
+    <string name="input_panel_photo">圖 片</string>
+    <string name="input_panel_video">小視頻</string>
+    <string name="input_panel_location">位 置</string>
+    <string name="input_panel_vanish">閱後即焚</string>
+    <string name="input_panel_snapchat">閱後即焚</string>
+    <string name="input_panel_take">拍 攝</string>
+    <string name="im_choose_pic">請選擇JPG PNG BMP GIF格式的圖片文件</string>
+    <string name="repeat_download_message">重新下載?</string>
+    <string name="repeat_send_has_blank">重 發</string>
+    <string name="repeat_send_message">重發消息?</string>
+    <string name="copy_has_blank">復 制</string>
+    <string name="delete_has_blank">刪 除</string>
+    <string name="voice_to_text">轉文字</string>
+    <string name="forward_to_person">轉發到個人</string>
+    <string name="forward_to_team">轉發到群組</string>
+    <string name="withdrawn_msg">撤 回</string>
+    <string name="save">保存</string>
+    <string name="main_msg_list_delete_chatting">刪除該聊天</string>
+    <string name="main_msg_list_sticky_on_top">置頂該聊天</string>
+    <string name="main_msg_list_clear_sticky_on_top">取消置頂</string>
+    <string name="save_to_device">保存到手機</string>
+    <string name="picture_save_fail">圖片保存失敗</string>
+    <string name="picture_save_to">圖片已保存到手機</string>
+    <string name="search_join_team">搜索加入群組</string>
+    <string name="file_transfer_state_downloaded">已下載</string>
+    <string name="file_transfer_state_undownload">未下載</string>
+    <string name="trans_voice_failed">語音轉化失敗</string>
+    <string name="team_invalid_tip">您已退出該群</string>
+    <string name="normal_team_invalid_tip">您已退出該討論組</string>
+    <string name="team_send_message_not_allow">您已不在該群，不能發送消息</string>
+    <string name="send">發送</string>
+    <string name="unsupport_title">無法顯示該內容</string>
+    <string name="unsupport_desc">客戶端版本不支持該內容</string>
+    <string name="revoke_failed">發送時間超過2分鐘的消息，不能被撤回</string>
+
+    <!-- 語音 -->
+    <string name="record_audio">按住 說話</string>
+    <string name="record_audio_end">松開  結束</string>
+    <string name="sdcard_not_exist_error">請插入SD卡</string>
+    <string name="recording_error">錄音失敗，請重試</string>
+    <string name="recording_init_failed">初始化錄音失敗</string>
+    <string name="recording_cancel">手指上滑，取消發送</string>
+    <string name="timer_default">00:00</string>
+    <string name="recording_cancel_tip">松開手指，取消發送</string>
+    <string name="recording_max_time">錄音達到最大時間，是否發送？</string>
+
+    <!-- 拍照視頻 -->
+    <string name="gallery_invalid">妳的手機沒有圖庫程序</string>
+    <string name="sdcard_not_enough_head_error">SD卡被拔出或存儲空間不足，無法保存頭像</string>
+    <string name="sdcard_not_enough_error">存儲空間不足，無法保存此次多媒體消息</string>
+    <string name="download_video">正在下載視頻</string>
+    <string name="download_video_fail">視頻下載失敗,請重試</string>
+    <string name="look_video_fail">無法播放該視頻</string>
+    <string name="look_video_fail_try_again">暫時無法播放視頻，請重試</string>
+    <string name="video_play">視頻播放</string>
+    <string name="video_record">視頻錄制</string>
+    <string name="video_record_symbol">REC</string>
+    <string name="video_record_begin">開始錄制</string>
+    <string name="connect_vedio_device_fail">無法連接視頻設備 ，請稍候再試</string>
+    <string name="capture_video_size_in_kb">視頻文件大小為: %1$dKB,</string>
+    <string name="capture_video_size_in_mb">視頻文件大小為: %1$.2fMB,</string>
+    <string name="is_send_video">是否發送該視頻？</string>
+    <string name="start_camera_to_record_failed">啟動攝像頭錄制視頻失敗</string>
+    <string name="stop_fail_maybe_stopped">停止失敗，可能已經停止</string>
+    <string name="video_exception">視頻文件異常</string>
+    <string name="im_choose_video_file_size_too_large">視頻文件過大，系統限制為20MB</string>
+    <string name="im_choose_video">請選擇3GP MP4格式的視頻文件</string>
+    <string name="video_record_short">錄制視頻太短</string>
+    <string name="download_progress_description">%1$s（%2$s/%3$s）</string>
+
+    <!-- 聯系人選擇器 -->
+    <string name="contact_selector">聯系人選擇器</string>
+
+    <!-- team -->
+    <string name="team_need_authentication">需要身份驗證</string>
+    <string name="team_allow_anyone_join">允許任何人加入</string>
+    <string name="team_not_allow_anyone_join">不允許任何人申請加入</string>
+    <string name="team_admin_invite">管理員邀請</string>
+    <string name="team_everyone_invite">所有人邀請</string>
+    <string name="team_admin_update">管理員修改</string>
+    <string name="team_everyone_update">所有人修改</string>
+    <string name="team_invitee_need_authen">需要驗證</string>
+    <string name="team_invitee_not_need_authen">不需要驗證</string>
+    <string name="team_notify_mute">不提醒任何消息</string>
+    <string name="team_notify_all">提醒所有消息</string>
+    <string name="team_notify_manager">只提醒管理員消息</string>
+    <string name="team_nickname">群昵稱</string>
+    <string name="team_nickname_none">未填寫</string>
+    <string name="team_identity">身份</string>
+    <string name="remove_member">移出本群</string>
+    <string name="team_member_info">成員信息</string>
+    <string name="team_admin">管理員</string>
+    <string name="team_creator">群主</string>
+    <string name="team_member">群成員</string>
+    <string name="update_success">保存成功</string>
+    <string name="update_failed">保存失敗, code:%d</string>
+    <string name="no_permission">沒有權限</string>
+    <string name="set_team_admin">設為管理員</string>
+    <string name="cancel_team_admin">取消管理員</string>
+    <string name="team_member_remove_confirm">確定要將其移出群組麽?</string>
+    <string name="team_annourcement">群公告</string>
+    <string name="invite_member">邀請成員</string>
+    <string name="team_name">群名稱</string>
+    <string name="team_introduce">群介紹</string>
+    <string name="team_extension">擴展示例</string>
+    <string name="click_set">點擊設置</string>
+    <string name="create_advanced_team">創建高級群</string>
+    <string name="reach_team_member_capacity">成員數量不能超過%1$d</string>
+    <string name="team_authentication">身份驗證</string>
+    <string name="team_invite">邀請他人權限</string>
+    <string name="team_info_update">群資料修改權限</string>
+    <string name="team_invitee_authentication">被邀請人身份驗證</string>
+    <string name="create_team">創建群</string>
+    <string name="over_team_member_capacity">邀請失敗，成員人數上限為%1$d人</string>
+    <string name="over_team_capacity">創建失敗，創建群數量達到限制</string>
+    <string name="create_team_failed">創建失敗</string>
+    <string name="create_team_success">創建成功</string>
+    <string name="team_announce_title">標題</string>
+    <string name="team_announce_content">公告內容</string>
+    <string name="team_announce_notice">請輸入群公告標題</string>
+    <string name="my_team_card">我的群名片</string>
+    <string name="team_introduce_hint">點擊填寫群介紹</string>
+    <string name="team_extension_hint">點擊修改擴展內容</string>
+    <string name="team_announce_hint">點擊填寫群公告</string>
+    <string name="team_notification_config">消息提醒</string>
+    <string name="team_transfer_without_member">沒有可轉移的群成員</string>
+    <string name="team_invite_members_success">群成員邀請已發出</string>
+    <string name="team_invite_members_failed">群成員邀請失敗</string>
+    <string name="team_transfer_success">群轉移成功</string>
+    <string name="team_transfer_failed">群轉移失敗</string>
+    <string name="quit_team_success">您已退群</string>
+    <string name="quit_team_failed">退群失敗</string>
+    <string name="quit_normal_team_success">您已經退出討論組</string>
+    <string name="quit_normal_team_failed">退出討論組失敗</string>
+    <string name="dismiss_team_success">群已解散</string>
+    <string name="dismiss_team_failed">解散群失敗</string>
+    <string name="dismiss_team">解散本群</string>
+    <string name="transfer_team">轉讓群</string>
+    <string name="quit_team">退出群</string>
+    <string name="quit_normal_team">退出討論組</string>
+    <string name="team_apply_to_join">申請加入</string>
+    <string name="advanced_team">高級群</string>
+    <string name="normal_team">討論組</string>
+    <string name="team_name_toast">群名稱不能為空</string>
+    <string name="not_allow_empty">不能為空</string>
+    <string name="chat_setting">聊天信息</string>
+    <string name="team_settings_name">設置名稱</string>
+    <string name="normal_team_name">討論組名稱</string>
+    <string name="remove_member_success">移除成員成功</string>
+    <string name="remove_member_failed">移除成員失敗</string>
+    <string name="invite_member_success">邀請成員成功</string>
+    <string name="invite_member_failed">邀請成員失敗</string>
+    <string name="team_create_notice">請添加群成員</string>
+    <string name="team_settings_set_name">取個名字吧</string>
+    <string name="team_not_exist">該群不存在</string>
+    <string name="normal_team_not_exist">該討論組不存在</string>
+    <string name="mute_msg">設置禁言</string>
+    <string name="set_head_image">設置頭像</string>
+    <string name="team_update_cancel">取消更新</string>
+    <string name="team_update_failed">群頭像設置失敗</string>
+    <string name="reach_capacity">人數已達上限</string>
+    <!-- 消息搜索 -->
+    <string name="message_search_no_result">無結果</string>
+    <string name="message_search_title">查看聊天內容</string>
+
+    <!-- image picker -->
+    <string name="picker_image_preview">預覽</string>
+    <string name="picker_image_send">發送</string>
+    <string name="picker_image_folder">相冊</string>
+    <string name="picker_image_album_loading">相冊加載中…</string>
+    <string name="picker_image_album_empty">相冊中沒有圖片！</string>
+    <string name="picker_image_folder_info">共%d張</string>
+    <string name="picker_image_exceed_max_image_select">最多選擇%d張圖片！</string>
+    <string name="picker_image_send_select">完成（%d）</string>
+    <string name="picker_image_preview_original">發送原圖</string>
+    <string name="picker_image_preview_original_select">發送原圖（%s）</string>
+    <string name="picker_image_error">獲取圖片出錯</string>
+    <string name="image_compressed_size">該原始圖片大小為: %1$s,</string>
+    <string name="unknow_size">未知大小</string>
+    <string name="is_send_image">是否發送該原始圖片？</string>
+    <string name="multi_image_compressed_size">原始圖片總大小為: %1$s,</string>
+    <string name="is_send_multi_image">是否發送這些原始圖片？</string>
+    <string name="waitfor_image_local">正在打開相冊，請稍候\u2026</string>
+    <string name="recapture">重拍</string>
+    <string name="image_show_error">圖片顯示異常</string>
+    <string name="memory_out">內存不足</string>
+    <string name="choose_from_photo_album">從手機相冊選擇</string>
+    <string name="choose">選取</string>
+    <string name="edit">編輯</string>
+    <string name="crop">裁剪</string>
+
+    <!-- 消息類型 -->
+    <string name="msg_type_image">圖片</string>
+    <string name="msg_type_audio">語音</string>
+
+    <!-- 查看大圖 -->
+    <string name="download_picture_fail">圖片下載失敗</string>
+    <string name="look_up_original_photo_format">查看原圖（%s）</string>
+
+    <!--全文檢索-->
+    <string name="fts_enable">全文檢索(FTS4)</string>
+    <string name="fts_prefix_hit">前綴匹配高亮檢索結果</string>
+    <string name="msg_search">全文檢索</string>
+    <string name="msg_search_limit">全文檢索顯示條數</string>
+
+    <string name="message_Reply_before">對方回復前,只可以發三條消息</string>
+    <string name="Focus_on_each_other">是否添加對方為好友，不再錯過?</string>
+    <string name="Focus_on_each_other2">+好友</string>
+
+</resources>

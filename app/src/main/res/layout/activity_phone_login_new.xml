@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="@color/write"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/icon_nav_return"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_12"
+        android:paddingRight="@dimen/dp_12"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/login_tips_tv"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_12"
+        android:paddingRight="@dimen/dp_12"
+        android:text="@string/login_tips"
+        android:layout_alignParentEnd="true"
+        android:textSize="14sp"
+        android:textColor="@color/black3"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/phone_login_title"
+        android:layout_marginLeft="@dimen/dp_41"
+        android:textColor="@color/black3"
+        android:layout_marginTop="@dimen/dp_72"
+        android:textSize="24sp"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/activity_phone_login_phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@drawable/login_edt_bottom_line"
+        android:layout_marginLeft="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_38">
+
+        <TextView
+            android:id="@+id/activity_phone_login_phone_nation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_22"
+            android:text="+86"
+            android:textSize="16sp" />
+
+        <com.yuejian.meet.widgets.CleanableEditText
+            android:id="@+id/txt_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_toRightOf="@+id/activity_phone_login_phone_nation_code"
+            android:background="@color/write"
+            android:hint="@string/phone_login_phone_hint"
+            android:inputType="phone"
+            android:textColor="@color/black3"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@drawable/login_edt_bottom_line"
+        android:layout_marginLeft="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginRight="@dimen/dp_38"
+        android:orientation="horizontal">
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/activity_phone_login_checkcode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_22"
+            android:layout_weight="2"
+            android:background="@null"
+            android:hint="@string/reg_hint_verify_code"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/activity_phone_login_getcode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_marginBottom="@dimen/dp_9"
+            android:layout_weight="1"
+            android:background="@drawable/bg_resg_grey_unpress_btn"
+            android:text="@string/reg_text_verify_code_time"
+            android:textColor="@color/grey_alpha_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_phone_login_phone_next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_145"
+        android:layout_marginRight="@dimen/dp_12"
+        android:background="@drawable/bg_resg_grey_unpress_btn"
+        android:text="@string/reg_btn_next"
+        android:textColor="@color/write"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_15"
+        android:layout_below="@+id/activity_phone_login_phone_next_btn"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/look_check"
+            android:layout_width="wrap_content"
+            android:button="@drawable/look_select"
+            android:checked="true"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Login_means_read_and_agree"
+            android:textColor="@color/black9"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/login_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_login_zc"
+            android:textColor="#ff3494db"
+            android:textSize="12sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reach"
+            android:textColor="@color/black9"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/login_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tex_about_account"
+            android:textColor="#ff3494db"
+            android:textSize="12sp" />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginTop="92dp"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="#59B3B3B4"
+        android:layout_height="1dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/tex_other_login"
+        android:textSize="14sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="#59B3B3B4"
+        android:layout_height="1dp"/>
+</LinearLayout>
+ <ImageView
+     android:id="@+id/login_wx"
+     android:layout_width="wrap_content"
+     android:layout_gravity="center"
+     android:padding="19dp"
+     android:src="@mipmap/icon_login_weixin_green"
+     android:layout_height="wrap_content" />
+</LinearLayout>
+    </ScrollView>

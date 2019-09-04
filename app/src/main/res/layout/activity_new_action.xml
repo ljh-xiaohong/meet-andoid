@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/setting_bg"
+    tools:context=".activities.message.NewActionActivity">
+    <include
+        layout="@layout/titlebar_layout"/>
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/new_action_spring"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/new_action_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:background="@color/setting_bg"
+            android:divider="@color/setting_bg"/>
+
+    </com.yuejian.meet.widgets.springview.SpringView>
+
+</LinearLayout>

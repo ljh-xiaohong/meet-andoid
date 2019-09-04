@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff6f6f6"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <requestFocus />
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_90"
+        android:layout_marginBottom="@dimen/px_16"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginTop="@dimen/px_16"
+        android:background="@drawable/shape_surname_search">
+
+        <ImageButton
+            android:id="@+id/surname_imgBtn_search"
+            android:layout_width="@dimen/px_90"
+            android:layout_height="@dimen/px_90"
+            android:background="@drawable/selector_title_bar_back"
+            android:clickable="true"
+            android:paddingTop="@dimen/dp_4"
+            android:src="@mipmap/ic_search"
+            android:visibility="visible" />
+
+        <com.yuejian.meet.widgets.CleanableEditText
+            android:id="@+id/et_surname_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:drawableRight="@mipmap/ic_edit_clean"
+            android:hint="@string/Search_for_your_last_name"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="6.0dip"
+            android:singleLine="true"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/px_28"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_me_surname_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_170"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="我的姓氏"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/px_30" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px_20"
+            android:paddingTop="@dimen/px_20">
+
+            <TextView
+                android:id="@+id/txt_me_name"
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_44"
+                android:layout_marginRight="@dimen/px_22"
+                android:text="李" />
+
+            <TextView
+                android:id="@+id/txt_all_surname"
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_22"
+                android:layout_marginRight="@dimen/px_22"
+                android:text="全部" />
+
+            <TextView
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_22"
+                android:layout_marginRight="@dimen/px_44"
+                android:text="李"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="#fff6f6f6" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_service"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/px_250"
+                android:layout_height="@dimen/px_250"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_kefu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="你的姓氏不存在？\n快联系客服解决"
+                android:textColor="#ff797979"
+                android:textSize="@dimen/px_36" />
+
+            <TextView
+                android:id="@+id/relation_service"
+                android:layout_width="@dimen/px_200"
+                android:layout_height="@dimen/px_64"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/px_20"
+                android:background="@drawable/selector_gift_group_btn"
+                android:gravity="center"
+                android:text="联系客服"
+                android:textColor="@color/color_radio_sex_button"
+                android:textSize="@dimen/px_32" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="@string/All_the_family_name2"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/px_30" />
+
+        <GridView
+            android:id="@+id/surname_gridview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/px_22"
+            android:layout_marginRight="@dimen/px_22"
+            android:layout_marginTop="@dimen/px_30"
+            android:columnWidth="@dimen/px_20"
+            android:numColumns="3"
+            android:verticalSpacing="@dimen/px_20" />
+    </LinearLayout>
+</LinearLayout>

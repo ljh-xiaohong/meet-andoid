@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/item_surname_rank_tv_ranknum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="1"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp"
+            />
+
+
+    <TextView
+        android:id="@+id/item_surname_rank_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/item_surname_rank_tv_ranknum"
+        android:text="宋"
+        android:textColor="@color/color_black_333333"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/item_surname_rank_tv_Pname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/item_surname_rank_tv_name"
+        android:text="Song"
+        android:textColor="@color/color_grey_999999"
+        android:textSize="16sp"
+        />
+
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@+id/item_surname_rank_tv_meritnum"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="姓氏起源"
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp"/>
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/goout_xu"
+            android:id="@+id/item_surname_rank_tv_meritnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           />
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#e5e5e5"/>
+
+</RelativeLayout>
+

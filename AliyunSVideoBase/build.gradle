@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion externalCompileSdkVersion
+    buildToolsVersion externalBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion externalMinSdkVersion
+        targetSdkVersion externalTargetSdkVersion
+        consumerProguardFiles 'lib-proguard-rules.pro'
+
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    compile externalAndroidAppCompatV7
+    compile externalAndroidRecyclerView
+    compile project(':AliyunVideoSdk')
+    compile project(':AlivcCore')
+    compile project(':AliyunVideoCommon')
+    compile ('com.github.bumptech.glide:glide:3.7.0')
+    compile externalAlivcConan
+    compile externalGSON
+}

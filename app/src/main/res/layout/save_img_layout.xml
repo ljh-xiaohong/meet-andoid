@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="80.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="16.0sp" android:gravity="center" android:id="@+id/save_in_local" android:clickable="true" android:layout_width="fill_parent" android:layout_height="40.0dip" android:text="保存图片" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="16.0sp" android:gravity="center" android:id="@+id/scan_qr_code" android:focusable="true" android:visibility="gone" android:clickable="true" android:layout_width="fill_parent" android:layout_height="40.0dip" android:text="识别图中二维码" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="16.0sp" android:gravity="center" android:id="@+id/quxiao" android:clickable="true" android:layout_width="fill_parent" android:layout_height="40.0dip" android:text="取消" />
+</LinearLayout>

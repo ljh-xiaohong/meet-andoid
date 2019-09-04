@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion externalCompileSdkVersion
+    buildToolsVersion externalBuildToolsVersion
+    defaultConfig {
+        minSdkVersion externalMinSdkVersion
+        targetSdkVersion externalTargetSdkVersion
+        consumerProguardFiles 'lib-proguard-rules.pro'
+    }
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':AliyunSVideoBase')
+    compile project(":AliyunSvideoMusic")
+    compile project(path: ':AliyunFileDownLoader:downloadermanager')
+    compile ('com.github.bumptech.glide:glide:3.7.0')
+    compile externalGSON
+    compile externalFaceUnity
+}

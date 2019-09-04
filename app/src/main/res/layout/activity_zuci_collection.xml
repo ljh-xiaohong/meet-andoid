@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_80"
+        android:layout_marginTop="@dimen/px_1"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/collection_surname_sel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/ic_pull_down_nor"
+            android:hint="@string/home_all_name"
+            android:padding="8.0dip"
+            android:text=""
+            android:textColor="@color/color_black_333333"
+            android:textColorHint="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/collection_province_sel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/ic_pull_down_nor"
+            android:hint="@string/whole_province"
+            android:padding="8.0dip"
+            android:textColor="@color/color_black_333333"
+            android:textColorHint="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/collection_city_sel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/ic_pull_down_nor"
+            android:hint="@string/the_whole_city"
+            android:padding="8.0dip"
+            android:text=""
+            android:textColor="@color/color_black_333333"
+            android:textColorHint="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/collection_spring"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:id="@+id/collection_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/setting_bg"
+            android:divider="@color/setting_bg"
+            android:dividerHeight="@dimen/px_1" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+</LinearLayout>

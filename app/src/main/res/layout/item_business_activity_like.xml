@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="#fff6f6f7"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="30dp">
+
+    <TextView
+        android:id="@+id/item_business_like_no"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_12" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/item_business_like_head"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/item_business_like_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:gravity="center|left"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/item_business_like_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:gravity="center|left"
+        android:textSize="@dimen/sp_12" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center|right"
+        android:text="+1"
+        android:textColor="#ab3a34"
+        android:textSize="@dimen/sp_16" />
+
+</LinearLayout>

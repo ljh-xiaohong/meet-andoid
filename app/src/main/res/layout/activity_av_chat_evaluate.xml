@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_title_bar"
+        layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10.0dip">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70.0dip"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                app:cardCornerRadius="@dimen/px_8">
+
+                <ImageView
+                    android:id="@+id/user_icon"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/ic_default" />
+            </android.support.v7.widget.CardView>
+
+            <RadioGroup
+                android:id="@+id/rg_evaluate_all"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="13.0dip"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_good"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_avchat_appraise_good_switch"
+                    android:text="   好评"
+                    android:textColor="@color/color_black_333333" />
+
+                <RadioButton
+                    android:id="@+id/rb_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_avchat_appraise_bad_switch"
+                    android:text="   中评"
+                    android:textColor="@color/color_black_333333" />
+
+                <RadioButton
+                    android:id="@+id/rb_bad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/selector_avchat_appraise_bad_switch"
+                    android:text="   差评"
+                    android:textColor="@color/color_black_333333" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25.0dip"
+            android:text="评价详情(选填)" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:visibility="gone">
+
+            <RadioGroup
+                android:id="@+id/rg_publicity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_hide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_choose_sex"
+                    android:text="匿名" />
+
+                <RadioButton
+                    android:id="@+id/rb_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10.0dip"
+                    android:background="@null"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/selector_choose_sex"
+                    android:text="公开" />
+            </RadioGroup>
+            >
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/txt_evaluate_content"
+            android:layout_width="fill_parent"
+            android:layout_height="100.0dip"
+            android:layout_marginTop="2.0dip"
+            android:background="@drawable/shape_comment_dynamic_btn_bg"
+            android:gravity="clip_horizontal"
+            android:hint="对我的印象如何,来说两句吧!"
+            android:imeOptions="actionNext"
+            android:padding="5.0dip"
+            android:textSize="12.0dip" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp_38"
+            android:layout_marginTop="30.0dip"
+            android:background="@drawable/shape_txt_gray"
+            android:gravity="center"
+            android:text="提交评价"
+            android:textColor="@color/text_while"
+            android:textSize="@dimen/text_title_size"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

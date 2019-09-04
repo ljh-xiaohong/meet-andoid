@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/member_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_176"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="@dimen/px_176"
+                android:layout_height="@dimen/px_176">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/px_128"
+                    android:layout_height="@dimen/px_128"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px_24">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="@dimen/px_120"
+                        android:layout_height="@dimen/px_120"
+                        android:layout_centerInParent="true"
+                        app:cardCornerRadius="@dimen/px_12"
+                        app:cardElevation="0.0dip">
+
+                        <ImageView
+                            android:id="@+id/img_member_header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_default" />
+
+                        <ImageView
+                            android:id="@+id/img_member_claim"
+                            android:layout_width="@dimen/px_91"
+                            android:layout_height="@dimen/px_80"
+                            android:layout_gravity="start|bottom|center"
+                            android:src="@mipmap/ic_member_claim"
+                            android:visibility="gone" />
+                    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_member_sponsor"
+                    android:layout_width="@dimen/px_146"
+                    android:layout_height="@dimen/px_52"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_guo"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_member_sponsor_nor"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_128"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/px_8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cultural_inheritance"
+                        android:textColor="@color/color_black_333333"
+                        android:textSize="@dimen/px_28"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_member_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_20"
+                        android:text="20在审核中"
+                        android:textColor="#fff64f4f"
+                        android:textSize="@dimen/px_24"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/txt_member_certified"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/px_28"
+                        android:text="@string/To_identify"
+                        android:textColor="#ff54abe6" />
+                </RelativeLayout>
+            </LinearLayout>
+            ////已认领
+
+            <LinearLayout
+                android:id="@+id/ll_member_sponsor"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_128"
+                android:layout_gravity="center"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/px_8"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/txt_member_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
+                            android:textColor="@color/praise_item_default"
+                            android:textSize="@dimen/px_30"
+                            android:textStyle="bold"
+                            android:text="ive"/>
+
+                        <TextView
+                            android:id="@+id/txt_member_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/px_10"
+                            android:background="@drawable/selector_item_sex_ll_bg"
+                            android:drawableLeft="@drawable/selector_item_sex_img"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/px_3"
+                            android:paddingRight="@dimen/px_3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/px_24" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1.0"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_3"
+                            android:layout_marginRight="@dimen/px_3">
+
+                            <TextView
+                                android:id="@+id/member_job"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textColor="@color/txt_color_666666"
+                                android:text="你好"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/other_job_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/member_other_job"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="@dimen/px_3"
+                            android:text="@string/authentication"
+                            android:textColor="@color/txt_color_666666"
+                            android:textSize="@dimen/px_24" />
+
+                        <ImageView
+                            android:id="@+id/img_member_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/selector_phone_approve"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/img_member_weixin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/selector_weixin_approve"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/img_member_identity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/px_3"
+                            android:src="@drawable/selector_identity_approve"
+                            android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/img_member_enterprise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/px_3"
+                            android:src="@drawable/selector_enterprise_approve"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <LinearLayout
+                        android:id="@+id/member_distance_la"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/px_50"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_positon" />
+
+                        <TextView
+                            android:id="@+id/txt_member_distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_8"
+                            android:textColor="@color/txt_color_999999"
+                            android:textSize="@dimen/px_24" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_no_photo" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_72"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/The_current_members"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="@dimen/px_30" />
+
+                <TextView
+                    android:id="@+id/member_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:text="0"
+                    android:textColor="@color/txt_color_yellow"
+                    android:textSize="@dimen/px_32" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/px_1"
+            android:layout_height="@dimen/px_40"
+            android:layout_gravity="center"
+            android:background="@color/bg_no_photo" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Members_of_the_certification"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="@dimen/px_30" />
+
+                <TextView
+                    android:id="@+id/member_authenticate_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_10"
+                    android:text="0"
+                    android:textColor="@color/txt_color_yellow"
+                    android:textSize="@dimen/px_32" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_12"
+        android:background="@color/bg_no_photo"
+        android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

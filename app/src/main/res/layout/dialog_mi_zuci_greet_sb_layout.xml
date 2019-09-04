@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_clan_botton_white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_40"
+        android:background="@drawable/shape_dialog_title_ab3a34" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px_24"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px_28"
+            android:textColor="@color/color_232323"
+            android:text="跟"/>
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/px_8"
+            android:textSize="@dimen/px_28"
+            android:textColor="#b89477"
+            android:text="某某打招乎"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/px_8"
+            android:textSize="@dimen/px_28"
+            android:textColor="@color/color_232323"
+            android:text="打招呼"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="@dimen/px_420"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="@dimen/px_3"
+            android:layout_height="@dimen/px_25"
+            android:background="@color/color_ab3a34"/>
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_8"
+            android:textSize="@dimen/px_26"
+            android:background="#f1ffffff"
+            android:textColor="@color/color_232323"
+            android:hint="你好,能跟你认识一下么"/>
+    </LinearLayout>
+    <View
+        android:layout_width="@dimen/px_420"
+        android:layout_height="@dimen/px_2"
+        android:layout_marginTop="@dimen/px_16"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/setting_bg"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/px_500"
+        android:layout_height="@dimen/px_80"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/px_24"
+            android:gravity="center"
+            android:textColor="@color/txt_color_999999"
+            android:text="取消"/>
+        <View
+            android:layout_width="@dimen/px_1"
+            android:layout_height="@dimen/px_60"
+            android:background="@color/setting_bg"/>
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:padding="@dimen/px_24"
+            android:textColor="@color/color_ab3a34"
+            android:text="确定"/>
+
+    </LinearLayout>
+</LinearLayout>

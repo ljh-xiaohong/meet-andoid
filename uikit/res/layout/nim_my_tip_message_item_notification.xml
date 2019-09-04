@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/nim_gift_hint_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dip"
+        android:background="@drawable/nim_bg_message_tip">
+        <ImageView
+            android:id="@+id/tip_gift_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_small_gift"/>
+        <TextView
+            android:id="@+id/message_item_notification_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tip_messaage_gift_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#f65757"
+            android:textSize="12sp"
+            android:text="礼物"/>
+    </LinearLayout>
+
+</merge>

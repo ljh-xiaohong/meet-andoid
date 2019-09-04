@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center" android:orientation="vertical" android:background="@color/setting_bg" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center_vertical" android:id="@+id/action_message" android:background="@drawable/selector_bottom_bar_bg" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_24" android:focusable="true" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_88" android:layout_marginBottom="@dimen/px_12">
+        <TextView android:textSize="@dimen/px_28" android:textColor="#ff3498db" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="查看动态消息" />
+        <View android:layout_width="0.0dip" android:layout_height="1.0px" android:layout_weight="1.0" />
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/icon_more" />
+    </LinearLayout>
+    <com.yuejian.meet.widgets.SwipeRefreshView android:id="@+id/ap_swipe_refresh_layout" android:background="@color/tab_bg" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@+id/action_message">
+        <ListView android:id="@+id/person_action_list" android:layout_width="fill_parent" android:layout_height="fill_parent" android:divider="#ffe6e6e6" android:dividerHeight="1.0px" />
+    </com.yuejian.meet.widgets.SwipeRefreshView>
+    <include layout="@layout/no_data_tips_layout" />
+</RelativeLayout>

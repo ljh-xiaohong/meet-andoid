@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/transparent">
+
+        <com.yuejian.meet.widgets.CircleImageView
+            android:id="@+id/img"
+            android:layout_width="240.0dip"
+            android:layout_height="240.0dip"
+            android:layout_gravity="center"
+            app:border_color="@color/transparent"
+            app:border_width="0.0dip" />
+
+        <TextView
+            android:id="@+id/please"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="#61000000"
+            android:gravity="center"
+            android:text="请关联家人..."
+            android:textColor="#ffffffff"
+            android:textSize="16.0sp" />
+
+        <com.yuejian.meet.widgets.WaveView
+            android:id="@+id/wave"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="30.0dip"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/relative_family"
+                android:layout_width="64.0dip"
+                android:layout_height="64.0dip"
+                android:layout_marginEnd="28.0dip"
+                android:background="@drawable/selector_red_circle"
+                android:gravity="center"
+                android:text="@string/relative_family"
+                android:textColor="#ffffffff"
+                android:textSize="15.0sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/sayhi"
+                    android:layout_width="65.0dip"
+                    android:layout_height="65.0dip"
+                    android:background="@drawable/selector_red_circle"
+                    android:gravity="center"
+                    android:text="打招呼"
+                    android:textColor="#ffffffff"
+                    android:textSize="15.0sp" />
+
+                <TextView
+                    android:id="@+id/chat"
+                    android:layout_width="65.0dip"
+                    android:layout_height="65.0dip"
+                    android:layout_marginStart="28.0dip"
+                    android:background="@drawable/selector_red_circle"
+                    android:gravity="center"
+                    android:text="聊天"
+                    android:textColor="#ffffffff"
+                    android:textSize="15.0sp" />
+
+                <TextView
+                    android:id="@+id/person_home"
+                    android:layout_width="65.0dip"
+                    android:layout_height="65.0dip"
+                    android:layout_marginStart="28.0dip"
+                    android:background="@drawable/selector_red_circle"
+                    android:gravity="center"
+                    android:text="@string/person_home"
+                    android:textColor="#ffffffff"
+                    android:textSize="15.0sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/delete"
+                android:layout_width="65.0dip"
+                android:layout_height="65.0dip"
+                android:layout_marginStart="28.0dip"
+                android:background="@drawable/selector_red_circle"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="#ffffffff"
+                android:textSize="15.0sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/lianxilayout"
+            android:layout_width="fill_parent"
+            android:layout_height="124.0dip"
+            android:layout_gravity="bottom"
+            android:background="#ffffffff"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/tongxunlu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12.0dip">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/tongxunlu_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8.0dip"
+                        android:text="通讯录"
+                        android:textColor="#ff232323"
+                        android:textSize="12.0sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/weixin_friend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30.0dip"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/weixin_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8.0dip"
+                        android:text="微信好友"
+                        android:textColor="#ff232323"
+                        android:textSize="12.0sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/quxiao"
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_gravity="bottom"
+                android:background="#ffab3a34"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#ffffffff" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_120"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/px_180"
+            android:layout_height="@dimen/px_180"
+            android:src="@mipmap/wx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_16"
+            android:text="@string/verify_center_text4"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_34" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="1.0px"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" />
+
+    <Button
+        android:id="@+id/sure_verify_wx"
+        style="@style/yue_jian_btn_1"
+        android:layout_marginBottom="@dimen/px_96"
+        android:text="@string/phone_verify_toast3" />
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:oneshot="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="60" android:drawable="@drawable/explosion_one" />
+    <item android:duration="60" android:drawable="@drawable/explosion_two" />
+    <item android:duration="60" android:drawable="@drawable/explosion_three" />
+    <item android:duration="60" android:drawable="@drawable/explosion_four" />
+    <item android:duration="60" android:drawable="@drawable/explosion_five" />
+    <item android:duration="60" android:drawable="@android:color/transparent" />
+</animation-list>

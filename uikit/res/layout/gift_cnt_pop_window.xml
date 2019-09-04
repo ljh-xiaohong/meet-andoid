@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/cnt_1"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+    <TextView
+        android:id="@+id/cnt_10"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="10"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+    <TextView
+        android:id="@+id/cnt_66"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="66"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+    <TextView
+        android:id="@+id/cnt_99"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="99"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+    <TextView
+        android:id="@+id/cnt_188"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="188"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+    <TextView
+        android:id="@+id/cnt_520"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="520"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+
+
+    <TextView
+        android:id="@+id/cnt_1314"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="1314"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dfdfdf" />
+</LinearLayout>

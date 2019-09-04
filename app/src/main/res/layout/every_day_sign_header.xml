@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/white"
+    android:paddingLeft="8.0dip"
+    android:paddingRight="8.0dip"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/px_190"
+        android:layout_marginTop="8.0dip"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="40.0dip"
+            android:layout_height="234.0dip"
+            android:layout_marginEnd="6.0dip"
+            android:background="#ffd3bd94"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40.0dip"
+                android:text="2018"
+                android:textColor="@color/color_white" />
+
+            <TextView
+                android:id="@+id/lunar_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/year"
+                android:layout_centerHorizontal="true"
+                android:text="@string/action_dialog_text4"
+                android:textColor="@color/color_white"
+                android:textSize="10.0sp" />
+
+            <TextView
+                android:id="@+id/aninmal_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/action_dialog_text5"
+                android:textColor="@color/color_white"
+                android:textSize="12.0sp" />
+
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/yue"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4.0dip"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="19.0sp" />
+
+            <TextView
+                android:id="@+id/yue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40.0dip"
+                android:text="月"
+                android:textColor="@color/color_white"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <com.yuejian.meet.widgets.LunarCalendarView
+            android:id="@+id/lunar_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/px_50"
+            android:paddingRight="@dimen/px_50"
+            android:layout_marginTop="@dimen/px_60"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/px_32"
+                    android:textColor="@color/color_black_333333"
+                    android:text="五月十二"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_8"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="@dimen/px_20"
+                    android:text="戊戌年"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/px_22"
+                        android:textColor="#65b178"
+                        android:text="宜"/>
+                    <View
+                        android:layout_width="@dimen/px_1"
+                        android:layout_height="@dimen/px_20"
+                        android:layout_marginLeft="@dimen/px_8"
+                        android:layout_marginRight="@dimen/px_16"
+                        android:background="@color/txt_color_999999"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/px_22"
+                        android:textColor="@color/color_black_333333"
+                        android:text="祭祀 交易 纳财"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_8"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/px_22"
+                        android:textColor="#65b178"
+                        android:text="忌"/>
+                    <View
+                        android:layout_width="@dimen/px_1"
+                        android:layout_height="@dimen/px_20"
+                        android:layout_marginLeft="@dimen/px_8"
+                        android:layout_marginRight="@dimen/px_16"
+                        android:background="@color/txt_color_999999"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/px_22"
+                        android:textColor="@color/color_black_333333"
+                        android:text="开封 破土 上梁"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sign_btn"
+        android:layout_width="@dimen/px_268"
+        android:layout_height="@dimen/px_71"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/px_44"
+        android:background="@drawable/selector_sign_btn_bg"
+        android:gravity="center"
+        android:text="@string/action_dialog_text3"
+        android:textColor="@color/white"
+        android:textSize="16.0sp" />
+</FrameLayout>

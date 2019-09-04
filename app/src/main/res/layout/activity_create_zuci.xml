@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_90"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/zuci_name"
+                    android:textColor="@color/color_black_333333" />
+
+                <EditText
+                    android:id="@+id/zuci_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/px_9"
+                    android:background="@color/white"
+                    android:hint="@string/input_zuci_name"
+                    android:textSize="@dimen/px_30" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="#ffe4e4e4" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_90"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/year_of_completion"
+                    android:textColor="@color/color_black_333333" />
+
+                <EditText
+                    android:id="@+id/zuci_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/px_9"
+                    android:background="@color/white"
+                    android:hint="@string/input_year_of_completion"
+                    android:textSize="@dimen/px_30" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="#ffe4e4e4" />
+
+            <LinearLayout
+                android:id="@+id/mi_zuci_address_layout"
+                style="@style/create_mi_clan_layout">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/detailed_address" />
+
+                <TextView
+                    android:id="@+id/mi_zuci_address"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="@string/Select_the_detailed_address" />
+
+                <ImageView
+                    style="@style/create_mi_clan_img_sel"
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="#ffe4e4e4" />
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/zuci_brief_introduction" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingBottom="@dimen/px_44"
+                android:paddingTop="@dimen/px_30"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/mi_zuci_about"
+                    style="@style/create_mi_clan_txt_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/px_280"
+                    android:background="@drawable/shape_zuci_synopsis_bg"
+                    android:gravity="start"
+                    android:hint="@string/Please_enter_the_description"
+                    android:padding="@dimen/px_24"
+                    android:paddingTop="@dimen/px_16" />
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_3"
+                android:background="#ffe4e4e4" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/px_30"
+                android:paddingLeft="@dimen/px_24"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black_333333"
+                    android:text="@string/image"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:textColor="@color/color_ab3a34"
+                    android:text="*"/>
+            </LinearLayout>
+            <com.yuejian.meet.widgets.InnerGridView
+                android:id="@+id/mi_clan_grid"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/px_30"
+                android:paddingTop="@dimen/px_30"
+                android:paddingLeft="@dimen/px_20"
+                android:paddingRight="@dimen/px_20"
+                android:background="@color/white"
+                android:numColumns="4"
+                android:verticalSpacing="@dimen/px_16" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/zuci_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:layout_margin="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_28"
+        android:background="@drawable/shape_button_ab3a34"
+        android:text="@string/Submit_audit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px_32" />
+</LinearLayout>

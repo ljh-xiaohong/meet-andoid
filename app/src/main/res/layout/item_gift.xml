@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp">
+
+    <FrameLayout
+        android:id="@+id/fl_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_radius_top_black"
+            android:orientation="vertical"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="60dp"
+            android:paddingTop="2dp">
+
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Johnny"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/txt_gift_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="送一个樱花雨"
+                android:textColor="#fff8b053"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_gift_pic"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center|right"
+            android:alpha="0.0"
+            android:src="@mipmap/ic_gift_nor" />
+    </FrameLayout>
+
+    <com.yuejian.meet.session.widgets.MagicTextView
+        android:id="@+id/giftNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginTop="10.0dip"
+        android:layout_toRightOf="@+id/fl_gift"
+        android:includeFontPadding="false"
+        android:text="x1"
+        android:textColor="#fff8b053"
+        android:textSize="26.0sp"
+        android:textStyle="bold"
+        app:strokeColor="@android:color/white"
+        app:mtvstrokeJoinStyle="miter"
+        app:mtvstrokeWidth="2.0" />
+
+    <com.yuejian.meet.session.widgets.CustomRoundView
+        android:id="@+id/crvheadimage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="14dp" />
+</RelativeLayout>

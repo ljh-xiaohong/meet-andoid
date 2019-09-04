@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/springView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/color_white">
+
+        <ListView
+            android:id="@+id/contact_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+
+    <LinearLayout
+        android:id="@+id/no_data_tips_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#fff6f6f6"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="150.0dip"
+            android:src="@mipmap/wuneirong" />
+
+        <TextView
+            android:id="@+id/tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20.0dip"
+            android:text="好像什么都没有!"
+            android:textColor="#ff333333"
+            android:textSize="14.0sp" />
+    </LinearLayout>
+</LinearLayout>

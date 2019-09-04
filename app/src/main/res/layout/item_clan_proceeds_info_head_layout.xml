@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginTop="@dimen/px_40"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总发布收款人数:"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+
+        <TextView
+            android:id="@+id/proceeds_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_25"
+            android:text="32"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginTop="@dimen/px_28"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已交款人数:"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+
+        <TextView
+            android:id="@+id/proceeds_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_25"
+            android:text="32"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginTop="@dimen/px_28"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未交款人数:"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+
+        <TextView
+            android:id="@+id/proceeds_no_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_25"
+            android:text="32"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_32" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_16"
+        android:layout_marginTop="@dimen/px_40"
+        android:background="@color/setting_bg" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginLeft="@dimen/px_24"
+        android:gravity="center_vertical"
+        android:text="成员列表"
+        android:textColor="@color/txt_color_666666"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="@color/setting_bg" />
+</LinearLayout>

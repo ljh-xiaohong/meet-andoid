@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/titlebar_layout"/>
+        <com.yuejian.meet.widgets.springview.SpringView
+            android:id="@+id/bot_spring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/px_30"
+            android:paddingRight="@dimen/px_30"
+            android:paddingTop="@dimen/px_30"
+            android:layout_weight="1">
+            <ListView
+                android:id="@+id/bot_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/white"
+                android:dividerHeight="@dimen/px_1"
+                android:padding="@dimen/px_30"
+                android:background="@color/setting_bg"/>
+        </com.yuejian.meet.widgets.springview.SpringView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginBottom="@dimen/px_40"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/launch_enjoy"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_98"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/px_15"
+            android:background="@drawable/shape_button_dd362b"
+            android:gravity="center"
+            android:text="@string/enjoy_text_1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px_30" />
+
+        <TextView
+            android:id="@+id/bu_next"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_98"
+            android:layout_marginLeft="@dimen/px_15"
+            android:layout_weight="1"
+            android:background="@drawable/shape_button_dd362b"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/bot_txt_8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+</FrameLayout>

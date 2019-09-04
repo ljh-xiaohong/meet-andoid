@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/action_top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@color/white"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_action_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_50"
+                android:layout_marginRight="@dimen/px_50"
+                android:gravity="center"
+                android:padding="@dimen/px_16">
+
+                <TextView
+                    android:id="@+id/txt_action_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全部"
+                    android:textColor="@color/color_action_top_choose_txt" />
+
+                <ImageView
+                    android:id="@+id/action_pull_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_4"
+                    android:src="@drawable/selector_pull_down" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_action_attention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_50"
+                android:layout_marginRight="@dimen/px_50"
+                android:gravity="center"
+                android:padding="@dimen/px_16"
+                android:text="关注"
+                android:textColor="@color/color_action_top_choose_txt" />
+
+            <TextView
+                android:id="@+id/txt_action_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_50"
+                android:layout_marginRight="@dimen/px_50"
+                android:gravity="center"
+                android:padding="@dimen/px_16"
+                android:text="推荐"
+                android:textColor="@color/color_action_top_choose_txt" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/select_window_action"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.yuejian.meet.widgets.springview.SpringView
+            android:id="@+id/action_spring"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white">
+
+            <ListView
+                android:id="@+id/action_lsit"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/color_white"
+                android:divider="@color/setting_bg"
+                android:dividerHeight="@dimen/px_12"
+                android:listSelector="@color/color_white" />
+        </com.yuejian.meet.widgets.springview.SpringView>
+
+        <FrameLayout
+            android:id="@+id/none_data"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@mipmap/none" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

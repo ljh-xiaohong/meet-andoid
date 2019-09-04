@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px_300"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:gravity="center"
+        android:text="@string/main_more_text"
+        android:textColor="#ff797979"
+        android:textSize="@dimen/px_28" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+
+    <TextView
+        android:id="@+id/sj"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/main_more_text1"
+        android:textColor="#ff333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+
+    <TextView
+        android:id="@+id/xmqy"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/main_more_text2"
+        android:textColor="#ff333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+
+    <TextView
+        android:id="@+id/mrl"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/main_more_text3"
+        android:textColor="#ff333333"
+        android:textSize="@dimen/px_30" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+</LinearLayout>

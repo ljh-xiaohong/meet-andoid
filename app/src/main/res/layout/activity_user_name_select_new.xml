@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_user_name_select_new_mlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/icon_nav_return"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_12"
+        android:paddingRight="@dimen/dp_12"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/activity_user_name_select_titlebar"
+        android:layout_width="wrap_content"
+        android:text="@string/reg_text_information"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black3"
+        android:layout_marginTop="@dimen/dp_72"
+        android:textSize="24sp"
+        android:layout_height="wrap_content" />
+
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/activity_user_name_select_new_img"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_below="@+id/activity_user_name_select_titlebar"
+        android:src="@mipmap/touxiang_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_34" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_user_name_select_new_img"
+        android:layout_marginTop="@dimen/dp_33"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_38"
+        android:paddingRight="@dimen/dp_38">
+        <!-- 姓 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_44"
+                    android:layout_toLeftOf="@+id/acitivity_user_name_select_new_family_name"
+                    android:text="@string/reg_text_family_name"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <EditText
+                    android:id="@+id/acitivity_user_name_select_new_family_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:maxLength="4"
+                    android:background="@null"
+                    android:hint="@string/reg_hint_select_family_name"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+
+
+            <View
+                android:layout_width="@dimen/dp_240"
+                android:layout_height="@dimen/dp_1"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line_color_grey" />
+
+        </RelativeLayout>
+        <!-- 名 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/acitivity_user_name_select_new_given_name"
+                    android:layout_marginRight="@dimen/dp_44"
+                    android:text="@string/reg_text_surname_name"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <EditText
+                    android:id="@+id/acitivity_user_name_select_new_given_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:maxLength="8"
+                    android:hint="@string/reg_hint_select_surname_name"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+
+            <View
+                android:layout_width="@dimen/dp_240"
+                android:layout_centerHorizontal="true"
+                android:layout_height="@dimen/dp_1"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line_color_grey" />
+
+        </RelativeLayout>
+        <!-- 推荐人 -->
+        <RelativeLayout
+            android:layout_width="@dimen/dp_240"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_28"
+            android:background="@color/referrer">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_28"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/referrer"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/acitivity_user_name_referrer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:gravity="center|left"
+                    android:maxLength="13"
+                    android:hint="@string/please_enter_your_cell_phone_number"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="240dp"
+                android:layout_height="@dimen/dp_1"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line_color_grey" />
+
+        </RelativeLayout>
+        <!-- 性别 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:visibility="gone"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_28"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:maxWidth="@dimen/dp_28"
+                    android:minWidth="@dimen/dp_28"
+                    android:text="@string/reg_text_gender"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <RadioGroup
+                    android:id="@+id/acitivity_user_name_select_new_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_28"
+                    android:layout_weight="20"
+                    android:checkedButton="@+id/activity_user_name_select_rb_man"
+                    android:gravity="center|left"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/activity_user_name_select_rb_man"
+                        android:layout_width="@dimen/dp_36"
+                        android:layout_height="@dimen/dp_24"
+                        android:background="@drawable/selector_gender"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/reg_rb_man"
+                        android:textColor="@drawable/select_gender_color" />
+
+                    <RadioButton
+                        android:id="@+id/activity_user_name_select_rb_woman"
+                        android:layout_width="@dimen/dp_36"
+                        android:layout_height="@dimen/dp_24"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:background="@drawable/selector_gender"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/reg_rb_wonman"
+                        android:textColor="@drawable/select_gender_color" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_line_color_grey"
+
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:hint="*确定性别后不可退改"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/acitivity_user_name_select_new_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_60"
+        android:background="@drawable/bg_resg_grey_unpress_btn"
+        android:text="@string/reg_btn_next"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70.0dip"
+        android:layout_marginBottom="23.0dip"
+        android:background="#ffffffff"
+        android:paddingLeft="12.0dip"
+        android:paddingRight="12.0dip">
+
+        <CheckBox
+            android:id="@+id/av_collection"
+            android:layout_width="30.0dip"
+            android:layout_height="30.0dip"
+            android:layout_gravity="center|right"
+            android:background="@drawable/collect_start"
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20.0dip"
+            android:text="故乡的云"
+            android:textColor="#ff232323"
+            android:textSize="18.0sp" />
+
+        <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="文字：梨园  声音：张鹏"
+            android:textColor="#ff666666"
+            android:textSize="14.0sp" />
+    </FrameLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="200.0dip"
+        android:layout_height="200.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4.0dip"
+        app:cardCornerRadius="12.0dip"
+        app:cardElevation="4.0dip">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="#ffe0e0e0" />
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="160.0dip"
+        android:layout_height="30.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/like_check"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:background="@drawable/like_check"
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/like_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4.0dip"
+            android:text="123"
+            android:textColor="#ff666666"
+            android:textSize="13.0sp" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/reward"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_marginEnd="4.0dip"
+            android:src="@mipmap/shang_harbour" />
+
+        <TextView
+            android:id="@+id/reward_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4.0dip"
+            android:text="55"
+            android:textColor="#ff666666"
+            android:textSize="13.0sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12.0dip"
+        android:paddingRight="12.0dip">
+
+        <TextView
+            android:id="@+id/currentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="00:00"
+            android:textColor="#ff999999"
+            android:textSize="10.0sp" />
+
+        <SeekBar
+            android:id="@+id/seek_bar_progress"
+            android:layout_width="270.0dip"
+            android:layout_height="16.0dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:maxHeight="2.0dip"
+            android:minHeight="4.0dip"
+            android:progress="0"
+            android:progressDrawable="@drawable/seek_bar_pregress_bg"
+            android:thumb="@drawable/thumb" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60.0dip"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip">
+
+        <LinearLayout
+            android:id="@+id/bofangku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20.0dip"
+                android:layout_height="24.0dip"
+                android:src="@mipmap/bofangku_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.0dip"
+                android:text="播放库"
+                android:textColor="#ff5a5a5a"
+                android:textSize="10.0sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <LinearLayout
+            android:layout_width="160.0dip"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pre"
+                android:layout_width="20.0dip"
+                android:layout_height="20.0dip"
+                android:src="@mipmap/shangyishou" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="44.0dip"
+                android:layout_height="44.0dip"
+                android:src="@mipmap/bofang" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="20.0dip"
+                android:layout_height="20.0dip"
+                android:src="@mipmap/xiayishou" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <LinearLayout
+            android:id="@+id/fenxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20.0dip"
+                android:layout_height="20.0dip"
+                android:src="@mipmap/fenxiang_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.0dip"
+                android:text="分享"
+                android:textColor="#ff5a5a5a"
+                android:textSize="10.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="8.0dip"
+        android:layout_marginTop="8.0dip"
+        android:background="#fff6f6f6" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:baselineAligned="true"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="4.0dip"
+            android:layout_height="14.0dip"
+            android:background="#ffab3a34" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-1.0dip"
+            android:layout_marginStart="4.0dip"
+            android:text="内容简介"
+            android:textColor="#ff232323"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/introduction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20.0dip"
+        android:paddingLeft="12.0dip"
+        android:paddingRight="12.0dip"
+        android:paddingTop="20.0dip"
+        android:textColor="#ff232323" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="8.0dip"
+        android:background="#fff6f6f6" />
+</LinearLayout>

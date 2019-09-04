@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="@dimen/px_300" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/px_28" android:textColor="#ff797979" android:gravity="center" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="@dimen/px_88" android:text="发表版块" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="@dimen/px_30" android:textColor="#ff333333" android:gravity="center" android:id="@+id/current_age" android:background="@color/color_white" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_88" android:text="现代" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="@dimen/px_30" android:textColor="#ff333333" android:gravity="center" android:id="@+id/mrl" android:background="@color/color_white" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_88" android:text="近代" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="@dimen/px_30" android:textColor="#ff333333" android:gravity="center" android:id="@+id/sj" android:background="@color/color_white" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_88" android:text="古代" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+</LinearLayout>

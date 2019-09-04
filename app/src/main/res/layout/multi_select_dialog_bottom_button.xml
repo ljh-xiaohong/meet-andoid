@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:background="@color/color_b3b3b3" android:layout_width="fill_parent" android:layout_height="@dimen/light_line_size" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:textColor="@drawable/multi_select_text_color_selector" android:id="@+id/multi_select_dialog_negative_btn" android:background="@drawable/multi_select_cancel_bg" android:visibility="gone" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/cancel" android:layout_weight="1.0" style="@style/dialog_button_text_style" />
+        <View android:id="@+id/multi_select_dialog_btn_divide_view" android:background="@color/color_b3b3b3" android:visibility="gone" android:layout_width="@dimen/light_line_size" android:layout_height="fill_parent" />
+        <Button android:textColor="@drawable/multi_select_text_color_selector" android:gravity="center" android:id="@+id/multi_select_dialog_positive_btn" android:background="@drawable/multi_select_ok_bg" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="@string/ok" android:layout_weight="1.0" style="@style/dialog_button_text_style" />
+    </LinearLayout>
+</LinearLayout>

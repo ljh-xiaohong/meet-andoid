@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <FrameLayout
+        android:id="@+id/actoin_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <com.yuejian.meet.widgets.springview.SpringView
+                android:id="@+id/action_info_spring"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/color_white">
+
+                <ListView
+                    android:id="@+id/action_info_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:divider="#ffdedede"
+                    android:dividerHeight="@dimen/px_1" />
+            </com.yuejian.meet.widgets.springview.SpringView>
+
+            <LinearLayout
+                android:id="@+id/comment_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_112"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <EditText
+                    android:id="@+id/msg_content"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/selector_next_btn"
+                    android:gravity="center_vertical"
+                    android:hint="@string/notice_info_text_2"
+                    android:maxHeight="@dimen/px_112"
+                    android:maxLength="500"
+                    android:minHeight="@dimen/px_60"
+                    android:paddingLeft="@dimen/px_24"
+                    android:paddingRight="@dimen/px_24"
+                    android:textColor="#ff999999"
+                    android:textColorHint="#ff999999"
+                    android:textSize="@dimen/px_28" />
+
+                <Button
+                    android:id="@+id/msg_send"
+                    android:layout_width="@dimen/px_100"
+                    android:layout_height="@dimen/px_50"
+                    android:layout_marginLeft="@dimen/px_40"
+                    android:background="@drawable/selector_btn_verify_wx"
+                    android:text="@string/send"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/px_28" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/none_data"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@mipmap/none" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

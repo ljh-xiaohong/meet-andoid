@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:id="@+id/frist_strote_pic1_lay"
+    android:layout_marginRight="10px"
+    android:layout_marginBottom="10px"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:background="@color/white"
+        android:layout_height="80dp">
+        <ImageView
+            android:id="@+id/frist_strote_pic1_iv"
+            android:layout_width="80dp"
+            android:scaleType="fitXY"
+            android:layout_height="80dp" />
+        <ImageView
+            android:id="@+id/frist_strote_pic1_delect_iv"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_pic_del"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

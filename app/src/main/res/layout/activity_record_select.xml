@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <requestFocus />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:id="@+id/fanhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/px_36"
+            android:src="@mipmap/icon_fanhui_b" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="@dimen/px_8"
+            android:layout_marginTop="@dimen/px_8"
+            android:background="@drawable/shape_search_bill_record"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_26">
+
+            <EditText
+                android:id="@+id/search_edit"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/px_8"
+                android:layout_weight="1.0"
+                android:background="@color/color_white"
+                android:hint="@string/record_select_text_15"
+                android:imeActionLabel="搜索"
+                android:imeOptions="actionSearch"
+                android:maxLines="1"
+                android:textColor="#ff999999"
+                android:textColorHint="#ff999999"
+                android:textSize="12.0sp" />
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_search" />
+
+            <TextView
+                android:id="@+id/cancel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:padding="4.0dip"
+                android:text="取消"
+                android:textColor="#ff54a6e5"
+                android:textSize="14.0sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_content_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0px"
+                android:layout_marginTop="@dimen/px_8"
+                android:background="#ffdfdfdf" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px_28"
+                android:layout_marginTop="@dimen/px_32"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24"
+                android:text="选择分类"
+                android:textColor="#ff999999"
+                android:textSize="@dimen/px_28" />
+        </LinearLayout>
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/bill_btns_grid_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:paddingBottom="@dimen/px_12"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24"
+            app:columnCount="3">
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="1"
+                android:text="@string/record_select_text_1"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="2"
+                android:text="@string/record_select_text_2"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="3"
+                android:text="@string/record_select_text_3"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="4"
+                android:text="@string/record_select_text_4"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="5"
+                android:text="@string/record_select_text_5"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="6"
+                android:text="@string/record_select_text_6"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:id="@+id/btn_yyetc"
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="7"
+                android:text="@string/record_select_text_7"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="8"
+                android:text="@string/record_select_text_8"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="9"
+                android:text="@string/record_select_text_9"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="10"
+                android:text="@string/record_select_text_10"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="32.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/selector_bill_record_btn"
+                android:onClick="onTagClick"
+                android:tag="11"
+                android:text="@string/record_select_text_11"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp"
+                app:layout_columnWeight="1.0" />
+        </android.support.v7.widget.GridLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_12"
+            android:background="@color/setting_bg" />
+
+        <LinearLayout
+            android:id="@+id/select_time"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_88"
+            android:background="@color/color_white"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24">
+
+            <ImageView
+                android:layout_width="@dimen/px_52"
+                android:layout_height="@dimen/px_52"
+                android:src="@mipmap/icon_xzsj" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_16"
+                android:text="@string/record_select_text_12"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <ImageView
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@mipmap/icon_wd_gengduo" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="#ffe6e6e6" />
+    </LinearLayout>
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/spring_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/color_white">
+
+        <com.yuejian.meet.widgets.PinnedSectionListView
+            android:id="@+id/search_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+</LinearLayout>

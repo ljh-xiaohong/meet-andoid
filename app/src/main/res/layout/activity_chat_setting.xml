@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_88"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/The_receiver_plays_voice"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <CheckBox
+                android:id="@+id/voice_use_ear_cup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:button="@drawable/selector_toggle_btn_bg" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="#fff7f7f7" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_88"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24"
+                android:text="聊天背景"
+                android:textColor="#ff7c7c7c"
+                android:textSize="@dimen/px_30" />
+
+            <LinearLayout
+                android:id="@+id/select_photo_from_albums"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_88"
+                android:background="@drawable/selector_bottom_bar_bg"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="从相册中选择"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/px_30"
+                    android:typeface="serif" />
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <ImageView
+                    android:id="@+id/chat_bg_img"
+                    android:layout_width="@dimen/px_60"
+                    android:layout_height="@dimen/px_60"
+                    android:layout_marginRight="4.0dip"
+                    android:scaleType="centerInside" />
+
+                <ImageView
+                    android:layout_width="20.0dip"
+                    android:layout_height="20.0dip"
+                    android:src="@mipmap/icon_wd_gengduo" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0px"
+                android:background="#fff7f7f7" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.yuejian.meet.bsr.BSRGiftView android:id="@+id/gift_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <com.yuejian.meet.bsr.BSRGiftLayout android:id="@+id/gift_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </RelativeLayout>
+    <include android:id="@+id/avchat_video_top_control" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="18.0dip" android:layout_marginBottom="36.0dip" android:layout_alignParentTop="true" layout="@layout/video_switch_audio_layout" />
+    <LinearLayout android:orientation="vertical" android:id="@+id/llgiftcontent" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="170.0dip" android:animateLayoutChanges="true" />
+    <include android:id="@+id/avchat_video_bottom_control" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="30.0dip" android:layout_alignParentBottom="true" layout="@layout/video_call_bottom_switch_layout" />
+    <include android:id="@+id/avchat_record_layout" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="15.0dip" android:layout_above="@+id/avchat_video_bottom_control" android:layout_centerHorizontal="true" layout="@layout/avchat_record_layout" />
+    <include android:id="@+id/avchat_video_permission_control" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="170.0dip" layout="@layout/avchat_video_permission_layout" />
+    <RelativeLayout android:id="@+id/call_notificationLayout" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <TextView android:textSize="16.0sp" android:textColor="@color/video_call_peer_close_cameral_text_color" android:gravity="center" android:layout_gravity="center" android:background="@drawable/avchat_call_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:shadowColor="@color/video_call_peer_close_cameral_text_shadow" android:shadowDy="1.0" android:shadowRadius="1.0" />
+        <TextView android:textSize="17.0sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/call_refuse" android:background="@drawable/avchat_refuse_bg_selector_go" android:layout_width="110.0dip" android:layout_height="40.0dip" android:layout_marginBottom="70.0dip" android:text="取消" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <include android:id="@+id/avchat_video_middle_control" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/avchat_video_center_layout" />
+</RelativeLayout>

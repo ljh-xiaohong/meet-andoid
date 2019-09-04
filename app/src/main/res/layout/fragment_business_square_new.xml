@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 封面人物 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 封面抬头 -->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingRight="@dimen/dp_12">
+
+
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:background="@color/color_AB3A34" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/business_front"
+                        android:textColor="@color/color_black_ff333333" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_business_square_new_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="9dp"
+                    android:textColor="#3C77BB"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/fragment_business_square_new_toplist_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_business_square_new_toplist_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_gravity="center"
+                    android:drawableRight="@mipmap/icon_shangquan_more_unfold"
+                    android:drawablePadding="2dp"
+                    android:gravity="center"
+                    android:text="@string/business_more"
+                    android:textColor="@color/color_3498DB"
+                    android:textSize="@dimen/sp_14" />
+
+
+            </LinearLayout>
+
+
+            <!-- 热门社群 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- 热门抬头 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingRight="@dimen/dp_12">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_shangquan_hot" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/business_group"
+                        android:textColor="@color/color_black_ff333333" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fragment_business_square_new_grouplist_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_business_square_new_grouplist_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_gravity="center"
+                    android:drawableRight="@mipmap/icon_shangquan_more_unfold"
+                    android:drawablePadding="2dp"
+                    android:gravity="center"
+                    android:text="@string/business_more"
+                    android:textColor="@color/color_3498DB"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+
+            <!-- 热门名帖 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 名帖抬头 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingRight="@dimen/dp_12">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_shangquan_hot" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/business_tag"
+                        android:textColor="@color/color_black_ff333333" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fragment_business_square_new_taglist_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_business_square_new_taglist_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_gravity="center"
+                    android:drawableRight="@mipmap/icon_shangquan_more_unfold"
+                    android:drawablePadding="2dp"
+                    android:gravity="center"
+                    android:text="@string/business_more"
+                    android:textColor="@color/color_3498DB"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

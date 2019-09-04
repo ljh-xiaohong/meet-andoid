@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                     android:layout_width="fill_parent"
+                                     android:layout_height="fill_parent"
+                                     android:gravity="center">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_qr_code_window_bg"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_96">
+
+            <TextView
+                android:id="@+id/group_user_limits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px_14"
+                android:padding="@dimen/px_10"
+                android:text="设为管理员"
+                android:textColor="@color/color_set_group_limits_button"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/group_user_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/px_24"
+                android:padding="@dimen/px_10"
+                android:src="@mipmap/icon_quxiao"/>
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="#ffe6e6e6"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_32"
+            android:orientation="horizontal">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="@dimen/px_150"
+                android:layout_height="@dimen/px_150">
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="@dimen/px_120"
+                    android:layout_height="@dimen/px_120"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/px_10">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="@dimen/px_120"
+                        android:layout_height="@dimen/px_120"
+                        app:cardCornerRadius="@dimen/px_8">
+
+                        <ImageView
+                            android:id="@+id/img_group_user_portrait"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_default"/>
+                    </android.support.v7.widget.CardView>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_group_user_official"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:src="@mipmap/ic_shi"/>
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_group_user_homepage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/px_48"
+                android:gravity="end"
+                android:paddingBottom="@dimen/px_15"
+                android:paddingTop="@dimen/px_15"
+                android:text="进入个人主页》"
+                android:textColor="#ff54bae6"
+                android:textSize="@dimen/px_28"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/group_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="东波"
+                android:textColor="@color/color_black_333333"/>
+
+            <TextView
+                android:id="@+id/group_user_sex"
+                style="@style/user_sex_styls_layout"
+                android:layout_gravity="center"
+                android:paddingBottom="0.0dip"
+                android:paddingTop="0.0dip"
+                android:text=" 24"/>
+
+            <TextView
+                android:id="@+id/group_user_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/px_4"
+                android:text="码农"
+                android:textColor="@color/txt_color_999999"/>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/px_48">
+
+                <TextView
+                    android:id="@+id/txt_group_user_add_attention"
+                    android:layout_width="@dimen/px_100"
+                    android:layout_height="@dimen/px_44"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/selector_focus_btn"
+                    android:gravity="center"
+                    android:text="加关注"
+                    android:textColor="@color/white"/>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:id="@+id/txt_group_user_official"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_34"
+            android:layout_marginLeft="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_20"
+            android:background="@drawable/shape_group_userinfo_official"
+            android:paddingBottom="@dimen/px_4"
+            android:paddingLeft="@dimen/px_14"
+            android:paddingRight="@dimen/px_14"
+            android:paddingTop="@dimen/px_4"
+            android:text="珠海传承使者"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px_24"/>
+
+        <TextView
+            android:id="@+id/txt_group_user_attention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_20"
+            android:text="关注23|粉丝47|被赞333"
+            android:textColor="@color/color_black_333333"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_48"
+            android:layout_marginRight="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/px_3"
+                android:text="认证："
+                android:textColor="@color/txt_color_666666"
+                android:textSize="@dimen/px_24"/>
+
+            <ImageView
+                android:id="@+id/img_user_phone"
+                style="@style/user_phone_approve"/>
+
+            <ImageView
+                android:id="@+id/img_user_weixin"
+                style="@style/user_weixin_approve"/>
+
+            <ImageView
+                android:id="@+id/img_user_identity"
+                style="@style/user_identity_approve"/>
+
+            <ImageView
+                android:id="@+id/img_member_enterprise"
+                style="@style/user_enterprise_approve"/>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/group_user_chat"
+                    style="@style/group_user_letter"
+                    android:text="私信"/>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/px_48"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_positon"/>
+
+            <TextView
+                android:id="@+id/txt_group_user_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_8"
+                android:text="23km"
+                android:textColor="@color/txt_color_999999"
+                android:textSize="@dimen/px_24"/>
+        </LinearLayout>
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_96">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/group_user_jurisdiction_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_88"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/shape_group_jurisdiction_bg">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/px_1"
+                    android:background="#ffe6e6e6"/>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/group_user_redcard"
+                        style="@style/group_user_jurisdiction_layout">
+
+                        <TextView
+                            style="@style/group_user_jurisdiction_txt"
+                            android:layout_centerInParent="true"
+                            android:drawableLeft="@drawable/selector_group_user_red_ic"
+                            android:text=" 红牌"/>
+                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/group_user_yellowcard"
+                        style="@style/group_user_jurisdiction_layout"
+                        android:visibility="visible">
+
+                        <View
+                            android:layout_width="@dimen/px_1"
+                            android:layout_height="fill_parent"
+                            android:background="#ffe6e6e6"/>
+
+                        <TextView
+                            style="@style/group_user_jurisdiction_txt"
+                            android:layout_centerInParent="true"
+                            android:drawableLeft="@drawable/selector_group_user_yellow_ic"
+                            android:text=" 黄牌"/>
+                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/group_user_warning"
+                        style="@style/group_user_jurisdiction_layout">
+
+                        <View
+                            android:layout_width="@dimen/px_1"
+                            android:layout_height="fill_parent"
+                            android:background="#ffe6e6e6"/>
+
+                        <TextView
+                            style="@style/group_user_jurisdiction_txt"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:drawableLeft="@drawable/selector_group_user_warning_ic"
+                            android:text=" 警告"/>
+                    </com.zhy.autolayout.AutoRelativeLayout>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,13 @@
+include ':app', ':uikit', 'VerticalBannerView', ':AliyunSVideoLibrary'
+include ':AlivcCore' //短视频sdk核心组件
+include ':AliyunSVideoBase' //短视频基础包
+include ':AliyunFileDownLoader:downloadermanager' //资源数据库和下载模块
+include ':AliyunSvideoMusic' //短视频音乐控件
+include ':AliyunRecorder:record_demo'
+include ':AliyunEditor:editor_demo' //编辑模块ui和功能实现模块
+include ':AliyunCrop:crop_demo' //裁剪ui模块
+include ':AlivcMedia' //媒体资源选择库
+include ':AliyunVideoSdk' //短视频sdk编辑核心功能
+include ':AliyunVideoCommon' //公共模块，主要为工具类
+include ':PictureSelectorLib'
+include ':ucrop'

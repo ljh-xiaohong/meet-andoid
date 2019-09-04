@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="160.0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_margin="2.0dip"
+        android:orientation="vertical"
+        app:cardCornerRadius="8.0dip"
+        app:cardElevation="0.0dip">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="fill_parent"
+                android:layout_height="160.0dip"
+                android:src="@mipmap/fengjing" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="4.0dip"
+                android:paddingRight="4.0dip">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff232323"
+                    android:textSize="16.0sp" />
+
+                <TextView
+                    android:id="@+id/person_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8.0dip"
+                    android:background="@drawable/shape_man"
+                    android:drawableLeft="@drawable/selector_man"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/px_8"
+                    android:paddingRight="@dimen/px_8"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/px_24" />
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_positon"
+                    android:textColor="#ff999999"
+                    android:textSize="@dimen/px_26" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

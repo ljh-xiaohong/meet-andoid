@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/invite_spring"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0">
+
+        <ListView
+            android:id="@+id/invtie_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="#ffe6e6e6"
+            android:dividerHeight="@dimen/px_1" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_1">
+
+        <CheckBox
+            android:id="@+id/invite_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_24"
+            android:button="@drawable/selector_choose_sex"
+            android:text=" 全选"
+            android:textColor="@color/color_black_333333" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="#ffe6e6e6" />
+
+        <TextView
+            android:id="@+id/invtie_content"
+            android:layout_width="@dimen/px_176"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="#fff3bb66"
+            android:gravity="center"
+            android:text="邀请(0)"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</LinearLayout>

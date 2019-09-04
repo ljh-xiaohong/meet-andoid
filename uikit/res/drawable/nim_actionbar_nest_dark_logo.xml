@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@color/transparent"
+        android:right="5dp"/>
+    ///nim_actionbar_dark_logo_icon  聊天头部图标
+</layer-list>

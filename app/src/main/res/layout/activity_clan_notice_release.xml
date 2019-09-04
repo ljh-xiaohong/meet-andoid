@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/ic_clan_gonggao_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px_24"
+        android:layout_weight="1.0"
+        android:background="@drawable/shape_clan_notice_bg"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txt_clan_release_content"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_300"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginRight="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_4"
+            android:background="@color/white"
+            android:gravity="start"
+            android:hint="说点什么吧..."
+            android:maxLength="5000"
+            android:paddingTop="@dimen/px_20"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_26" />
+
+        <GridView
+            android:id="@+id/clan_release_gridveiw"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="@dimen/px_24"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginRight="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_16"
+            android:horizontalSpacing="@dimen/px_32"
+            android:numColumns="4"
+            android:verticalSpacing="@dimen/px_16"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/clan_release_img"
+            android:layout_width="@dimen/px_120"
+            android:layout_height="@dimen/px_90"
+            android:scaleType="center"
+            android:src="@mipmap/ic_img_select_max" />
+    </LinearLayout>
+</LinearLayout>

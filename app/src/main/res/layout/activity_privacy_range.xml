@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:id="@+id/all_days_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_all_name"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/all_days_check"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_privacy_sel" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <LinearLayout
+        android:id="@+id/seven_days_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Only_7_days"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/seven_days_check"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_privacy_sel"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <LinearLayout
+        android:id="@+id/thirty_days_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Only_30_days"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/thirty_days_check"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_privacy_sel"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <LinearLayout
+        android:id="@+id/half_year_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Only_days"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/half_year_check"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_privacy_sel"
+            android:visibility="invisible" />
+    </LinearLayout>
+</LinearLayout>

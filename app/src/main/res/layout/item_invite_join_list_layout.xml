@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="@dimen/px_110" android:layout_marginTop="5.0dip" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:layout_alignParentEnd="true">
+        <CheckBox android:layout_gravity="center" android:id="@+id/check_invite_sel" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dip" android:layout_marginRight="15.0dip" android:checked="true" android:button="@drawable/selector_choose_sex" android:text=" " android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+        <RelativeLayout android:layout_width="@dimen/px_100" android:layout_height="@dimen/px_100" android:layout_marginLeft="12.0dip">
+            <RelativeLayout android:layout_width="@dimen/px_80" android:layout_height="@dimen/px_80" android:layout_centerHorizontal="true">
+                <android.support.v7.widget.CardView android:layout_width="fill_parent" android:layout_height="fill_parent" app:cardBackgroundColor="@color/white" app:cardCornerRadius="6.0dip">
+                    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+                        <ImageView android:id="@+id/img_nivite_head" android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@mipmap/ic_default" android:scaleType="fitXY" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_alignParentStart="true" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+            <ImageView android:id="@+id/invite_join_fqr" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@mipmap/ic_shi" android:scaleType="fitEnd" android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_weight="1.0">
+                <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip">
+                    <TextView android:textSize="@dimen/px_28" android:textColor="@color/color_black_333333" android:gravity="center" android:id="@+id/txt_nivite_content" android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="聊天" android:maxLength="10" android:layout_weight="1.0" />
+                </LinearLayout>
+                <TextView android:textSize="@dimen/px_28" android:textColor="@color/white" android:id="@+id/txt_intive_sex" android:background="@drawable/selector_item_sex_ll_bg" android:paddingLeft="@dimen/px_6" android:paddingRight="@dimen/px_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_10" android:text=" 21" android:drawableLeft="@drawable/selector_item_sex_img" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

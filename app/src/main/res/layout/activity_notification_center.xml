@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:id="@+id/xdfs"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_xdfs" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/The_new_fan"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/fans_count"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/spjg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_sppj" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/Video_evaluation"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/video_comment_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/wzxx"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_wzxx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/Post_a_message"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/essay_message_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/syxx"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_12"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_syxx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="商域消息"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/shop_message_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/xttz"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_12"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_xttz" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/tex_about_notice"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/system_message_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/zpxx"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_zpxx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/Family_news"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/clan_msg_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/shjg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_shjg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/audit_result"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/examine_result_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+
+    <LinearLayout
+        android:id="@+id/jbxq"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:layout_width="@dimen/px_52"
+            android:layout_height="@dimen/px_52"
+            android:src="@mipmap/icon_jbxq" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="@string/To_report_the_details"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/report_detail_cnt"
+            android:layout_width="@dimen/px_36"
+            android:layout_height="@dimen/px_36"
+            android:layout_marginRight="@dimen/px_20"
+            android:background="@drawable/shape_badge_bg"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/px_20"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="15.0dip"
+            android:layout_height="15.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/mine_divider_line_color" />
+</LinearLayout>

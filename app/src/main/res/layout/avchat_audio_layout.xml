@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/avchat_call_bg">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/avchat_audio_switch_video"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="142.0dip"
+            android:layout_marginTop="18.0dip"
+            android:background="@drawable/video_audio_mode_switch_bg"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants">
+
+            <Button
+                android:id="@+id/avchat_distinct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20.0dip"
+                android:background="@color/transparent"
+                android:shadowColor="#ff353738"
+                android:text="清晰"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/vachat_distinct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:clickable="false"
+                android:drawableLeft="@drawable/avchat_switch_mode_video_icon"
+                android:drawablePadding="5.0dip"
+                android:shadowColor="#ff353738"
+                android:shadowDy="-1.0"
+                android:shadowRadius="1.0"
+                android:text="@string/avchat_switch_to_video"
+                android:textColor="@color/white"
+                android:textSize="13.0sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <com.netease.nim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/avchat_audio_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60.0dip" />
+
+        <TextView
+            android:id="@+id/avchat_audio_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15.0dip"
+            android:layout_marginTop="15.0dip"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="20.0sp" />
+
+        <Chronometer
+            android:id="@+id/avchat_audio_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15.0dip"
+            android:gravity="center"
+            android:shadowColor="#fffbfbf9"
+            android:shadowDy="1.0"
+            android:shadowRadius="1.0"
+            android:textColor="@color/white"
+            android:textSize="16.0sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/avchat_audio_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5.0dip"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingLeft="35.0dip"
+            android:paddingRight="35.0dip"
+            android:text="@string/avchat_video_call_request"
+            android:textColor="@color/white"
+            android:textSize="17.0sp" />
+
+        <TextView
+            android:id="@+id/avchat_audio_wifi_unavailable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:background="@drawable/avchat_audio_call_wifi_unavailable"
+            android:gravity="center_horizontal"
+            android:includeFontPadding="false"
+            android:paddingBottom="7.0dip"
+            android:paddingTop="15.0dip"
+            android:text="@string/avchat_audio_call_wifi_unavailable_tip"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/avchat_audio_netunstable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="1.0dip"
+            android:drawableRight="@drawable/network_grade_1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/avchat_network_grade_1"
+            android:textColor="@color/white"
+            android:textSize="17.0sp"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:paddingBottom="45.0dip">
+
+            <include
+                android:id="@+id/avchat_audio_mute_speaker_huangup"
+                layout="@layout/avchat_audio_control_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="visible" />
+
+            <include
+                android:id="@+id/avchat_audio_refuse_receive"
+                layout="@layout/avchat_refuse_receive_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/avchat_record_layout"
+                layout="@layout/avchat_record_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/avchat_audio_mute_speaker_huangup"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15.0dip"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

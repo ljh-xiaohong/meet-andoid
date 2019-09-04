@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <TextView
+        android:id="@+id/phone_modify_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px_30"
+        android:layout_marginLeft="@dimen/px_72"
+        android:layout_marginRight="@dimen/px_72"
+        android:layout_marginTop="@dimen/px_30"
+        android:gravity="center"
+        android:lineSpacingExtra="2.0dip"
+        android:text="短信验证码已发送，请填写验证码"
+        android:textColor="#ff999999"
+        android:textSize="@dimen/px_30"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/modify_nation_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_login_phone"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+
+        <TextView
+            android:id="@+id/nation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:text="+86"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_24"
+            android:text="\ 1511111111"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffe6e6e6" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <EditText
+            android:id="@+id/verify_code_edit"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/white"
+            android:hint="@string/reg_hint_ver"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="@color/color_383838"
+            android:textColorHint="#ff999999"
+            android:textSize="@dimen/px_30" />
+
+        <View
+            android:layout_width="1.0px"
+            android:layout_height="fill_parent"
+            android:background="#ffe6e6e6" />
+
+        <TextView
+            android:id="@+id/gain_verify_code"
+            android:layout_width="@dimen/px_240"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/reg_text_verify_code_time"
+            android:textColor="#ffba945a"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:layout_marginBottom="@dimen/px_96"
+        android:layout_marginLeft="24.0dip"
+        android:layout_marginRight="24.0dip"
+        android:layout_marginTop="@dimen/px_120"
+        android:background="@drawable/selector_gift_group_btn"
+        android:enabled="false"
+        android:text="@string/phone_code_text_1"
+        android:textColor="@color/color_radio_sex_button" />
+</LinearLayout>

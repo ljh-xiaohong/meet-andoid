@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+    <LinearLayout
+        android:id="@+id/city_originator_manual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:padding="@dimen/px_24"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/px_84"
+                android:layout_height="@dimen/px_84"
+                android:src="@mipmap/ic_originator_manual"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:textSize="@dimen/px_26"
+                android:text="@string/manual_originator_name"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="@dimen/px_2"
+            android:layout_height="@dimen/px_84"
+            android:background="@color/setting_bg"/>
+        <LinearLayout
+            android:id="@+id/group_chat_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/px_84"
+                android:layout_height="@dimen/px_84"
+                android:src="@mipmap/ic_chat_manual"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/px_24"
+                android:textSize="@dimen/px_26"
+                android:text="@string/manual_chat_manual_name"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_2"
+        android:orientation="horizontal"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:padding="@dimen/px_24"
+        android:gravity="center">
+        <LinearLayout
+            android:id="@+id/in_cash_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/px_84"
+                android:layout_height="@dimen/px_84"
+                android:src="@mipmap/ic_in__cash_rule"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/px_24"
+                android:textSize="@dimen/px_26"
+                android:text="@string/manual_in_cash_name"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="@dimen/px_2"
+            android:layout_height="@dimen/px_84"
+            android:background="@color/setting_bg"/>
+        <LinearLayout
+            android:id="@+id/out_cash_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/px_84"
+                android:layout_height="@dimen/px_84"
+                android:src="@mipmap/ic_out_cash_rule"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/px_24"
+                android:textSize="@dimen/px_26"
+                android:text="@string/manual_out_cash_name"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/feedback_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_16"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_feedback"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <!--<View-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="1.0px"-->
+        <!--android:background="#fff7f7f7" />-->
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/manual_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:layout_margin="@dimen/px_30"
+        android:background="@drawable/shape_button_ab3a34"
+        android:text="@string/setting_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px_32" />
+</LinearLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px_30">
+        <android.support.v7.widget.CardView
+            android:layout_width="@dimen/px_108"
+            android:layout_height="@dimen/px_108"
+            android:layout_gravity="center_vertical"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/px_12"
+            app:cardElevation="0.0dip">
+            <ImageView
+                android:id="@+id/item_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_default"/>
+        </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/px_30"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/item_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="4.0dip"
+                    android:textSize="@dimen/px_28"
+                    android:textColor="@color/color_232323"
+                    android:gravity="center_vertical"
+                    android:text="姓名"/>
+                <TextView
+                    android:id="@+id/item_txt_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_item_sex_ll_bg"
+                    android:drawableStart="@drawable/selector_item_sex_img"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/px_3"
+                    android:paddingRight="@dimen/px_3"
+                    android:text=" 24"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/px_24"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="姓名"
+                android:textColor="@color/txt_color_999999"
+                android:textSize="@dimen/px_24" />
+            <TextView
+                android:id="@+id/item_other_job"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textSize="@dimen/px_24"
+                android:textColor="@color/txt_color_999999"
+                android:gravity="center_vertical"
+                android:text="姓名"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/add_tree"
+            android:layout_width="@dimen/px_130"
+            android:layout_height="@dimen/px_58"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/shape_tree_tag_item_bg"
+            android:gravity="center"
+            android:text="+添加"
+            android:textColor="@color/color_audit_text"
+            android:textSize="@dimen/px_26" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="@color/setting_bg"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginRight="@dimen/px_30"
+        android:visibility="gone"/>
+
+</LinearLayout>

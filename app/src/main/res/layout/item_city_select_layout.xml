@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88">
+
+        <TextView
+            android:id="@+id/txt_city_name"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_56"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginRight="@dimen/px_22"
+            android:gravity="center_vertical"
+            android:text="李"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/px_28" />
+
+        <ImageView
+            android:id="@+id/select_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_24"
+            android:src="@mipmap/ic_more_right" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ciyt_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/setting_bg"
+        android:paddingBottom="@dimen/px_20"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingTop="@dimen/px_8">
+
+        <TextView
+            android:id="@+id/city_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/px_26" />
+    </LinearLayout>
+</LinearLayout>

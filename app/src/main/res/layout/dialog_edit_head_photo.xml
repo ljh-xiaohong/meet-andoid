@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/divider_line_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_dialog_photo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/padding_Bottom"
+        android:paddingTop="@dimen/padding_Top"
+        android:text="@string/txt_edit_photo"
+        android:textColor="@android:color/black"
+        android:textSize="16.0sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/divider_line_color" />
+
+    <TextView
+        android:id="@+id/txt_dialog_album"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/padding_Bottom"
+        android:paddingTop="@dimen/padding_Top"
+        android:text="@string/txt_edit_select_album"
+        android:textColor="@android:color/black"
+        android:textSize="16.0sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/divider_line_color" />
+
+    <TextView
+        android:id="@+id/txt_dialog_save_pic"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/padding_Bottom"
+        android:paddingTop="@dimen/padding_Top"
+        android:text="@string/txt_edit_save_photo"
+        android:textColor="@android:color/black"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:id="@+id/txt_dialog_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_Top"
+        android:background="@drawable/selector_common_txt_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/padding_Bottom"
+        android:paddingTop="@dimen/padding_Top"
+        android:text="@string/pw_txt_cancel"
+        android:textColor="@android:color/black"
+        android:textSize="16.0sp" />
+</LinearLayout>

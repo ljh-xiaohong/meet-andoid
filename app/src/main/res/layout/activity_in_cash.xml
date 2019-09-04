@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffececec"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6.0dip"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:padding="8.0dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:text="@string/casht_text"
+            android:textColor="@color/color_383838"
+            android:textSize="15.0sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.0dip"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/alipay_way_layout"
+                android:layout_width="100.0dip"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_alipay_way"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dip"
+                    android:clickable="false"
+                    android:text="@string/casht_text1"
+                    android:textColor="@color/selector_in_cash_text_bg" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/wxpay_way_layout"
+                android:layout_width="100.0dip"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_wxpay_way"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dip"
+                    android:clickable="false"
+                    android:text="@string/text_login_wx"
+                    android:textColor="@color/selector_in_cash_text_bg" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:id="@+id/unionpay_way_layout"
+                android:layout_width="100.0dip"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_bank_way"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dip"
+                    android:clickable="false"
+                    android:text="@string/out_cash_text2"
+                    android:textColor="@color/selector_in_cash_text_bg" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="8.0dip"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:padding="8.0dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:text="@string/casht_text2"
+            android:textColor="@color/color_383838"
+            android:textSize="15.0sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:background="#ffeeeeee" />
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/incash_tag_grid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8.0dip"
+            android:background="@color/color_white"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            app:columnCount="3"
+            app:orientation="horizontal"
+            app:rowCount="3">
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+
+            <Button
+                android:layout_width="0.0dip"
+                android:layout_height="35.0dip"
+                android:layout_margin="4.0dip"
+                android:background="@drawable/selector_in_cash_account_bg"
+                android:onClick="onTagClick"
+                android:textColor="@color/in_cash_account_bg_nor"
+                app:layout_columnWeight="1.0" />
+        </android.support.v7.widget.GridLayout>
+
+        <View
+            android:layout_width="1.0px"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/in_cash_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginRight="16.0dip"
+            android:background="@drawable/selector_btn_verify_wx"
+            android:onClick="inCash"
+            android:text="@string/my_wallet_text6"
+            android:textColor="@color/color_white"
+            android:textSize="18.0sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4.0dip"
+            android:layout_marginTop="6.0dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_user_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/casht_text3"
+                android:textSize="9.0sp" />
+
+            <TextView
+                android:id="@+id/in_cash_rule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/casht_text4"
+                android:textColor="@color/light_blue"
+                android:textSize="9.0sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="》"
+                android:textSize="9.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

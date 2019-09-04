@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fffef5e7"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_416">
+
+                <ImageView
+                    android:id="@+id/clan_info_title_photo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/px_415"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_default"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/bg_yellow" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/clan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/px_32"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="香洲梁氏宗亲会"
+                android:textColor="@color/color_232323"
+                android:textSize="@dimen/px_36" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/px_36"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/clan_info_customer_cnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已加入45位成员"
+                    android:textColor="#ffc58a30"
+                    android:textSize="@dimen/px_28" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/list_more" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/px_24"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/px_8"
+                        android:background="@drawable/ic_clan_info_biankuang"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/px_28"
+                        android:paddingLeft="@dimen/px_40"
+                        android:paddingRight="@dimen/px_40"
+                        android:paddingTop="@dimen/px_28">
+
+                        <TextView
+                            android:id="@+id/clan_info_surname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="姓氏：梁"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/clan_info_hall_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:text="堂号：梁国堂"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/clan_info_found_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:text="成立时间：民国14年"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/clan_info_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="详细地址：珠海香洲"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_28" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_6"
+                    android:background="@color/white"
+                    android:padding="@dimen/px_8"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_bk_one"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/clan_info_kuangjia"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_info_kuangjia" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="架构"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/clan_info_guangchang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_info_guangchang" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="广场"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/clan_info_gonggao_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_info_gonggao" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="公告"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/clan_info_shengpi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_info_shengpi" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="审批"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/clan_info_houkuan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_infoshoukuan" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="收款"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_clan_info_control"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/px_8"
+                            android:visibility="visible">
+
+
+                            <LinearLayout
+                                android:id="@+id/caln_info_ibianji"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/px_60"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px_100"
+                                    android:layout_height="@dimen/px_100"
+                                    android:src="@mipmap/ic_clan_infobianji" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="编辑"
+                                    android:textColor="@color/color_232323"
+                                    android:textSize="@dimen/px_28" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_6"
+                    android:background="@color/white"
+                    android:padding="@dimen/px_8">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_clan_info_biankuang"
+                        android:orientation="vertical"
+                        android:padding="@dimen/px_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="简介"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_30" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/px_1"
+                            android:layout_marginTop="@dimen/px_16"
+                            android:background="#ffe7e7e7" />
+
+                        <TextView
+                            android:id="@+id/clan_info_about"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_16"
+                            android:ellipsize="end"
+                            android:maxLines="4"
+                            android:text="宗亲会立于1993年" />
+
+                        <TextView
+                            android:id="@+id/about_unfold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:gravity="end"
+                            android:text="展开>>"
+                            android:textColor="#ff54abe6"
+                            android:textSize="@dimen/px_28" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/clan_info_charge_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_6"
+                    android:background="@color/white"
+                    android:padding="@dimen/px_8">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_clan_info_biankuang"
+                        android:orientation="vertical"
+                        android:padding="@dimen/px_20">
+
+                        <TextView
+                            android:id="@+id/clan_info_charge_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="珠海祭祖经费"
+                            android:textColor="@color/color_232323" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/px_1"
+                            android:layout_marginTop="@dimen/px_16"
+                            android:background="#ffe7e7e7" />
+
+                        <TextView
+                            android:id="@+id/clan_info_charge_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_16"
+                            android:text="为保证祭祖的，每人100块"
+                            android:textColor="@color/color_232323"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/clan_info_charge_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:text="金额：200"
+                            android:textColor="#ffc58a30"
+                            android:textSize="@dimen/px_24" />
+
+                        <TextView
+                            android:id="@+id/clan_info_charge_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px_8"
+                            android:text="截止时间：20018-10-10"
+                            android:textColor="@color/txt_color_666666"
+                            android:textSize="@dimen/px_24" />
+
+                        <Button
+                            android:id="@+id/clan_info_pay_button"
+                            android:layout_width="@dimen/px_180"
+                            android:layout_height="@dimen/px_56"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/shape_button_ab3a34"
+                            android:text="立即支付"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/clan_info_charge_pay_cnt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/px_6"
+                            android:text="33人已支付费用"
+                            android:textColor="@color/txt_color_999999"
+                            android:textSize="@dimen/px_24" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/clan_info_photo_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_6"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_clan_info_biankuang"
+                        android:orientation="vertical"
+                        android:padding="@dimen/px_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="相册"
+                            android:textColor="@color/color_232323" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/px_1"
+                            android:layout_marginTop="@dimen/px_16"
+                            android:background="#ffe7e7e7" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/px_16">
+
+                            <ImageView
+                                android:id="@+id/clan_info_photos1"
+                                android:layout_width="@dimen/px_208"
+                                android:layout_height="@dimen/px_208"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_default" />
+
+                            <ImageView
+                                android:id="@+id/clan_info_photos2"
+                                android:layout_width="@dimen/px_208"
+                                android:layout_height="@dimen/px_208"
+                                android:layout_marginLeft="@dimen/px_10"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_default" />
+
+                            <ImageView
+                                android:id="@+id/clan_info_photos3"
+                                android:layout_width="@dimen/px_208"
+                                android:layout_height="@dimen/px_208"
+                                android:layout_marginLeft="@dimen/px_10"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_default" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/clan_info_photo_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="@dimen/px_44"
+                            android:gravity="end"
+                            android:text="查看全部>>"
+                            android:textColor="#ff54abe6"
+                            android:textSize="@dimen/px_28" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/clan_info_add_but"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="#ffab3a34"
+        android:text="申请加入"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/invite_join_group_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/invite_join_left_layout"
+        android:layout_width="200.0dip"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nim_message_left_transparent_bg"
+        android:orientation="vertical"
+        android:paddingLeft="6.0dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="发起收款"
+            android:textColor="#ffba945a"
+            android:textSize="@dimen/px_30" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginRight="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_22"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_event" />
+
+                <TextView
+                    android:id="@+id/op_charge_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="珠海活动经费"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_15"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_fee" />
+
+                <TextView
+                    android:id="@+id/op_charge_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="200/人"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_15"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_timer" />
+
+                <TextView
+                    android:id="@+id/op_charge_tiem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="截止时间2018-05-01"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginTop="@dimen/px_30"
+            android:background="#ffe1e1e1" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_72"
+            android:drawableRight="@mipmap/list_more"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24"
+            android:text="确认加入"
+            android:textColor="@color/txt_color_666666"
+            android:textSize="@dimen/px_30" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/invite_join_right_layout"
+        android:layout_width="200.0dip"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nim_message_right_transparent_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_30"
+            android:text="发起收款"
+            android:textColor="#ffba945a"
+            android:textSize="@dimen/px_30" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_22"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_event" />
+
+                <TextView
+                    android:id="@+id/charge_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="珠海活动经费"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_15"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_fee" />
+
+                <TextView
+                    android:id="@+id/charge_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="珠海活动经费"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_15"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@mipmap/message_ic_timer" />
+
+                <TextView
+                    android:id="@+id/charge_tiem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:text="截止时间2018-05-01"
+                    android:textColor="#ff797979" />
+            </LinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginRight="6.0dip"
+            android:layout_marginTop="@dimen/px_30"
+            android:background="#ffe1e1e1" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_72"
+            android:drawableRight="@mipmap/list_more"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_48"
+            android:text="查看详情"
+            android:textColor="@color/txt_color_666666"
+            android:textSize="@dimen/px_30" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/px_24">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/item_bug_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/px_30"
+                android:textColor="@color/pickerview_topbar_title"
+                android:text="代码两分钟,bug"/>
+            <TextView
+                android:id="@+id/item_bug_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/px_26"
+                android:layout_marginTop="@dimen/px_24"
+                android:textColor="@color/txt_color_999999"
+                android:text="最近回复   2018年4月"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_bug_type_name"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_36"
+                android:paddingLeft="@dimen/px_8"
+                android:paddingRight="@dimen/px_8"
+                android:textSize="@dimen/px_24"
+                android:textColor="@color/selector_bug_type_font_text"
+                android:background="@drawable/selector_bug_type_btn_bg"
+                android:gravity="center"
+                android:text="反馈BUG"/>
+            <TextView
+                android:id="@+id/feedback_solve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/px_26"
+                android:layout_marginTop="@dimen/px_24"
+                android:textColor="@color/color_ab3a34"
+                android:text="@string/user_feedback_bug5"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

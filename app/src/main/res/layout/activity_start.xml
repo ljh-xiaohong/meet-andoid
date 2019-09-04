@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include
+        android:id="@+id/layout_title_bar"
+        layout="@layout/titlebar_layout2"
+        android:visibility="gone"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/alpha_bg"
+        android:clickable="true" />
+
+    <ImageView
+        android:id="@+id/exit_iv"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/icon_nav_quit"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_12"
+        android:paddingRight="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_12"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@mipmap/logo_yuejian"
+        android:layout_marginTop="@dimen/dp_120"
+        android:layout_marginLeft="@dimen/dp_66"
+        android:layout_marginRight="@dimen/dp_66"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/bg_login"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="@dimen/dp_250">
+        <LinearLayout
+            android:id="@+id/phone_login"
+            android:layout_width="@dimen/dp_240"
+            android:layout_marginTop="@dimen/dp_51"
+            android:background="@drawable/write4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/dp_44">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_login_phone"
+            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/phone_tv"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:textSize="15sp"
+                android:textColor="@color/phone_tv"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/img_login_wx"
+            android:layout_width="@dimen/dp_240"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/write4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/dp_44">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_login_weixin"
+            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/wx_tv"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:textSize="15sp"
+                android:textColor="@color/phone_tv"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/login_privacy"
+            android:layout_width="wrap_content"
+            android:text="@string/login_tips"
+            android:layout_marginTop="@dimen/dp_58"
+            android:textSize="14sp"
+            android:textColor="@color/write"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

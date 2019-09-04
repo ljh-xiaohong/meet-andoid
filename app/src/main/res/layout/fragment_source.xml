@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@color/color_white" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_24" android:layout_width="fill_parent" android:layout_height="@dimen/px_80">
+        <TextView android:textSize="@dimen/px_28" android:textColor="@color/color_black_333333" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="姓氏：" />
+        <TextView android:textColor="@color/colorYellow" android:id="@+id/surname_select" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="全部 " android:drawableRight="@mipmap/ic_pull_down_nor" />
+    </LinearLayout>
+    <com.yuejian.meet.widgets.springview.SpringView android:id="@+id/spring_view" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ListView android:id="@+id/article_list" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="fill_parent" android:divider="#ffdfdfdf" android:dividerHeight="1.0px" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+</LinearLayout>

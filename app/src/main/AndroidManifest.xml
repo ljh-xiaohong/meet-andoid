@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yuejian.meet">
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" /> <!-- Required -->
+    <permission
+        android:name="com.yuejian.meet.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- Optional for location -->
+    <uses-permission android:name="com.yuejian.meet.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- 多媒体相关 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 如果需要实时音视频通话模块，下面的权限也是必须的。否则，可以不加 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!-- 查询快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" /> <!-- SDK 权限申明, 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <!-- 和下面的 uses-permission 一起加入到你的 AndroidManifest 文件中。 -->
+    <permission
+        android:name="com.yuejian.meet.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" /> <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <uses-permission android:name="com.yuejian.meet.permission.RECEIVE_MSG" />
+    <uses-permission android:name="android.permission.SET_PREFERRED_APPLICATIONS" /> <!-- 小米推送 -->
+    <permission
+        android:name="com.yuejian.meet.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.yuejian.meet.permission.MIPUSH_RECEIVE" />
+
+    <application
+        android:name=".app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/app_logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup,icon,theme,android:label">
+        <activity android:name=".activities.mine.InheritorEarningsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.search.SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.creation.ArticleEditActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.creation.ArticleSelectTemplateActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.creation.SuibiSelectTagActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activities.home.ReleaseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.mine.GifActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.home.SelectImageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.home.PicturePreviewActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.creation.SuibiEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".activities.mine.BuyAllVipPermissionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.mine.BuySingleVipPermissionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.mine.LightUpActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.StartUpActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="opozhgnt" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".activities.SplashActivity"
+            android:launchMode="singleTask" />
+
+        <meta-data
+            android:name="design_width"
+            android:value="768" />
+        <meta-data
+            android:name="design_height"
+            android:value="1280" /> <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="de622c31760a7bd0dd8191e9cf71e532" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="593f4a69677baa75a20015ba" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="c2a5563620e06621e6d0df6fcb246e44" /> <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}" /> -->
+        <meta-data
+            android:name="com.openinstall.APP_KEY"
+            android:value="runzwr" />
+        <!--
+             APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
+            如果 SDKOptions 中提供了，取 SDKOptions 中的值。
+        -->
+        <meta-data
+            android:name="com.netease.nim.appKey"
+            android:value="34d50d8c470040ffc6d809df61b8f83c" /> <!-- 声明网易云通信后台服务，如需保持后台推送，使用独立进程效果会更好。 -->
+        <service
+            android:name="com.netease.nimlib.service.NimService"
+            android:process=":core" /> <!-- 运行后台辅助服务 -->
+        <service
+            android:name="com.netease.nimlib.service.NimService$Aux"
+            android:process=":core" /> <!-- 声明网易云通信后台辅助服务 -->
+        <service
+            android:name="com.netease.nimlib.job.NIMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":core" />
+        <!--
+             网易云通信SDK的监视系统启动和网络变化的广播接收器，用户开机自启动以及网络变化时候重新登录，
+            保持和 NimService 同一进程
+        -->
+        <receiver
+            android:name="com.netease.nimlib.service.NimReceiver"
+            android:exported="false"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver> <!-- 网易云通信进程间通信 Receiver -->
+        <receiver android:name="com.netease.nimlib.service.ResponseReceiver" /> <!-- 网易云通信进程间通信service -->
+        <service android:name="com.netease.nimlib.service.ResponseService" /> <!-- 安卓保活配置 -->
+        <!-- <service -->
+        <!-- android:name="com.netease.cosine.core.CosineService" -->
+        <!-- android:process=":cosine" /> -->
+        <!-- <receiver -->
+        <!-- android:name="com.netease.cosine.target.CosineReceiver" -->
+        <!-- android:exported="true" -->
+        <!-- android:process=":cosine" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.netease.cosine.target" -->
+        <!-- android:value="" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.netease.cosine.target.receiver" -->
+        <!-- android:value="com.netease.nimlib.service.NimReceiver" /> -->
+        <!-- 申明本地电话状态（通话状态）的广播接收器，第三方APP集成时音视频模块时，如果需要在App中处理网络通话与本地电话的交互请加上此接收器 -->
+        <!-- 在Demo的示例代码中是在Application进行了网络通话与本地电话的互斥处理 -->
+        <receiver android:name=".session.avchat.receiver.IncomingCallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver> <!-- 小米推送配置 -->
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":mixpush" />
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true"
+            android:process=":mixpush" />
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false"
+            android:process=":mixpush">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.netease.nimlib.mixpush.mi.MiPushReceiver"
+            android:exported="true">
+            <intent-filter android:priority="0x7fffffff">
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver> <!-- 小米配置结束 -->
+        <!-- 华为推送配置 -->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100084137" />
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="com.yuejian.meet.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" /> <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <receiver android:name="com.netease.nimlib.mixpush.hw.HWPushReceiver">
+            <intent-filter android:priority="0x7fffffff">
+
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="CS_cloud_ablitity"
+                android:value="successRateAnalytics" />
+        </receiver>
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+
+                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver> <!-- 华为配置结束 -->
+        <!-- Required SDK 核⼼功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service> <!-- since 1.8.0 option 可选项。⽤于同⼀设备中不同应⽤的JPush服务相互拉起的功能。 -->
+        <!-- 若不启⽤该功能可删除该组件，将不拉起其他应⽤也不能被其他应⽤拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.yuejian.meet" />
+            </intent-filter>
+        </service> <!-- Required SDK核⼼功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
+                <category android:name="com.yuejian.meet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver> <!-- Required SDK核⼼功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.yuejian.meet" />
+            </intent-filter>
+        </activity> <!-- SDK核⼼功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.yuejian.meet" />
+            </intent-filter>
+        </activity> <!-- Required SDK核⼼功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" /> <!-- Required SDK核⼼功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" /> <!-- User defined. ⽤户⾃定义的⼲播接收器 -->
+        <receiver
+            android:name=".jpush.JPushBroadcast"
+            android:enabled="true">
+            <intent-filter>
+
+                <!-- Required ⽤户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required ⽤户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required ⽤户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required ⽤户打开⾃定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- 接收⺴络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.yuejian.meet" />
+            </intent-filter>
+        </receiver> <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了⽅便开发者统计APK分发渠道。 -->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的APK可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+        <!-- 渠道统计报表位于控制台⻚⾯的 “统计”-“⽤户统计”-“渠道分布” 中 -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" /> <!-- Required. AppKey copied from Portal -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="f825e41b35c0dd3528eb89d8" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".session.activity.WatchSnapChatPictureActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 音视频 -->
+        <activity
+            android:name=".session.avchat.activity.AVChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <service android:name=".service.DownloadGiftImgService" />
+
+        <activity android:name=".activities.GuideActivity" />
+        <activity
+            android:name=".activities.DateActivity"
+            android:theme="@style/MyDialog" />
+        <activity android:name=".activities.mine.LoginActivity" />
+        <activity android:name=".activities.mine.UserNameSelectActivity" />
+        <activity android:name=".activities.mine.RegisterActivity" />
+        <activity android:name=".activities.common.SurnameActivity" />
+        <activity android:name=".activities.common.SelectCityActivity" /> <!-- Meet Activitys -->
+        <activity
+            android:name=".activities.mine.SettingActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ChatSettingActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.MessageSettingActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ModifyPhoneActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.AboutActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.IncomeListActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/MyDialog" />
+        <activity
+            android:name=".activities.mine.PrivacyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.PrivacyRangeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.BlackListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ActionUserPermissionActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.VerifyCenterActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.common.SelectMemberCityActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.common.ChooseIndustryActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".activities.common.MemberMoreSelectActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.YourDialog" />
+        <activity
+            android:name=".activities.mine.VerifyPhoneActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.VerifyWxActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.VerifyIdCardActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.VerifyBusinessActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.ReleaseActionActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.home.NearbyLocationActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.InviteOriginateActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ContactActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.EditActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ChooseJobActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.home.ClaimStatementActivity" />
+        <activity android:name=".activities.home.ClaimCitySponsorActivity" />
+        <activity android:name=".activities.home.ClaimSucceedActivity" />
+        <activity android:name=".activities.home.ParticipateInClaimingActivity" />
+        <activity
+            android:name=".activities.mine.ModifyNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.SelectSpecialtyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.AvChatServiceInfoActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.home.ActionInfoActivity" />
+        <activity android:name=".activities.home.ReplyMoreActivity" />
+        <activity
+            android:name=".activities.mine.SelectInterestActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.MyWalletActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.NotificationCenterActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.BillRecordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.AvChatEvaluateActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.RecordSelectActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.RecordSelectByTimeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.BillRecordClassifyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.NotificationDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.ManualActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ModifyOutCashPWDActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.UpdateOutCashPwdActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.ResetOutCashActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.BillDetailActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.home.GroupCityListActivity" />
+        <activity
+            android:name=".activities.mine.InCashActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.OutCashActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.MyEssayActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.web.WebActivity" />
+        <activity
+            android:name=".activities.mine.CreateArticleActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.FamousPersonsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.SectionActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.ArticleInfoActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.RewardListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.FamilySourceActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.HistoryEventActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.ClanActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.GenealogyActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.FoundationActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.WalletHelperActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.WalletCashRuleActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.StoreWebActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.web.VideoViewActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.mine.SelectGoodsActivity"
+            android:launchMode="singleTop" /> <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".activities.home.InviteJoinGroupActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.home.AdvancedTeamInfoActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.home.GroupAllMemberActivity" />
+        <activity android:name=".activities.home.GroupNoticeActivity" />
+        <activity
+            android:name=".activities.home.VideoCallInfoActivity"
+            android:label="@string/title_activity_video_call_info"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".framents.home.GroupChatSearchActivity" />
+        <activity android:name=".bean.ClaimPactActivity" />
+        <activity android:name=".activities.home.ActionMessageActivity" />
+        <activity android:name=".activities.home.GroupFootprintActivity" />
+        <activity android:name=".activities.home.ActionRewardActivity" />
+        <activity android:name=".framents.home.MemberSearchActivity" /> <!-- 家族起动页 -->
+        <activity
+            android:name=".activities.startactivity.StartFamilyActivity"
+            android:exported="true"
+            android:icon="@mipmap/app_logo"
+            android:label="家族"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity> <!-- 信息起动页 -->
+        <activity
+            android:name=".activities.startactivity.StartMessageActivity"
+            android:exported="true"
+            android:icon="@mipmap/app_logo"
+            android:label="信息"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- 百家姓起动页 -->
+        <activity
+            android:name=".activities.startactivity.StartFamilyNamesActivity"
+            android:exported="true"
+            android:icon="@mipmap/app_logo"
+            android:label="百家姓"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- 发现起动页 -->
+        <activity
+            android:name=".activities.startactivity.StartFindActivity"
+            android:exported="true"
+            android:icon="@mipmap/app_logo"
+            android:label="发现"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- 我的起动页 -->
+        <activity
+            android:name=".activities.startactivity.StartMineActivity"
+            android:exported="true"
+            android:icon="@mipmap/app_logo"
+            android:label="我的"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- 格力开机引导  注册页或登录 -->
+        <activity
+            android:name=".activities.mine.GeLiLoginActivity"
+            android:exported="true"
+            android:label="格力开机引导"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".activities.gile.GeLiUserNameSelectActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activities.gile.GeLiRegisterActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".activities.common.DownlineDialogActivity"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activities.group.SelectContactActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.group.GroupUserinfo"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.group.GroupNameActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.group.GroupMemberManagerActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.message.ServerCenterActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.group.GroupsNoticeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.group.GroupMemberActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.find.FindMemberActivity" />
+        <activity
+            android:name=".SplashNewActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".UpgradeInfoTipActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.SurnameWikiActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.mine.AreaCodeActivity" />
+        <activity android:name=".activities.mine.PhoneCodeVerificationActivity" />
+        <activity
+            android:name=".activities.find.ScannerActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.find.MyQrCodeActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".NoNetworkActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.family.HarbourActivity" />
+        <activity android:name=".activities.family.HistoryBulletinActivity" />
+        <activity android:name=".activities.family.AddMemberActivity" />
+        <activity android:name=".activities.family.EveryDaySignActivity" />
+        <activity android:name=".activities.family.PutSomethingActivity" />
+        <activity android:name=".activities.family.BindFamilyActivity" />
+        <activity
+            android:name=".activities.clan.ClanInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanInviteMemberActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanLocationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanMasterApproveActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanMemberActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanMemberChargeSelActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanNoticeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanNoticeReleaseActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanPhotoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanPhotoReleaseActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanProceedsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.ClanProceedsInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.CreateClanSucceedActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.MiClanAssociationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.CreateMiClanActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.MainClanActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.MoreClanActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.NoticeInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.SearchLocationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.clan.StartProceedsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.search.MoreSearchActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.CreateZuciActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.ZuciCollectionActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.ZuciFootprintsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.ZuciInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.ZuciMainActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.zuci.ZuciNearbyActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.search.MainSearchActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.find.ActionActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.message.VideoBookActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activities.message.GroupChatActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.family.MessageBoardActivity" />
+        <activity android:name=".activities.family.FamilyMemberActivity" />
+        <activity android:name=".activities.family.InviteFamilyActivity" />
+        <activity android:name=".activities.family.MyInviteRangeActivity" />
+        <activity android:name=".activities.message.NewActionActivity" />
+        <activity android:name=".activities.mine.UserFeedbackActivity" />
+        <activity android:name=".activities.mine.HistoryFeedbackActivity" />
+        <activity android:name=".activities.mine.UserHistoryFeedbackInfoActivity" />
+        <activity android:name=".activities.zuci.ZuciMapNavigationActivity" />
+        <activity android:name=".activities.mine.PhoneLoginActivity" />
+        <activity android:name=".activities.mine.BangDingWeChatActivity" />
+        <activity android:name=".activities.common.SelectFamilyCityActivity" />
+        <activity
+            android:name=".activities.mine.LanguageSettingActivity"
+            android:label="@string/title_activity_language_setting"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.home.EnjoyActivity" />
+        <activity
+            android:name=".activities.home.CreateEnjoyActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activities.home.EnjoySucceedActivity" />
+        <activity android:name=".activities.home.CreateBotActivity" />
+        <activity android:name=".activities.home.BotInfoActivity" />
+        <activity android:name=".activities.home.BotSucceedActivity" />
+        <activity android:name=".activities.home.MyBotActivity" />
+        <activity android:name=".activities.mine.PerfectUserDataActivity" />
+        <activity
+            android:name=".activities.FamilyTree.TreeTagActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activities.FamilyTree.TreeAddActivity" />
+        <activity android:name=".activities.FamilyTree.AddressBooNotekActivity" />
+        <activity android:name=".activities.FamilyTree.AddRelationActivity" />
+        <activity android:name=".activities.FamilyTree.AddNewFriendActivity" />
+        <activity
+            android:name=".activities.FamilyTree.AddressListActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activities.FamilyTree.FriendBlacklistActivity" />
+        <activity android:name=".activities.FamilyTree.AddRelationActivity2" />
+        <activity android:name=".activities.applet.MeetAppletActivity" />
+        <activity android:name=".activities.applet.AppletSeverActivity" />
+        <activity
+            android:name=".activities.applet.ExclusiveAppletActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activities.gile.PhoneCodeActivity" />
+        <activity android:name=".activities.gile.BangDingPhoneActivity" />
+        <activity android:name=".activities.gile.Register2Activity" />
+        <activity android:name=".framents.find.ForHomePfracticeActivity" />
+        <activity android:name=".framents.find.RechargeMeritsActivity" />
+        <activity android:name=".activities.meritsurname.MeritRankingActivity" />
+        <activity android:name=".activities.meritsurname.SurnameRankActivity" />
+        <activity android:name=".activities.meritsurname.SurnameOriginActivity" />
+        <activity android:name=".activities.meritsurname.AddSurnameOriginActivity" />
+        <activity android:name=".activities.meritsurname.QuestRewardsActivity" />
+        <activity android:name=".activities.mine.MyVisitorActivity" />
+        <activity android:name=".activities.mine.ShareCodeActivity" />
+        <activity android:name=".activities.mine.PersonHomeActivity" />
+        <activity android:name=".activities.mine.OrderFormActivity" />
+        <activity android:name=".activities.mine.NewWalletActivity" />
+        <activity
+            android:name=".activities.mine.EditHomeActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activities.meritsurname.ForFreeActivity" />
+        <activity android:name=".activities.creation.MusicSelectTemplateActivity" />
+        <activity android:name=".activities.creation.SuibiPreviewActivity" />
+        <activity android:name=".activities.business.TempShowingActivity" />
+        <activity android:name=".activities.mine.VipEarningsActivity" />
+        <activity android:name=".activities.business.BusinessPublishActivity" />
+        <activity android:name=".activities.creation.VideoDetailsActivity" />
+        <activity android:name=".activities.creation.ArticleDetailsActivity" />
+
+        <receiver android:name=".framents.creation.UploadVideoBroadReceiver">
+            <intent-filter>
+                <action android:name="com.yuejian.meet.uploadvideo" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

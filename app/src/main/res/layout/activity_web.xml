@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/divider_line_color"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/topic_action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/layout_titlebar_height"
+        android:background="@color/color_dd362b">
+
+        <ImageButton
+            android:id="@+id/webview_titlebar_imgBtn_back"
+            android:layout_width="50.0dip"
+            android:layout_height="50.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_title_bar_back"
+            android:clickable="true"
+            android:paddingBottom="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_4"
+            android:src="@mipmap/ic_titlebar_back" />
+
+        <ImageButton
+            android:id="@+id/webview_titlebar_imgBtn_finish"
+            android:layout_width="18.0dip"
+            android:layout_height="18.0dip"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/webview_titlebar_imgBtn_back"
+            android:background="@drawable/selector_title_bar_back"
+            android:clickable="true"
+            android:src="@mipmap/ic_close_page"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/web_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/web_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/topic_action_bar" />
+
+    <include layout="@layout/no_network_layout" />
+</RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_14"
+        android:layout_marginRight="@dimen/px_24">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:minHeight="@dimen/px_120">
+
+            <RelativeLayout
+                android:layout_width="50.0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8.0dip">
+
+                <com.yuejian.meet.widgets.CircleImageView
+                    android:id="@+id/img_action_header"
+                    android:layout_width="48.0dip"
+                    android:layout_height="48.0dip"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_default" />
+
+                <ImageView
+                    android:id="@+id/img_action_sponsor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="20.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:src="@mipmap/ic_shi"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="45.0dip"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_action_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLength="10"
+                    android:textColor="@color/praise_item_default"
+                    android:textSize="15.0sp"
+                    android:textStyle="bold"
+                    android:text="坚果"/>
+
+                <View
+                    android:layout_width="1.0px"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="1.0" />
+                <TextView
+                    android:id="@+id/txt_action_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="12.0sp"
+                    android:text="20:20"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom|center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_action_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16.0dip"
+                        android:background="@drawable/shape_address"
+                        android:gravity="center"
+                        android:paddingLeft="4.0dip"
+                        android:paddingRight="4.0dip"
+                        android:textColor="@color/color_white"
+                        android:textSize="12.0sp" />
+
+                    <TextView
+                        android:id="@+id/txt_action_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16.0dip"
+                        android:layout_marginLeft="4.0dip"
+                        android:background="@drawable/selector_item_sex_ll_bg"
+                        android:drawableLeft="@drawable/selector_item_sex_img"
+                        android:gravity="center"
+                        android:paddingLeft="2.0dip"
+                        android:paddingRight="2.0dip"
+                        android:textColor="@color/white"
+                        android:textSize="12.0sp" />
+
+                    <TextView
+                        android:id="@+id/txt_action_job"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/px_8"
+                        android:maxLength="8"
+                        android:textColor="@color/txt_color_666666"
+                        android:textSize="@dimen/px_24" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="12.0sp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</com.zhy.autolayout.AutoLinearLayout>

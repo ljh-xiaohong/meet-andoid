@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_390"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/zuci_info_photo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/px_88"
+                    android:layout_alignParentBottom="true"
+                    android:background="@mipmap/ic_zuci_title_zhezhao"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/px_40"
+                    android:paddingRight="@dimen/px_34">
+
+                    <TextView
+                        android:id="@+id/zuci_info_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/selector_zuci_info_like_choose"
+                        android:gravity="center_vertical"
+                        android:text=" 11个赞"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/px_24" />
+
+                    <TextView
+                        android:id="@+id/zuci_info_collection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_26"
+                        android:layout_weight="1.0"
+                        android:drawableLeft="@drawable/selector_zuci_collect_info_choose"
+                        android:gravity="center_vertical"
+                        android:text=" 已收藏"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/px_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_zuci_image_sanwei"
+                        android:gravity="center_vertical"
+                        android:text=" 10"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_53"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <TextView
+                    android:id="@+id/zuci_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="广东省颜氏祖祠"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/px_32"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:layout_marginLeft="@dimen/px_24"
+                    android:layout_marginRight="@dimen/px_12"
+                    android:src="@mipmap/ic_zuci_quanjin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全景"
+                    android:textColor="#ff54abe6"
+                    android:textSize="@dimen/px_28" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:layout_marginTop="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_24"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:id="@+id/zuci_main_distance_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/px_16"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/px_23"
+                        android:layout_height="@dimen/px_23"
+                        android:src="@mipmap/ic_loaction_dingwei" />
+
+                    <TextView
+                        android:id="@+id/zuci_info_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_6"
+                        android:text="2.4km"
+                        android:textColor="@color/color_ab3a34"
+                        android:textSize="@dimen/px_24" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/px_1"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/px_3"
+                    android:layout_marginRight="@dimen/px_16"
+                    android:layout_marginBottom="@dimen/px_3"
+                    android:background="@color/color_black_333333" />
+
+                <TextView
+                    android:id="@+id/zuci_info_loatoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/px_10"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="广东省珠海市香洲区"
+                    android:textColor="@color/color_black_333333" />
+
+                <ImageView
+                    android:id="@+id/map_link"
+                    android:layout_width="@dimen/px_40"
+                    android:layout_height="@dimen/px_40"
+                    android:src="@mipmap/ic_zuci_map_link" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_1"
+                android:layout_marginTop="@dimen/px_40"
+                android:background="@color/setting_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:layout_marginTop="@dimen/px_40"
+                android:text="@string/About_the_ancestral_hall"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_32"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/zuci_info_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:layout_marginTop="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_24"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="关于姓氏的"
+                android:textColor="@color/color_black_333333" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_1"
+                android:layout_marginTop="@dimen/px_40"
+                android:background="@color/setting_bg"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/clan_banding_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:layout_marginTop="@dimen/px_40"
+                android:layout_marginRight="@dimen/px_24"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="@string/Clansmen_association"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="@dimen/px_32"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#ff54abe6"
+                    android:textSize="@dimen/px_28" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/clan_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_24"
+                android:layout_marginTop="@dimen/px_27"
+                android:layout_marginRight="@dimen/px_24"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/px_1"
+                    android:layout_marginTop="@dimen/px_40"
+                    android:background="@color/setting_bg" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_24"
+                    android:layout_marginTop="@dimen/px_40"
+                    android:layout_marginRight="@dimen/px_24">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:text="@string/footprint"
+                        android:textColor="@color/color_black_333333"
+                        android:textSize="@dimen/px_32"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/footprint_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/more"
+                        android:textColor="#ff54abe6"
+                        android:textSize="@dimen/px_28" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/footprint_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_27"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="@color/setting_bg" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_98"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/zuci_faxian"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="@dimen/px_45"
+                android:layout_height="@dimen/px_45"
+                android:layout_marginTop="@dimen/px_10"
+                android:src="@mipmap/ic_zuci_jizu"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/ancestor_worship"
+                android:textColor="@color/txt_color_666666"
+                android:textSize="@dimen/px_26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/zuci_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/px_45"
+                android:layout_height="@dimen/px_45"
+                android:layout_marginTop="@dimen/px_10"
+                android:src="@mipmap/ic_zuci_message"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/message_board"
+                android:textColor="@color/txt_color_666666"
+                android:textSize="@dimen/px_26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="@dimen/px_45"
+                android:layout_height="@dimen/px_45"
+                android:layout_marginTop="@dimen/px_10"
+                android:src="@mipmap/ic_zuci_faxian_zupu"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/pedigree_clan"
+                android:textColor="@color/txt_color_666666"
+                android:textSize="@dimen/px_26" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

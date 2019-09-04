@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--填充色-->
+    <!--<solid android:color="@android:color/white" />-->
+    <!--边框颜色及宽度-->
+    <stroke android:color="#E0E0E0"
+        android:width="1dp"/>
+
+    <corners android:topLeftRadius="4dp"
+        android:topRightRadius="4dp"
+        android:bottomRightRadius="4dp"
+        android:bottomLeftRadius="4dp"/>
+
+    <padding
+        android:left="5dp"
+        android:right="5dp"
+        android:top="3dp"
+        android:bottom="3dp"/>
+</shape>

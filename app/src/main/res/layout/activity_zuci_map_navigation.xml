@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.zuci.ZuciMapNavigationActivity">
+    <include
+        layout="@layout/titlebar_layout"/>
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/zuzi_link_map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/txt_color_666666" />
+    <LinearLayout
+        android:id="@+id/zuci_map_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_156"
+            android:layout_marginRight="@dimen/px_24"
+            android:layout_marginLeft="@dimen/px_24"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:src="@mipmap/ic_loaction_dingwei"/>
+                <TextView
+                    android:id="@+id/map_site"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_9"
+                    android:textColor="@color/color_black_333333"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="明珠北路"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20">
+                <ImageView
+                    android:layout_width="@dimen/px_30"
+                    android:layout_height="@dimen/px_30"
+                    android:src="@mipmap/ic_navigation"/>
+                <TextView
+                    android:id="@+id/map_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_9"
+                    android:textColor="@color/color_black_333333"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="距离现在25k"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/mpa_submit"
+            android:layout_width="@dimen/px_187"
+            android:layout_height="@dimen/px_98"
+            android:layout_marginRight="@dimen/px_24"
+            android:layout_marginBottom="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_30"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_button_ebb156"
+            android:text="到这里去"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape>
+            <corners android:radius="5dp" />
+            <!--<solid android:color="#FF9800" />-->
+            <solid android:color="@color/white" />
+            <stroke android:width="1px" android:color="@color/in_cash_account_bg_sel" />
+        </shape>
+    </item>
+
+    <item android:state_selected="false">
+        <shape>
+            <corners android:radius="5dp" />
+            <!--<solid android:color="#f9c813" />-->
+            <solid android:color="@color/white" />
+            <stroke android:width="1px" android:color="@color/in_cash_account_bg_nor" />
+        </shape>
+    </item>
+</selector>

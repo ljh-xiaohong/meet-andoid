@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="@color/white" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:paddingLeft="@dimen/px_24" android:layout_width="fill_parent" android:layout_height="@dimen/px_118">
+        <ImageView android:layout_gravity="center" android:id="@+id/footprint_photo" android:layout_width="@dimen/px_84" android:layout_height="@dimen/px_84" />
+        <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:paddingLeft="@dimen/px_14" android:layout_width="fill_parent" android:layout_height="@dimen/px_84">
+            <TextView android:textColor="@color/color_black_333333" android:gravity="center_vertical" android:id="@+id/footprint_name" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="珠海一群" android:layout_weight="1.0" />
+            <TextView android:textColor="@color/txt_color_999999" android:gravity="center_vertical" android:id="@+id/footprint_time" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="上次访问  7/16" android:layout_weight="1.0" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

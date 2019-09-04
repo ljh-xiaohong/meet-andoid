@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff6f6f6"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="4.0dip"
+            android:layout_height="20.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="#ff0099ff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="按分类筛选"
+            android:textColor="@color/color_black_333333"
+            android:textSize="17.0sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/bill_btns_grid_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:paddingBottom="@dimen/px_12"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:paddingTop="@dimen/px_12"
+        app:columnCount="3">
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="1"
+            android:text="充值记录"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="2"
+            android:text="提现记录"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="3"
+            android:text="收到礼物"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="4"
+            android:text="送出礼物"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="5"
+            android:text="视频收入"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="6"
+            android:text="视频消费"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:id="@+id/btn_yyetc"
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="7"
+            android:text="营业额提成"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="8"
+            android:text="推荐收入"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="9"
+            android:text="购物消费"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="10"
+            android:text="店铺收入"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+
+        <Button
+            android:layout_width="0.0dip"
+            android:layout_height="32.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="8.0dip"
+            android:layout_marginRight="8.0dip"
+            android:background="@drawable/selector_bill_record_btn"
+            android:onClick="onTagClick"
+            android:tag="11"
+            android:text="礼物退款"
+            android:textColor="@color/selector_surname_text_color"
+            android:textSize="15.0sp"
+            app:layout_columnWeight="1.0" />
+    </android.support.v7.widget.GridLayout>
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:layout_marginTop="8.0dip"
+        android:background="@drawable/selector_copy_qr_link"
+        android:text="取消"
+        android:textSize="17.0sp" />
+</LinearLayout>

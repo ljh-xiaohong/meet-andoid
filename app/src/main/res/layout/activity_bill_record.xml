@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <com.yuejian.meet.widgets.SwipeRefreshView
+        android:id="@+id/swipe_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:id="@+id/bill_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="#ffeaeaea"
+            android:dividerHeight="1.0dip" />
+    </com.yuejian.meet.widgets.SwipeRefreshView>
+</LinearLayout>

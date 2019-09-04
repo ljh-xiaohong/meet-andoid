@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+              android:layout_marginTop="15dp"
+              android:background="@mipmap/bell_bash_xu"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="撞钟"
+        android:textColor="@color/color_232323"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="撞钟撞钟撞钟撞钟撞钟撞钟撞钟454456985659856+526+85"
+        android:textColor="@color/color_232323"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今天共有"
+            android:textColor="#999999"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tv_all_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="228人撞钟"
+            android:textColor="@color/color_232323"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+</LinearLayout>

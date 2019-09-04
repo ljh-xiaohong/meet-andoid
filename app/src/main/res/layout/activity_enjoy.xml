@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/enjoy_layot"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.home.EnjoyActivity">
+    <include
+        layout="@layout/titlebar_layout"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.yuejian.meet.widgets.springview.SpringView
+            android:id="@+id/enjoy_spring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/px_30"
+            android:paddingRight="@dimen/px_30"
+            android:paddingTop="@dimen/px_30"
+            android:layout_weight="1">
+            <ListView
+                android:id="@+id/enjoy_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/white"
+                android:dividerHeight="@dimen/px_30"
+                android:padding="@dimen/px_30"
+                android:background="@color/white"/>
+        </com.yuejian.meet.widgets.springview.SpringView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginBottom="@dimen/px_40"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/launch_enjoy"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_98"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/px_15"
+                android:background="@drawable/shape_button_dd362b"
+                android:gravity="center"
+                android:text="@string/enjoy_text_1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px_30" />
+
+            <TextView
+                android:id="@+id/bu_next"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_98"
+                android:layout_marginLeft="@dimen/px_15"
+                android:layout_weight="1"
+                android:background="@drawable/shape_button_dd362b"
+                android:enabled="true"
+                android:gravity="center"
+                android:text="@string/bot_txt_8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px_30" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

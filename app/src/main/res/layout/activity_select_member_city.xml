@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/titlebar_layout" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_24"
+            android:text="@string/Locating_city"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/px_30" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px_20"
+            android:paddingTop="@dimen/px_20">
+
+            <TextView
+                android:id="@+id/txt_location_city"
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_44"
+                android:layout_marginRight="@dimen/px_22"
+                android:visibility="invisible"
+                android:text="珠海" />
+
+            <TextView
+                android:id="@+id/txt_select_all_city"
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_44"
+                android:layout_marginRight="@dimen/px_22"
+                android:text="@string/nationwide" />
+
+            <TextView
+                style="@style/txt_surnae_select_item"
+                android:layout_marginLeft="@dimen/px_44"
+                android:layout_marginRight="@dimen/px_22"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_8"
+            android:background="@color/bg_no_photo" />
+
+        <TextView
+            android:id="@+id/sel_type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:layout_marginTop="@dimen/px_24"
+            android:text="按省份选择城市"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/px_30" />
+
+        <ListView
+            android:id="@+id/city_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/px_24"
+            android:divider="@color/vive_colors_wire_e6e6e6"
+            android:dividerHeight="@dimen/px_1" />
+    </LinearLayout>
+</LinearLayout>

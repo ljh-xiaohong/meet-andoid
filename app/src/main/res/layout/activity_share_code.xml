@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activities.mine.ShareCodeActivity">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="@color/setting_bg" />
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_30"
+        android:layout_marginTop="@dimen/px_60"
+        android:layout_marginRight="@dimen/px_30"
+        android:layout_weight="1"
+        android:background="@drawable/shape_button_white_s"
+        android:orientation="vertical"
+        android:padding="@dimen/px_30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="胡桃里"
+                android:textColor="@color/color_232323"
+                android:textSize="@dimen/px_34" />
+
+
+        </LinearLayout>
+
+        <com.yuejian.meet.widgets.CircleImageView
+            android:id="@+id/user_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/ic_default" />
+
+        <TextView
+            android:id="@+id/user_corp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/px_15"
+            android:text="约见百家姓有限公司"
+            android:textSize="@dimen/dp_12" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20">
+
+                <ImageView
+                    android:layout_width="@dimen/px_32"
+                    android:layout_height="@dimen/px_32"
+                    android:src="@mipmap/ic_code_phone" />
+
+                <TextView
+                    android:id="@+id/txt_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text="*** **** ****"
+                    android:textColor="@color/color_232323"
+                    android:textSize="@dimen/px_26" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/location_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20">
+
+                <ImageView
+                    android:layout_width="@dimen/px_32"
+                    android:layout_height="@dimen/px_32"
+                    android:src="@mipmap/ic_code_location" />
+
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text="广东珠海"
+                    android:textColor="@color/color_232323"
+                    android:textSize="@dimen/px_26" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/email_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20">
+
+                <ImageView
+                    android:layout_width="@dimen/px_32"
+                    android:layout_height="@dimen/px_32"
+                    android:src="@mipmap/ic_code_email" />
+
+                <TextView
+                    android:id="@+id/txt_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:text="987512131@qq.com"
+                    android:textColor="@color/color_232323"
+                    android:textSize="@dimen/px_26" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_3"
+            android:layout_marginTop="@dimen/px_20"
+            android:background="@mipmap/imaginary_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@mipmap/app_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="约见百家姓APP"
+                    android:textColor="@color/color_232323"
+                    android:textSize="@dimen/px_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_10"
+                    android:text="约见百家姓APP"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="@dimen/px_16" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/shaer_code"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_6"
+                android:maxEms="1"
+                android:text="扫码下载"
+                android:textSize="@dimen/px_16" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_80"
+        android:layout_marginBottom="@dimen/px_71"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_1"
+                android:layout_weight="1"
+                android:background="@color/color_232323" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_20"
+                android:layout_marginRight="@dimen/px_20"
+                android:text="分享百家姓ID,好友扫描二维码"
+                android:textColor="@color/color_232323"
+                android:textSize="@dimen/dp_13" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_1"
+                android:layout_weight="1"
+                android:background="@color/color_232323" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/px_30">
+
+            <ImageView
+                android:id="@+id/share_wechat"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@mipmap/ic_share_wechat_logo" />
+
+            <ImageView
+                android:id="@+id/share_qq"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="@dimen/px_60"
+                android:layout_marginRight="@dimen/px_60"
+                android:src="@mipmap/ic_share_qq_logo"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/share_find"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@mipmap/ic_share_find_logo" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

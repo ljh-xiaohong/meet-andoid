@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/activity_article_layout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/iv_edit_article_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@mipmap/icon_fanhui_b" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="文章"
+            android:textColor="@color/color_232323"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <com.yuejian.meet.widgets.MyObservableScrollView
+        android:id="@+id/sv_srollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_article_layout2"
+        android:layout_below="@+id/activity_article_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <com.yuejian.meet.widgets.CircleImageView
+                    android:id="@+id/civ_article_details_header"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_default"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_article_details_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Name"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/civ_article_details_header"
+                    app:layout_constraintTop_toTopOf="@+id/civ_article_details_header" />
+
+                <TextView
+                    android:id="@+id/tv_article_details_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="date"
+                    android:textColor="#999999"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/civ_article_details_header"
+                    app:layout_constraintStart_toEndOf="@+id/civ_article_details_header" />
+
+                <ImageView
+                    android:id="@+id/iv_article_details_card_icon"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@mipmap/tab_post"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_article_details_name"
+                    app:layout_constraintStart_toEndOf="@+id/tv_article_details_name"
+                    app:layout_constraintTop_toTopOf="@+id/tv_article_details_name" />
+
+                <TextView
+                    android:id="@+id/tv_article_details_comp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="comp"
+                    android:textColor="#D2B8A2"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_article_details_name"
+                    app:layout_constraintStart_toEndOf="@+id/iv_article_details_card_icon"
+                    app:layout_constraintTop_toTopOf="@+id/tv_article_details_name" />
+
+                <TextView
+                    android:id="@+id/tv_article_details_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_radiu_black_rect"
+                    android:text="+ 关注"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#E6E6E6" />
+
+            <LinearLayout
+                android:id="@+id/ll_article_details_content_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#E6E6E6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="#D27F1D"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#E6E6E6" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--      android:src="@mipmap/default_pic_w" -->
+                    <ImageView
+                        android:id="@+id/iv_article_details_ad_img"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_article_details_ad_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="#333333"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toEndOf="@+id/iv_article_details_ad_img"
+                        app:layout_constraintTop_toTopOf="@+id/iv_article_details_ad_img" />
+
+                    <TextView
+                        android:id="@+id/tv_article_details_ad_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="#666666"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@+id/iv_article_details_ad_img"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_article_details_ad_title" />
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_article_details_discuss_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"></LinearLayout>
+
+        </LinearLayout>
+    </com.yuejian.meet.widgets.MyObservableScrollView>
+
+
+    <EditText
+        android:id="@+id/ed_edit_discuss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_article_layout2"
+        android:background="@drawable/shape_button_white_s"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:hint="请评论"
+        android:imeOptions="actionSend"
+        android:padding="12dp"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/activity_article_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <!-- 点赞 -->
+        <RelativeLayout
+            android:id="@+id/bt_article_details_zan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_article_details_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/icon_mine_zan_nor"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="赞"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <!-- 评论 -->
+        <RelativeLayout
+            android:id="@+id/bt_article_details_discuss"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:drawableLeft="@mipmap/icon_mine_comment"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="评论"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <!-- 转发 -->
+        <RelativeLayout
+            android:id="@+id/bt_article_details_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/icon_mine_share"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="转发"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

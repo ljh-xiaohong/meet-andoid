@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="1.0px"
+        android:layout_height="1.0px"
+        android:layout_marginBottom="4.0dip" />
+
+    <include layout="@layout/layout_item_user_info_title" />
+
+    <LinearLayout
+        android:id="@+id/action_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="66.0dip"
+        android:layout_marginRight="12.0dip"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_item_actioninfo_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4.0dip"
+            android:layout_marginRight="13.0dip"
+            android:layout_marginTop="4.0dip"
+            android:background="@color/color_white"
+            android:padding="2.0dip"
+            android:textColor="#ff333333" />
+
+        <LinearLayout
+            android:id="@+id/acton_meg_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="13.0dip"
+            android:background="#fff2f2f2"
+            android:orientation="vertical">
+
+            <com.yuejian.meet.widgets.InnerListView
+                android:id="@+id/lt_action_info_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff2f2f2"
+                android:divider="@color/color_white"
+                android:dividerHeight="0.0dip"
+                android:paddingBottom="4.0dip"
+                android:paddingTop="4.0dip"
+                android:scrollbars="none"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/rely_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/rely_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginTop="2.0dip"
+                android:gravity="center"
+                android:text="共0条回复 >"
+                android:textColor="#ff3498db"
+                android:textSize="12.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_16"
+            android:layout_marginTop="@dimen/px_44"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24">
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:id="@+id/actioninfo_like_praise_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5.0dip"
+                android:drawableLeft="@drawable/selector_action_like_itme"
+                android:padding="2.0dip"
+                android:text=" 0"
+                android:textColor="@color/txt_color_999999"
+                android:textSize="12.0sp" />
+
+            <ImageView
+                android:id="@+id/actioninfo_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_32"
+                android:padding="2.0dip"
+                android:src="@mipmap/ic_message_chat" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+</com.zhy.autolayout.AutoLinearLayout>

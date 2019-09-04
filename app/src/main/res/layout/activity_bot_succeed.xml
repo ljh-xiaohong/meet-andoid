@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.home.BotSucceedActivity">
+    <include
+        layout="@layout/titlebar_layout"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_220"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/px_260"
+            android:layout_height="@dimen/px_220"
+            android:src="@mipmap/ic_bot_succeed"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_56"
+            android:gravity="center"
+            android:textSize="@dimen/px_30"
+            android:textColor="@color/color_232323"
+            android:text="您的项目发布申请已提交成功，\n官方审核通过后将显示在宗享会中。"/>
+        <Button
+            android:id="@+id/bu_chat"
+            android:layout_width="@dimen/px_530"
+            android:layout_height="@dimen/px_79"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/px_56"
+            android:textSize="@dimen/px_32"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_button_dd362b"
+            android:enabled="true"
+            android:text="返回首页" />
+
+    </LinearLayout>
+
+</LinearLayout>

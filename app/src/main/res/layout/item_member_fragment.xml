@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/member_heaber_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_10"
+        android:background="@color/bg_no_photo"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/itme_layout_one"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_156"
+        android:layout_marginBottom="2.0dip"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginRight="@dimen/px_24">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true">
+
+            <RelativeLayout
+                android:layout_width="@dimen/px_140"
+                android:layout_height="fill_parent">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="@dimen/px_120"
+                    android:layout_height="@dimen/px_120"
+                    android:layout_centerInParent="true"
+                    app:cardCornerRadius="@dimen/px_12"
+                    app:cardElevation="0.0dip">
+
+                    <ImageView
+                        android:id="@+id/img_member_header"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_default" />
+                </android.support.v7.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/faqr"
+                    android:layout_width="@dimen/px_140"
+                    android:layout_height="@dimen/px_40"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_shi" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_120"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/px_30"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txt_member_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/praise_item_default"
+                        android:textSize="@dimen/px_28"
+                        android:textStyle="bold"
+                        android:text="垃圾"/>
+
+                    <TextView
+                        android:id="@+id/txt_member_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px_30"
+                        android:layout_marginLeft="@dimen/px_10"
+                        android:background="@drawable/selector_item_sex_ll_bg"
+                        android:drawableLeft="@drawable/selector_item_sex_img"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/px_3"
+                        android:paddingRight="@dimen/px_3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/px_24" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/px_3"
+                        android:layout_marginRight="@dimen/px_3">
+
+                        <TextView
+                            android:id="@+id/txt_member_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/px_30"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="4.0dip"
+                            android:background="@drawable/shape_address"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/px_8"
+                            android:paddingRight="@dimen/px_8"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/px_24" />
+
+
+                        <TextView
+                            android:id="@+id/member_job"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/px_24"
+                            android:maxLines="1"
+                            android:textColor="@color/txt_color_999999"
+                            android:text="约见公司"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/other_job_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/other_job"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="@dimen/px_3"
+                        android:text="认证："
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="@dimen/px_24" />
+
+                    <ImageView
+                        android:id="@+id/img_member_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_8"
+                        android:src="@drawable/selector_phone_approve"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/img_member_weixin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_8"
+                        android:src="@drawable/selector_weixin_approve"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/img_member_identity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_4"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_8"
+                        android:src="@drawable/selector_identity_approve"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/img_member_enterprise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px_4"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/px_8"
+                        android:src="@drawable/selector_enterprise_approve"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/member_distance_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="20.0dip"
+                android:layout_marginRight="@dimen/px_26"
+                android:gravity="center|right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_positon" />
+
+                <TextView
+                    android:id="@+id/txt_member_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_8"
+                    android:textColor="@color/txt_color_999999"
+                    android:textSize="@dimen/px_24" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="#ffe6e6e6" />
+</LinearLayout>

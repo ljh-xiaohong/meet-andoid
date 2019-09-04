@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <com.yuejian.meet.widgets.gallery.ViewPagerGallery
+        android:id="@+id/vp_gallery"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/delete_photo"
+        android:layout_width="@dimen/px_100"
+        android:layout_height="@dimen/px_100"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/px_72"
+        android:background="@drawable/selector_red_circle"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="#ffcccccc"
+        android:textSize="@dimen/px_28"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <include
+            android:id="@+id/save_img_layout"
+            layout="@layout/save_img_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</FrameLayout>

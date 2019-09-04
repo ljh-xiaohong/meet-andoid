@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/familybg_shoye"
+    tools:context="com.yuejian.meet.framents.family.MyFamliyFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/my_famliy_ll__surname_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_famliy_tv_surname_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="姓氏排行"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/my_famliy_ll__merit_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_famliy_tv_merit_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="功德排行"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/icon_shouye"/>
+
+                <TextView
+                    android:id="@+id/my_famliy_tv_myname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="2dp"
+                    android:text="徐"
+                    android:textColor="@color/color_232323"
+                    android:textSize="50sp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_famliy_tv_influence_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+
+                        android:textColor="@color/white"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="影响力"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_famliy_tv_allpeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+
+                        android:textColor="@color/white"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:id="@+id/my_famliy_tv_people"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="入谱人数"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/familybg_dibu"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@mipmap/family_item_gao_shouye"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/my_famliy_ll_surname_cultural"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:background="@mipmap/surname_culture_shouye">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="姓氏文化"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="7dp"
+                        android:layout_toLeftOf="@+id/ib"
+                        android:text="更多"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+
+                    <ImageButton
+                        android:id="@+id/ib"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="#00ffffff"
+                        android:src="@mipmap/goout_white"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_wenhua"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="4"
+                        android:textColor="@color/color_232323"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/my_famliy_ll_news"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/family_item_shouye"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/xinwendontai_shouxu"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新闻动态"
+                        android:textColor="@color/color_232323"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="名家辈出 群星璀璨"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0"/>
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/my_famliy_ll_ethnic_surname"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/family_item_shouye"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/xingshi_shouxu"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓氏族人"
+                        android:textColor="@color/color_232323"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="为同姓感到光荣"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0"/>
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/my_famliy_ll_family_tree"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/family_item_shouye"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/jiazu_shouxu"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的族谱"
+                        android:textColor="@color/color_232323"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="名家辈出 群星璀璨"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0"/>
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+
+

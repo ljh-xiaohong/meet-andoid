@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginRight="@dimen/px_24"
+        android:background="#fff6f6f6"
+        android:paddingBottom="@dimen/px_8"
+        android:paddingTop="@dimen/px_8"
+        android:textColor="#ff000000"
+        android:textSize="14.0sp" />
+
+    <com.yuejian.meet.widgets.InnerGridView
+        android:id="@+id/photo_grid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:horizontalSpacing="@dimen/px_12"
+        android:paddingBottom="@dimen/px_8"
+        android:numColumns="3"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:paddingTop="@dimen/px_8"
+        android:verticalSpacing="@dimen/px_12"
+        android:visibility="visible" />
+</LinearLayout>

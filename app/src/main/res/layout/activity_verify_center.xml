@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_400"
+        android:scaleType="fitXY"
+        android:src="@mipmap/verify_top_bg" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_16"
+        android:background="@color/setting_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/phone_verify"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/selector_bottom_bar_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <ImageView
+                android:layout_width="@dimen/px_52"
+                android:layout_height="@dimen/px_52"
+                android:src="@mipmap/icon_shouji" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:text="@string/text_login_phone"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:id="@+id/phone_verify_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px_26"
+                android:text="未认证"
+                android:textColor="@color/mine_tips_text_color"
+                android:textSize="@dimen/px_28" />
+
+            <ImageView
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@mipmap/icon_more" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/mine_divider_line_color" />
+
+        <LinearLayout
+            android:id="@+id/wx_verify"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/selector_bottom_bar_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <ImageView
+                android:layout_width="@dimen/px_52"
+                android:layout_height="@dimen/px_52"
+                android:src="@mipmap/icon_weixinrz" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:text="@string/verify_center_text4"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:id="@+id/wx_verify_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px_26"
+                android:text="未认证"
+                android:textColor="@color/mine_tips_text_color"
+                android:textSize="@dimen/px_28" />
+
+            <ImageView
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@mipmap/icon_more" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/mine_divider_line_color" />
+
+        <LinearLayout
+            android:id="@+id/id_verify"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/selector_bottom_bar_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20">
+
+            <ImageView
+                android:layout_width="@dimen/px_52"
+                android:layout_height="@dimen/px_52"
+                android:src="@mipmap/icon_sf" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:text="@string/verify_center_text5"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:id="@+id/id_card_verify_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px_26"
+                android:text="未认证"
+                android:textColor="@color/mine_tips_text_color"
+                android:textSize="@dimen/px_28" />
+
+            <ImageView
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@mipmap/icon_more" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/mine_divider_line_color" />
+
+        <LinearLayout
+            android:id="@+id/business_verify"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/selector_bottom_bar_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_20"
+            android:paddingRight="@dimen/px_20"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/px_52"
+                android:layout_height="@dimen/px_52"
+                android:src="@mipmap/icon_yyzz" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:text="营业执照"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:id="@+id/business_verify_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px_26"
+                android:text="未认证"
+                android:textColor="@color/mine_tips_text_color"
+                android:textSize="@dimen/px_28" />
+
+            <ImageView
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:src="@mipmap/icon_more" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/mine_divider_line_color" />
+    </LinearLayout>
+</LinearLayout>

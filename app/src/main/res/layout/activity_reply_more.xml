@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/reply_more_spring"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0">
+
+        <ListView
+            android:id="@+id/reply_more_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fff0f0f0"
+            android:divider="#ffdfdfdf"
+            android:dividerHeight="@dimen/px_1" />
+    </com.yuejian.meet.widgets.springview.SpringView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_112"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <EditText
+            android:id="@+id/reply_msg_content"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_next_btn"
+            android:gravity="center_vertical"
+            android:hint="说点什么吧..."
+            android:maxHeight="@dimen/px_112"
+            android:maxLength="500"
+            android:minHeight="@dimen/px_60"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24"
+            android:textColor="#ff999999"
+            android:textColorHint="#ff999999"
+            android:textSize="@dimen/px_28" />
+
+        <Button
+            android:id="@+id/reply_msg_send"
+            android:layout_width="@dimen/px_100"
+            android:layout_height="@dimen/px_50"
+            android:layout_marginLeft="@dimen/px_40"
+            android:background="@drawable/selector_btn_verify_wx"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px_28" />
+    </LinearLayout>
+</LinearLayout>

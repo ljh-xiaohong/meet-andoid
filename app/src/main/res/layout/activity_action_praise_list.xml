@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_64"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:text="被以下用户点赞"
+        android:textColor="#ff979797"
+        android:textSize="@dimen/px_26"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/action_praise_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/setting_bg"
+        android:divider="#ffdfdfdf"
+        android:dividerHeight="1.0px" />
+</LinearLayout>

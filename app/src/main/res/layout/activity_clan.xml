@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ImageView
+        android:layout_width="@dimen/px_168"
+        android:layout_height="@dimen/px_168"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_194"
+        android:src="@mipmap/icon_qidai" />
+
+    <TextView
+        android:layout_width="@dimen/px_320"
+        android:layout_height="@dimen/px_52"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_60"
+        android:background="@drawable/shape_qidai_bg"
+        android:gravity="center"
+        android:text="更多功能正在开发中"
+        android:textColor="#ff999999"
+        android:textSize="@dimen/px_30" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_30"
+        android:text="敬请期待..."
+        android:textColor="#ffba945a"
+        android:textSize="@dimen/px_40" />
+</LinearLayout>

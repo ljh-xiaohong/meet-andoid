@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="horizontal"
+    android:paddingLeft="12.0dip"
+    android:paddingRight="12.0dip">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="68.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/weekday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffadadad"
+                android:textSize="14.0sp" />
+
+            <TextView
+                android:id="@+id/bill_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.0dip"
+                android:textColor="#ffadadad"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14.0dip"
+            android:layout_marginRight="10.0dip"
+            app:cardCornerRadius="6.0dip">
+
+            <ImageView
+                android:id="@+id/bill_icon"
+                android:layout_width="50.0dip"
+                android:layout_height="50.0dip"
+                android:scaleType="fitXY"
+                android:src="#ffe8e8e8" />
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bill_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black_333333"
+                android:textSize="16.0sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bill_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.0dip"
+                android:maxLines="2"
+                android:textColor="#ff666666"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

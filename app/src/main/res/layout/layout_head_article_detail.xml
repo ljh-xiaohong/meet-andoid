@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <WebView android:id="@+id/web_content" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <LinearLayout android:orientation="horizontal" android:background="@color/color_white" android:paddingLeft="@dimen/px_24" android:paddingTop="@dimen/px_10" android:paddingRight="@dimen/px_24" android:paddingBottom="@dimen/px_10" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/px_24" android:textColor="#ff999999" android:gravity="center" android:layout_gravity="center_vertical" android:id="@+id/like_cnt" android:padding="@dimen/px_8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_8" android:text=" 0" android:drawableLeft="@drawable/selector_action_like_itme" />
+        <View android:layout_width="0.0dip" android:layout_height="1.0px" android:layout_weight="1.0" />
+        <ImageView android:id="@+id/weixin_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_30" android:src="@mipmap/icon_weixin" android:onClick="onShare" />
+        <ImageView android:id="@+id/pyq_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/icon_pyq" android:onClick="onShare" />
+        <ImageView android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_30" android:src="@mipmap/icon_gdfx" android:onClick="onShare" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="@dimen/px_200" android:layout_marginTop="@dimen/px_12">
+        <Button android:textSize="@dimen/px_30" android:textColor="@color/color_white" android:background="@drawable/selector_share_invate_link" android:layout_width="@dimen/px_160" android:layout_height="@dimen/px_72" android:text="赞赏" android:onClick="onReward" />
+        <RelativeLayout android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_64" android:layout_marginTop="@dimen/px_18" android:onClick="goToRewardList">
+            <LinearLayout android:orientation="horizontal" android:id="@+id/reward_icon_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="@dimen/px_15" android:layout_centerInParent="true" />
+            <TextView android:textSize="@dimen/px_22" android:textColor="#ff999999" android:id="@+id/reward_cnt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_16" android:text="等#人>" android:layout_toRightOf="@+id/reward_icon_layout" android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/author_layout" android:background="@color/color_white" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_24" android:clickable="true" android:layout_width="fill_parent" android:layout_height="@dimen/px_180" android:layout_marginTop="@dimen/px_12">
+        <RelativeLayout android:layout_width="@dimen/px_140" android:layout_height="@dimen/px_140">
+            <ImageView android:id="@+id/author_icon" android:layout_width="@dimen/px_120" android:layout_height="@dimen/px_120" android:src="#ffe8e8e8" android:layout_centerInParent="true" />
+            <ImageView android:id="@+id/faqr" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="@dimen/px_40" android:src="@mipmap/ic_shi" android:scaleType="fitXY" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="@dimen/px_100" android:layout_marginLeft="@dimen/px_22">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <TextView android:textSize="@dimen/px_28" android:textColor="#ff797979" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_16" android:text="作者" />
+                <TextView android:textSize="@dimen/px_30" android:textStyle="bold" android:textColor="@color/color_black_333333" android:id="@+id/author_name" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView android:textSize="@dimen/px_28" android:textColor="#ff999999" android:id="@+id/create_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/px_30" />
+        </LinearLayout>
+        <View android:layout_width="0.0dip" android:layout_height="1.0px" android:layout_weight="1.0" />
+        <Button android:textSize="@dimen/px_24" android:textColor="@color/color_white" android:id="@+id/add_focus" android:background="@drawable/selector_focus_btn" android:layout_width="@dimen/px_110" android:layout_height="@dimen/px_56" android:text="加关注" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingTop="@dimen/px_16" android:paddingBottom="@dimen/px_16" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/px_28" android:textColor="#ff999999" android:id="@+id/comment_cnt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_24" android:text="评论 0" />
+            <View android:layout_width="0.0dip" android:layout_height="1.0px" android:layout_weight="1.0" />
+            <TextView android:textSize="@dimen/px_28" android:textColor="#ff94c7ec" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_24" android:text="按时间" android:drawableRight="@mipmap/ic_replys_sort" android:onClick="onSortByHot" />
+        </LinearLayout>
+        <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    </LinearLayout>
+</LinearLayout>

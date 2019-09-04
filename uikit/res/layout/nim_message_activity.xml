@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/message_fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:orientation="vertical"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"/>
+        <RelativeLayout
+            android:id="@+id/acttention_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ECECEF">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:paddingRight="@dimen/text_size_15"
+                android:paddingLeft="@dimen/text_size_15"
+                android:layout_height="43dp"
+                android:background="@drawable/shape_send_msg_title_button_bg"
+                android:visibility="visible">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_size_13"
+                    android:textColor="#999999"
+                    android:text="@string/Focus_on_each_other"/>
+                <TextView
+                    android:id="@+id/user_attention"
+                    android:layout_width="55dp"
+                    android:layout_height="24dp"
+                    android:textSize="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_send_msg_txt_button_bg"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="@string/Focus_on_each_other2"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+</LinearLayout>

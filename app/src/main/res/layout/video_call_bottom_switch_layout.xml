@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/avchat_incoming_control"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <com.yuejian.meet.widgets.MaxHeightListView
+        android:id="@+id/lv_video_chat_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12.0dip"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0dip"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rlayout_video_accept_chat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.9"
+        android:background="@color/divider_line_color"
+        android:paddingBottom="8.0dip"
+        android:paddingTop="8.0dip"
+        android:visibility="gone">
+
+        <com.yuejian.meet.widgets.CustomEditText
+            android:id="@+id/c_edit_txt_msg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_toLeftOf="@+id/txt_btn_send_info"
+            android:background="@drawable/shape_invited_not_itemfoc"
+            android:gravity="center|left"
+            android:hint="@string/hint_say_st"
+            android:paddingBottom="8.0dip"
+            android:paddingLeft="@dimen/dp_4"
+            android:paddingTop="8.0dip"
+            android:textSize="14.0sp" />
+
+        <TextView
+            android:id="@+id/txt_btn_send_info"
+            android:layout_width="58.0dip"
+            android:layout_height="30.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14.0dip"
+            android:background="@drawable/selector_login_btn"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/activity_render_request_tips4"
+            android:textColor="@android:color/white"
+            android:textSize="14.0sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/imgBtn_online_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15.0dip"
+            android:background="@null"
+            android:src="@mipmap/ic_video_message"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/rl_surface_bottom_bar_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/avchat_video_record"
+                android:layout_width="0.0dip"
+                android:layout_height="40.0dip"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/empty"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_send_gift" />
+
+            <ImageView
+                android:id="@+id/avchat_switch_camera"
+                android:layout_width="0.0dip"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="12.0dip"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/empty"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_video_switch_camera_normal" />
+
+            <ImageView
+                android:id="@+id/avchat_close_camera"
+                android:layout_width="0.0dip"
+                android:layout_height="50.0dip"
+                android:layout_marginLeft="12.0dip"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/empty"
+                android:padding="10.0dip"
+                android:scaleType="centerInside"
+                android:src="@drawable/avchat_close_camera_bg"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/avchat_video_mute"
+                android:layout_width="0.0dip"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="12.0dip"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/empty"
+                android:scaleType="centerInside"
+                android:src="@drawable/avchat_mute_bg" />
+
+            <ImageView
+                android:id="@+id/avchat_video_logout"
+                android:layout_width="0.0dip"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="12.0dip"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/empty"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_avchat_video_bottom_logout_normal_finish" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

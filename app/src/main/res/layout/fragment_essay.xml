@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <com.yuejian.meet.widgets.SwipeRefreshView
+        android:id="@+id/swipe_refresh_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/essay_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </com.yuejian.meet.widgets.SwipeRefreshView>
+
+    <include
+        layout="@layout/no_data_tips_layout"
+        android:visibility="gone" />
+</FrameLayout>

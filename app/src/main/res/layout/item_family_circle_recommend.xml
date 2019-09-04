@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_radius_white">
+
+
+    <ImageView
+        android:id="@+id/iv_family_recommend_item_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_family_recommend_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/label_article"
+        app:layout_constraintEnd_toEndOf="@+id/iv_family_recommend_item_img"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_recommend_item_img" />
+
+    <TextView
+        android:id="@+id/tv_family_recommend_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="家圈 - 推荐，最多显示两行内容.家圈 - 推荐，最多显示两行内容.家圈 - 推荐，最多显示两行内容"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_family_recommend_item_img" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/iv_family_recommend_item_head"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_family_recommend_item_content" />
+
+    <TextView
+        android:id="@+id/tv_family_recommend_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="姓名"
+        android:textColor="#666666"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_family_recommend_item_head"
+        app:layout_constraintStart_toEndOf="@+id/iv_family_recommend_item_head"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_recommend_item_head" />
+
+    <ImageView
+        android:id="@+id/tv_family_recommend_item_zan_icon"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginEnd="8dp"
+        android:src="@mipmap/icon_zan_nor"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_family_recommend_item_head"
+        app:layout_constraintEnd_toStartOf="@+id/tv_family_recommend_item_zan_count"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_recommend_item_head" />
+
+    <TextView
+        android:id="@+id/tv_family_recommend_item_zan_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:text="2333"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_family_recommend_item_head"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_recommend_item_head" />
+
+
+</android.support.constraint.ConstraintLayout>

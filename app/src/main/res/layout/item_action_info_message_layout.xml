@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="@dimen/px_10" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/meg_me_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="梁某" />
+        <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/mes_reply" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_8" android:layout_marginRight="@dimen/px_8" android:text="回复" />
+        <TextView android:textSize="@dimen/px_24" android:textColor="#ff2398db" android:id="@+id/mes_opposite_name" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="梁某" />
+        <TextView android:textSize="@dimen/px_24" android:textColor="#ff2398db" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="：" />
+        <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:id="@+id/messag_content" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="很有用" />
+    </LinearLayout>
+</LinearLayout>

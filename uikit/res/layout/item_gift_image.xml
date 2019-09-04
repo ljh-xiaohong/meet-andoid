@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00ffffff" >
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/gift_item_layotu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_select_gift_bg"
+        android:paddingTop="6dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/gift_iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/gift_tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gift_iv_images"
+                android:textColor="@color/title_background_color"
+                android:textSize="10sp"
+                android:text="sadfasdfsdfdsdf"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:src="@mipmap/icon_money"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/gift_tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/gift_iv_select"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignRight="@+id/gift_ll_container"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:src="@mipmap/ic_evaluate_checked"-->
+        <!--android:visibility="gone" />-->
+
+
+</RelativeLayout>

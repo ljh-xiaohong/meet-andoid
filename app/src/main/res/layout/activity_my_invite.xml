@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+    <com.yuejian.meet.widgets.springview.SpringView
+        android:id="@+id/invite_spring"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="#ff9f9f9f"
+            android:dividerHeight="1.0px"
+            android:background="@color/white"/>
+    </com.yuejian.meet.widgets.springview.SpringView>
+
+</LinearLayout>

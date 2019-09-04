@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/bg02"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="86.0dip"
+        android:src="@mipmap/zujian" />
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="19.0dip"
+        android:ems="14"
+        android:gravity="center"
+        android:text="当前个人资料完善度高于xx%同姓宗亲建议完善资料，提升形象值"
+        android:textColor="@color/white"
+        android:textSize="15.0sp" />
+
+    <Button
+        android:id="@+id/gotoupgrade"
+        android:layout_width="120.0dip"
+        android:layout_height="32.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13.0dip"
+        android:background="@drawable/upgrade_info_button"
+        android:text="去提升形象值>>"
+        android:textColor="@color/white"
+        android:textSize="13.0sp" />
+
+    <View
+        android:layout_width="1.0px"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" />
+
+    <Button
+        android:id="@+id/finish"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
+        android:background="@drawable/selector_btn_verify_wx"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18.0sp" />
+</LinearLayout>

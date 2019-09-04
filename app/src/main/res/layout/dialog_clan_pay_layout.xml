@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffe6e6e6"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="#fff6f6f6"
+        android:gravity="center"
+        android:text="支付方式"
+        android:textColor="@color/color_black_333333"
+        android:textSize="@dimen/px_26" />
+
+    <LinearLayout
+        android:id="@+id/jinbi"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_1"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/px_44"
+            android:layout_height="@dimen/px_44"
+            android:layout_marginLeft="@dimen/px_24"
+            android:src="@mipmap/icon_jinbi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="金币支付"
+            android:textColor="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_1"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/px_24"
+            android:text="余额：50"
+            android:textColor="#ffebb156"
+            android:textSize="@dimen/px_26" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weixin"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_1"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/px_44"
+            android:layout_height="@dimen/px_44"
+            android:layout_marginLeft="@dimen/px_24"
+            android:src="@mipmap/icon_weixin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="微信"
+            android:textColor="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_1"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/zhifubao"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_1"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/px_44"
+            android:layout_height="@dimen/px_44"
+            android:layout_marginLeft="@dimen/px_24"
+            android:src="@mipmap/icon_zhifubao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_16"
+            android:text="微信"
+            android:textColor="@color/color_black_333333" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_1"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+</LinearLayout>

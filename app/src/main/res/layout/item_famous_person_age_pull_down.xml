@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/shape_qr_code_window_bg" android:paddingLeft="8.0dip" android:paddingRight="8.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:gravity="center" android:id="@+id/all_age" android:tag="0" android:paddingTop="4.0dip" android:paddingBottom="4.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="全部" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:gravity="center" android:id="@+id/current_age" android:tag="1" android:paddingTop="4.0dip" android:paddingBottom="4.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="现代" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:gravity="center" android:id="@+id/modern_age" android:tag="2" android:paddingTop="4.0dip" android:paddingBottom="4.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="近代" />
+    <View android:background="#ffdfdfdf" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <TextView android:textSize="14.0sp" android:textColor="#ff999999" android:gravity="center" android:id="@+id/ancient_age" android:tag="3" android:paddingTop="4.0dip" android:paddingBottom="4.0dip" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="古代" />
+</LinearLayout>

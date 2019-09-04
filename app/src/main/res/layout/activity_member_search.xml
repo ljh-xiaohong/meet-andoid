@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff6f6f6"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:layout_marginBottom="@dimen/px_16"
+        android:background="@color/color_white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="30.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/shape_search_bg"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20.0dip"
+                android:layout_height="20.0dip"
+                android:layout_marginLeft="4.0dip"
+                android:clickable="true"
+                android:src="@mipmap/ic_search"
+                android:visibility="visible" />
+
+            <com.yuejian.meet.widgets.CleanableEditText
+                android:id="@+id/et_search"
+                android:layout_width="fill_parent"
+                android:layout_height="28.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="#ffe7e8ea"
+                android:drawableRight="@mipmap/ic_edit_clean"
+                android:hint="约见号/姓名"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingLeft="8.0dip"
+                android:paddingRight="8.0dip"
+                android:textColor="@color/praise_item_default"
+                android:textColorHint="#ff999999"
+                android:textSize="14.0sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8.0dip"
+            android:clickable="true"
+            android:padding="8.0dip"
+            android:text="取消"
+            android:textColor="#ff333333"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.yuejian.meet.widgets.springview.SpringView
+            android:id="@+id/spring_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ListView
+                android:id="@+id/member_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#fff6f6f6" />
+        </com.yuejian.meet.widgets.springview.SpringView>
+
+        <ImageView
+            android:id="@+id/none_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/none"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/preview_suibi_layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/iv_preview_suibi_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@mipmap/icon_fanhui_b" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="预览"
+            android:textColor="@color/color_232323"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_preview_suibi_submit"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="发布"
+            android:textSize="14sp"
+            android:textColor="#333333" />
+    </RelativeLayout>
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_suibi_preview"
+        android:layout_width="match_parent"
+        android:layout_height="233dp">
+    </com.youth.banner.Banner>
+
+    <TextView
+        android:id="@+id/tv_suibi_preview_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:text="标题"
+        android:textSize="17sp"
+        android:textColor="#333333"/>
+
+    <TextView
+        android:id="@+id/tv_suibi_preview_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:text="老路牌、霓虹灯、\n复古的黄包车、独具风情的明星海报、\n老式广告牌......\n站在街外，眼前这条街具有老上海的怀旧情结，\n让人仿...\n老路牌、霓虹灯、\n复古的黄包车、独具风情的明星海报。"
+        android:textSize="14sp"
+        android:textColor="#333333"/>
+
+    <TextView
+        android:id="@+id/tv_suibi_preview_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_gray_btn"
+        android:text="#旅游"
+        android:textColor="#507DAF"
+        android:textSize="14sp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@android:color/white">
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="3dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="12dp"
+            android:background="#AB3A34"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="配置功能"
+            android:textColor="#333333"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/view3"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="@+id/view3" />
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="4dp"
+            android:src="@mipmap/weixin_pay_xu"
+            app:layout_constraintBottom_toBottomOf="@+id/textView12"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/textView12"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="18sp"
+            android:layout_height="18sp"
+            android:layout_marginEnd="12dp"
+            android:src="@mipmap/icon_peizhi_xiala"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="只能选择一种配置"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+        <LinearLayout
+            android:id="@+id/ll_preview_suibi_pz_mujuan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/icon_peizhi_bot_mujuan"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="配置募捐"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_preview_suibi_pz_activity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/icon_peizhi_bot_active"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="配置活动"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_preview_suibi_pz_product"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/icon_peizhi_bot_product"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="配置商品"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_preview_suibi_pz_only"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/icon_peizhi_bot_only"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="专属配置"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

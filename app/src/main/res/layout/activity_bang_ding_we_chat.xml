@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activities.mine.BangDingWeChatActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"/>
+    <include
+        layout="@layout/titlebar_layout2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_60"
+        android:textSize="@dimen/px_48"
+        android:textColor="@color/color_232323"
+        android:text="@string/Binding_micro_letter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px_30"
+        android:text="@string/Binding_micro_letter2"
+        android:textColor="@color/txt_color_999999"
+        android:textSize="@dimen/px_26" />
+    <LinearLayout
+        android:id="@+id/bengding_weichat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_94"
+        android:layout_marginLeft="@dimen/px_110"
+        android:layout_marginRight="@dimen/px_104"
+        android:layout_marginTop="@dimen/px_120"
+        android:gravity="center"
+        android:background="@drawable/shape_button_dd362b">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px_32"
+            android:textColor="@color/white"
+            android:text="@string/reg_btn_next"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/nubengding"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_78"
+        android:textSize="@dimen/px_32"
+        android:layout_marginTop="@dimen/px_30"
+        android:layout_marginLeft="@dimen/px_110"
+        android:layout_marginRight="@dimen/px_104"
+        android:background="@drawable/shape_frame_button_dd362b"
+        android:text="@string/Binding_micro_letter4"
+        android:textColor="@color/color_dd362b"
+        android:visibility="gone"/>
+</LinearLayout>

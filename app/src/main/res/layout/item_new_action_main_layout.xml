@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/px_76"
+        android:layout_marginRight="@dimen/px_76">
+
+    <TextView
+        android:id="@+id/item_new_action_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/setting_bg"
+        android:gravity="center"
+        android:padding="@dimen/px_24"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/txt_color_999999"
+        android:text="1233"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/setting_bg"
+        app:cardCornerRadius="5.0dip"
+        app:cardElevation="0.0dip">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_317">
+                <ImageView
+                    android:id="@+id/item_new_acton_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/item_new_action_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:background="#4D000000"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/px_24"
+                    android:layout_alignParentBottom="true"
+                    android:text="来啊"/>
+            </RelativeLayout>
+            <com.yuejian.meet.widgets.InnerListView
+                android:id="@+id/item_new_action_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/setting_bg"
+                android:dividerHeight="@dimen/px_1"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+    <View
+        android:id="@+id/new_action_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80" />
+
+
+</LinearLayout>

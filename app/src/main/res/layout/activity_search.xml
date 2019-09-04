@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:gravity="center_vertical"
+        android:layout_height="44dp">
+    <RelativeLayout
+        android:layout_width="@dimen/dp_314"
+        android:layout_height="@dimen/dp_32"
+        android:layout_weight="2"
+        android:background="@drawable/shape_search_title_bar_new">
+        <ImageView
+            android:id="@+id/search_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_home_search"
+            android:visibility="visible" />
+        <com.yuejian.meet.utils.ClearEditText
+            android:id="@+id/et_search_all"
+            android:layout_toRightOf="@+id/search_all"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_height="fill_parent"
+            android:paddingLeft="5dp"
+            android:gravity="center_vertical"
+            android:background="@color/pickerview_bg_topbar"
+            android:hint="@string/verify_business_text5"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/sp_14"
+            android:visibility="visible" />
+    </RelativeLayout>
+        <TextView
+            android:id="@+id/cencel"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black3"
+            android:text="取消"
+            android:paddingLeft="9dp"
+            android:textSize="15sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tag_lay"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="热门搜索"
+        android:textColor="@color/black3"
+        android:textSize="15sp"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_height="wrap_content" />
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/hot_flowlayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="54px"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_height="wrap_content">
+    </com.zhy.view.flowlayout.TagFlowLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="历史搜索"
+        android:textColor="@color/black3"
+        android:textSize="15sp"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/clear_history"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_14"
+            android:src="@mipmap/icon_home_search_del"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/history_flowlayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="54px"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_height="wrap_content">
+    </com.zhy.view.flowlayout.TagFlowLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tag_horizontal_list"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tag_content_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    </LinearLayout>

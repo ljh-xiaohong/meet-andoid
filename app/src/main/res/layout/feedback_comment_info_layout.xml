@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px_30"
+            android:layout_weight="1"
+            android:textColor="#b89477"
+            android:text="百家姓氏回复"/>
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px_26"
+            android:textColor="#b2b2b2"
+            android:text="2018"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/comment_conten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/px_28"
+        android:textColor="#232323"
+        android:layout_marginTop="@dimen/px_24"
+        android:text="你好,请回复下你的"/>
+
+</LinearLayout>

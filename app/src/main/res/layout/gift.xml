@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <FrameLayout
+        android:id="@+id/gift"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/box"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gaizi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/gai" />
+
+            <ImageView
+                android:id="@+id/caidai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleX="0.0"
+                android:scaleY="0.0"
+                android:src="@mipmap/caidai" />
+
+            <ImageView
+                android:id="@+id/hezi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gaizi"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/hezi" />
+
+            <TextView
+                android:id="@+id/gift_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hezi"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10.0dip"
+                android:text="荷花 x 1"
+                android:textColor="#ffffb20c" />
+
+            <ImageView
+                android:id="@+id/shanguang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:alpha="0.0"
+                android:src="@mipmap/liwubg" />
+
+            <ImageView
+                android:id="@+id/gift_icon"
+                android:layout_width="80.0dip"
+                android:layout_height="80.0dip"
+                android:layout_centerInParent="true"
+                android:alpha="0.0"
+                android:scaleX="0.0"
+                android:scaleY="0.0" />
+        </RelativeLayout>
+    </FrameLayout>
+</FrameLayout>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/loading_view"
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:layout_marginTop="-30.0dip">
+
+        <com.yuejian.meet.widgets.CircleImageView
+            android:id="@+id/loading_icon"
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:layout_gravity="center"
+            android:src="@mipmap/app_logo" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/banner"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_300"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/bg_banner_720" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_26">
+
+            <ImageView
+                android:layout_width="@dimen/px_223"
+                android:layout_height="@dimen/px_156"
+                android:layout_gravity="center"
+                android:src="@mipmap/vein" />
+
+            <TextView
+                android:id="@+id/surname_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#ff333333"
+                android:textSize="59.0dip" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/px_24"
+        android:paddingTop="@dimen/px_24">
+
+        <LinearLayout
+            android:id="@+id/zixun"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_shijian" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_12"
+                android:text="资讯"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/genyuan"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_mrl" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_12"
+                android:text="根源"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/clan"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_qiyuan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_12"
+                android:text="宗亲会"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/zupu"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_xuanju" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_12"
+                android:text="族谱"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jijin"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_jijin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_12"
+                android:text="基金"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_24" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/new_essay"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_80"
+        android:layout_marginBottom="@dimen/px_12"
+        android:layout_marginTop="@dimen/px_12"
+        android:background="@drawable/selector_white_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/px_64"
+            android:layout_height="@dimen/px_64"
+            android:layout_marginRight="@dimen/px_20"
+            android:src="#ffe8e8e8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="深圳颜静发布了一篇文章，快去看看吧"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_26" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_more" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:layout_marginTop="@dimen/px_12"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="综合资讯"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_32" />
+    </RelativeLayout>
+</LinearLayout>

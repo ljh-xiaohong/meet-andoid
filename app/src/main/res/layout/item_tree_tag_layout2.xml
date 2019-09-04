@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/px_30"
+        android:background="@drawable/shape_tree_tag_item_bg2"
+        android:gravity="center"
+        android:text="李"
+        android:textColor="@color/color_audit_text2"
+        android:textSize="@dimen/px_24" />
+</LinearLayout>

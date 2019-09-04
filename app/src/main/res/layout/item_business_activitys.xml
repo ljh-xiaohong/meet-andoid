@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/underline_bg_half_dp"
+    android:orientation="horizontal">
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/iv_business_activity_item_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="21dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_default" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp">
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="姓名"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="一天前"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_business_activity_item_name" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="8dp"
+            android:src="@mipmap/tab_post"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_business_activity_item_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_business_activity_item_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_business_activity_item_name" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="#D2B8A2"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_business_activity_item_name"
+            app:layout_constraintStart_toEndOf="@+id/imageView15"
+            app:layout_constraintTop_toTopOf="@+id/tv_business_activity_item_name" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_radiu_black_rect"
+            android:text="+ 关注"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_radiu_btn_light_pink"
+            android:text="正在进行"
+            android:textColor="#C06D66"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_business_activity_item_time" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="content content content content content content content"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_business_activity_item_status" />
+
+        <ImageView
+            android:id="@+id/iv_business_activity_item_content_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/default_pic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_business_activity_item_content" />
+
+        <LinearLayout
+            android:id="@+id/ll_business_activity_item_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#F6F6F7"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_business_activity_item_content_img">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张家辉觉得很赞" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_read_and_join_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:text="%d人看过，%d人参加"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_business_activity_item_comment" />
+
+        <TextView
+            android:id="@+id/tv_join_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_radiu_btn_dark_red"
+            android:text="一键参与"
+            android:textColor="#F2F5F7"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_read_and_join_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_read_and_join_num" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

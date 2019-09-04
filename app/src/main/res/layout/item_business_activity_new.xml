@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/underline_bg_half_dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <com.yuejian.meet.widgets.CircleImageView
+            android:id="@+id/iv_business_activity_item_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="21dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_default" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="26dp"
+            android:layout_toRightOf="@+id/iv_business_activity_item_head"
+            android:text="姓名"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_business_activity_item_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="9dp"
+            android:layout_toRightOf="@+id/iv_business_activity_item_head"
+            android:text="一天前"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="28dp"
+            android:layout_toLeftOf="@+id/tv_business_activity_item_follow"
+            android:layout_toRightOf="@+id/tv_business_activity_item_time"
+            android:drawableLeft="@mipmap/tab_post"
+            android:drawablePadding="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:textColor="#D2B8A2"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_radiu_black_rect"
+            android:text="+ 关注"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="59dp">
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_radiu_btn_light_pink"
+            android:text="正在进行"
+            android:textColor="#C06D66"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_business_activity_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
+            android:text="content content content content content content content"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <com.yuejian.meet.widgets.springview.MyGridView
+            android:id="@+id/gv_business_activity_item_imgs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"></com.yuejian.meet.widgets.springview.MyGridView>
+
+        <LinearLayout
+            android:id="@+id/ll_business_activity_item_likers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="#F6F6F7"
+            android:orientation="vertical"></LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="59dp">
+
+        <TextView
+            android:id="@+id/tv_read_and_join_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="19dp"
+            android:text="%d人看过，%d人参加" />
+
+
+        <TextView
+            android:id="@+id/tv_join_activity_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/bg_radiu_btn_dark_red"
+            android:text="一键参与"
+            android:textColor="#F2F5F7"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+

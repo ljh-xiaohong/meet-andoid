@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/white" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:id="@+id/itemt_area_wire" android:background="@color/vive_colors_wire_e6e6e6" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="@dimen/px_1" android:layout_marginLeft="@dimen/px_24" android:layout_marginRight="@dimen/px_24" />
+    <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_black_333333" android:gravity="center_vertical" android:id="@+id/area_letter" android:background="@color/setting_bg" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_24" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="@dimen/px_44" />
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/item_nation_area_code_layout" android:background="@color/white" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_40" android:layout_width="fill_parent" android:layout_height="@dimen/px_77">
+        <TextView android:textSize="@dimen/px_26" android:textColor="@color/color_black_333333" android:id="@+id/item_nation_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="中国" android:layout_weight="1.0" />
+        <TextView android:textSize="@dimen/px_26" android:id="@+id/item_area_code" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+86" />
+    </LinearLayout>
+</LinearLayout>

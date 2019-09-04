@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/px_8"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:text="聊天背景"
+        android:textColor="#ff7c7c7c"
+        android:textSize="@dimen/px_30"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/black_list"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通讯录黑名单"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/px_8"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:text="@string/home_action_name"
+        android:textColor="#ff7c7c7c"
+        android:textSize="@dimen/px_30" />
+
+    <LinearLayout
+        android:id="@+id/action_user_permission"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Allow_viewing_of_dynamic"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/action_user_permission_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4.0dip"
+            android:text="@string/owner"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/px_28" />
+
+        <ImageView
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <LinearLayout
+        android:id="@+id/action_brows_rank"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@drawable/selector_bottom_bar_bg"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Allow_viewing_of_dynamic2"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30"
+            android:typeface="serif" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/privacy_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4.0dip"
+            android:text="@string/home_all_name"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/px_28" />
+
+        <ImageView
+            android:layout_width="20.0dip"
+            android:layout_height="20.0dip"
+            android:src="@mipmap/icon_wd_gengduo" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#fff7f7f7" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_88"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/px_8"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24"
+            android:text="约单"
+            android:textColor="#ff7c7c7c"
+            android:textSize="@dimen/px_30" />
+
+        <LinearLayout
+            android:id="@+id/order_setting"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_88"
+            android:background="@drawable/selector_bottom_bar_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在个人主页展示约单"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:typeface="serif" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:button="@drawable/selector_toggle_btn_bg" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="#fff7f7f7" />
+    </LinearLayout>
+</LinearLayout>

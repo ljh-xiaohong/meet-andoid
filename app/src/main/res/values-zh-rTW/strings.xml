@@ -1,0 +1,1398 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="hello_blank_fragment_home">Hello blank fragment home</string>
+    <string name="app_name">百家姓氏</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--底部tab-->
+    <string name="tab_rbtn_trinidad_eye">填寫資料</string>
+    <string name="tab_rbtn_msg">消息</string>
+    <string name="tab_rbtn_contact_list">通訊錄</string>
+    <string name="tab_rbtn_mine">我</string>
+    <string name="video_select">視頻選擇</string>
+
+    <!--頂部toolbar-->
+    <string name="title_bar_txt_send_request">發起請求</string>
+    <string name="title_bar_hint_search">輸入關鍵字或昵稱搜索</string>
+    <string name="title_bar_txt_recorder_again">重拍</string>
+    <string name="title_bar_txt_confirm">確定</string>
+
+
+    <!--我-->
+    <string name="mine_txt_login_reg">登錄</string>
+    <string name="mine_txt_review">評價</string>
+    <string name="mine_txt_img_text_aty_prize">分享有獎</string>
+    <string name="discover_txt_prize">推薦有獎</string>
+    <string name="mine_txt_img_text_aty_msg">消息</string>
+    <string name="mine_txt_img_text_aty_notic">通知</string>
+    <string name="mine_txt_img_text_aty_direct__msg">私信</string>
+    <string name="mine_txt_img_text_aty_address_list">通訊錄</string>
+    <string name="mine_txt_wallet">賬單明細</string>
+    <string name="mine_txt_setting">設置</string>
+    <string name="mine_txt_agree">•開通即視為同意</string>
+    <string name="mine_bright_accpect">《百家姓氏VIP用戶協議電子版》</string>
+
+    <!--登錄註冊-->
+    <string name="login_hint_pwd">請輸入密碼</string>
+    <string name="login_btn_login">登錄</string>
+    <string name="login_btn_logout">退出</string>
+    <string name="login_text_reg">註冊賬號</string>
+    <string name="login_text_forget_pwd">忘記密碼</string>
+    <string name="reg_text_commonly_phone">請輸入常用手機號碼</string>
+    <string name="reg_hint_phone">請輸入手機號碼</string>
+    <string name="reg_hint_ver">請輸入驗證碼</string>
+    <string name="reg_btn_next">下一步</string>
+    <string name="reg_btn_redpackage">發紅包</string>
+    <string name="reg_btn_go">繼續</string>
+    <string name="reg_hint_verify_code">請輸入驗證碼</string>
+    <string name="reg_text_verify_code_time">獲取驗證碼</string>
+    <string name="reg_text_usage_agreement1">註冊即代表您同意</string>
+    <string name="reg_text_usage_agreement">
+        <u>用戶協議</u>
+    </string>
+    <string name="reg_text_usage_agreement2">
+        <u>隱私政策</u>
+    </string>
+    <string name="reg_text_usage_agreement3">登錄即代表您同意</string>
+    <string name="reg_hint_login_pwd">請再次輸入密碼</string>
+    <string name="reg_hint_login_new_pwd">請輸入新的密碼</string>
+    <string name="reg_hint_login_new_pwd2">請再次輸入新的密碼</string>
+    <string name="reg_rb_man">男</string>
+    <string name="reg_rb_wonman">女</string>
+    <string name="dialog_text_bank">解除綁定</string>
+    <string name="dialog_text_cancel">取消</string>
+    <string name="dialog_text_save">保存</string>
+    <string name="text_save_failed">保存失敗</string>
+    <string name="text_save_suc">保存成功</string>
+    <string name="reg_text_information">個人信息</string>
+    <string name="reg_text_family_name">姓</string>
+    <string name="reg_text_surname_name">名</string>
+    <string name="reg_hint_select_family_name">請選擇您的姓氏（不可修改）</string>
+    <string name="reg_hint_select_surname_name">請輸入您的名字</string>
+    <string name="reg_text_birth">生日</string>
+    <string name="reg_hint_birth">請選擇出生日期</string>
+    <string name="reg_text_gender">性別</string>
+
+    <!--修改登錄密碼-->
+    <string name="text_modify_old">輸入原密碼</string>
+    <string name="text_modify_new">輸入新密碼</string>
+    <string name="text_modify_new2">再次輸入新密碼</string>
+
+    <!--系統通知-->
+    <string name="tex_about_notice">系統通知</string>
+    <string name="tex_about_account">《約見用戶使用協議》</string>
+    <string name="tex_about_version">版本檢測</string>
+    <string name="tex_about_version2">（可更新至最新版本）</string>
+
+
+    <!--下拉刷新，上拉加載-->
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">釋放立即刷新</string>
+    <string name="refreshing1">正在刷新&#8230;</string>
+    <string name="refresh_success">刷新成功</string>
+    <string name="refresh_null">沒有更多數據了</string>
+    <string name="refresh_fail">刷新失敗</string>
+    <string name="pullup_to_load">上拉加載更多</string>
+    <string name="release_to_load">釋放立即加載</string>
+    <string name="loading">正在加載&#8230;</string>
+    <string name="load_succeed">加載成功</string>
+    <string name="load_fail">加載失敗</string>
+
+    <!--底部PopupWindow-->
+    <string name="pw_txt_cancel">取消</string>
+    <string name="pw_txt_comment">評價</string>
+
+    <!--評價頁面-->
+    <string name="play_end_btn_txt">評價</string>
+    <string name="submit_evaluate_txt">提交評價</string>
+    <string name="whole_evaluate_txt">整體評價</string>
+    <string name="good_evaluate_txt">好評</string>
+    <string name="middle_evaluate_txt">中評</string>
+    <string name="bad_evaluate_txt">差評</string>
+    <string name="evaluate_detail_txt">評價詳情（選填）</string>
+    <string name="evaluate_detail_txt_label">您的評價對其他用戶有很大幫助（請文明留言）</string>
+    <string name="evaluate_upload_pic">上傳照片（選填）</string>
+    <string name="evaluate_anonymous_txt">匿名</string>
+    <string name="evaluate_open_txt">公開</string>
+    <string name="common_btn_txt">完成</string>
+    <string name="careate_clan">建立宗親會</string>
+
+    <!--提示語-->
+    <string name="toast_net_error_txt">網絡連接異常，請檢查網絡設置</string>
+
+    <!--發送邀請帖-->
+    <string name="txt_get_service_failed">計費詳情，點擊查看</string>
+
+
+    <!--評價-->
+    <string name="txt_comment_all">全部</string>
+    <string name="txt_comment_good">好評</string>
+    <string name="txt_comment_middle">中評</string>
+    <string name="txt_comment_bad">差評</string>
+
+    <!--刷新數據提示-->
+    <string name="txt_no_more_data">沒有更多數據了</string>
+
+    <!--視頻過程中-->
+    <string name="txt_video_accept">接受</string>
+    <string name="txt_video_refuse">拒絕</string>
+    <string name="txt_video_refuse_online">撤下服務</string>
+    <string name="txt_video_bottom_notify">請點擊上方的“好評率”，留意對方的信譽(即評價記錄及地理位置信息)</string>
+    <string name="txt_good_evaluate_rate">好評率：</string>
+    <string name="text_mine_person">登錄 | 註冊</string>
+    <string name="text_mine_total_money">總金幣</string>
+    <string name="text_mine_money_lable">金幣</string>
+    <string name="text_mine_recharge_money">購買的金幣</string>
+    <string name="text_mine_recharge_lable">購買金幣</string>
+    <string name="text_mine_income">收益的金幣</string>
+    <string name="text_mine_account_detail">賬單明細</string>
+    <string name="txt_you_follow">您關註了</string>
+    <string name="txt_follow_you">關註了您</string>
+
+    <!--消息列表-->
+    <string name="text_mine_num">約見號</string>
+    <string name="text_mine_me">我</string>
+    <string name="text_login_and">和</string>
+    <string name="text_login_zc">《隱私政策》</string>
+    <string name="text_login_choose_type">選擇登錄方式</string>
+    <string name="text_login_wx">微信</string>
+    <string name="text_login_qq">QQ</string>
+    <string name="text_login_weibo">微博</string>
+    <string name="text_login_phone">手機號</string>
+    <string name="text_setting_lable">設置</string>
+    <string name="title_reg_money">購買金幣</string>
+    <string name="net_error_tips">網絡異常,請檢查網絡.</string>
+    <string name="toast_huanc">緩存已清空</string>
+    <!--    <string name="title_preson_detail">我的主頁</string>-->
+    <string name="text_person_man">男</string>
+    <string name="text_person_woman">女</string>
+    <string name="swipe_delete">刪除</string>
+
+    <string name="qq_friends">QQ好友</string>
+    <string name="wx_friends">微信好友</string>
+    <string name="qq_space">QQ空間</string>
+    <string name="wx_space">微信朋友圈</string>
+    <string name="sina_space">新浪微博</string>
+    <string name="twitter_space">Twitter</string>
+    <string name="facebook_space">Facebook</string>
+
+    <string name="text_zfb">支付寶</string>
+    <string name="text_wx">微信</string>
+    <string name="toast_waz">未安裝微信，請安裝後再試</string>
+    <string name="text_kfh_address">開戶行地址</string>
+    <string name="toast_name_not_data">姓名不能為空</string>
+    <string name="toast_sjh_not">手機號不能為空</string>
+    <string name="toast_sjh_not2">手機號不正確</string>
+    <string name="text_cxhq">重新獲取</string>
+    <string name="txt_sms">短信</string>
+
+    <!--視頻直播采集端和播放端-->
+    <string name="txt_no_send_empty_msg">親！不能發送空消息哦</string>
+    <string name="txt_send_success">發送成功</string>
+    <string name="txt_send_failed">發送失敗</string>
+
+    <!--帖子列表-->
+    <string name="txt_feed_price">金幣/分鐘</string>
+
+    <string name="image">圖片</string>
+    <string name="video">視頻</string>
+
+    <!--圖片選擇-->
+    <string name="txt_select_image">選擇相冊</string>
+    <string name="txt_more_pics">最多只能選擇9張圖片</string>
+
+    <!--common-->
+    <string name="txt_pressed_exit">再按一次退出</string>
+    <string name="txt_you_confirm_give_up">您確定放棄領取嗎？</string>
+    <string name="txt_sex_no_update">選擇性別後將不能修改</string>
+    <string name="txt_pic">[圖片]</string>
+    <string name="txt_video">[視頻]</string>
+    <string name="txt_video_chat">[視頻聊天]</string>
+    <string name="gift_pic">[禮物]</string>
+    <string name="red_packet">[紅包]</string>
+    <string name="txt_audio">[語音消息]</string>
+    <string name="txt_location">[位置]</string>
+    <string name="txt_file">[文件]</string>
+    <string name="txt_secret">[閱後即焚]</string>
+    <string name="txt_notify">[通知]</string>
+    <string name="txt_group_hint">[群提示]</string>
+    <string name="txt_The_group_of">[邀請入群]</string>
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">確定</string>
+
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">時</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
+
+    <string name="fragment_comments_detail_tips2">好評</string>
+    <string name="fragment_comments_detail_tips3">中評</string>
+    <string name="fragment_comments_detail_tips4">差評</string>
+    <string name="activity_render_request_tips4">發送</string>
+    <string name="hint_say_st">說點什麽吧</string>
+    <string name="hint_say_st_2">發布動態...</string>
+    <string name="live_send_pay_tips">妳向 %1$s 贈送了 %2$s金幣)</string>
+    <string name="live_receive_tips">向妳贈送了 %1$s金幣)</string>
+    <!-- xxx向妳贈送了yyy (+3金幣)-->
+    <string name="title_job">選擇行業</string>
+
+
+    <string name="oto_minute_ago">分鐘前</string>
+    <string name="oto_hour_ago">小時前</string>
+    <string name="oto_yesterday">昨天</string>
+    <string name="oto_the_day_before_yesterday">前天</string>
+    <string name="oto_day_ago">天前</string>
+    <string name="one_month_age">1個月前</string>
+    <string name="two_month_age">2個月前</string>
+    <string name="three_month_age">3個月前</string>
+    <!--最新-->
+    <string name="txt_discover">發現</string>
+    <string name="toast_video_tips">請文明視聊，發布謾罵、色情低俗、廣告、政治敏感等內容及違禁品交易信息將會被封停賬號。</string>
+    <string name="text_qr_code_to_praise">二維碼</string>
+
+    <!--網易雲音視頻-->
+
+    <string name="nrtc_settings">網絡通話設置</string>
+    <string name="nrtc_setting_net">網絡</string>
+    <string name="nrtc_setting_voe">語音通話</string>
+    <string name="nrtc_setting_vie">視頻通話</string>
+    <string name="nrtc_setting_other">其它</string>
+    <string name="nrtc_setting_vie_crop_key">nrtc_setting_vie_crop_key</string>
+    <string name="nrtc_setting_vie_crop">畫面裁剪</string>
+    <string name="nrtc_setting_vie_quality_key">nrtc_setting_vie_quality_key</string>
+    <string name="nrtc_setting_other_device_default_rotation_key">
+        nrtc_setting_other_device_default_rotation_key
+    </string>
+    <string name="nrtc_setting_other_device_default_rotation">設備默認旋轉角度(特殊設備使用)</string>
+    <string name="nrtc_setting_other_device_rotation_fixed_offset_key">
+        nrtc_setting_other_device_rotation_fixed_offset_key
+    </string>
+    <string name="nrtc_setting_other_device_rotation_fixed_offset">設備旋轉角度修正偏移量(特殊設備使用)</string>
+    <string name="nrtc_setting_vie_rotation_key">nrtc_setting_vie_rotation_key</string>
+    <string name="nrtc_setting_vie_rotation">畫面旋轉</string>
+    <string name="nrtc_setting_vie_default_front_camera_key">
+        nrtc_setting_vie_default_front_camera_key
+    </string>
+    <string name="nrtc_setting_vie_default_front_camera">默認前置攝像頭</string>
+    <string name="nrtc_setting_vie_hw_encoder_key">nrtc_setting_vie_hw_encoder_key</string>
+    <string name="nrtc_setting_vie_hw_encoder">硬件編碼(僅部分設備支持)</string>
+    <string name="nrtc_setting_vie_hw_decoder_key">nrtc_setting_vie_hw_decoder_key</string>
+    <string name="nrtc_setting_vie_hw_decoder">硬件解碼(僅部分設備支持)</string>
+    <string name="nrtc_setting_other_server_record_audio_key">
+        nrtc_setting_other_server_record_audio_key
+    </string>
+    <string name="nrtc_setting_other_server_record_audio">音頻服務器錄制</string>
+    <string name="nrtc_setting_other_server_record_video_key">
+        nrtc_setting_other_server_record_video_key
+    </string>
+    <string name="nrtc_setting_other_server_record_video">視頻服務器錄制</string>
+    <string name="nrtc_setting_voe_call_proximity_key">nrtc_setting_voe_call_proximity_key</string>
+    <string name="nrtc_setting_voe_call_proximity">通話期間關閉屏幕</string>
+    <string name="nrtc_setting_voe_muted_key">nrtc_setting_voe_muted_key</string>
+    <string name="nrtc_setting_voe_muted">語音流靜音處理</string>
+    <string name="nrtc_setting_vie_muted_key">nrtc_setting_vie_muted_key</string>
+    <string name="nrtc_setting_vie_muted">視頻流靜音處理</string>
+    <string name="nrtc_setting_vie_fps_reported_key">nrtc_setting_vie_fps_reported_key</string>
+    <string name="nrtc_setting_vie_fps_reported">幀率匯報</string>
+    <string name="nrtc_setting_vie_max_bitrate_key">nrtc_setting_vie_max_bitrate_key</string>
+    <string name="nrtc_setting_vie_max_bitrate">碼率(Kbps)</string>
+    <string name="nrtc_setting_voe_audio_aec_key">nrtc_setting_voe_audio_aec_key</string>
+    <string name="nrtc_setting_voe_audio_aec">Acoustic Echo Canceler</string>
+    <string name="nrtc_setting_voe_audio_agc_key">nrtc_setting_voe_audio_agc_key</string>
+    <string name="nrtc_setting_voe_audio_agc">Automatic Gain Control</string>
+    <string name="nrtc_setting_voe_audio_ns_key">nrtc_setting_voe_audio_ns_key</string>
+    <string name="nrtc_setting_voe_audio_ns">Noise Suppressor</string>
+
+
+    <string name="avchat_net_error_then_quit">網絡異常，通話結束</string>
+    <string name="avchat_call_finish">通話結束</string>
+    <string name="avchat_peer_reject">對方拒絕了本次通話</string>
+    <string name="avchat_peer_protocol_low_version">對方版本過低，請提示對方升級</string>
+    <string name="avchat_local_protocol_low_version">版本過低，請升級後使用</string>
+    <string name="avchat_invalid_channel_id">視頻通話已結束</string>
+    <string name="avchat_local_call_busy">本地通話中，無法使用易信進行通話。</string>
+    <string name="avchat_peer_busy">對方正在通話中，請稍後再撥。</string>
+    <string name="avchat_wait_recieve">等待對方接聽…</string>
+    <string name="avchat_audio_call_request">請求通話</string>
+    <string name="avchat_connecting">連接中…</string>
+    <string name="avchat_audio_to_video_invitation">對方邀請妳開啟視頻聊天…</string>
+    <string name="avchat_cannot_establish_connection">無法和對方建立連接</string>
+    <string name="avchat_network_unstable_notificaton">當前網絡不穩定</string>
+    <string name="avchat_peer_close_camera">對方關閉了攝像頭</string>
+    <string name="avchat_peer_open_camera">對方打開了攝像頭</string>
+    <string name="avchat_local_close_camera">妳關閉了攝像頭</string>
+    <string name="avchat_audio_to_video_wait">正在等待對方開啟攝像頭…</string>
+    <string name="avchat_no_pick_up">未接聽</string>
+    <string name="avchat_no_response">無人接聽,請稍候重試</string>
+    <string name="avchat_buddy_reject">對方正忙</string>
+    <string name="avchat_cancel">已取消</string>
+    <string name="avchat_switch_video_reject">對方不同意音頻切換為視頻！</string>
+    <string name="avchat_notification">正在與%1$s通話中，點擊繼續</string>
+    <string name="avchat_hangup_notificaion">%1$s:【網絡通話】</string>
+    <string name="avchat_call">網絡通話</string>
+    <string name="avchat_no_pickup_call">未接聽</string>
+    <string name="avchat_call_failed">對方不在線，請稍後重試</string>
+    <string name="avchat_no_permission">暫無權限，請開通音視頻服務</string>
+    <string name="avchat_in_switch">請耐心等待！</string>
+    <string name="txt_me">我</string>
+    <string name="start_session_record">我發起了白板演示</string>
+    <string name="session_end_record">白板演示已結束</string>
+    <string name="txt_login_tips">其他登錄方式</string>
+    <string name="title_send_dynamic">發布動態</string>
+    <string name="txt_edit_photo">拍照</string>
+    <string name="txt_edit_select_album">從相冊選擇</string>
+    <string name="txt_edit_save_photo">保存照片</string>
+    <string name="txt_send_gift_failed">禮物發送失敗，請重試</string>
+    <string name="txt_charging_tips">不足1分鐘，按1分鐘收費；</string>
+
+    <!--還可輸入%1$s-->
+    <string name="txt_my_thme">我擅長的話題是：</string>
+
+    <string name="input_panel_audio_call">語音通話</string>
+    <string name="input_panel_video_call">視頻聊天</string>
+    <!-- team video call -->
+    <string name="t_avchat_not_start_with_less_member">無法發起，人數少於2人</string>
+    <string name="t_avchat_start">發起了視頻聊天</string>
+    <string name="t_avchat_create_room_fail">創建房間失敗</string>
+    <string name="t_avchat_push_content">"[網絡通話]"</string>
+
+    <string name="message_history_query">雲消息記錄</string>
+    <string name="message_clear">清空本地消息記錄</string>
+    <string name="input_panel_snapchat">input_panel_snapchat</string>
+
+    <!-- 閱後即焚 -->
+    <string name="snapchat_longclick_to_view">按住查看</string>
+    <string name="snapchat_title">閱後即焚</string>
+
+    <string name="nrtc_setting_other_webrtc_compat_key">setting_other_webrtc_compat_key</string>
+    <string name="nrtc_setting_vie_crop_ratio_key">nrtc_setting_vie_crop_ratio_key</string>
+    <string name="nrtc_setting_voe_high_quality_key">nrtc_setting_voe_high_quality_key</string>
+    <string name="nrtc_setting_voe_high_quality">高清語音</string>
+    <string name="nrtc_setting_voe_dtx_key">nrtc_setting_voe_dtx_key</string>
+    <string name="nrtc_setting_voe_dtx">人聲檢測</string>
+
+    <string name="avchat_refuse">掛斷</string>
+    <string name="avchat_receive">開啟</string>
+    <string name="avchat_pickup">接聽</string>
+
+    <string name="avchat_hangup">結束通話</string>
+    <string name="avchat_switch_to_video">切換視頻</string>
+    <string name="avchat_switch_to_audio">切換語音</string>
+    <string name="avchat_video_call_request">正在等待對方接受邀請…</string>
+    <string name="avchat_audio_call_wifi_unavailable_tip">當前非WiFi環境，每分鐘將產生約0.5M的流量</string>
+    <string name="avchat_network_grade_0">網絡通暢：</string>
+    <string name="avchat_network_grade_1">網絡正常：</string>
+    <string name="avchat_network_grade_2">網絡一般：</string>
+    <string name="avchat_network_grade_3">網絡較差：</string>
+    <string name="title_activity_av_chat_evaluate">AvChatEvaluateActivity</string>
+    <string name="title_activity_video_call_info">VideoCallInfoActivity</string>
+    <string name="copyright">\@約見科技 版權所有\nCopyRight 2017 Yuejian Network\nAll Rights Reserved</string>
+    <string name="tips_select_goods"> "若不填寫信息，\n傳承使者審核將不被通過"</string>
+    <string name="coupon_usage_rule">1.購物券不找贖，不可兌換現金；\n2.購物券不可退換，過期失效；</string>
+    <string name="save_in_gallery">保存到相冊</string>
+    <string name="go_back_home">返回首頁</string>
+
+    <string name="invite_check_out">查看詳情 ></string>
+    <string name="invite_member">邀請成員</string>
+    <string name="yi">宜</string>
+    <string name="ji">忌</string>
+
+    <string name="ic_faxian"></string>
+    <string name="ic_find_jiazuquan"></string>
+    <string name="ic_jiazu"></string>
+    <string name="ic_message_address_book"></string>
+    <string name="ic_message_group"></string>
+    <string name="ic_message_inform"></string>
+    <string name="ic_message_video_communicate"></string>
+    <string name="ic_mine"></string>
+    <string name="ic_navbar_more"></string>
+    <string name="ic_navbar_search"></string>
+    <string name="ic_qianbao"></string>
+    <string name="ic_qrcode_wode"></string>
+    <string name="ic_renzhengzhongxin"></string>
+    <string name="ic_shangyu"></string>
+    <string name="ic_shezhi"></string>
+    <string name="ic_shiyongshouce"></string>
+    <string name="ic_wodewenzhang"></string>
+    <string name="ic_xinxi"></string>
+    <string name="ic_zongqin"></string>
+    <string name="ic_zongqinhui"></string>
+    <string name="ic_zuci"></string>
+
+    <string name="iknow">知道了</string>
+    <string name="relative_family">"關聯 家人"</string>
+    <string name="person_home">"個人 主頁"</string>
+    <string name="title_invite_family">凡邀請1位家人註冊APP,您將獲得100金幣</string>
+    <string name="title_invite_family_bold">您將隨機獲得1~10積分獎勵</string>
+    <string name="title_invite_family_link_dec">積分可用於積分商城消費 ></string>
+    <string name="gengguo">更多</string>
+
+    <string name="manual_originator_name">傳承使者\n認領說明</string>
+    <string name="manual_chat_manual_name">約見群聊\n準則</string>
+    <string name="manual_in_cash_name">用戶充值\n協議</string>
+    <string name="manual_out_cash_name">用戶提現\n規則</string>
+
+
+    <!--主頁-->
+    <string name="main_city_name">家族</string>
+    <string name="main_message_name">消息</string>
+    <string name="main_find_name">發現</string>
+    <string name="main_mine_name">我的</string>
+    <string name="main_according_exit_name">再按一次退出程序</string>
+    <string name="main_no_longer_showing_title_hint_name">下線提示</string>
+    <string name="main_no_longer_showing_hint_name">您的帳號在另一個設備登錄</string>
+    <string name="main_input_invitation_code_name">輸入邀請碼</string>
+    <string name="main_invitation_code_name">邀請碼</string>
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
+
+    <string name="modify_successfully">修改成功</string>
+    <string name="change_failed">修改失敗</string>
+    <string name="Video_offline">視頻下線</string>
+    <string name="Video_online">視頻上線</string>
+    <string name="examine">查看</string>
+    <string name="set_a_password">請先設置提現密碼</string>
+    <string name="whether_online">是否上線?</string>
+    <string name="whether_offline">是否下線?</string>
+    <string name="hint">提示</string>
+    <string name="online_success">上線成功</string>
+    <string name="offline_success">下線成功</string>
+    <string name="under_certification">正在認證中</string>
+    <string name="call_records">通話記錄</string>
+    <string name="you_want_to_delete">您確定要刪除嗎</string>
+    <string name="release">發布</string>
+    <string name="release_the_dynamic">發布動態</string>
+    <string name="select_add_dynamic_mapping">選擇添加動態配圖</string>
+    <string name="please_fill_what_you_want_to_say">請填寫妳想說的話</string>
+    <string name="release_success">發布成功!</string>
+    <string name="uploading_pictures">正在上傳圖片!</string>
+    <string name="photo_at_most">最多能選9張</string>
+    <string name="photo_at_most_15">不能上傳超過15張私照哦~</string>
+    <string name="contents_of_violation">上傳圖片中，含違規內容，請重新上傳~</string>
+    <string name="network_error">網絡錯誤，請設置網絡</string>
+    <string name="cateway_timeout">網關超時</string>
+    <string name="connection_timeout">連接超時</string>
+    <string name="alipay_app_failed_to_set_up">支付寶App調起失敗</string>
+    <string name="H5_continue_using_the_page_complete_payment">點擊確認，使用H5頁面繼續完成支付</string>
+    <string name="payment_success">支付成功</string>
+    <string name="for_cancellation">支付取消</string>
+    <string name="please_select_recharge_mode">請選擇充值方式</string>
+    <string name="failed_to_update_wallet">更新錢包失敗</string>
+    <string name="my_photo_albums">我的相冊</string>
+    <string name="the_album_of_the_ta">Ta的相冊</string>
+    <string name="ta_received">收到</string>
+    <string name="one_message">條消息</string>
+    <string name="no_gifts_have_been_received">目前未收到任何禮物</string>
+    <string name="no_gifts_have_been_sent">目前未送出任何禮物</string>
+    <string name="my_private_photos">我的私照</string>
+    <string name="ta_private_photos">Ta的私照</string>
+    <string name="my_dynamic">我的動態</string>
+    <string name="ta_dynamic">Ta的動態</string>
+    <string name="ta_who_read">Ta看過誰</string>
+    <string name="who_s_seen_the_ta">誰看過Ta</string>
+    <string name="please_login_before_sharing_me">請先登錄再分享我哦~</string>
+    <string name="share_to">分享到...~</string>
+    <string name="according_to_view_private">查看私照</string>
+    <string name="the_evaluation_details">評價詳情</string>
+    <string name="anonymity">匿名</string>
+    <string name="i_evaluate">我 評價</string>
+    <string name="evaluate_i">評價 我</string>
+    <string name="her_evaluation">她 評價</string>
+    <string name="evaluation_ber">評價 她</string>
+    <string name="authenticated">已認證</string>
+    <string name="authentication_failure">認證失敗</string>
+    <string name="co_to_the_certification">去認證</string>
+    <string name="authorization_failure">授權失敗</string>
+    <string name="login_failure">登錄失敗</string>
+    <string name="is_requesting">正在請求</string>
+    <string name="not_install_qq">未裝QQ，請安裝再試</string>
+    <string name="not_install_weChat">未裝微信，請安裝再試</string>
+    <string name="is_submitted">正在提交</string>
+    <string name="register">註冊</string>
+    <string name="experience_immediately">立即體驗</string>
+    <string name="wechat">微信</string>
+    <string name="to_login">賬號登錄</string>
+    <string name="goddess">女神</string>
+    <string name="newest">最新</string>
+    <string name="search_all">搜索ID/昵稱/職業</string>
+    <string name="and">和</string>
+    <string name="sms_login">手機短信登錄</string>
+    <string name="please_enter_your_cell_phone_number">請輸入手機號</string>
+    <string name="please_enter_your_cell_phone_number_new">請輸入新手機號</string>
+    <string name="please_enter_the_correct_mobile_phone_number">請輸入正確的手機號碼</string>
+    <string name="retrieve_the_verification_code">重新獲取驗證碼</string>
+    <string name="platform_bound_phones">*只有在朵聊平臺綁定過的手機才可以執行驗證碼登錄。</string>
+    <string name="recommendation_code_sharing">推薦碼分享</string>
+    <string name="copied_link">已復制鏈接：</string>
+    <string name="promotion_of_earnings">推廣收益</string>
+    <string name="number_of_people">人數</string>
+    <string name="commission_than">提成比</string>
+    <string name="total_revenue">總收益/金幣</string>
+    <string name="promotion_of_hierarchy">推廣層級</string>
+    <string name="Level_chat_friend">一級聊友</string>
+    <string name="privacy_settings">隱私設置</string>
+    <string name="set_the_withdrawal_password">設置提現密碼</string>
+    <string name="binding_mobile_phone">綁定手機</string>
+    <string name="binding_mobile_phone_first">請先去綁定手機哦~</string>
+    <string name="please_bind_your_mobile_phone_number">請綁定手機號碼</string>
+    <string name="shake">震動</string>
+    <string name="versions">版本</string>
+    <string name="user_usage_protocol">用戶使用協議</string>
+    <string name="in_regard_to">關於</string>
+    <string name="change_mobile_phone_number">更改手機號</string>
+    <string name="change_mobile_phone_number2">更換手機號</string>
+    <string name="binding_success">綁定成功</string>
+    <string name="next_step">下一步</string>
+    <string name="confirm_the_binding">確認綁定</string>
+    <string name="verification_code">驗證碼</string>
+    <string name="account_security_hint">為了保障您的賬戶安全，請輸入手機號，以驗證身份。我們不會在未經您的批準下，將您的手機號告知第三方。</string>
+    <string name="change_the_withdrawal_password">修改提現密碼</string>
+    <string name="reset_withdrawal_password">重置提現密碼</string>
+    <string name="withdrawal_password_set_successfully">提現密碼設置成功</string>
+    <string name="the_name_your_primary_school">妳的小學學校的名字</string>
+    <string name="your_favorite_star">妳最喜歡的明星？</string>
+    <string name="where_you_were_born">妳的出生地？</string>
+    <string name="please_enter_the_withdrawal_password">請輸入提現密碼</string>
+    <string name="the_passwords_entered_are_different">兩次輸入的密碼不一樣</string>
+    <string name="please_select_the_security_issue">請選擇密保問題</string>
+    <string name="please_enter_your_security_answer">請輸入妳的密保答案</string>
+    <string name="please_enter_6_bit_password">請輸入6位的密碼</string>
+    <string name="please_enter_new_password">請輸入新密碼</string>
+    <string name="the_passwords_entered_are_inconsistent">兩次輸入的密碼不一致</string>
+    <string name="please_enter_the_security_answer">請輸入密保答案</string>
+    <string name="successful_authentication">驗證成功，請重設密碼</string>
+    <string name="withdrawal_password">提現密碼</string>
+    <string name="confirm_withdrawal_password">確認提現密碼</string>
+    <string name="enter_the_answer">輸入答案</string>
+    <string name="old_withdrawal_code">舊提現密碼</string>
+    <string name="please_enter_the_old_withdrawal_password">請輸入舊提現密碼</string>
+    <string name="new_withdrawal_code">新提現密碼</string>
+    <string name="please_enter_new_withdrawal_code">請輸入新提現密碼</string>
+    <string name="please_confirm_the_new_withdrawal_password">請確認新提現密碼</string>
+    <string name="submit">提交</string>
+    <string name="security_question">密保問題</string>
+    <string name="answer">答案</string>
+    <string name="set_login_password">設置登錄密碼</string>
+    <string name="password_length_cannot_be_less_than_6_bits">密碼長度不能小於6位</string>
+    <string name="please_confirm_the_new_password">請確認新密碼</string>
+    <string name="please_enter_the_old_password">請輸入舊密碼</string>
+    <string name="set_password_successfully">設置密碼成功</string>
+    <string name="failed_to_set_password">設置密碼失敗</string>
+    <string name="visit_others_home_pages_without_any_trace">無痕瀏覽他人主頁</string>
+    <string name="mine_longin">登錄</string>
+    <string name="project_name">約見號：</string>
+    <string name="Friend_request_family">妳的好友邀請妳進入家族</string>
+    <string name="Family_the_clan_slogan">約見app是一款基於百家姓的APP，旨在凝聚家族力量，弘揚百家姓文化。帶妳追根溯源，找到家族宗親</string>
+    <string name="Please_log_in">請登錄，才能使用完成功能</string>
+    <string name="Ancestral_shrine_remit">祖祠匯</string>
+    <string name="Ancestral_shrine_remit_describe">家廟宗祠祖祠</string>
+    <string name="Clansmen_association">宗親會</string>
+    <string name="Clansmen_association_all">所有宗親會</string>
+    <string name="Clansmen_association_describe">同姓宗親聯誼</string>
+    <string name="Near_the_clan">附近宗親</string>
+    <string name="The_family_dynamic">家族動態</string>
+    <string name="surnames">姓氏</string>
+    <string name="surnames_all">全部</string>
+    <string name="nationwide">全國</string>
+    <string name="attention">關註</string>
+    <string name="attention2">已關註</string>
+    <string name="add_attention">加關註</string>
+    <string name="Video_can_t_be_big">視頻不能大於10秒</string>
+    <string name="Continuous_sign_in">您已連續簽到</string>
+    <string name="Continuous_sign_in2">天，再接再勵哦 本次修行值+10</string>
+    <string name="Immediately_binding">立即綁定0</string>
+    <string name="Sign_in_successfully">簽到成功</string>
+    <string name="bangding_phone">綁定手機</string>
+    <string name="in_operation">正在操作...</string>
+    <string name="Fill_in_the_location">您需要先填寫所在地方可進行消費</string>
+    <string name="To_fill_in">前往填寫</string>
+    <string name="Cancel_the_top">取消置頂</string>
+    <string name="but_top">置頂</string>
+    <string name="group_chat">群聊</string>
+    <string name="clan_relatives">宗親</string>
+    <string name="Ancestral_shrine">祖祠</string>
+    <string name="article">文章</string>
+    <string name="out_login">妳確定要退出登錄嗎？</string>
+    <string name="langage">語言</string>
+    <string name="New_message_alert">新消息提醒</string>
+    <string name="chat">聊天</string>
+    <string name="privacy">隱私</string>
+    <string name="The_receiver_plays_voice">使用聽筒播放語音</string>
+    <string name="voice">聲音</string>
+    <string name="Notification_of_new_information">新消息提醒通知</string>
+    <string name="Invite_your_family">邀請好友</string>
+    <string name="integral">積分 + </string>
+    <string name="registration_date">註冊時間</string>
+    <string name="china">中國</string>
+    <string name="Select_Country">選擇國家/地區</string>
+    <string name="pudata_phone_title_hint">更換手機後，下次登錄可以用新手機號登錄。\n當前手機號：#phone</string>
+    <string name="check_for_updates">檢查更新</string>
+    <string name="It_s_the_latest_version">已是最新版本</string>
+    <string name="It_s_the_latest_version_2">有新版本更新,點擊更新</string>
+    <string name="Appointment">約見</string>
+    <string name="Only_7_days">近7天</string>
+    <string name="Only_30_days">近30天</string>
+    <string name="Only_days">近半年</string>
+    <string name="owner">所有人</string>
+    <string name="owner2">僅自己</string>
+    <string name="friend">好友</string>
+    <string name="Allow_viewing_of_dynamic">允許查看動態的用戶</string>
+    <string name="Allow_viewing_of_dynamic2">允許查看動態的範圍</string>
+    <string name="wechat_login">微信登錄</string>
+    <string name="phone_login">手機登錄</string>
+    <string name="Temporarily_not_login">暫不登錄</string>
+    <string name="reach">及</string>
+    <string name="Login_means_read_and_agree">登錄即代表閱讀並同意</string>
+    <string name="Verify_cell_phone_number">驗證手機號</string>
+    <string name="Verify_cell_phone_number2">手機號僅用於登錄及保證障賬戶安全</string>
+    <string name="Verify_cell_phone_number3">手機驗證登錄</string>
+    <string name="Select_the_country_and_area_code">選擇國家和區號</string>
+    <string name="search">搜索</string>
+    <string name="WeChat_certification_is_successful">微信認證成功</string>
+    <string name="Binding_micro_letter">綁定微信</string>
+    <string name="Binding_micro_letter2">更好保護賬號安全</string>
+    <string name="Binding_micro_letter3">立即綁定，領取10金幣獎勵</string>
+    <string name="Binding_micro_letter4">暫不需要</string>
+    <string name="user_name">用戶名</string>
+    <string name="Return_to_the_home_page">確定要取消註冊並返回主頁?</string>
+    <string name="select_surname">請選擇妳的姓氏</string>
+    <string name="Sharing_the_clan">已經有 </string>
+    <string name="Sharing_the_clan2"> 位同姓用戶已經加入好呦</string>
+    <string name="input_name"> 請輸入妳的名字</string>
+    <string name="input_name2"> 您的全名：</string>
+    <string name="you_name"> 填寫姓名</string>
+    <string name="you_name2"> 請填寫真實姓名，姓氏確定後不可修改</string>
+    <string name="Sex_selection"> 選擇性別</string>
+    <string name="Sex_selection2"> 性別確定後不可修改</string>
+    <string name="complete_registration"> 完成註冊</string>
+    <string name="All_the_family_name"> 所有姓氏</string>
+    <string name="select_city"> 選擇城市</string>
+    <string name="location">定位</string>
+    <string name="Select_province">選擇省份</string>
+    <string name="Select_province3">妳先選擇省份</string>
+    <string name="Select_province2">按省份選擇城市</string>
+    <string name="sex">性別</string>
+    <string name="age">年齡</string>
+    <string name="industry">行業</string>
+    <string name="Search_your_industry">搜索妳的行業</string>
+    <string name="Make_sure_to_abandon_the_editor">確定放棄此次編輯</string>
+    <string name="Content_cannot_be_empty">內容不能為空</string>
+    <string name="Is_released">正在發布...</string>
+    <string name="Google_Maps">所在位置</string>
+    <string name="Locating_city">定位城市</string>
+    <string name="All_the_family_name2">全部姓氏</string>
+    <string name="Search_for_your_last_name">搜索你的姓氏</string>
+    <string name="Dynamic_message">動態消息</string>
+    <string name="My_clan_association">我的宗親會</string>
+    <string name="Join_the_clan">加入宗親會</string>
+    <string name="Join_the_clan2">你尚未擁有或加入宗親會</string>
+    <string name="Join_the_clan3">籌建中</string>
+    <string name="Join_the_clan4">若60天內您的宗親會人數不足10人，\n我們將從地圖中下架你的宗親會。</string>
+    <string name="Edit_data">編輯資料</string>
+    <string name="Clan_background">宗親會背景</string>
+    <string name="select_Clan_background">請選擇宗親背景圖片</string>
+    <string name="Clan_name">宗親會名稱</string>
+    <string name="input_Clan_name">請輸入宗親會名稱</string>
+    <string name="Tong_he_tong">堂號</string>
+    <string name="input_Tong_he_tong">請輸入堂號</string>
+    <string name="Tong_he_tong2">如：魯堂號</string>
+    <string name="date_of_establishment">成立時間</string>
+    <string name="input_date_of_establishment">請輸入成立時間</string>
+    <string name="detailed_address">詳細地址</string>
+    <string name="Select_the_detailed_address">請選擇詳細地址</string>
+    <string name="Binding_ancestral_shrine">綁定祖祠</string>
+    <string name="Binding_ancestral_shrine2">未綁定</string>
+    <string name="brief_introduction">簡介</string>
+    <string name="brief_introduction2">簡單介紹下你的宗親會吧</string>
+    <string name="brief_introduction3">入會要求</string>
+    <string name="brief_introduction4">請填寫對入會成員的要求</string>
+    <string name="Family_album">宗親會相冊</string>
+    <string name="Family_album2">申請建立宗親會</string>
+    <string name="Family_album3">是否要解散宗親會</string>
+    <string name="Family_album4">解散宗親會</string>
+    <string name="please_enter">請輸入</string>
+    <string name="mobile_phone_photographing">手機拍照</string>
+    <string name="Choose_from_the_album">從相冊裏選擇</string>
+    <string name="application_approved">申請成功</string>
+    <string name="Ancestral_shrine_near">附近祖祠</string>
+    <string name="select_address">選擇地址</string>
+    <string name="panorama">全景</string>
+    <string name="praise">贊</string>
+    <string name="praise2">個贊</string>
+    <string name="collect">收藏</string>
+    <string name="collect2">已收藏</string>
+    <string name="whole_province">全省</string>
+    <string name="the_whole_city">全市</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="Should_cancel_the_collection">是否要取消收藏</string>
+    <string name="About_the_ancestral_hall">關於宗祠</string>
+    <string name="more">更多</string>
+    <string name="footprint">足跡</string>
+    <string name="ancestor_worship">祭祖</string>
+    <string name="message_board">留言板</string>
+    <string name="pedigree_clan">族譜</string>
+    <string name="leave_a_message">留言不能為空哦~</string>
+    <string name="distance">距離現在位置</string>
+    <string name="Select_a_map">選擇地圖</string>
+    <string name="Baidu_Map">百度地圖</string>
+    <string name="Amap">高德地圖</string>
+    <string name="nearby">附近</string>
+    <string name="zuci_name">祖祠名稱</string>
+    <string name="input_zuci_name">請輸入祖祠名稱</string>
+    <string name="year_of_completion">建成年份</string>
+    <string name="input_year_of_completion">請輸入建成年份</string>
+    <string name="zuci_brief_introduction">祖祠簡介</string>
+    <string name="Please_enter_the_description">請輸入描述...</string>
+    <string name="Submit_audit">提交審核</string>
+    <string name="add_zuci">添加祖祠</string>
+    <string name="Creating_successful">創建成功</string>
+
+
+    <!--發現-->
+    <string name="find_title_name">發現</string>
+    <string name="find_evaluation_name">評價</string>
+    <string name="interstellar_family_tree">星際族譜</string>
+    <string name="for_home_practice">為家修行</string>
+    <string name="family_information">家族資訊</string>
+    <string name="Institute_of_family">家族學院</string>
+    <string name="shang_yu">商域</string>
+
+    <!--同城-->
+    <string name="home_all_name">全部</string>
+    <string name="home_action_name">動態</string>
+
+    <!--我的-->
+    <string name="mine_daily_attendance">每日簽到</string>
+    <string name="mine_Inheriting_the_messenger">傳承使者</string>
+    <string name="mine_authentication_center">認證中心</string>
+    <string name="mine_My_account">我的賬戶</string>
+    <string name="mine_My_article">我的文章</string>
+    <string name="mine_Help_and_feedback">幫助與反饋</string>
+    <string name="mine_invite_friends">邀請好友</string>
+    <string name="mine_Binding_mobile_phone_hint">綁定手機後，可以使用短信驗證碼快捷登錄，並提高賬號安全性！</string>
+    <string name="title_activity_language_setting">LanguageSettingActivity</string>
+
+    <string name="scan">掃一掃</string>
+    <string name="write_an_article">寫文章</string>
+    <string name="A_group_chat">發起群聊</string>
+    <string name="bean_vermicelli">粉絲</string>
+    <string name="blacklist">黑名單</string>
+    <string name="To_the_length">去電時長</string>
+    <string name="call_the_length">來電時長</string>
+    <string name="The_family_group">家族群</string>
+    <string name="Group_of_friends">好友群</string>
+    <string name="Group_of_friends_search">搜索您要進入的城市家族群</string>
+    <string name="Group_chat_footprint">群聊足跡</string>
+    <string name="notification_center">通知中心</string>
+    <string name="The_new_fan">新的粉絲</string>
+    <string name="Video_evaluation">視頻評價</string>
+    <string name="Post_a_message">文章消息</string>
+    <string name="Family_news">族譜消息</string>
+    <string name="audit_result">審核結果</string>
+    <string name="To_report_the_details">舉報詳情</string>
+    <string name="Members_of_the_certification">認證成員</string>
+    <string name="The_current_members">當前成員</string>
+    <string name="authentication">認證:</string>
+    <string name="To_identify">去認領>></string>
+    <string name="cultural_inheritance">姓氏文化傳承使者</string>
+    <string name="cultural_inheritance2">您的姓氏或所屬家族與當前家族不符</string>
+    <string name="cultural_inheritance3">請先在認證中心通過身份認證</string>
+    <string name="cultural_inheritance4">暫不支持全國氏文化傳承使者</string>
+    <string name="cultural_inheritance5">當前城市官方發起人未被認領</string>
+    <string name="cultural_inheritance6">認領傳承使者</string>
+    <string name="under_review">人在審核中</string>
+    <string name="To_claim_that">認領說明</string>
+    <string name="Participate_in_the_claim">參與認領</string>
+    <string name="Participate_in_the_claim2">快來認領吧!</string>
+    <string name="Participate_in_the_claim3">您已成為傳承使者，不可再次認領</string>
+    <string name="Participate_in_the_claim4">您已認領傳承使者，不可重復認領</string>
+    <string name="Participate_in_the_claim5">傳承使者認領合同</string>
+    <string name="Participate_in_the_claim6">您已經是傳承使者</string>
+    <string name="Claim_requirements">認領要求</string>
+    <string name="Claim_the_value">認領價值</string>
+    <string name="A_privilege">發起特權</string>
+    <string name="Claim_to_know">認領須知</string>
+    <string name="I_have_read_and_agreed">我已閱讀並同意</string>
+    <string name="I_have_read_and_agreed2">《傳承使者認領合同》</string>
+    <string name="To_claim_success">認領成功</string>
+    <string name="To_claim_success2">認領傳承使者審核提交成功</string>
+    <string name="To_claim_success3">*若審核未通過平臺建設將原數退回</string>
+
+    <string name="Invite_the_number">邀請人數： </string>
+    <string name="Invite_the_number2">人，獲得</string>
+    <string name="Invite_the_number3">積分，排名第</string>
+    <string name="Your_friends_invite_you_into_the_family">你的好友邀請你進入家族</string>
+    <string name="Your_friends_invite_you_into_the_family2">約見app是一款基於百家姓的APP，旨在凝聚家族力量，弘揚百家姓文化。帶你追根溯源，找到家族宗親</string>
+    <string name="Invite_title1">我只是想，累了有個溫馨的聊天的地方。</string>
+    <string name="Invite_title2">不要錢的那種，只要誇我媽就行。</string>
+    <string name="Invite_title3">有你我們家會很快樂的~~</string>
+    <string name="Invite_title4">我確定不點進來看看？</string>
+    <string name="Invite_title5">別讓手機成為冷落家人的理由。</string>
+    <string name="Invite_title6">在有限的歲月裏，為你的家族做點什麽唄！</string>
+    <string name="Invite_s_title1">我在這裏建立了溫馨的家族，你也來創建屬於自己的家族吧！</string>
+    <string name="Invite_s_title2">我媽媽叫你來我們家吃飯啦！</string>
+    <string name="Invite_s_title3">我們家缺那種好看又有才的家人，你要不要來？</string>
+    <string name="Invite_s_title4">為了家族傳承，我建立了家族樂園。</string>
+    <string name="Invite_s_title5">放下手機？那就來這裏和家人聊聊天吧！</string>
+    <string name="Invite_s_title6">你這麽厲害！要不要來為你的家族代言？</string>
+
+    <string name="user_feedback_title">用戶反饋</string>
+      
+    <string name="user_feedback_bug1">反饋BUG</string>
+      
+    <string name="user_feedback_bug2">功能建議</string>
+      
+    <string name="user_feedback_bug3">吐槽</string>
+      
+    <string name="user_feedback_bug4">其他</string>
+      
+    <string name="user_feedback_bug5">已解決</string>
+      
+    <string name="user_feedback_bug6">最近回复</string>
+      
+    <string name="user_feedback_hint">請輸入要反饋的內容</string>
+      
+    <string name="user_feedback_hint2">反饋成功</string>
+      
+    <string name="text_user_feedback">問題分類</string>
+      
+    <string name="text_user_feedback2">問題和意見</string>
+      
+    <string name="text_user_feedback3">請輸入您遇到的問題...</string>
+      
+    <string name="text_user_feedback4">聯繫方式</string>
+      
+    <string name="text_user_feedback5">姓名</string>
+      
+    <string name="text_user_feedback6">請輸入您的姓名</string>
+      
+    <string name="text_user_feedback7">請輸入您的聯繫方式</string>
+      
+    <string name="text_user_feedback8">問題已解決</string>
+      
+    <string name="text_user_feedback9">問題未解決</string>
+      
+    <string name="history_feedback">歷史反饋</string>
+      
+    <string name="history_feedback2">感謝您的支持\n我們會繼續努力</string>
+      
+    <string name="history_feedback3">是否需要聯繫人工客服</string>
+      
+    <string name="article_title">編輯文章</string>
+      
+    <string name="article_hint">退出後編輯的內容將清空，確認退出嗎？ </string>
+      
+    <string name="article_hint1">請上傳主圖</string>
+      
+    <string name="article_hint2">請輸入文章標題</string>
+      
+    <string name="article_hint3">請選擇名人年代</string>
+      
+    <string name="article_hint4">請輸入名人姓名</string>
+      
+    <string name="article_hint5">不能發布空的文章哦~</string>
+      
+    <string name="article_hint6">請複製文章鏈接</string>
+      
+    <string name="article_equals">現代</string>
+      
+    <string name="article_equals1">近代</string>
+      
+    <string name="article_equals2">古代</string>
+      
+    <string name="text_article">粘貼鏈接</string>
+      
+    <string name="text_article1">手動編輯</string>
+      
+    <string name="text_article2">名人姓名</string>
+      
+    <string name="text_article3">名人年代</string>
+      
+    <string name="text_article4">文章標題</string>
+      
+    <string name="text_article5">上傳主圖</string>
+    <string name="text_article6">輸入來源網站名稱</string>
+    <string name="text_article7">粘貼文章鏈接</string>
+      
+    <string name="text_code">複製鏈接</string>
+      
+    <string name="text_code1">分享二維碼</string>
+      
+    <string name="text_code2">邀請傳承使者</string>
+      
+    <string name="text_code3">從相冊獲取</string>
+      
+    <string name="scanner_title">掃一掃</string>
+      
+    <string name="scanner_content">我的二維碼</string>
+      
+    <string name="scanner_toast">未識別到二維碼</string>
+      
+    <string name="select_contact_toast">請選擇好友</string>
+      
+    <string name="select_contact_toast1">邀請失敗</string>
+      
+    <string name="select_contact">邀請入群</string>
+      
+    <string name="select_contact1">選中好友，加入群聊</string>
+      
+    <string name="select_contact_hint">搜索好友</string>
+      
+    <string name="setting_text">我要反饋</string>
+      
+    <string name="my_wallet_title">我的賬戶</string>
+      
+    <string name="my_wallet_toast">請先通過手機號認證</string>
+      
+    <string name="my_wallet_toast2">請先設置提現密碼</string>
+      
+    <string name="my_wallet_toast3">收益金幣滿1000才能提現哦~</string>
+      
+    <string name="my_wallet_toast4">請先通過手機號認證</string>
+      
+    <string name="my_wallet_toast5">請先設置提現密碼</string>
+      
+    <string name="my_wallet_toast6">請先通過身份認證</string>
+      
+    <string name="my_wallet_text">賬戶總金幣</string>
+      
+    <string name="my_wallet_text1">充值的金幣</string>
+      
+    <string name="my_wallet_text2">收益的金幣</string>
+      
+    <string name="my_wallet_text3">購物積分(點擊兌換)</string>
+      
+    <string name="my_wallet_text4">我的購物券</string>
+      
+    <string name="my_wallet_text5">幫助</string>
+      
+    <string name="my_wallet_text6">充值</string>
+      
+    <string name="my_wallet_text7">提現</string>
+      
+    <string name="bill_title">賬單詳情</string>
+      
+    <string name="bill_text">微信支付</string>
+      
+    <string name="bill_text1">交易成功</string>
+      
+    <string name="bill_text2">商品說明</string>
+      
+    <string name="bill_text3">創建時間</string>
+      
+    <string name="bill_text4">訂單號</string>
+      
+    <string name="update_psd">修改密碼</string>
+      
+    <string name="update_psd2">找回密碼</string>
+      
+    <string name="modify_toast">設置成功</string>
+      
+    <string name="modify_toast1">請輸入6位數字密碼</string>
+      
+    <string name="modify_toast2">請輸入新提現密碼</string>
+      
+    <string name="modify_out_toast">請先通過手機號認證</string>
+      
+    <string name="modify_out_text">請輸入原提現密碼</string>
+      
+    <string name="modify_out_text1">確認</string>
+      
+    <string name="verifyld_title">身份認證</string>
+      
+    <string name="verifyld_toast">請上傳手持證件正面頭部照</string>
+      
+    <string name="verifyld_toast1">請上傳證件正面照</string>
+      
+    <string name="verifyld_toast2">上傳手持證件正面頭部照失敗，請重新拍照</string>
+      
+    <string name="verifyld_toast3">上傳證件正面照失敗，請重新拍照</string>
+      
+    <string name="verifyld_text">證件類型：身份證</string>
+      
+    <string name="verifyld_text1">手持證件正面頭部照</string>
+      
+    <string name="verifyld_text2">證件正面照</string>
+      
+    <string name="verifyld_text3">查看示例</string>
+      
+    <string name="verifyld_text4">提交認證</string>
+      
+    <string name="out_cash_title">提現</string>
+      
+    <string name="out_cash_toast">請輸入提現金額</string>
+      
+    <string name="out_cash_toast1">請正確輸入提現金額</string>
+      
+    <string name="out_cash_toast2">提現金額超過可提現金額</string>
+      
+    <string name="out_cash_toast3">請輸入提現人姓名</string>
+      
+    <string name="out_cash_toast4">請輸入支付寶賬號</string>
+      
+    <string name="out_cash_toast5">請輸入卡號</string>
+      
+    <string name="out_cash_toast6">請輸入銀行名稱</string>
+    <string name="out_cash_toast7">請輸入銀行開戶支行名稱</string>
+      
+    <string name="out_cash_text">可提現金額</string>
+      
+    <string name="out_cash_text1">支付寶(推薦)</string>
+      
+    <string name="out_cash_text2">銀聯</string>
+      
+    <string name="out_cash_text3">支付寶賬號</string>
+      
+    <string name="out_cash_text4">提現人姓名</string>
+      
+    <string name="out_cash_text6">卡號</string>
+      
+    <string name="out_cash_text7">提現人儲蓄卡號</string>
+      
+    <string name="out_cash_text8">銀行</string>
+      
+    <string name="out_cash_text9">支行名稱</string>
+      
+    <string name="out_cash_text_1">提現金額</string>
+      
+    <string name="out_cash_text_2">可提現金額#元,</string>
+      
+    <string name="out_cash_text_3">全部提現</string>
+      
+    <string name="out_cash_text_4">確認提現</string>
+      
+    <string name="out_cash_text_5">5個工作日內到賬</string>
+      
+    <string name="out_cash_text_6">提現規則</string>
+      
+    <string name="wallet_helper_title">錢包幫助中心</string>
+      
+    <string name="wallet_helper_text">錢包賬單類問題</string>
+      
+    <string name="wallet_helper_text1">支付密碼類問題</string>
+      
+    <string name="wallet_helper_text2">充值/轉出方法及規則</string>
+      
+    <string name="wallet_helper_text3">充值/轉出失敗類問題</string>
+      
+    <string name="wallet_cash_rule_text">充值錢包餘額</string>
+      
+    <string name="wallet_cash_rule_text1">轉出錢包餘額</string>
+      
+    <string name="wallet_cash_rule_text2">關於錢包餘額轉出手續費及規則說明</string>
+      
+    <string name="verify_center_text">審核中</string>
+      
+    <string name="verify_center_text1">未認證</string>
+      
+    <string name="verify_center_text2">已認證</string>
+      
+    <string name="verify_center_text3">未通過</string>
+      
+    <string name="verify_center_text4">微信認證</string>
+      
+    <string name="verify_center_text5">身份認證</string>
+      
+    <string name="phone_verify_text">國家/地區</string>
+      
+    <string name="phone_verify_text1">輸入你的手機號</string>
+      
+    <string name="phone_verify_title">手機號認證</string>
+      
+    <string name="phone_verify_toast">請正確輸入手機號</string>
+      
+    <string name="phone_verify_toast1">手機號認證成功</string>
+      
+    <string name="phone_verify_toast2">重發</string>
+      
+    <string name="phone_verify_toast3">開始微信認證</string>
+      
+    <string name="verify_business_title">營業執照認證</string>
+      
+    <string name="verify_business_toast">正在審核中</string>
+      
+    <string name="verify_business_toast1">正在上傳</string>
+      
+    <string name="verify_business_text">示例:</string>
+      
+    <string name="verify_business_text1">上傳營業執照</string>
+      
+    <string name="verify_business_text2">只支持中國大陸工商局或市場監督管理局頒發的工商營業執照，且必須在有效期內。 \n格式要求：原件/副本照片、掃描或者加蓋公章的複印件。 </string>
+      
+    <string name="verify_business_text3">搜索分類</string>
+      
+    <string name="verify_business_text4">點擊查看更多>></string>
+      
+    <string name="verify_business_text5">搜索</string>
+      
+    <string name="message_header_text">約見科技官方客服</string>
+      
+    <string name="message_header_text1">客服工作時間為星期一至星期六 9:00-18:00</string>
+      
+    <string name="message_header_text2">百家姓新聞動態</string>
+      
+    <string name="message_header_text3">新聞動態</string>
+      
+    <string name="main_more_text">發表版塊</string>
+      
+    <string name="main_more_text1">資訊</string>
+      
+    <string name="main_more_text2">姓氏起源</string>
+      
+    <string name="main_more_text3">名人錄</string>
+    <string name="action_dialog_text">顯示內容</string>
+      
+    <string name="action_dialog_text1">我關注的</string>
+      
+    <string name="action_dialog_text2">城市</string>
+    <string name="action_dialog_text6">已簽到</string>
+    <string name="spring_text">下拉刷新</string>
+      
+    <string name="spring_text1">鬆開刷新數據</string>
+      
+    <string name="spring_text2">正在刷新</string>
+      
+    <string name="spring_text3">剛剛</string>
+      
+    <string name="spring_text4">鬆開載入更多</string>
+      
+    <string name="spring_text5">查看更多</string>
+      
+    <string name="spring_text6">下拉刷新</string>
+      
+    <string name="spring_text7">上次更新時間：</string>
+      
+    <string name="spring_text8">正在加載更多</string>
+    <string name="spring_text9">沒有更多數據加載了</string>
+    <string name="action_dialog_text3">立即簽到</string>
+    <string name="action_dialog_text4">戊戌年</string>
+    <string name="action_dialog_text5">狗年</string>
+
+    <string name="casht_text">充值方式</string>
+    <string name="casht_text1">支付寶(推薦)</string>
+    <string name="casht_text2">充值金額</string>
+    <string name="casht_text3">我已閱讀並同意《</string>
+    <string name="casht_text4">用戶充值協議</string>
+    <string name="casht_text5">充值￥</string>
+    <string name="casht_text6">暫不支付銀聯方式支付</string>
+    <string name="casht_text7">請先安裝微信客戶端</string>
+    <string name="casht_text8">邀請排行榜</string>
+    <string name="invite_sms_content">您貴姓？您了解自己本姓的起源與宗族文化麼？
+缺人脈？想尋根問祖結交可靠同姓宗親好友麼？
+點擊鏈接立即下載：</string>
+    <string name="clan_text_1">我建立的宗親會</string>
+
+    <string name="record_select_text_1">充值記錄</string>
+      
+    <string name="record_select_text_2">提現記錄</string>
+      
+    <string name="record_select_text_3">收到禮物</string>
+      
+    <string name="record_select_text_4">送出禮物</string>
+      
+    <string name="record_select_text_5">視頻收入</string>
+      
+    <string name="record_select_text_6">視頻消費</string>
+      
+    <string name="record_select_text_7">營業額提成</string>
+      
+    <string name="record_select_text_8">推薦收入</string>
+      
+    <string name="record_select_text_9">購物消費</string>
+      
+    <string name="record_select_text_10">店鋪收入</string>
+      
+    <string name="record_select_text_11">禮物退款</string>
+      
+    <string name="record_select_text_12">選擇時間</string>
+      
+    <string name="record_select_text_13">按月選擇</string>
+      
+    <string name="record_select_text_14">按日選擇</string>
+      
+    <string name="record_select_text_15">輸入賬單相關信息</string>
+    <string name="essay_text_1">已發表</string>
+    <string name="essay_text_2">通知詳情</string>
+    <string name="notice_info_text_1">詳情</string>
+      
+    <string name="notice_info_text_2">說點什麼吧...</string>
+      
+    <string name="action_info_text_1">確定刪除該動態?</string>
+      
+    <string name="action_info_text_2">內容不能為空</string>
+      
+    <string name="action_info_text_3">複製成功</string>
+      
+    <string name="action_info_text_4">按熱度</string>
+      
+    <string name="action_info_text_5">按時間</string>
+      
+    <string name="action_info_text_6">未登錄不能評論</string>
+      
+    <string name="delete">刪除</string>
+      
+    <string name="action_info_text_7">評論</string>
+      
+    <string name="action_info_text_8">次打賞</string>
+      
+    <string name="action_info_text_9">等</string>
+      
+    <string name="action_info_text_10">共</string>
+      
+    <string name="action_info_text_11">回复</string>
+      
+    <string name="action_info_text_12">條回复 ></string>
+    <string name="every_dey_text_1">連續簽到 </string>
+
+    <string name="record_text_1">請選擇正確的時間</string>
+      
+    <string name="record_text_2">開始時間</string>
+      
+    <string name="record_text_3">結束時間</string>
+    <string name="action_text_1">收起</string>
+    <string name="action_text_2">展開全文</string>
+    <string name="toast_text_1">已復製到粘貼板</string>
+    <string name="phone_code_text_1">確認更改</string>
+    <string name="phone_code_text_2">填寫驗證碼</string>
+    <string name="phone_code_text_3">手機號更換成功~</string>
+    <string name="phone_code_text_4">手機號設置成功</string>
+    <string name="phone_code_text_5">確定更改</string>
+    <string name="phone_code_text_6">確定綁定</string>
+    <string name="choose_indeustry_1">請選擇行業</string>
+    <string name="Clansmen_association_1">宗享會</string>
+    <string name="enjoy_text_1">發布會議</string>
+    <string name="enjoy_create_text_1">發起會議</string>
+    <string name="enjoy_create_text_2">確定提交</string>
+    <string name="enjoy_create_text_3">項目名稱</string>
+    <string name="enjoy_create_text_4">請填寫項目或產品名稱</string>
+    <string name="enjoy_create_text_5">參與方式</string>
+    <string name="enjoy_create_text_6">總冠名</string>
+    <string name="enjoy_create_text_7">贊助商</string>
+    <string name="enjoy_create_text_8">路演</string>
+    <string name="enjoy_create_text_9">3萬元1個單位+1個推位</string>
+    <string name="enjoy_create_text_10">10萬元1個單位全場獨享</string>
+    <string name="enjoy_create_text_11">產品</string>
+    <string name="enjoy_create_text_12">現金</string>
+    <string name="enjoy_create_text_13">酒店會議場地</string>
+    <string name="enjoy_create_text_14">路演30分鐘5000元</string>
+    <string name="enjoy_create_text_15">1路演1小時3萬元</string>
+    <string name="enjoy_create_text_16">* 一次會議不超過兩個商家路演</string>
+    <string name="enjoy_create_text_17">預計會議時間</string>
+    <string name="enjoy_create_text_18">會議地點</string>
+    <string name="enjoy_create_text_19">請填寫會議舉辦城市或具體地點</string>
+    <string name="enjoy_create_text_20">會議人數</string>
+    <string name="enjoy_create_text_21">合作機制</string>
+    <string name="enjoy_create_text_22">給居間人</string>
+    <string name="enjoy_create_text_23">給平台</string>
+    <string name="enjoy_create_text_24">給市傳承使者</string>
+    <string name="enjoy_create_text_25">電話</string>
+    <string name="enjoy_create_text_26">請輸入電話號碼</string>
+    <string name="enjoy_create_text_27">請選擇時間</string>
+    <string name="enjoy_create_text_28">請輸入給居間人提成</string>
+    <string name="enjoy_create_text_29">請輸入給平台提成</string>
+    <string name="enjoy_create_text_30">請輸入給市傳承使者提成</string>
+    <string name="enjoy_succed_1">您的會議申請已經提交成功，\n我們將在1-3個工作日內聯繫您!</string>
+    <string name="enjoy_succed_2">返回首頁</string>
+    <string name="enjoy_succed_3">提交成功</string>
+    <string name="enjoy_succed_4">百家姓氏為您：\n搭建商業活動平台。\n我搭台，您唱戲，\n為您的項目全案策劃，\n提供路演平台。</string>
+    <string name="enjoy_succed_5">請選擇贊助商產品</string>
+
+    <string name="treeadd_name1">他可能是您的:</string>
+      
+    <string name="treeadd_name2">待處理事項</string>
+      
+    <string name="treeadd_name3">待處理申請</string>
+      
+    <string name="treeadd_name4">你可能認識</string>
+      
+    <string name="treeadd_name5">添加新朋友</string>
+      
+    <string name="treeadd_name6">搜索添加關鍵標籤</string>
+      
+    <string name="treeadd_name7">修改關係</string>
+      
+    <string name="treeadd_name8">添加關係</string>
+      
+    <string name="treeadd_name9">我是</string>
+      
+    <string name="treeadd_name10">是我的</string>
+      
+    <string name="treeadd_name11">請選擇關係</string>
+      
+    <string name="treeadd_name12">修改成功</string>
+      
+    <string name="treeadd_name13">添加成功,等待對方同意</string>
+      
+    <string name="treeadd_name14">好友同窗關係</string>
+      
+    <string name="treeadd_name15">你可能認識</string>
+      
+    <string name="treeadd_name16">請選擇</string>
+      
+    <string name="treeadd_name17">血緣關係圖</string>
+      
+    <string name="treeadd_name18">*恭喜您，通過</string>
+      
+    <string name="treeadd_name19">的邀請成為百家姓氏的一員，快跟他建立關係吧！</string>
+      
+    <string name="treeadd_name20">添加成功,等待對方同意</string>
+      
+    <string name="treeadd_name21">跳過 》</string>
+      
+    <string name="treeadd_name22">通訊錄朋友</string>
+      
+    <string name="treeadd_name23">請至少選擇一項</string>
+      
+    <string name="treeadd_name24">成功發送邀請</string>
+      
+    <string name="treeadd_name25">全選</string>
+      
+    <string name="treeadd_name26">一鍵邀請</string>
+      
+    <string name="treeadd_name27">選擇標籤</string>
+      
+    <string name="treeadd_name28">子輩血緣關係</string>
+      
+    <string name="treeadd_name29">同輩血緣關係</string>
+      
+    <string name="treeadd_name30">父同輩血緣關係</string>
+    <string name="treeadd_name31">爺同輩血緣關係</string>
+      
+    <string name="applet_name1">專屬小程序</string>
+      
+    <string name="applet_name2">合計: ￥</string>
+      
+    <string name="applet_name3">請輸入聯繫方式</string>
+      
+    <string name="applet_name4">選擇年服務類型</string>
+      
+    <string name="applet_name5">選擇小程序類型</string>
+      
+    <string name="applet_name6">選擇製作服務</string>
+      
+    <string name="applet_name7">支付方式</string>
+      
+    <string name="applet_name8">確定支付</string>
+      
+    <string name="applet_name9">服務製作流程</string>
+      
+    <string name="applet_name10">諮詢客服</string>
+      
+    <string name="applet_name11">立即購買</string>
+      
+    <string name="applet_name12">約見小程序</string>
+      
+    <string name="applet_name13">了解服務</string>
+    <string name="applet_name14">個請求未處理</string>
+
+
+    <!-- 商圈-广场  -->
+    <string name="business_affect">影響力</string>
+    <string name="business_front">封面人物</string>
+    <string name="business_more">查看更多</string>
+    <string name="business_group">熱門社群</string>
+    <string name="business_tag">熱門名帖</string>
+    <string name="business_more_up">收起</string>
+</resources>

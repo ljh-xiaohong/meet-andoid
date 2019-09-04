@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <WebView
+        android:id="@+id/pact_web"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0" />
+
+    <Button
+        android:id="@+id/pact_button"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_94"
+        android:layout_below="@+id/ll_input_all"
+        android:layout_margin="@dimen/px_24"
+        android:background="@drawable/selector_next_btn"
+        android:enabled="false"
+        android:text="@string/cultural_inheritance6"
+        android:textColor="@color/color_radio_sex_button" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px_34"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/pact_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_choose_pact"
+            android:checked="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_8"
+            android:text="@string/I_have_read_and_agreed" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/I_have_read_and_agreed2"
+            android:textColor="#fff3bb66" />
+    </LinearLayout>
+</LinearLayout>

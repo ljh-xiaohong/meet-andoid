@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="@dimen/px_118">
+        <ImageView android:layout_gravity="center_vertical" android:id="@+id/img_group_header_icon" android:layout_width="@dimen/px_84" android:layout_height="@dimen/px_84" />
+        <TextView android:textSize="@dimen/px_28" android:textColor="@color/color_black_333333" android:layout_gravity="center_vertical" android:id="@+id/txt_group_header_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_24" android:text="珠海一群" />
+        <TextView android:textSize="@dimen/px_28" android:textColor="#fff8d058" android:layout_gravity="center_vertical" android:id="@+id/txt_group_header_cnt" android:paddingLeft="@dimen/px_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="(22)" />
+    </LinearLayout>
+    <View android:background="@color/vive_colors_wire_e6e6e6" android:layout_width="fill_parent" android:layout_height="@dimen/px_1" android:layout_alignParentBottom="true" />
+</LinearLayout>

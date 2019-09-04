@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" app:cardCornerRadius="4.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200.0dip"
+        android:layout_height="200.0dip">
+        <TextView android:textSize="17.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:background="#ffab3a34"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:text="请选择" />
+        <ListView android:id="@+id/list"
+            android:scrollbars="none"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

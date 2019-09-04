@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/find_bg_xu"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="发现"
+        android:textColor="#232323"
+        android:textSize="16sp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/find_fmt_for_home_pfractice"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:id="@+id/txt_find_pedigree"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/weijiaxuxing_xufa" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="为家修行"
+                        android:textColor="@color/color_232323"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/unread_msg_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="赚功德 换大礼"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <ImageView
+                    android:id="@+id/list_more2"
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu" />
+            </LinearLayout>
+
+            <!--创建宗享会-->
+
+            <LinearLayout
+                android:id="@+id/find_fmt_ll_create_zong_will_enjoy"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/zongxianghui_xufa" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="创建宗享会"
+                    android:textColor="@color/color_232323"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu" />
+            </LinearLayout>
+
+
+            <!-- 一秒淘 -->
+
+            <LinearLayout
+                android:id="@+id/yimiaotao"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/yimiaotao_icon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="一秒淘"
+                        android:textColor="@color/color_232323"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="精选优品，先到先得"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+
+                <ImageView
+
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/white_expand" />
+            </LinearLayout>
+
+            <!--优选商城-->
+
+
+            <LinearLayout
+                android:id="@+id/find_fmt_ll_optimization_shopping"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/youxuanshangcheng_white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="约见优选商城"
+                        android:textColor="@color/color_232323"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="轻松赚钱 · 好货优选"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+
+                <ImageView
+
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/white_expand" />
+            </LinearLayout>
+
+
+            <!--家族学院-->
+            <LinearLayout
+                android:id="@+id/find_fmt_ll_family_college"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/jiazuxuyuan_xufa" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Institute_of_family"
+                        android:textColor="@color/color_232323"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="文化传承基地"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu" />
+            </LinearLayout>
+
+            <!--商城-->
+            <LinearLayout
+                android:id="@+id/find_fmt_ll_shopping_mall"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@mipmap/find_item_xu"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="23dp">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/shangyu_xufa" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商域"
+                        android:textColor="@color/color_232323"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="亲人的商城"
+                        android:textColor="@color/txt_color_999999"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_weight="1.0" />
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/goout_xu" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

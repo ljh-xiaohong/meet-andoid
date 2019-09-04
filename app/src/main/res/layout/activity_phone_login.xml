@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.mine.PhoneLoginActivity"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"/>
+    <include
+        layout="@layout/titlebar_layout2"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_60"
+        android:layout_marginLeft="@dimen/px_112"
+        android:layout_marginRight="@dimen/px_112"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24dp"
+            android:textColor="@color/color_232323"
+            android:text="@string/Verify_cell_phone_number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_30"
+            android:layout_marginBottom="@dimen/px_54"
+            android:layout_gravity="center"
+            android:textSize="@dimen/px_26"
+            android:textColor="@color/txt_color_999999"
+            android:text="@string/Verify_cell_phone_number2"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_80"
+                android:orientation="horizontal"
+                android:background="@drawable/button_eeeeee">
+
+                <TextView
+                    android:id="@+id/nation_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_20"
+                    android:text="+86"
+                    android:textColor="@color/color_232323"
+                    android:textSize="@dimen/px_28" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/icon_more_7"/>
+
+                <com.yuejian.meet.widgets.CleanableEditText
+                    android:id="@+id/txt_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="@dimen/px_30"
+                    android:drawableRight="@mipmap/ic_edit_clean"
+                    android:hint="@string/please_enter_your_cell_phone_number"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:padding="@dimen/padding"
+                    android:textColor="@color/praise_item_default"
+                    android:textSize="@dimen/px_28" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_marginTop="@dimen/px_10"
+                android:background="@color/view_color"
+                android:visibility="gone"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_12"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:orientation="horizontal">
+
+                <com.yuejian.meet.widgets.CleanableEditText
+                    android:id="@+id/txt_code"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_txt_white"
+                    android:drawableRight="@mipmap/ic_edit_clean"
+                    android:hint="@string/reg_hint_ver"
+                    android:inputType="number"
+                    android:padding="@dimen/padding"
+                    android:textSize="@dimen/px_28" />
+
+                <TextView
+                    android:id="@+id/bt_code"
+                    android:layout_width="@dimen/px_128"
+                    android:layout_height="@dimen/px_41"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_frame_code"
+                    android:gravity="center"
+                    android:text="@string/reg_text_verify_code_time"
+                    android:textColor="@color/color_dd362b"
+                    android:textSize="@dimen/px_22" />
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:background="@color/view_color" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/bu_next"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_80"
+        android:alpha="0.6"
+        android:textSize="@dimen/px_32"
+        android:layout_marginTop="@dimen/px_71"
+        android:layout_marginLeft="@dimen/px_112"
+        android:layout_marginRight="@dimen/px_112"
+        android:background="@drawable/shape_button_dd362b"
+        android:enabled="true"
+        android:text="@string/reg_btn_next"
+        android:textColor="@color/white" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@+id/bu_next"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px_40"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Login_means_read_and_agree"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="@dimen/px_22" />
+
+        <TextView
+            android:id="@+id/login_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tex_about_account"
+            android:textColor="#ff3494db"
+            android:textSize="@dimen/px_22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reach"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="@dimen/px_22" />
+
+        <TextView
+            android:id="@+id/login_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_login_zc"
+            android:textColor="#ff3494db"
+            android:textSize="@dimen/px_22" />
+    </LinearLayout>
+
+</LinearLayout>

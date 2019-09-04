@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_radius_white">
+
+    <ImageView
+        android:id="@+id/iv_family_follow_item_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:layout_marginEnd="12dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_head" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/iv_family_follow_item_list"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_head"
+        android:layout_height="wrap_content"/>
+
+    <com.yuejian.meet.utils.FolderTextView
+        android:id="@+id/tv_family_follow_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="21dp"
+        android:text="家圈 - 推荐，最多显示两行内容.家圈 - 推荐,家圈 - 推荐，最多显示两行内容.家圈 - 推荐"
+        android:textColor="#333333"
+        app:foldLine="4"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_list" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/iv_family_follow_item_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="21dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_family_follow_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="姓名"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
+
+    <ImageView
+        android:id="@+id/tv_family_follow_item_name_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@mipmap/icon_home_vip"
+        app:layout_constraintStart_toEndOf="@+id/tv_family_follow_item_name"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
+
+    <TextView
+        android:id="@+id/tv_family_follow_item_created_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="on hour ago"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_family_follow_item_name" />
+
+    <RelativeLayout
+        android:id="@+id/ll_action_layout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_family_follow_item_content">
+
+        <CheckBox
+            android:id="@+id/zan_check"
+            android:layout_width="wrap_content"
+            android:button="@drawable/zan_select"
+            android:checked="false"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/zan_check_num"
+            android:textColor="#000000"
+            android:text="99"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/zan_check"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <ImageView
+            android:id="@+id/more_operation"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_mmore"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content" />
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_family_follow_zan_root"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_family_follow_zan_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:srcCompat="@mipmap/icon_mine_zan_nor" />
+
+            <TextView
+                android:id="@+id/tv_family_follow_zan_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="赞"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_family_follow_comment_root"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_family_follow_comment_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:srcCompat="@mipmap/icon_mine_comment" />
+
+            <TextView
+                android:id="@+id/tv_family_follow_comment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="评论"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_family_follow_share_root"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_family_follow_share_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:srcCompat="@mipmap/icon_mine_share" />
+
+            <TextView
+                android:id="@+id/tv_family_follow_share_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="转发"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_list"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/ll_action_layout"
+        android:layout_height="wrap_content"/>
+
+</android.support.constraint.ConstraintLayout>

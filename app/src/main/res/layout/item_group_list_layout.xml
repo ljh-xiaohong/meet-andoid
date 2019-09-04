@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:id="@+id/item_view" android:background="@color/vive_colors_wire_e6e6e6" android:layout_width="fill_parent" android:layout_height="0.5px" android:layout_alignParentBottom="true" />
+    <LinearLayout android:orientation="horizontal" android:id="@+id/group_top_bg" android:background="@drawable/selector_layout_group_bg" android:paddingLeft="@dimen/px_22" android:layout_width="fill_parent" android:layout_height="@dimen/px_118">
+        <RelativeLayout android:layout_gravity="center_vertical" android:id="@+id/group_seed_layout" android:layout_width="@dimen/px_100" android:layout_height="@dimen/px_100" android:layout_marginLeft="@dimen/px_24">
+            <ImageView android:id="@+id/img_group_seed_header" android:layout_width="@dimen/px_84" android:layout_height="@dimen/px_84" android:layout_centerVertical="true" />
+            <TextView android:id="@+id/group_notice_tip" android:text="99+" style="@style/txt_red_dot" />
+            <ImageView android:id="@+id/img_group_gfit" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/ic_gift_sel" android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <TextView android:textSize="@dimen/px_28" android:textColor="@color/color_black_333333" android:layout_gravity="center_vertical" android:id="@+id/txt_group_seed_name" android:layout_width="wrap_content" android:layout_height="17.0dip" android:layout_marginLeft="@dimen/px_24" android:text="珠海一群" />
+        <TextView android:textSize="@dimen/px_28" android:textColor="#fff8d058" android:layout_gravity="center_vertical" android:id="@+id/txt_group_seed_cnt" android:paddingLeft="@dimen/px_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="(22)" />
+        <RelativeLayout android:layout_gravity="center" android:id="@+id/un_message_layout" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_24">
+            <ImageView android:layout_width="@dimen/px_32" android:layout_height="@dimen/px_32" android:src="@mipmap/icon_un_message" android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

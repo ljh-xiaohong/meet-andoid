@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".activities.home.EnjoySucceedActivity">
+    <include
+        layout="@layout/titlebar_layout"/>
+    <ImageView
+        android:layout_width="@dimen/px_260"
+        android:layout_height="@dimen/px_260"
+        android:layout_marginTop="@dimen/px_130"
+        android:src="@mipmap/ic_enjoy_succeed"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_64"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/color_232323"
+        android:text="@string/enjoy_succed_1"/>
+    <Button
+        android:id="@+id/bu_next"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_79"
+        android:layout_marginLeft="@dimen/px_95"
+        android:layout_marginRight="@dimen/px_95"
+        android:layout_marginTop="@dimen/px_64"
+        android:textSize="@dimen/px_32"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button_dd362b"
+        android:enabled="true"
+        android:text="@string/enjoy_succed_2" />
+
+</LinearLayout>

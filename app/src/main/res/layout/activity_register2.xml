@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".activities.gile.Register2Activity">
+    <LinearLayout
+        android:id="@+id/basic_info_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <include layout="@layout/titlebar_layout2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_60"
+            android:textSize="@dimen/px_48"
+            android:textColor="@color/color_232323"
+            android:layout_gravity="center"
+            android:text="上传头像"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px_28"
+            android:layout_marginTop="@dimen/px_28"
+            android:textColor="@color/txt_color_999999"
+            android:layout_gravity="center"
+            android:text="真实示人，上传后客服将进行审核"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="63.0dip"
+            android:layout_height="63.0dip"
+            android:layout_marginTop="@dimen/px_71"
+            android:layout_marginBottom="@dimen/px_71"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_mine_card_bg"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5.0dip"
+            app:cardElevation="4.0dip">
+            <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_update_default"/>
+
+        </android.support.v7.widget.CardView>
+        <Button
+            android:id="@+id/bu_next"
+            android:layout_width="@dimen/px_530"
+            android:layout_height="@dimen/px_76"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/px_72"
+            android:background="@drawable/shape_button_dd362b"
+            android:text="@string/reg_btn_next"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

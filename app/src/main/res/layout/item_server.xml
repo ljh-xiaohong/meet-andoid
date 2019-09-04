@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80.0dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <FrameLayout
+            android:id="@+id/cardview"
+            android:layout_width="70.0dip"
+            android:layout_height="70.0dip"
+            android:layout_centerVertical="true">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:cardCornerRadius="2.0dip"
+                app:cardElevation="0.0dip">
+
+                <ImageView
+                    android:id="@+id/server_icon"
+                    android:layout_width="64.0dip"
+                    android:layout_height="64.0dip"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_default" />
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/unreand_msg_cnt"
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:layout_gravity="right"
+                android:background="@drawable/shape_badge_bg"
+                android:gravity="center"
+                android:text="12"
+                android:textColor="@color/color_white"
+                android:textSize="10.0sp"
+                android:visibility="visible" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="60.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8.0dip"
+            android:layout_toRightOf="@+id/cardview"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8.0dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/server_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="约见科技官方客服"
+                    android:textColor="#ff333333"
+                    android:textSize="14.0sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/online_state"
+                    android:layout_width="30.0dip"
+                    android:layout_height="14.0dip"
+                    android:layout_marginLeft="@dimen/px_16"
+                    android:background="@drawable/selector_online_bg"
+                    android:gravity="center"
+                    android:text="在线"
+                    android:textColor="@color/color_white"
+                    android:textSize="10.0sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff999999"
+                android:textSize="13.0sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/contact_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/info"
+            android:text="15:00"
+            android:textColor="#ff999999"
+            android:textSize="12.0sp" />
+    </RelativeLayout>
+</LinearLayout>

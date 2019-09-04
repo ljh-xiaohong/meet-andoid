@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="gridPasswordView">
+
+        <attr name="gpvTextColor" format="color|reference" />
+        <attr name="gpvTextSize" format="dimension" />
+
+        <attr name="gpvLineColor" format="color" />
+        <attr name="gpvGridColor" format="color" />
+        <attr name="gpvLineWidth" format="dimension" />
+
+        <attr name="gpvPasswordLength" format="integer" />
+        <attr name="gpvPasswordTransformation" format="string" />
+
+        <attr name="gpvPasswordType" format="enum">
+            <enum name="numberPassword" value="0" />
+            <enum name="textPassword" value="1" />
+            <enum name="textVisiblePassword" value="2" />
+            <enum name="textWebPassword" value="3" />
+        </attr>
+
+    </declare-styleable>
+    <declare-styleable name="CircleButton">
+        <attr name="cb_color" format="color" />
+        <attr name="cb_pressedRingWidth" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MessageItemView">
+        <attr name="ic_icon" format="reference" />
+        <attr name="con_title" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="PullScrollView">
+        <attr name="headers" format="reference" />
+        <attr name="headerHeight" format="dimension" />
+        <attr name="headerVisibleHeight" format="dimension" />
+    </declare-styleable>
+
+    <!--&lt;!&ndash; 圆形头像 &ndash;&gt;-->
+    <declare-styleable name="CustomRoundView">
+        <attr name="crv_border_width" format="dimension"></attr>
+        <attr name="crv_border_color" format="color"></attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="MagicTextView">
+        <attr name="innerShadowColor" format="color" />
+        <attr name="innerShadowRadius" format="float" />
+        <attr name="innerShadowDx" format="float" />
+        <attr name="innerShadowDy" format="float" />
+        <attr name="outerShadowColor" format="color" />
+        <attr name="outerShadowRadius" format="float" />
+        <attr name="outerShadowDx" format="float" />
+        <attr name="outerShadowDy" format="float" />
+        <attr name="typeface" format="string" />
+        <attr name="foreground" format="reference|color" />
+        <attr name="mtvstrokeWidth" format="float" />
+        <attr name="mtvstrokeMiter" format="float" />
+        <attr name="strokeColor" format="color" />
+        <attr name="mtvstrokeJoinStyle">
+            <enum name="miter" value="0" />
+            <enum name="bevel" value="1" />
+            <enum name="round" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+
+        <attr name="y_offset_step" format="dimension" />
+
+        <attr name="rotation_degrees" format="float" />
+
+        <attr name="min_adapter_stack" format="integer" />
+
+        <attr name="max_visible" format="integer" />
+
+    </declare-styleable>
+
+    <declare-styleable name="FolderTextView">
+        <attr name="foldText" format="string" />//折叠文字,默认'收起'
+        <attr name="unFoldText" format="string" />//展开文字,默认'更多'
+        <attr name="foldLine" format="integer" />//折叠行数,默认2
+        <attr name="tailTextColor" format="color" />//折叠文字颜色,默认'#999999'
+        <attr name="tailTextSize" format="integer" />//折叠文字颜色,默认'#999999'
+        <attr name="canFoldAgain" format="boolean" />// 能否折叠,默认false
+    </declare-styleable>
+</resources>

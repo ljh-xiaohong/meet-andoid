@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion externalCompileSdkVersion
+    buildToolsVersion externalBuildToolsVersion
+    defaultConfig {
+        minSdkVersion externalMinSdkVersion
+        targetSdkVersion externalTargetSdkVersion
+    }
+
+}
+
+dependencies {
+    compile project(':AliyunFileDownLoader:downloadermanager')
+    compile externalAndroidAppCompatV7
+    compile externalAndroidRecyclerView
+
+    compile externalGSON
+    compile project(':AliyunSVideoBase')
+    compile project(':AliyunVideoCommon')
+    compile ('com.github.bumptech.glide:glide:3.7.0')
+}

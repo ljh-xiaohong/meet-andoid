@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nim_gift_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nim_message_item_red_right_bg"
+    android:paddingBottom="@dimen/px_16"
+    android:paddingTop="@dimen/px_16"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:orientation="vertical">
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/nim_red_left_layout"
+        android:layout_width="@dimen/px_474"
+        android:layout_height="@dimen/px_128"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="@dimen/px_96"
+            android:layout_height="@dimen/px_96"
+            android:layout_marginLeft="@dimen/px_28"
+            android:src="@mipmap/icon_gift_sel"/>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/red_title_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:text="欢迎珠加入珠海"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px_30" />
+
+            <TextView
+                android:id="@+id/red_get"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
+                android:textColor="@color/white"
+                android:maxLength="8"
+                android:textSize="@dimen/px_26"
+                android:text="点击领取>>"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/nim_red_right_layout"
+        android:layout_width="@dimen/px_474"
+        android:layout_height="@dimen/px_128"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_marginRight="@dimen/px_24"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/red_title_right_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:text="欢迎珠加入珠海"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px_30" />
+
+            <TextView
+                android:id="@+id/red_get_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
+                android:textColor="@color/white"
+                android:maxLength="8"
+                android:textSize="@dimen/px_26"
+                android:text="点击领取>>"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/px_96"
+            android:layout_height="@dimen/px_96"
+            android:layout_marginRight="@dimen/px_28"
+            android:src="@mipmap/icon_gift_sel" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout >

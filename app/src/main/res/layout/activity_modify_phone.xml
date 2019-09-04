@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <requestFocus />
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/phone_modify_tips"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_64"
+            android:layout_marginLeft="@dimen/px_72"
+            android:layout_marginRight="@dimen/px_72"
+            android:layout_marginTop="@dimen/px_30"
+            android:gravity="left"
+            android:lineSpacingExtra="2.0dip"
+            android:text="@string/pudata_phone_title_hint"
+            android:textColor="#ff999999"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modify_nation_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Select_Country"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+
+        <TextView
+            android:id="@+id/modify_nation_name"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="20.0dip"
+            android:text="@string/china"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_longin_more_area" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffe6e6e6" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <TextView
+            android:id="@+id/modify_nation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+86"
+            android:textColor="@color/color_383838"
+            android:textSize="@dimen/px_30" />
+
+        <EditText
+            android:id="@+id/modify_phone_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:hint="@string/please_enter_your_cell_phone_number_new"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="20.0dip"
+            android:textColor="@color/color_383838"
+            android:textColorHint="#ff999999"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffe6e6e6" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/verify_code_edit"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@color/white"
+            android:hint="输入验证号"
+            android:maxLines="1"
+            android:textColor="@color/color_383838"
+            android:textColorHint="#ff999999"
+            android:textSize="@dimen/px_30" />
+
+        <View
+            android:layout_width="1.0px"
+            android:layout_height="fill_parent"
+            android:background="#ffe6e6e6" />
+
+        <TextView
+            android:id="@+id/gain_verify_code"
+            android:layout_width="@dimen/px_240"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="#ffba945a"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sure_modify_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:layout_marginLeft="24.0dip"
+        android:layout_marginRight="24.0dip"
+        android:layout_marginTop="@dimen/px_60"
+        android:background="@drawable/selector_gift_group_btn"
+        android:text="@string/reg_btn_next"
+        android:textColor="@color/color_radio_sex_button" />
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#64000000"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@mipmap/tree" />
+
+    <ImageView
+        android:id="@+id/full_gift"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-220.0dip"
+        android:scaleType="fitXY"
+        android:src="@mipmap/full_gift" />
+
+    <FrameLayout
+        android:id="@+id/component"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" />
+
+    <FrameLayout
+        android:id="@+id/owner"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="40.0dip"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/put_thing_btn"
+            android:layout_width="110.0dip"
+            android:layout_height="35.0dip"
+            android:background="@drawable/selector_put_in_surprise"
+            android:gravity="center"
+            android:text="放入惊喜"
+            android:textColor="#ffffffff"
+            android:textSize="16.0sp" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/yaoyiyao"
+            android:layout_width="110.0dip"
+            android:layout_height="35.0dip"
+            android:background="@drawable/selector_yaoyiyao"
+            android:gravity="center"
+            android:text="摇一摇"
+            android:textColor="#fffff21f"
+            android:textSize="16.0sp" />
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="30.0dip"
+        android:layout_height="30.0dip"
+        android:layout_gravity="right"
+        android:layout_marginRight="18.0dip"
+        android:layout_marginTop="24.0dip"
+        android:src="@mipmap/close_white" />
+</FrameLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:background="@drawable/shape_qr_code_window_bg" android:paddingLeft="@dimen/px_24" android:paddingRight="@dimen/px_24" android:layout_width="@dimen/px_560" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="right" android:id="@+id/close_dialog" android:layout_width="15.0dip" android:layout_height="15.0dip" android:layout_marginTop="@dimen/px_44" android:src="@mipmap/icon_quxiao" />
+        <TextView android:textSize="@dimen/px_34" android:textColor="#ff333333" android:gravity="center_horizontal" android:id="@+id/no_title_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/px_30" android:layout_marginTop="@dimen/px_90" android:layout_marginRight="@dimen/px_30" android:text="@string/tips_select_goods" android:maxLines="2" android:ems="12" android:lineSpacingExtra="4.0dip" />
+        <Button android:id="@+id/queding" android:layout_marginTop="@dimen/px_80" android:layout_marginBottom="@dimen/px_20" android:text="确定" style="@style/yue_jian_btn_1" />
+        <Button android:id="@+id/quxiao" android:background="@drawable/selector_btn_cancel" android:layout_marginBottom="@dimen/px_20" android:text="取消" style="@style/yue_jian_btn_1" />
+    </LinearLayout>
+</FrameLayout>

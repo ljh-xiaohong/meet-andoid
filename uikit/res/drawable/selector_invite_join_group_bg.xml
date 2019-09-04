@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/ic_invite_join_group_right_bg"/>
+
+    <item android:state_selected="true" android:drawable="@drawable/ic_invite_join_group_right_bg"/>
+    <item android:drawable="@drawable/ic_invite_join_group_left_bg">
+    </item>
+
+</selector>

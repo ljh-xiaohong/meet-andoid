@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:layout_marginTop="@dimen/px_16"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/et_group_name"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/px_24"
+            android:background="@color/white"
+            android:hint="请输入群名称"
+            android:maxLength="12"
+            android:paddingRight="@dimen/px_24"
+            android:singleLine="true"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_30" />
+    </LinearLayout>
+</LinearLayout>

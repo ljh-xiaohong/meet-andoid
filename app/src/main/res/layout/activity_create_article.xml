@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <requestFocus />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_88"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px_24"
+        android:paddingRight="@dimen/px_24">
+
+        <ImageView
+            android:id="@+id/fanhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_36"
+            android:src="@mipmap/icon_fanhui_b" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/article_title"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/px_36"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/create_essay"
+            android:layout_width="50dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_save_btn_bg"
+            android:paddingBottom="@dimen/px_8"
+            android:paddingLeft="@dimen/px_16"
+            android:paddingRight="@dimen/px_16"
+            android:paddingTop="@dimen/px_8"
+            android:text="@string/release"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="#ffdfdfdf" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px_20"
+            android:paddingTop="@dimen/px_20">
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <RadioButton
+                android:id="@+id/paste_check"
+                android:layout_width="102.0dip"
+                android:layout_height="36.0dip"
+                android:layout_marginRight="36.0dip"
+                android:background="@drawable/selector_select_time_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/text_article"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp" />
+
+            <RadioButton
+                android:id="@+id/edit_check"
+                android:layout_width="102.0dip"
+                android:layout_height="36.0dip"
+                android:background="@drawable/selector_select_time_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/text_article1"
+                android:textColor="@color/selector_surname_text_color"
+                android:textSize="15.0sp" />
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px_60"
+            android:layout_marginTop="@dimen/px_110"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px_24"
+            android:paddingRight="@dimen/px_24">
+
+            <LinearLayout
+                android:layout_width="@dimen/px_420"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/mrl_name_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/famous_person_name_edit"
+                        android:layout_width="@dimen/px_420"
+                        android:layout_height="@dimen/px_80"
+                        android:background="@color/color_white"
+                        android:hint="@string/text_article2"
+                        android:maxLines="1"
+                        android:textColor="#ff999999"
+                        android:textColorHint="#ff999999"
+                        android:textSize="@dimen/px_28" />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0px"
+                        android:layout_marginTop="2.0dip"
+                        android:background="#ffdfdfdf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mrl_age_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/fp_age_edit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/px_80"
+                        android:background="@color/color_white"
+                        android:drawableRight="@mipmap/btn_xiala"
+                        android:hint="@string/text_article3"
+                        android:textColor="#ff999999"
+                        android:textColorHint="#ff999999"
+                        android:textSize="@dimen/px_28" />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0px"
+                        android:layout_marginTop="2.0dip"
+                        android:background="#ffdfdfdf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/title_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/essay_title_edit"
+                        android:layout_width="@dimen/px_420"
+                        android:layout_height="@dimen/px_80"
+                        android:background="@color/color_white"
+                        android:hint="@string/text_article4"
+                        android:maxLines="1"
+                        android:textColor="#ff999999"
+                        android:textColorHint="#ff999999"
+                        android:textSize="@dimen/px_28" />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0px"
+                        android:layout_marginTop="2.0dip"
+                        android:background="#ffdfdfdf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/paste_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/paste_from_name"
+                            android:layout_width="@dimen/px_420"
+                            android:layout_height="@dimen/px_80"
+                            android:background="@color/color_white"
+                            android:hint="@string/text_article6"
+                            android:textColor="#ff999999"
+                            android:textColorHint="#ff999999"
+                            android:textSize="@dimen/px_28" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1.0px"
+                            android:layout_marginTop="2.0dip"
+                            android:background="#ffdfdfdf" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/paste_from_url"
+                            android:layout_width="@dimen/px_420"
+                            android:layout_height="@dimen/px_80"
+                            android:background="@color/color_white"
+                            android:hint="@string/text_article7"
+                            android:inputType="textUri"
+                            android:textColor="#ff999999"
+                            android:textColorHint="#ff999999"
+                            android:textSize="@dimen/px_28" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1.0px"
+                            android:layout_marginTop="2.0dip"
+                            android:background="#ffdfdfdf" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.0dip"
+                android:layout_height="1.0px"
+                android:layout_weight="1.0" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px_250"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/upload_photo"
+                    android:layout_width="@dimen/px_180"
+                    android:layout_height="@dimen/px_180"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_shangchuan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_16"
+                    android:text="@string/text_article5"
+                    android:textColor="#ff999999"
+                    android:textSize="@dimen/px_24" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/web_essay_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+</LinearLayout>

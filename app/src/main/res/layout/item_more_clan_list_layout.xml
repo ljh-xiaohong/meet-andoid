@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/item_clan_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_96"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/px_6"
+                android:layout_height="@dimen/px_40"
+                android:background="@color/color_ab3a34" />
+
+            <TextView
+                android:id="@+id/txt_mi_clan_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_18"
+                android:text="@string/clan_text_1"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/px_30"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/px_2"
+            android:background="@color/setting_bg" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_img_more_clan_photo"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px_300"
+        android:layout_margin="@dimen/px_24"
+        android:scaleType="centerCrop" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px_24"
+        android:layout_marginLeft="@dimen/px_24"
+        android:layout_marginRight="@dimen/px_24"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/item_img_more_clan_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="梁家"
+                    android:textColor="@color/color_black_333333"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/item_association_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_16"
+                    android:text="筹建中..."
+                    android:textColor="#ff3498db"
+                    android:textSize="@dimen/px_28"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_16"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_img_more_clan_loation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_zongqinhui_txt_bg"
+                    android:drawableLeft="@mipmap/ic_loaction_dingwei"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/px_13"
+                    android:paddingRight="@dimen/px_13"
+                    android:text="19.22km"
+                    android:textColor="@color/color_ab3a34" />
+
+                <TextView
+                    android:id="@+id/item_img_more_clan_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_6"
+                    android:background="@drawable/shape_zongqinhui_txt_bg"
+                    android:paddingLeft="@dimen/px_13"
+                    android:paddingRight="@dimen/px_13"
+                    android:text="19.22人"
+                    android:textColor="@color/color_ab3a34"
+                    android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/banding_clan_but"
+            android:layout_width="@dimen/px_160"
+            android:layout_height="@dimen/px_48"
+            android:layout_marginTop="@dimen/px_8"
+            android:background="@drawable/shape_know_more"
+            android:gravity="center"
+            android:text="进入宗亲会"
+            android:textColor="@color/color_home_top_bar"
+            android:textSize="@dimen/px_24"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>

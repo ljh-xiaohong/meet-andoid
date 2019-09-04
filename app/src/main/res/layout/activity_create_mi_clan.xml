@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/setting_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/create_clan_bg_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_128"
+                android:layout_marginTop="@dimen/px_8"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/px_24"
+                android:paddingRight="@dimen/px_24">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/Clan_background" />
+
+                <ImageView
+                    android:id="@+id/create_clan_photo"
+                    android:layout_width="@dimen/px_80"
+                    android:layout_height="@dimen/px_80"
+                    android:src="@mipmap/ic_default" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/create_clan_name_layout"
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_16">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/Clan_name" />
+
+                <TextView
+                    android:id="@+id/mi_clan_name"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="请输入宗亲会名称" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_1">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/surnames" />
+
+                <TextView
+                    android:id="@+id/mi_clan_surname"
+                    style="@style/create_mi_clan_txt_two"
+                    android:text="梁" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mi_clan_hall_name_layout"
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_1">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/Tong_he_tong" />
+
+                <TextView
+                    android:id="@+id/mi_clan_hall_name"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="@string/Tong_he_tong2" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mi_clan_time_layout"
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_1">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/date_of_establishment" />
+
+                <TextView
+                    android:id="@+id/mi_clan_time"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="@string/input_date_of_establishment" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mi_clan_address_layout"
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_1">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/detailed_address" />
+
+                <TextView
+                    android:id="@+id/mi_clan_address"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="@string/Select_the_detailed_address" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/crate_mi_mi_zuci_binding_layout"
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_1">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/Binding_ancestral_shrine" />
+
+                <TextView
+                    android:id="@+id/mi_clan_binding_zuci"
+                    style="@style/create_mi_clan_txt_two"
+                    android:gravity="end"
+                    android:hint="@string/Binding_ancestral_shrine2" />
+
+                <ImageView style="@style/create_mi_clan_img_sel" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_16"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/brief_introduction" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_height="@dimen/px_160"
+                android:layout_marginTop="@dimen/px_1"
+                android:gravity="start"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/mi_clan_about"
+                    style="@style/create_mi_clan_txt_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:gravity="start"
+                    android:hint="@string/brief_introduction2"
+                    android:paddingTop="@dimen/px_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_marginTop="@dimen/px_16"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/create_mi_clan_txt_first"
+                    android:text="@string/brief_introduction3" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/create_mi_clan_layout"
+                android:layout_height="@dimen/px_160"
+                android:layout_marginTop="@dimen/px_1"
+                android:gravity="start"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/mi_clan_intrant_about"
+                    style="@style/create_mi_clan_txt_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:gravity="start"
+                    android:hint="@string/brief_introduction4"
+                    android:paddingTop="@dimen/px_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/photo_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/create_mi_clan_layout"
+                    android:layout_marginTop="@dimen/px_16">
+
+                    <TextView
+                        style="@style/create_mi_clan_txt_first"
+                        android:text="@string/Family_album" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/create_mi_clan_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_1">
+
+                    <com.yuejian.meet.widgets.InnerGridView
+                        android:id="@+id/mi_clan_grid"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_30"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:fadingEdgeLength="@dimen/px_20"
+                        android:numColumns="4"
+                        android:verticalSpacing="@dimen/px_16" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_96"
+                android:layout_margin="@dimen/px_30"
+                android:background="@drawable/shape_button_ab3a34"
+                android:text="@string/Family_album2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px_32" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

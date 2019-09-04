@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/bug_type_name"
+        android:layout_width="@dimen/px_120"
+        android:layout_height="@dimen/px_56"
+        android:textSize="@dimen/px_24"
+        android:textColor="@color/selector_bug_type_font_text"
+        android:background="@drawable/selector_bug_type_btn_bg"
+        android:gravity="center"
+        android:text="反馈BUG"/>
+
+</LinearLayout>

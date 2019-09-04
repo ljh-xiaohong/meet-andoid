@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_title_bar"
+        layout="@layout/titlebar_layout"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/px_44">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_108"
+            android:text="约见百家姓帐号"
+            android:textColor="#ff262626"
+            android:textSize="@dimen/px_52" />
+
+        <LinearLayout
+            android:id="@+id/ll_input_all"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px_300">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/geli_area_code_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/px_52"
+                                android:text="国家/地区"
+                                android:textColor="@color/praise_item_default"
+                                android:textSize="@dimen/px_30" />
+
+                            <TextView
+                                android:id="@+id/geli_nation_area_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.0"
+                                android:padding="@dimen/padding"
+                                android:text="中国"
+                                android:textColor="@color/praise_item_default"
+                                android:textSize="@dimen/px_30" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px_24"
+                                android:src="@mipmap/ic_longin_more_area" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1.0dip"
+                            android:layout_marginTop="@dimen/px_10"
+                            android:background="@color/view_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/geli_nation_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/px_52"
+                            android:text="+86"
+                            android:textColor="@color/praise_item_default"
+                            android:textSize="@dimen/px_30" />
+
+                        <com.yuejian.meet.widgets.CleanableEditText
+                            android:id="@+id/txt_content"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_txt_white"
+                            android:drawableRight="@mipmap/ic_edit_clean"
+                            android:hint="请输入手机号"
+                            android:inputType="phone"
+                            android:maxLength="11"
+                            android:padding="@dimen/padding"
+                            android:textColor="@color/praise_item_default"
+                            android:textSize="@dimen/px_30" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:layout_marginTop="@dimen/px_10"
+                        android:background="@color/view_color" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_28"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:orientation="vertical">
+
+                        <com.yuejian.meet.widgets.CleanableEditText
+                            android:id="@+id/txt_code"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_52"
+                            android:background="@drawable/shape_txt_white"
+                            android:drawableRight="@mipmap/ic_edit_clean"
+                            android:hint="请输入验证码"
+                            android:inputType="number"
+                            android:padding="@dimen/padding"
+                            android:textSize="@dimen/px_30" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1.0dip"
+                            android:background="@color/view_color" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/bt_code"
+                        android:layout_width="@dimen/px_200"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/geli_shape_code_select_bg"
+                        android:gravity="center"
+                        android:text="获取验证码"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/px_30" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px_110"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bu_next"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px_94"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/geli_selector_next_btn"
+                android:enabled="false"
+                android:text="下一步"
+                android:textColor="@color/geli_color_radio_sex_button" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/px_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="登录即代表阅读并同意"
+                    android:textColor="@color/color_grey_999999"
+                    android:textSize="@dimen/px_22" />
+
+                <TextView
+                    android:id="@+id/login_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="《约见用户使用协议》"
+                    android:textColor="#ff3494db"
+                    android:textSize="@dimen/px_22" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="及"
+                    android:textColor="@color/color_grey_999999"
+                    android:textSize="@dimen/px_22" />
+
+                <TextView
+                    android:id="@+id/login_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="《隐私政策》"
+                    android:textColor="#ff3494db"
+                    android:textSize="@dimen/px_22" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/login_qq_wx_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px_64"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="@color/txt_notify_color" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:gravity="center"
+                    android:text="@string/txt_login_tips"
+                    android:textSize="@dimen/dp_12" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="@color/txt_notify_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_Left"
+                android:layout_marginRight="@dimen/margin_Right"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/img_login_wx"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@mipmap/ic_login_wx"
+                    android:gravity="center"
+                    android:text="微信" />
+
+                <TextView
+                    android:id="@+id/img_login_qq"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@mipmap/ic_login_qq"
+                    android:gravity="center"
+                    android:text="QQ"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

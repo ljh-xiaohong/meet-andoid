@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="#fff2ebe1" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:background="@mipmap/ic_clan_info_biankuangs" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/px_8">
+        <TextView android:textSize="@dimen/px_32" android:textColor="@color/color_black_333333" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/px_20" android:text="公告" />
+        <TextView android:textSize="@dimen/px_28" android:textColor="#ff9c835e" android:id="@+id/item_clan_notice_conten" android:background="#ffe9dfd0" android:padding="@dimen/px_8" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/px_20" android:text="公告内容公告内容公告内容公告内容公告内容公告内容" />
+        <LinearLayout android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/px_22" android:layout_marginBottom="@dimen/px_20">
+            <TextView android:textSize="@dimen/px_24" android:textColor="@color/txt_color_666666" android:id="@+id/item_clan_notice_time" android:paddingLeft="@dimen/px_32" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2018-03-03" android:layout_weight="1.0" />
+            <TextView android:textSize="@dimen/px_24" android:textColor="@color/color_ab3a34" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/px_20" android:text="立即查看>>" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

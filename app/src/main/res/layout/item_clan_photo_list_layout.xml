@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/px_24" android:textColor="@color/txt_color_999999" android:gravity="center_vertical" android:id="@+id/item_photo_time" android:background="@color/setting_bg" android:paddingLeft="@dimen/px_24" android:layout_width="fill_parent" android:layout_height="@dimen/px_60" android:text="5月" />
+    <com.yuejian.meet.widgets.InnerGridView android:id="@+id/clan_photo_grid" android:layout_width="fill_parent" android:layout_height="wrap_content" android:horizontalSpacing="@dimen/px_3" android:verticalSpacing="@dimen/px_3" android:numColumns="3" />
+</LinearLayout>

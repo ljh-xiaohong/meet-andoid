@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlayout_play_end_dialog_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:id="@+id/img_root_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#704f4251" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_service_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_marginTop="20.0dip"
+        android:background="@null"
+        android:paddingLeft="@dimen/dp_14"
+        android:paddingRight="@dimen/dp_14"
+        android:src="@mipmap/ic_service_online_close"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/txt_charging"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_btm_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120.0dip"
+        android:layout_marginTop="10.0dip"
+        android:text="@string/txt_charging_tips"
+        android:textSize="11.0sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_btm_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_service_to_evaluate"
+            android:layout_width="0.0dip"
+            android:layout_height="40.0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_common_service_btn_bg"
+            android:text="@string/play_end_btn_txt"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tv_detail_fail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40.0dip"
+            android:layout_marginRight="40.0dip"
+            android:background="@drawable/selector_common_service_btn_bg"
+            android:gravity="center"
+            android:padding="10.0dip"
+            android:text="@string/txt_get_service_failed"
+            android:textColor="@android:color/white"
+            android:textSize="18.0sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/server_detail_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25.0dip"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_service_time_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本次服务时长"
+                    android:textColor="#ffe2e2e2"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_service_consumption_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:text="本次消费支出"
+                    android:textColor="#ffe2e2e2"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_consumption_money_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:textColor="#ffe2e2e2"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_actual_income_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:textColor="#ffe2e2e2"
+                    android:textSize="14.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_service_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:text="3:00"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_service_consumption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10.0dip"
+                    android:gravity="right"
+                    android:text="66金币"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_consumption_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10.0dip"
+                    android:gravity="right"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+
+                <TextView
+                    android:id="@+id/txt_actual_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10.0dip"
+                    android:gravity="right"
+                    android:textColor="@android:color/white"
+                    android:textSize="14.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

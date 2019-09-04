@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80.0dip"
+    android:layout_height="40.0dip"
+    android:background="#fff8f8f8"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/copy"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:background="#fff8f8f8"
+        android:gravity="center"
+        android:text="复制"
+        android:textColor="#ff333333"
+        android:textSize="15.0sp" />
+</LinearLayout>

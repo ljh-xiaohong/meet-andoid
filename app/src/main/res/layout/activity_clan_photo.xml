@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout" />
+
+    <LinearLayout
+        android:id="@+id/add_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px_84"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/px_34"
+            android:layout_height="@dimen/px_34"
+            android:src="@mipmap/icon_shangchuan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px_24"
+            android:text="添加图片"
+            android:textColor="@color/color_ab3a34"
+            android:textSize="@dimen/px_28" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/photo_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/white" />
+</LinearLayout>
