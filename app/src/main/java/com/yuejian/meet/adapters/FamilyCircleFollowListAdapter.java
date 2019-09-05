@@ -91,7 +91,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         holder.nameTextView.setText(String.format("%s", entity.getName()));
         String createdTime = TimeUtils.formatDateTime(new Date(entity.getCreateTime()));
         holder.createdTimeView.setText(createdTime);
-        holder.contentTextView.setText(entity.getTitle());
+        holder.contentTextView.setText(entity.getContent());
 //        String imgUrl = entity.get;
 
 //        if (!TextUtils.isEmpty(imgUrl)) {
@@ -177,7 +177,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
-            this.mFollowEntities.addAll(followEntities);
+//            this.mFollowEntities.addAll(followEntities);
             notifyDataSetChanged();
     }
 

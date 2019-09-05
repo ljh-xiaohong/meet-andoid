@@ -27,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,22 +35,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.adapter.PicAdapter;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.DynamicPrivatePicBean;
+import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ImageUtils;
 import com.yuejian.meet.utils.Utils;
+import com.yuejian.meet.utils.ViewInject;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,6 +89,8 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
     LinearLayout countLay;
     @Bind(R.id.emojicons)
     FrameLayout emojicons;
+    @Bind(R.id.post)
+    TextView post;
     private boolean hasClick;
     private PicAdapter mAdapter;
 
@@ -345,8 +354,8 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
             }
         }
     }
-
-    @OnClick({R.id.emoji, R.id.pic,R.id.content})
+    public ApiImp apiImp = new ApiImp();
+    @OnClick({R.id.emoji, R.id.pic, R.id.content,R.id.post})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.emoji:
@@ -361,6 +370,48 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
                     emojicons.setVisibility(View.VISIBLE);
                     hasClick = true;
                 }
+                break;
+            case R.id.post:
+//                Map<String, Object> map = new HashMap<>();
+//                map.put("customerId", AppConfig.CustomerId);
+//                map.put("type", String.valueOf(page));
+//                map.put("pageItemCount", String.valueOf(count));
+//                apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
+//                    @Override
+//                    public void onSuccess(String data, int id) {
+//                        followEntitie=new Gson().fromJson(data, FamilyFollowEntity.class);
+//                        if (followEntitie.getCode()!=0) {
+//                            ViewInject.shortToast(getActivity(),followEntitie.getMessage());
+//                            return;
+//                        }
+//                        followEntities.addAll(followEntitie.getData());
+//                        if (followEntities.size() > 0 && firstLoad) {
+//                            mEmptyList.setVisibility(View.GONE);
+//                            firstLoad = false;
+//                        }
+//                        if (page <= 0) {
+//                            //上拉最新
+//                            mFollowListAdapter.refresh(followEntities);
+//                        } else {
+//                            //下拉更多
+//                            if (followEntitie.getData().size()!=pageCount){
+//                                ViewInject.shortToast(getActivity(),"已经是最后一页");
+//                            }else {
+//                                mFollowListAdapter.Loadmore(followEntities);
+//                            }
+//                        }
+//                        if (mSpringView != null) {
+//                            mSpringView.onFinishFreshAndLoad();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String errCode, String errMsg, int id) {
+//                        if (mSpringView != null) {
+//                            mSpringView.onFinishFreshAndLoad();
+//                        }
+//                    }
+//                });
                 break;
             case R.id.pic:
                 initPopwindow();

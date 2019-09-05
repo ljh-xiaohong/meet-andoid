@@ -16,6 +16,7 @@
               android:padding="14dp"
               android:layout_height="wrap_content" />
           <TextView
+              android:id="@+id/post"
               android:layout_width="54dp"
               android:text="发布"
               android:textColor="@color/white"

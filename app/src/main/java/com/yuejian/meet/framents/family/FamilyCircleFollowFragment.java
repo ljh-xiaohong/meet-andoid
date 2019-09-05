@@ -114,7 +114,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
             public void onSuccess(String data, int id) {
                  followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
                  if (followEntitie.getCode()!=0) {
-                     ViewInject.shortToast(getActivity(),"已经是最后一页");
+                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
                      return;
                  }
                 followEntities.addAll(followEntitie.getData());
