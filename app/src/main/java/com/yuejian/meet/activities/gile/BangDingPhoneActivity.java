@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.telephony.SmsMessage;
 import android.text.Editable;
@@ -19,51 +18,33 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.aliyun.common.utils.MD5Util;
 import com.google.gson.Gson;
-import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
-import com.netease.nim.uikit.app.entity.BusCallEntity;
+import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
-import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.common.util.string.StringUtil;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareConfig;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
-import com.yuejian.meet.activities.gile.BangDingPhoneActivity;
 import com.yuejian.meet.activities.mine.UserNameSelectActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.api.http.UrlConstant;
-import com.yuejian.meet.bean.LoginBean;
-import com.yuejian.meet.bean.QqLoginBean;
-import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
-import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
-import com.yuejian.meet.utils.FCLoger;
 import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StatusBarUtils;
 import com.yuejian.meet.utils.SystemTool;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.CleanableEditText;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +54,6 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * @author :
@@ -246,7 +226,7 @@ public class BangDingPhoneActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_protocol, R.id.login_privacy,R.id.back
+    @OnClick({R.id.login_protocol, R.id.login_privacy, R.id.back
             , R.id.activity_phone_login_getcode, R.id.login_tips_tv
             , R.id.activity_phone_login_phone_next_btn, R.id.activity_phone_login_phone_nation_code})
     @Override
@@ -275,7 +255,7 @@ public class BangDingPhoneActivity extends BaseActivity {
 //                startActivityForResult(intent, 12);
                 break;
             case R.id.login_tips_tv://电话代码 +86
-                Dialog dialog = DialogUtils.createOneBtnDialog(BangDingPhoneActivity.this, "联系客服", "400 000 000");
+                Dialog dialog = DialogUtils.createOneBtnDialog(BangDingPhoneActivity.this, "联系客服", "400 000 000","呼叫");
                 dialog.show();
                 break;
             case R.id.back:
@@ -310,9 +290,10 @@ public class BangDingPhoneActivity extends BaseActivity {
         apiImp.bangdingMobile(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                LoginBean loginBean=new Gson().fromJson(data,LoginBean.class);
+                NewUserEntity loginBean=new Gson().fromJson(data, NewUserEntity.class);
                 if (loginBean.getData()!=null){
-                    upadate(loginBean.getData().getCustomerId());
+                    AppConfig.newUerEntity= loginBean;
+                    upadate(loginBean.getData().toString());
                 }
                 if (dialog != null)
                     dialog.dismiss();
@@ -351,17 +332,14 @@ public class BangDingPhoneActivity extends BaseActivity {
      * @param data
      */
     public void upadate(String data) {
-//        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
-        DadanPreference.getInstance(this).setString("CustomerId",data);
-        AppConfig.CustomerId = data;
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                BusCallEntity entity = new BusCallEntity();
-//                entity.setCallType(BusEnum.LOGIN_UPDATE);
-//                Bus.getDefault().post(entity);
-//            }
-//        }, 500);
+        UserEntity entity =new Gson().fromJson(data, UserEntity.class);
+        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
+        AppConfig.userEntity = entity;
+        if (!CommonUtil.isNull(entity.getCustomer_id())){
+            AppConfig.CustomerId = entity.getCustomer_id();
+        }else {
+            AppConfig.CustomerId = entity.getCustomerId();
+        }
     }
 
     ///获取验证码
@@ -381,7 +359,7 @@ public class BangDingPhoneActivity extends BaseActivity {
             public void onSuccess(String data, int id) {
                 if (dialog != null)
                     dialog.dismiss();
-                Utils.countDown(60, phoneCode, null, R.drawable.bg_resg_grey_unpress_btn, R.drawable.bg_resg_grey_press_btn);
+                Utils.countDown(90, phoneCode, null, R.drawable.bg_resg_grey_unpress_btn, R.drawable.bg_resg_grey_press_btn);
 
 //                intent = new Intent(mContext, PhoneCodeActivity.class);
 //                intent.putExtra("mobile", txt_content.getText().toString());

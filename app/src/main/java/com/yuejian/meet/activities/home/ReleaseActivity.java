@@ -22,6 +22,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,18 +36,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
+import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.adapter.PicAdapter;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.mine.GifActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
+import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
 import com.yuejian.meet.bean.DynamicPrivatePicBean;
-import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.FeedsResourceBean;
 import com.yuejian.meet.bean.Image;
+import com.yuejian.meet.bean.ResultBean;
+import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ImageUtils;
+import com.yuejian.meet.utils.ImgUtils;
+import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 
@@ -70,7 +82,6 @@ import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
 public class ReleaseActivity extends BaseActivity implements EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
 
-
     @Bind(R.id.title)
     RelativeLayout title;
     @Bind(R.id.content)
@@ -93,12 +104,55 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
     TextView post;
     private boolean hasClick;
     private PicAdapter mAdapter;
+    private String photoAndVideoUrl="";
+    private LoadingDialogFragment dialog;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+//可在其中解析amapLocation获取相应内容。
+                    crLatitude= aMapLocation.getLatitude();//获取纬度
+                    crLongitude=aMapLocation.getLongitude();//获取经度
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + aMapLocation.getErrorCode() + ", errInfo:"
+                            + aMapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    private double crLongitude=0.0;
+    private double crLatitude=0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.release_activity);
         ButterKnife.bind(this);
+        dialog = LoadingDialogFragment.newInstance(getString(R.string.is_requesting));
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //获取一次定位结果：该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocationLatest(true);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
         Image pb = new Image();
         pb.setBitmap(null);
         pb.setThumbPath("");
@@ -372,46 +426,27 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
                 }
                 break;
             case R.id.post:
-//                Map<String, Object> map = new HashMap<>();
-//                map.put("customerId", AppConfig.CustomerId);
-//                map.put("type", String.valueOf(page));
-//                map.put("pageItemCount", String.valueOf(count));
-//                apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
-//                    @Override
-//                    public void onSuccess(String data, int id) {
-//                        followEntitie=new Gson().fromJson(data, FamilyFollowEntity.class);
-//                        if (followEntitie.getCode()!=0) {
-//                            ViewInject.shortToast(getActivity(),followEntitie.getMessage());
-//                            return;
-//                        }
-//                        followEntities.addAll(followEntitie.getData());
-//                        if (followEntities.size() > 0 && firstLoad) {
-//                            mEmptyList.setVisibility(View.GONE);
-//                            firstLoad = false;
-//                        }
-//                        if (page <= 0) {
-//                            //上拉最新
-//                            mFollowListAdapter.refresh(followEntities);
-//                        } else {
-//                            //下拉更多
-//                            if (followEntitie.getData().size()!=pageCount){
-//                                ViewInject.shortToast(getActivity(),"已经是最后一页");
-//                            }else {
-//                                mFollowListAdapter.Loadmore(followEntities);
-//                            }
-//                        }
-//                        if (mSpringView != null) {
-//                            mSpringView.onFinishFreshAndLoad();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String errCode, String errMsg, int id) {
-//                        if (mSpringView != null) {
-//                            mSpringView.onFinishFreshAndLoad();
-//                        }
-//                    }
-//                });
+                if (dialog != null)
+                    dialog.show(getFragmentManager(), "");
+
+                //说明：customerId：用户id，type：类型动态固定为1，title：动态标题，
+                // content：动态内容，labelId：标签id（动态为空串），photoAndVideoUrl：
+                // 动态图片资源地址（多个用逗号分隔），crLongitude：经度，crLatitude：纬度 crdId：动态固定给空串
+                if (CommonUtil.isNull(content.getText().toString())){
+                    ViewInject.shortToast(ReleaseActivity.this,R.string.content_tips);
+                    return;
+                }
+                if (CommonUtil.isNull(mSelectImages.get(0).getPath())){
+                    commit();
+                    return;
+                }
+                //上传图片
+                for (int i=0;i<mSelectImages.size();i++){
+                    if (!CommonUtil.isNull(mSelectImages.get(i).getPath())){
+                        mSelectImagesSize++;
+                        uploadUserImg(mSelectImages.get(i).getPath());
+                    }
+                }
                 break;
             case R.id.pic:
                 initPopwindow();
@@ -421,6 +456,74 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
                 hasClick = false;
                 break;
         }
+    }
+
+    String photo  = "";
+    int uploadCount=0;
+    int mSelectImagesSize=0;
+    /**
+     * 上传图片到oss 完成
+     */
+    private void uploadUserImg(String params) {
+        //如果存在头像，先上存到oss
+        String updtaImgName = OssUtils.getTimeNmaeJpg();
+        new FeedsApiImpl().upLoadImageFileToOSS(params, updtaImgName, this, new DataCallback<FeedsResourceBean>() {
+            @Override
+            public void onSuccess(FeedsResourceBean data) {
+                uploadCount++;
+                photo = data.imageUrl;
+                photoAndVideoUrl=photoAndVideoUrl+photo+",";
+                if (uploadCount==mSelectImagesSize) {
+                    commit();
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg) {
+                if (dialog != null)
+                    dialog.dismiss();
+                ViewInject.shortToast(getApplication(), errMsg);
+            }
+        });
+
+
+    }
+
+    private void commit() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("type", 1);
+        map.put("title", "");
+        map.put("content", content.getText().toString());
+        map.put("labelId", "");
+        if (!CommonUtil.isNull(photoAndVideoUrl)) {
+            map.put("photoAndVideoUrl", photoAndVideoUrl.substring(0, photoAndVideoUrl.length() - 1));
+        } else {
+            map.put("photoAndVideoUrl", photoAndVideoUrl);
+        }
+        map.put("crLongitude", crLongitude);
+        map.put("crLatitude", crLatitude);
+        map.put("crdId", "");
+        apiImp.postCreateAction(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
+                ResultBean resultBean = new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(ReleaseActivity.this, resultBean.getMessage());
+                if (resultBean.getCode() == 0) {
+                    Intent i = new Intent();
+                    setResult(7, i);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
+            }
+        });
     }
 
     private void setEmojiconFragment(boolean useSystemDefault) {

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="44dp">
+          <ImageView
+              android:layout_width="wrap_content"
+              android:src="@mipmap/back_left"
+              android:padding="14dp"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:text="举报"
+              android:textColor="#333333"
+              android:layout_centerInParent="true"
+              android:textSize="16sp"
+              android:layout_height="wrap_content" />
+     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="#F2F5F7"
+        android:layout_height="match_parent">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_marginTop="6dp"
+             android:paddingLeft="12dp"
+             android:orientation="vertical"
+             android:background="#FFFFFF"
+             android:layout_height="160dp">
+              <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+         <TextView
+             android:layout_width="wrap_content"
+             android:text="举报描述"
+             android:textColor="#333333"
+             android:layout_marginTop="14dp"
+             android:textSize="14sp"
+             android:layout_height="wrap_content"/>
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_marginLeft="8dp"
+                       android:layout_marginTop="16dp"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/count_lay">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="("
+                            android:textSize="11sp"
+                            android:textColor="#999999"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/tv_counts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:textColor="#999999"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:textColor="#999999"
+                            android:text="/"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:textColor="#999999"
+                            android:text="200"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text=")"
+                            android:textSize="11sp"
+                            android:textColor="#999999"
+                            android:layout_height="wrap_content" />
+                   </LinearLayout>
+              </LinearLayout>
+              <View
+                  android:layout_width="match_parent"
+                  android:background="#E6E6E6"
+                  android:layout_marginTop="15dp"
+                  android:layout_height="1dp"/>
+              <EditText
+                  android:id="@+id/report_edit"
+                  android:layout_width="match_parent"
+                  android:background="#FFFFFF"
+                  android:hint="详细描述举报理由"
+                  android:gravity="top"
+                  android:layout_marginTop="15dp"
+                  android:textSize="14sp"
+                  android:textColor="#333333"
+                  android:textColorHint="#999999"
+                  android:layout_height="match_parent" />
+         </LinearLayout>
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_marginTop="6dp"
+             android:paddingLeft="12dp"
+             android:orientation="vertical"
+             android:background="#FFFFFF"
+             android:layout_height="wrap_content">
+         <TextView
+             android:layout_width="wrap_content"
+             android:textColor="#333333"
+             android:textSize="14sp"
+             android:layout_marginTop="14dp"
+             android:text="联系方式"
+             android:layout_height="wrap_content" />
+
+              <EditText
+                  android:id="@+id/phone"
+                  android:layout_width="match_parent"
+                  android:background="@drawable/write"
+                  android:hint="请输入手机号"
+                  android:paddingLeft="12dp"
+                  android:layout_marginRight="12dp"
+                  android:layout_marginTop="15dp"
+                  android:layout_marginBottom="15dp"
+                  android:textSize="14sp"
+                  android:textColor="#333333"
+                  android:textColorHint="#999999"
+                  android:layout_height="32dp" />
+         </LinearLayout>
+         <TextView
+             android:layout_width="wrap_content"
+             android:text="*你的举报将在48小时内受理，若举报成功第一时间告知处理结果。请尽快提交完整的举报描述，无需重复举报，感谢配合。"
+             android:paddingLeft="12dp"
+             android:textColor="#999999"
+             android:layout_marginTop="6dp"
+             android:textSize="12sp"
+             android:paddingRight="31dp"
+             android:layout_height="wrap_content" />
+
+         <TextView
+             android:id="@+id/commit"
+             android:layout_width="match_parent"
+             android:layout_marginTop="207dp"
+             android:layout_marginLeft="12dp"
+             android:layout_marginRight="12dp"
+             android:text="提交"
+             android:textSize="17sp"
+             android:gravity="center"
+             android:textColor="#FFFFFF"
+             android:background="@drawable/black25"
+             android:layout_height="50dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,18 +1,17 @@
 package com.yuejian.meet.activities.mine;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,17 +28,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.app.AppConfig;
-import com.netease.nim.uikit.app.entity.BusCallEntity;
+import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
-import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
-import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.DateActivity;
 import com.yuejian.meet.activities.base.BaseActivity;
@@ -47,14 +42,15 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
 import com.yuejian.meet.bean.FeedsResourceBean;
-import com.yuejian.meet.bean.LoginBean;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.SystemTool;
+import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 
 import java.util.HashMap;
@@ -63,7 +59,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * 选择性
@@ -198,6 +193,12 @@ public class UserNameSelectActivity extends BaseActivity {
             ViewInject.shortToast(this, R.string.toast_name_not_data);
             return;
         }
+        if(!Utils.isMobileNO(acitivity_user_name_referrer.getText().toString())){
+            Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                    "请确认推荐人手机号","确定");
+            dialog.show();
+            return;
+        }
         params.put("referralMobile", acitivity_user_name_referrer.getText().toString());
         params.put("surname", tv_family_name.getText().toString());
         params.put("name", tv_given_name.getText().toString());
@@ -207,6 +208,8 @@ public class UserNameSelectActivity extends BaseActivity {
         if (!outputPath.equals("")) {
             uploadUserImg(params);
         } else {
+            if (dialog != null)
+                dialog.show(getFragmentManager(), "");
             postRegister(params);
         }
 
@@ -221,15 +224,26 @@ public class UserNameSelectActivity extends BaseActivity {
             @Override
             public void onSuccess(String data, int id) {
                 dialog.dismiss();
-                LoginBean loginBean=new Gson().fromJson(data,LoginBean.class);
-                if (loginBean.getData()!=null) {
-                    AppConfig.CustomerId = loginBean.getData().getCustomerId();
+                NewUserEntity loginBean=new Gson().fromJson(data, NewUserEntity.class);
+                if (loginBean.getData()!=null){
+                    AppConfig.newUerEntity= loginBean;
+                    updateCustomerData(loginBean.getData().toString());
                 }
+//                if (loginBean.getData()!=null) {
+//                    AppConfig.userEntity= (UserEntity) loginBean.getData();
+//                    updateCustomerData(AppConfig.userEntity.customer_id);
+//                }
                 if (loginBean.getCode() == 0) {
                     intent = new Intent(mContext, GifActivity.class);
                     startActivity(intent);
                     finish();
                 }else {
+                    if(loginBean.getCode()==19985){
+                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                                "请确认推荐人手机号","确定");
+                        dialog.show();
+                        return;
+                    }
                     ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 }
             }
@@ -261,15 +275,22 @@ public class UserNameSelectActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String data, int id) {
                         dialog.dismiss();
-                        LoginBean loginBean=new Gson().fromJson(data,LoginBean.class);
+                        NewUserEntity loginBean=new Gson().fromJson(data, NewUserEntity.class);
                         if (loginBean.getData()!=null){
-                            updateCustomerData(loginBean.getData().getCustomerId());
+                            AppConfig.newUerEntity= loginBean;
+                            updateCustomerData(loginBean.getData().toString());
                         }
                         if (loginBean.getCode() == 0) {
                             intent = new Intent(mContext, GifActivity.class);
                             startActivity(intent);
                             finish();
                         }else {
+                            if(loginBean.getCode()==19985){
+                                Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                                        "请确认推荐人手机号","确定");
+                                dialog.show();
+                                return;
+                            }
                             ViewInject.shortToast(getApplication(), loginBean.getMessage());
                         }
                     }
@@ -301,55 +322,17 @@ public class UserNameSelectActivity extends BaseActivity {
      * @param data
      */
     public void updateCustomerData(String data) {
-//        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
+        UserEntity entity =new Gson().fromJson(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
-//        AppConfig.userEntity = userBean;
-//        AppConfig.CustomerId = userBean.getCustomer_id();
+        AppConfig.userEntity = entity;
+
+        if (!CommonUtil.isNull(entity.getCustomer_id())){
+            AppConfig.CustomerId = entity.getCustomer_id();
+        }else {
+            AppConfig.CustomerId = entity.getCustomerId();
+        }
     }
 
-//    public void initView() {
-//
-//        dialog = LoadingDialogFragment.newInstance(getString(R.string.in_operation));
-//        setTitleText(getString(R.string.user_name));
-//        bt_next.setEnabled(false);
-//        intent = getIntent();
-//        if (intent.hasExtra("mobile"))
-//            mobile = intent.getStringExtra("mobile");
-//        if (intent.hasExtra("openId"))
-//            openId = intent.getStringExtra("openId");
-//        if (intent.hasExtra("flag"))
-//            flag = intent.getStringExtra("flag");
-//        if (intent.hasExtra("photo")) {
-//            photo = intent.getStringExtra("photo");
-//            //   Glide.with(this).load(photo).into(user_header_img);
-//        }
-//        if (intent.hasExtra("areaCode"))
-//            areaCode = intent.getStringExtra("areaCode");
-//        name.addTextChangedListener(new TextWatcherImpl());
-//    }
-
-
-//    public void initView() {
-//        member_number_layout.setVisibility(View.INVISIBLE);
-////        full_name_layout.setVisibility(View.INVISIBLE);
-//        dialog = LoadingDialogFragment.newInstance(getString(R.string.in_operation));
-//        setTitleText(getString(R.string.user_name));
-//        bu_next.setEnabled(false);
-//        intent = getIntent();
-//        if (intent.hasExtra("mobile"))
-//            mobile = intent.getStringExtra("mobile");
-//        if (intent.hasExtra("openId"))
-//            openId = intent.getStringExtra("openId");
-//        if (intent.hasExtra("flag"))
-//            flag = intent.getStringExtra("flag");
-//        if (intent.hasExtra("photo")) {
-//            photo = intent.getStringExtra("photo");
-//            Glide.with(this).load(photo).into(user_header_img);
-//        }
-//        if (intent.hasExtra("areaCode"))
-//            areaCode = intent.getStringExtra("areaCode");
-//        tv_given_name.addTextChangedListener(new TextWatcherImpl());
-//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @OnClick({R.id.acitivity_user_name_select_new_family_name, R.id.acitivity_user_name_select_new_given_name,

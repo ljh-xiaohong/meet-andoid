@@ -2,11 +2,8 @@ package com.yuejian.meet.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +28,7 @@ public class DialogUtils {
      * @param msg     文字说明
      * @return 对话框的对象
      */
-    public static Dialog createOneBtnDialog(Activity context, String titles, String msg) {
+    public static Dialog createOneBtnDialog(Activity context, String titles, String msg,String negativeButtonTv) {
 		/*
          * 获得view填充器对象
 		 */
@@ -61,6 +58,7 @@ public class DialogUtils {
                loadingDialog.dismiss();
             }
         });
+        negativeButton.setText(negativeButtonTv);
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

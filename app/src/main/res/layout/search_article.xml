@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:layout_height="88dp">
+
+     <ImageView
+         android:id="@+id/shop_img"
+         android:layout_centerVertical="true"
+         android:layout_width="90dp"
+         android:layout_alignParentRight="true"
+         android:layout_height="60dp" />
+
+     <TextView
+         android:id="@+id/title"
+         android:layout_width="match_parent"
+         android:textSize="14sp"
+         android:layout_toLeftOf="@+id/shop_img"
+         android:layout_marginRight="22dp"
+         android:maxLines="2"
+         android:ellipsize="end"
+         android:layout_marginTop="17dp"
+         android:textColor="#333333"
+         android:layout_marginLeft="9dp"
+         android:text="标题"
+         android:layout_height="wrap_content" />
+
+     <TextView
+         android:id="@+id/zan_check_num"
+         android:textColor="#666666"
+         android:drawableLeft="@mipmap/icon_zan_nor"
+         android:text="99"
+         android:drawablePadding="2dp"
+         android:layout_alignParentBottom="true"
+         android:layout_marginLeft="9dp"
+         android:layout_marginBottom="15dp"
+         android:textSize="13sp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="231dp"
+    android:layout_marginRight="10px"
+    android:background="@drawable/black4"
+    android:layout_marginBottom="10px"
+    android:layout_height="309dp">
+        <com.yuejian.meet.activities.custom.view.RoundAngleImageView
+            android:id="@+id/frist_strote_pic1_iv"
+            android:layout_width="231dp"
+            android:scaleType="fitXY"
+            android:layout_height="309dp" />
+</LinearLayout>
