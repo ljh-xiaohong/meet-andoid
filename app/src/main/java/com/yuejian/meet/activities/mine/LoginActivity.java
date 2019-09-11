@@ -1,20 +1,11 @@
 package com.yuejian.meet.activities.mine;
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.SmsMessage;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,13 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
-import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
-import com.netease.nim.uikit.app.entity.BusCallEntity;
+import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
-import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareConfig;
@@ -40,19 +32,12 @@ import com.yuejian.meet.activities.adapter.SplashAdapter;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.custom.scoller.ScollLinearLayoutManager;
 import com.yuejian.meet.activities.gile.BangDingPhoneActivity;
-import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.api.http.UrlConstant;
-import com.yuejian.meet.bean.EnjoyEntity;
-import com.yuejian.meet.bean.LoginBean;
 import com.yuejian.meet.bean.QqLoginBean;
 import com.yuejian.meet.bean.WxLoginBean;
-import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.AppManager;
-import com.yuejian.meet.utils.CommonUtil;
-import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.FCLoger;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -64,11 +49,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
@@ -110,7 +92,48 @@ public class LoginActivity extends BaseActivity {
         AppManager.finishOtherActivitis(this);
     }
 
+    int loginType = 0;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+//可在其中解析amapLocation获取相应内容。
+                    crLatitude= aMapLocation.getLatitude();//获取纬度
+                    crLongitude=aMapLocation.getLongitude();//获取经度
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + aMapLocation.getErrorCode() + ", errInfo:"
+                            + aMapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    private double crLongitude=0.0;
+    private double crLatitude=0.0;
     public void initView() {
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //获取一次定位结果：该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocationLatest(true);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
         mRecyclerView.setAdapter(new SplashAdapter(LoginActivity.this));
         mRecyclerView.setLayoutManager(new ScollLinearLayoutManager(LoginActivity.this));
         //smoothScrollToPosition滚动到某个位置（有滚动效果）
@@ -131,7 +154,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.img_login_wx,R.id.exit_iv,
+    @OnClick({R.id.img_login_wx, R.id.exit_iv,
             R.id.phone_login, R.id.login_privacy})
     @Override
     public void onClick(View v) {
@@ -147,7 +170,7 @@ public class LoginActivity extends BaseActivity {
                 umShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
                 break;
             case R.id.login_privacy:///约见用户使用协议
-                Dialog dialog = DialogUtils.createOneBtnDialog(LoginActivity.this, "联系客服", "400 000 000");
+                Dialog dialog = DialogUtils.createOneBtnDialog(LoginActivity.this, "联系客服", "400 000 000","呼叫");
                 dialog.show();
                 break;
             case R.id.phone_login:
@@ -217,12 +240,15 @@ public class LoginActivity extends BaseActivity {
         params.put("imageCode", "");
         params.put("weixin", wxLoginBean.openid);
         params.put("loginType", 1);
+        params.put("longitude", crLongitude);
+        params.put("latitude", crLatitude);
         apiImp.login(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                LoginBean loginBean=new Gson().fromJson(data,LoginBean.class);
+                NewUserEntity loginBean=new Gson().fromJson(data, NewUserEntity.class);
                 if (loginBean.getData()!=null){
-                    upadate(loginBean.getData().getCustomerId());
+                    AppConfig.newUerEntity= loginBean;
+                    upadate(loginBean.getData().toString());
                 }
                 if (dialog != null)
                     dialog.dismiss();
@@ -327,18 +353,11 @@ public class LoginActivity extends BaseActivity {
      * @param data
      */
     public void upadate(String data) {
+        UserEntity entity =new Gson().fromJson(data, UserEntity.class);
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
-        DadanPreference.getInstance(this).setString("CustomerId",data);
-//        AppConfig.userEntity = userBean;
-        AppConfig.CustomerId = data;
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                BusCallEntity entity = new BusCallEntity();
-//                entity.setCallType(BusEnum.LOGIN_UPDATE);
-//                Bus.getDefault().post(entity);
-//            }
-//        }, 500);
+        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
+        AppConfig.userEntity = entity;
+        AppConfig.CustomerId = entity.getCustomer_id();
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppInstallListener;
 import com.fm.openinstall.model.AppData;
 import com.fm.openinstall.model.Error;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.api.utils.PreferencesIm;
@@ -42,6 +43,7 @@ import com.yuejian.meet.session.config.preference.UserPreferences;
 import com.yuejian.meet.session.mixpush.DemoMixPushMessageHandler;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.AppinitUtil;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.FileUtils;
 import com.yuejian.meet.utils.ImUtils;
@@ -190,22 +192,26 @@ public class MyApplication extends TinkerApplication {
      */
     public void initCustomId() {
         setlangage();
-        String userData = DadanPreference.getInstance(this).getString("CustomerId");
-//        AppConfig.chatGiftPath = FileUtils.getChatGiftPath(this);
-        if (StringUtils.isNotEmpty(userData)) {
-//            UserEntity entity = JSON.parseObject(userData, UserEntity.class);
-//            AppConfig.userEntity = entity;
-            AppConfig.CustomerId = userData;
-//            AppConfig.UserSex = AppConfig.userEntity.getSex();
-//            AppConfig.Token = AppConfig.userEntity.getToken();
-//            ////获取保存位置
-//            AppConfig.city = PreferencesUtil.get(this, PreferencesUtil.CITY, "");
-//            AppConfig.district = PreferencesUtil.get(this, PreferencesUtil.DISTRICT, "");
-//            AppConfig.slatitude = PreferencesUtil.get(this, PreferencesUtil.LATITUDE, "0");
-//            AppConfig.slongitude = PreferencesUtil.get(this, PreferencesUtil.LONGITUDE, "0");
-//            AppConfig.province = PreferencesUtil.get(this, PreferencesUtil.PROVINCE, "");
-//            AppConfig.moneySun = Double.parseDouble(PreferencesIm.get(this, PreferencesIm.moneySum, "0.0"));
-        }
+        String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
+        UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
+//        UserEntity entity = JSON.parseObject(userData, UserEntity.class);
+        AppConfig.userEntity = entity;
+        AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
+
+//        String userData = DadanPreference.getInstance(this).getString("CustomerId");
+//        if (StringUtils.isNotEmpty(userData)) {
+//            AppConfig.newUerEntity = CommonUtil.getBeanFromSp(this,"userData","userBean");
+//            AppConfig.CustomerId = userData;
+////            AppConfig.UserSex = AppConfig.userEntity.getSex();
+////            AppConfig.Token = AppConfig.userEntity.getToken();
+////            ////获取保存位置
+////            AppConfig.city = PreferencesUtil.get(this, PreferencesUtil.CITY, "");
+////            AppConfig.district = PreferencesUtil.get(this, PreferencesUtil.DISTRICT, "");
+////            AppConfig.slatitude = PreferencesUtil.get(this, PreferencesUtil.LATITUDE, "0");
+////            AppConfig.slongitude = PreferencesUtil.get(this, PreferencesUtil.LONGITUDE, "0");
+////            AppConfig.province = PreferencesUtil.get(this, PreferencesUtil.PROVINCE, "");
+////            AppConfig.moneySun = Double.parseDouble(PreferencesIm.get(this, PreferencesIm.moneySum, "0.0"));
+//        }
 //        AppConfig.isGiftDownload = PreferencesIm.readBoolean(this, PreferencesIm.giftDownload);
     }
 

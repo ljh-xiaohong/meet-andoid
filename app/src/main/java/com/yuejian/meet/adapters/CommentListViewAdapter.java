@@ -16,7 +16,6 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentEntity;
-import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.widgets.CircleImageView;
 

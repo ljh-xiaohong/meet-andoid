@@ -2,41 +2,36 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.home.ArticleInfoActivity;
-import com.yuejian.meet.activities.web.WebActivity;
+import com.yuejian.meet.activities.adapter.ReleasePicAdapter;
+import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.api.http.UrlConstant;
-import com.yuejian.meet.bean.AVData;
+import com.yuejian.meet.bean.DynamicPrivatePicBean;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.bean.ZanBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.FolderTextView;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.widgets.CircleImageView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,13 +55,15 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
     private int check_num=0;
     private boolean isCheckeds;
     private onClickListener mOnClickListener;
+    private boolean isOne;
 
     public void setOnClickListener(onClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
     }
 
     public interface onClickListener {
-        void onClick(int position);
+        void onClick(int position, boolean me);
+        void onComment(int position);
     }
     public FamilyCircleFollowListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, Activity activity) {
         mContext = context;
@@ -89,36 +86,111 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
             Glide.with(mContext).load(headUrl).into(holder.headImageView);
         }
         holder.nameTextView.setText(String.format("%s", entity.getName()));
-        String createdTime = TimeUtils.formatDateTime(new Date(entity.getCreateTime()));
-        holder.createdTimeView.setText(createdTime);
-        holder.contentTextView.setText(entity.getContent());
-//        String imgUrl = entity.get;
 
-//        if (!TextUtils.isEmpty(imgUrl)) {
-//            Glide.with(mContext).load(imgUrl).placeholder(R.mipmap.loading_pic)
-//                    .error(R.mipmap.loading_unpic).centerCrop().into(holder.contentImgView);
-//        }
-//        holder.iv_family_follow_item_list.setOnClickListener(v -> mListItemClickListener.onListItemClick(entity.type, entity.id));
-//        boolean is_praise = entity.get;
-//        holder.zanIcon.setImageResource(is_praise ? R.mipmap.icon_pingjia_zan_sel : R.mipmap.icon_mine_zan_nor);
-//        holder.zan_check.setOnCheckedChangeListener((buttonView, isChecked)->{
-//            if (isChecked){
-//                check_num=check_num+1;
-//                holder.zan_check_num.setText(check_num+"");
-//            }else {
-//                check_num=check_num-1;
-//                holder.zan_check_num.setText(check_num+"");
-//            }
-//        });
-        if (entity.getVipType()==1) {
+        Date date = new Date(Long.parseLong(entity.getCreateTime())*1000);
+        String createdTime = TimeUtils.formatDateTime(date);
+        holder.createdTimeView.setText(createdTime);
+
+        if (!CommonUtil.isNull(entity.getVipType())&&Integer.parseInt(entity.getVipType())==1) {
             holder.tv_family_follow_item_name_tag.setVisibility(View.VISIBLE);
         }else {
             holder.tv_family_follow_item_name_tag.setVisibility(View.GONE);
         }
-        holder.zan_check_num.setText(entity.getCommentNum()+"");
+        holder.zan_check_num.setText(entity.getFabulousNum()+"");
         holder.more_operation.setOnClickListener(v -> {
-              mOnClickListener.onClick(position);
+              mOnClickListener.onClick(position,entity.isMe());
         });
+
+        if (Integer.parseInt(entity.getType())==1) {
+            holder.img.setVisibility(View.GONE);
+            holder.contentImgView.setVisibility(View.GONE);
+            holder.contentTextView.setText(entity.getContent());
+            if (!CommonUtil.isNull(entity.getPhotoAndVideoUrl())) {
+                String[] imgs = entity.getPhotoAndVideoUrl().split(",");
+                final List<Image> picData = new ArrayList<>();
+                for (int i = 0; i < imgs.length; i++) {
+                    Image pb = new Image();
+                    pb.setBitmap(null);
+                    pb.setUrl("");
+                    pb.setSelect(true);
+                    pb.setTake(true);
+                    pb.setPath(imgs[0]);
+                    picData.add(pb);
+                }
+                if (picData.size() == 1) {
+                    isOne = true;
+                    GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
+                    holder.iv_family_follow_item_list.setLayoutManager(layoutManager);
+                } else {
+                    isOne = false;
+                    GridLayoutManager layoutManager = new GridLayoutManager(mContext, 3);
+                    holder.iv_family_follow_item_list.setLayoutManager(layoutManager);
+                }
+                ReleasePicAdapter mAdapter = new ReleasePicAdapter(mContext, picData, isOne);
+                holder.iv_family_follow_item_list.setAdapter(mAdapter);
+                mAdapter.setClickPic(new ReleasePicAdapter.OnClickPic() {
+                    @Override
+                    public void clickPic(int position) {
+                        List<DynamicPrivatePicBean> actionPhoto = new ArrayList<>();
+                        List<String> list = new ArrayList<String>();
+                        for (int i = 0; i < picData.size(); i++) {
+                            actionPhoto.add(new DynamicPrivatePicBean(picData.get(i).getPath(), "1"));
+                            list.add(picData.get(i).getPath());
+                        }
+                        Utils.displayImages((Activity) mContext, list, position, null);
+                    }
+
+                    @Override
+                    public void delectPic(int position) {
+
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                holder.iv_family_follow_item_list.setVisibility(View.VISIBLE);
+                holder.iv_family_follow_item_list_lay.setVisibility(View.VISIBLE);
+            } else {
+                holder.iv_family_follow_item_list.setVisibility(View.GONE);
+                holder.iv_family_follow_item_list_lay.setVisibility(View.GONE);
+            }
+            holder.article_lay.setVisibility(View.GONE);
+            holder.contentTextView.setVisibility(View.VISIBLE);
+            holder.contentImgView.setVisibility(View.GONE);
+            holder.img.setVisibility(View.GONE);
+        }else if (Integer.parseInt(entity.getType())==2){
+            holder.article_lay.setVisibility(View.VISIBLE);
+            holder.contentTextView.setVisibility(View.GONE);
+            holder.iv_family_follow_item_list_lay.setVisibility(View.GONE);
+            holder.iv_family_follow_item_list.setVisibility(View.GONE);
+            holder.contentImgView.setVisibility(View.GONE);
+            holder.img.setVisibility(View.GONE);
+            holder.article_title.setText(entity.getTitle());
+            holder.article_content.setText(entity.getContent());
+            if (!TextUtils.isEmpty(entity.getPhotoAndVideoUrl())) {
+                Glide.with(mContext).load(entity.getPhotoAndVideoUrl()).into(holder.article_img);
+            }
+        }else if (Integer.parseInt(entity.getType())==4){
+            holder.article_lay.setVisibility(View.GONE);
+            holder.iv_family_follow_item_list_lay.setVisibility(View.VISIBLE);
+            holder.iv_family_follow_item_list.setVisibility(View.GONE);
+            holder.contentImgView.setVisibility(View.VISIBLE);
+            holder.contentTextView.setVisibility(View.VISIBLE);
+            holder.img.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(entity.getPhotoAndVideoUrl())) {
+                Glide.with(mContext).load(entity.getPhotoAndVideoUrl()).into(holder.contentImgView);
+            }
+            if (!CommonUtil.isNull(entity.getTitle())) {
+                holder.contentTextView.setText(entity.getTitle());
+            }else {
+                holder.contentTextView.setText("");
+            }
+        }
+
+
+        if (Integer.parseInt(entity.getIsPraise())==1){
+            holder.zan_check.setChecked(true);
+        }else {
+            holder.zan_check.setChecked(false);
+        }
         holder.zan_check.setOnClickListener(v -> {
             Map<String, Object> params = new HashMap<>();
             params.put("customerId", AppConfig.CustomerId);
@@ -127,7 +199,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                 @Override
                 public void onSuccess(String data, int id) {
                     try {
-                        ZanBean zanBean= new Gson().fromJson(data,ZanBean.class);
+                        ZanBean zanBean= new Gson().fromJson(data, ZanBean.class);
                         if (zanBean.getCode()==0){
                             holder.zan_check.setChecked(zanBean.getData().getIsPraise() == 1 ?true : false);
                             holder.zan_check_num.setText(zanBean.getData().getPraiseCnt()+"");
@@ -146,17 +218,22 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                 }
             });
         });
-//        holder.commentBtn.setOnClickListener(v -> mListItemClickListener.onListItemClick(entity.type, entity.id));
-//        holder.shareBtn.setOnClickListener(v -> {
-//            Glide.with(mContext).load(article_photo).asBitmap().into(new SimpleTarget<Bitmap>() {
-//                @Override
-//                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                    String title = entity.title;
-//                    String shareUrl = "http://app2.yuejianchina.com/yuejian-app/release/blank.html?type="+entity.type+"&id="+entity.id;
-//                    Utils.umengShareByList(mActivity, resource, title, "来自 约见·百家姓", shareUrl);
-//                }
-//            });
-//        });
+        if (entity.getCommentMap().size()>0){
+            CommentAdapter commentAdapter=new CommentAdapter((Activity) mContext,entity.getCommentMap());
+            holder.comment_list.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.comment_list.setAdapter(commentAdapter);
+            commentAdapter.notifyDataSetChanged();
+            holder.comment_list.setVisibility(View.VISIBLE);
+            if (entity.getCommentMap().size()>2){
+                holder.commentCount.setText("查看" + entity.getCommentMap().size() + "条评论 >");
+            }else {
+                holder.commentCount.setText("去评论 >");
+            }
+        }else {
+            holder.comment_list.setVisibility(View.GONE);
+            holder.commentCount.setText("去评论 >");
+        }
+        holder.commentCount.setOnClickListener(v -> mOnClickListener.onComment(position));
     }
 
     @Override
@@ -187,34 +264,41 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
 
     class FamilyCircleFollowListViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView contentImgView;
+        RoundAngleImageView contentImgView,article_img;
         FolderTextView contentTextView;
+        TextView commentCount;
         TextView nameTextView;
-        TextView createdTimeView;
+        TextView createdTimeView,article_title,article_content;
         CircleImageView headImageView;
         LinearLayout zanBtn;
         ImageView zanIcon;
         LinearLayout commentBtn;
         LinearLayout shareBtn;
+        RelativeLayout iv_family_follow_item_list_lay,article_lay;
 
 
         RecyclerView comment_list,iv_family_follow_item_list;
         CheckBox zan_check;
         TextView zan_check_num;
-        ImageView more_operation,tv_family_follow_item_name_tag;
+        ImageView more_operation,tv_family_follow_item_name_tag,img;
         public FamilyCircleFollowListViewHolder(View itemView) {
             super(itemView);
             headImageView = (CircleImageView) itemView.findViewById(R.id.iv_family_follow_item_head);
-            contentImgView = (ImageView) itemView.findViewById(R.id.iv_family_follow_item_img);
+            article_img = (RoundAngleImageView) itemView.findViewById(R.id.article_img);
+            contentImgView = (RoundAngleImageView) itemView.findViewById(R.id.iv_family_follow_item_img);
             contentTextView = (FolderTextView) itemView.findViewById(R.id.tv_family_follow_item_content);
+            article_title = (TextView) itemView.findViewById(R.id.article_title);
+            article_content = (TextView) itemView.findViewById(R.id.article_content);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_family_follow_item_name);
             createdTimeView = (TextView) itemView.findViewById(R.id.tv_family_follow_item_created_time);
             zanBtn = (LinearLayout) itemView.findViewById(R.id.ll_family_follow_zan_root);
             zanIcon = (ImageView) itemView.findViewById(R.id.iv_family_follow_zan_icon);
+            img = (ImageView) itemView.findViewById(R.id.img);
             commentBtn = (LinearLayout) itemView.findViewById(R.id.ll_family_follow_comment_root);
             shareBtn = (LinearLayout) itemView.findViewById(R.id.ll_family_follow_share_root);
-
-
+            iv_family_follow_item_list_lay = (RelativeLayout) itemView.findViewById(R.id.iv_family_follow_item_list_lay);
+            article_lay = (RelativeLayout) itemView.findViewById(R.id.article_lay);
+            commentCount = (TextView) itemView.findViewById(R.id.comment_count);
             comment_list=itemView.findViewById(R.id.comment_list);
             iv_family_follow_item_list=itemView.findViewById(R.id.iv_family_follow_item_list);
             zan_check=itemView.findViewById(R.id.zan_check);

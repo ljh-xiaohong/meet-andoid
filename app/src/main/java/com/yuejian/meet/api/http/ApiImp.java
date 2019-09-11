@@ -19,16 +19,18 @@ public class ApiImp {
     HttpRequstDB mHttpRequst = new HttpRequstDB();
 
     /**
-     * 收益列表
+     * 获取验证码
      *
-     * @param params
+     * @param mobile 手机号
      * @param tag
      * @param call
      */
-    public void doIncomeList(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
-        logindb.postRequst(UrlConstant.POST_INCOME_LIST(), params, tag, call);
+    public void getCode(String areaCode, String mobile, Object tag, DataIdCallback<String> call) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("areaCode", areaCode);
+        params.put("mobile", mobile);
+        mHttpRequst.postRequst(UrlConstant.SEND_CODE(), params, tag, call);
     }
-
     /**
      * 登录接口
      *
@@ -39,15 +41,15 @@ public class ApiImp {
     public void login(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.LOGIN(), params, tag, call);
     }
-
     /**
-     * 注册
+     * 根据手机号,绑定手机
      *
-     * @param tag
-     * @param call
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
      */
-    public void postRegister(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
-        logindb.postRequst(UrlConstant.POST_REGISTER(), params, tag, call);
+    public void bangdingMobile(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.POST_BANGDIN_MOBILE, paramMap, paramObject, paramDataIdCallback);
     }
 
     /**
@@ -59,6 +61,54 @@ public class ApiImp {
     public void postRegister2(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.POST_REGISTER2(), params, tag, call);
     }
+
+    /**
+     * 首页 动态
+     */
+    public void getAttentionFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.ATTENTIONFAMILYCRICLE, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 首页 动态 发布动态
+     */
+    public void postCreateAction(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTCREATEACTION, paramMap, paramObject, callback);
+    }
+    /**
+     * 首页 动态 删除动态
+     */
+    public void postDelectAction(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTDELECTACTION, paramMap, paramObject, callback);
+    }
+    /**
+     * 首页 动态 不感兴趣
+     */
+    public void postLoseInterest(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTLOSEINTEREST, paramMap, paramObject, callback);
+    }
+    /**
+     * 首页 动态 举报
+     */
+    public void postDoReport(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTDOREPORT, paramMap, paramObject, callback);
+    }
+    /**
+     * 首页 动态 搜索
+     */
+    public void getDoSearch(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GETDOSEARCH, paramMap, paramObject, callback);
+    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 第三方是否注册
@@ -79,35 +129,16 @@ public class ApiImp {
     public void loginother(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.POST_LOGIN_OTHER(), params, tag, call);
     }
-
     /**
-     * 获取验证码
+     * 收益列表
      *
-     * @param mobile 手机号
+     * @param params
      * @param tag
      * @param call
      */
-    public void getCode(String areaCode, String mobile, Object tag, DataIdCallback<String> call) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("areaCode", areaCode);
-        params.put("mobile", mobile);
-        mHttpRequst.postRequst(UrlConstant.SEND_CODE(), params, tag, call);
+    public void doIncomeList(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
+        logindb.postRequst(UrlConstant.POST_INCOME_LIST(), params, tag, call);
     }
-
-    /**
-     * 获取绑定手机验证码
-     *
-     * @param mobile 手机号
-     * @param tag
-     * @param call
-     */
-    public void getCode4(String areaCode, String mobile, Object tag, DataIdCallback<String> call) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("mobile", mobile);
-        params.put("area_code", areaCode);
-        mHttpRequst.postRequst(UrlConstant.SEND_CODE4(), params, tag, call);
-    }
-
     /**
      * 获取姓
      *
@@ -1336,16 +1367,7 @@ public class ApiImp {
         this.mHttpRequst.getRequst(UrlConstant.GET_CUSTOMEr_CHECK_WEIXIN_OPENID, paramMap, paramObject, paramDataIdCallback);
     }
 
-    /**
-     * 根据手机号,绑定手机
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void bangdingMobile(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.POST_BANGDIN_MOBILE, paramMap, paramObject, paramDataIdCallback);
-    }
+
 
     /**
      * 修改用户所属家族
@@ -1803,12 +1825,9 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.ICITYFAMILYCRICLE, paramMap, paramObject, callback);
     }
 
-    /**
-     * 首页 动态
-     */
-    public void getAttentionFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
-        this.mHttpRequst.postRequst(UrlConstant.ATTENTIONFAMILYCRICLE, paramMap, paramObject, callback);
-    }
+
+
+
 
     /**
      * 首页 内容详情

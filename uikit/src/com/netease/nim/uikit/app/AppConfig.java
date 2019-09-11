@@ -3,6 +3,7 @@ package com.netease.nim.uikit.app;
 
 import android.content.Context;
 
+import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 
@@ -15,6 +16,7 @@ public class AppConfig {
     public static boolean isGeliPhone=false;///是否是格力手机包
     public static boolean isLogin=false;///是否是格力手机包
     public static UserEntity userEntity;
+    public static NewUserEntity newUerEntity;
     public static String CustomerId="";//用户id
     public static String UserSex;////用户性别
     public static String Token="";//
@@ -41,7 +43,7 @@ public class AppConfig {
     public static String attention="0";//关注人的状态
     public static Boolean isGeLiGuide=false;///是否是格力引导页
     public static Boolean isShopTeam=false;//是否商店跳转到群聊
-    public static ChatEnum chatEnum=ChatEnum.defaults;//群聊类型
+    public static ChatEnum chatEnum= ChatEnum.defaults;//群聊类型
     public static Boolean isShopP2PChat=false;//是否商店跳转到聊天客服
     public static Boolean isClanWeiXinPay=false;
 

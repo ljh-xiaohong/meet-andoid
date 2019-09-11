@@ -1,18 +1,21 @@
 package com.yuejian.meet.framents.family;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
@@ -20,14 +23,15 @@ import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
-import com.yuejian.meet.activities.search.MainSearchActivity;
+import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
-import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -41,6 +45,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * @author : g000gle
@@ -67,9 +73,8 @@ public class FamilyCircleFollowFragment extends BaseFragment
 
     private FamilyCircleFollowListAdapter mFollowListAdapter;
 
-    private int mNextPageIndex = 0;
+    private int mNextPageIndex = 1;
     private int pageCount = 20;
-    private boolean firstLoad = true;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -85,23 +90,109 @@ public class FamilyCircleFollowFragment extends BaseFragment
         mRecyclerView.setAdapter(mFollowListAdapter);
         mFollowListAdapter.setOnClickListener(new FamilyCircleFollowListAdapter.onClickListener() {
             @Override
-            public void onClick(int position) {
-                 initpopupwindow();
+            public void onClick(int position, boolean me) {
+                initPopwindow(position,me);
+            }
+
+            @Override
+            public void onComment(int position) {
+                Intent intent=new Intent(getActivity(), MyDialogActivity.class);
+                intent.putExtra("crId",followEntities.get(position).getId()+"");
+                startActivity(intent);
             }
         });
         mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
-
+        btnRelease.setVisibility(View.VISIBLE);
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-//        loadDataFromNet("0", 1, pageCount);
         mSpringView.callFresh();
     }
 
-    private void initpopupwindow() {
+    private View popupView;
+    private PopupWindow window;
 
+    private void initPopwindow(int position, boolean me) {
+        final LayoutInflater inflater = LayoutInflater.from(getActivity());
+        popupView = inflater.inflate(R.layout.popupwindow, null);
+        window = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //设置动画
+        window.setAnimationStyle(R.style.popup_window_anim);
+        // 设置背景颜色
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        stateWindow.getBackground().setAlpha(10);
+        //设置可以获取焦点
+        window.setFocusable(true);
+        //设置可以触摸弹出框以外的区域
+        window.setOutsideTouchable(true);
+        // 更新popupwindow的状态
+        window.update();
+//        //添加pop窗口关闭事件
+        window.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        popupView.findViewById(R.id.bg).setOnClickListener(v -> window.dismiss());
+        popupView.findViewById(R.id.cancel).setOnClickListener(v -> window.dismiss());
+        TextView delect = popupView.findViewById(R.id.delect);
+        TextView uninterested = popupView.findViewById(R.id.uninterested);
+        TextView report = popupView.findViewById(R.id.report);
+        if (me){
+            delect.setVisibility(View.VISIBLE);
+            uninterested.setVisibility(View.GONE);
+            report.setVisibility(View.GONE);
+            delect.setOnClickListener(v -> delectContent(followEntities.get(position).getId()));
+        }else {
+            delect.setVisibility(View.GONE);
+            uninterested.setVisibility(View.VISIBLE);
+            uninterested.setOnClickListener(v ->notInterested(followEntities.get(position).getId()));
+            report.setVisibility(View.VISIBLE);
+            report.setOnClickListener(v -> {
+                Intent intent= new Intent(getActivity(), ReportActivity.class);
+                intent.putExtra("id",followEntities.get(position).getId());
+                startActivityForResult(intent,1);
+            });
+        }
     }
 
+    //删除
+    private void delectContent(int id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("type", "1");
+        map.put("id", id);
+        apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                onRefresh();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+    //不感兴趣
+    private void notInterested(int id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("type", "1");
+        map.put("id", id);
+        apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                onRefresh();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+
+
+    //加载数据
     List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
     FamilyFollowEntity followEntitie;
     private void loadDataFromNet(String type, int page, int count) {
@@ -112,17 +203,18 @@ public class FamilyCircleFollowFragment extends BaseFragment
         apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                 followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
-                 if (followEntitie.getCode()!=0) {
-                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
-                     return;
-                 }
-                followEntities.addAll(followEntitie.getData());
-                if (followEntities.size() > 0 && firstLoad) {
-                    mEmptyList.setVisibility(View.GONE);
-                    firstLoad = false;
+                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                if (followEntitie.getCode()!=0) {
+                    ViewInject.shortToast(getActivity(),followEntitie.getMessage());
+                    return;
                 }
-                if (page <= 0) {
+                followEntities.addAll(followEntitie.getData());
+                if (followEntities.size() > 0) {
+                    mEmptyList.setVisibility(View.GONE);
+                }else{
+                    mEmptyList.setVisibility(View.VISIBLE);
+                }
+                if (page <= 1) {
                     //上拉最新
                     mFollowListAdapter.refresh(followEntities);
                 } else {
@@ -150,15 +242,13 @@ public class FamilyCircleFollowFragment extends BaseFragment
     @Override
     public void onRefresh() {
         followEntities.clear();
-        mNextPageIndex = 0;
+        mNextPageIndex = 1;
         loadDataFromNet("0", mNextPageIndex, pageCount);
     }
 
     @Override
     public void onLoadmore() {
-//        if (followEntitie.getTotals()>followEntities.size()) {
-            loadDataFromNet("0", ++mNextPageIndex, pageCount);
-//        }
+        loadDataFromNet("0", ++mNextPageIndex, pageCount);
     }
 
     @Override
@@ -192,7 +282,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_release:
-                getActivity().startActivity(new Intent(getActivity(), ReleaseActivity.class));
+                getActivity().startActivityForResult(new Intent(getActivity(), ReleaseActivity.class),1);
                 break;
             case R.id.search_all:
             case R.id.et_search_all:
@@ -201,6 +291,16 @@ public class FamilyCircleFollowFragment extends BaseFragment
             case R.id.sweep_code:
                 getActivity().startActivity(new Intent(getActivity(), ScannerActivity.class));
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==7){
+            followEntities.clear();
+            mNextPageIndex = 1;
+            loadDataFromNet("0", mNextPageIndex, pageCount);
         }
     }
 }

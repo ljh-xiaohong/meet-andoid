@@ -31,7 +31,6 @@ import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.api.NetApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
-import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 import com.netease.nim.uikit.common.util.string.StringUtil;
@@ -46,6 +45,7 @@ import com.yuejian.meet.activities.clan.ClanMemberActivity;
 import com.yuejian.meet.activities.common.SelectFamilyCityActivity;
 import com.yuejian.meet.activities.group.GroupUserinfo;
 import com.yuejian.meet.activities.home.AdvancedTeamInfoActivity;
+import com.yuejian.meet.activities.home.CreationActivity;
 import com.yuejian.meet.activities.home.InviteJoinGroupActivity;
 import com.yuejian.meet.activities.mine.BangDingWeChatActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
@@ -64,7 +64,6 @@ import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
 import com.yuejian.meet.framents.find.FindFragment;
 import com.yuejian.meet.framents.message.MessageFragment;
 import com.yuejian.meet.framents.mine.MineFragment;
-import com.yuejian.meet.framents.mine.MineFragmentNew;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.CommonUtil;
@@ -77,7 +76,6 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.tinkerutil.SampleApplicationContext;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,7 +83,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import taobe.tec.jcc.JChineseConvertor;
 
 /**
  * 主页
@@ -319,11 +316,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     @OnClick({R.id.rlayout_one_to_one, R.id.rlayout_msg, R.id.rlayout_business, R.id.rlayout_creation,
             R.id.rlayout_mine, R.id.baijiaxing, R.id.layout_search, R.id.navbar_more, R.id.address_list})
     @Override
@@ -335,7 +327,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      * 选择的下标
      */
     public void setSelectBut(int vId) {
-        if ((vId == R.id.rlayout_msg && user == null) || vId == R.id.navbar_more || vId == R.id.layout_search) {
+        if (vId == R.id.navbar_more || vId == R.id.layout_search || vId == R.id.rlayout_creation) {
+
         } else {
             rbtn_home.setSelected(false);
             rbtn_message.setSelected(false);
@@ -356,26 +349,42 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 address_list.setVisibility(View.GONE);
                 break;
             case R.id.rlayout_msg:
-                maia_layout_title_bar.setVisibility(View.VISIBLE);
-                address_list.setVisibility(View.VISIBLE);
-                if (user == null) {
-                    Intent intent = new Intent(getApplication(), LoginActivity.class);
-                    intent.putExtra("mine_login", true);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
+                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
-                } else {
+                    return;
+                }
+                maia_layout_title_bar.setVisibility(View.GONE);
+                address_list.setVisibility(View.VISIBLE);
+//                if (user == null) {
+//                    Intent intent = new Intent(getApplication(), LoginActivity.class);
+//                    intent.putExtra("mine_login", true);
+//                    startActivity(intent);
+//                } else {
                     rbtn_message.setSelected(true);
                     changeFragment(messageFragment);
                     setTitleText(getString(R.string.tab_rbtn_msg));
-                }
+//                }
                 break;
             case R.id.rlayout_creation:
-                rbtn_creation.setSelected(true);
-                changeFragment(creationFragment);
-                setTitleText("开始创作");
-                maia_layout_title_bar.setVisibility(View.GONE);
-                address_list.setVisibility(View.GONE);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
+                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+                startActivity(new Intent(this, CreationActivity.class));
+//                rbtn_creation.setSelected(true);
+//                changeFragment(creationFragment);
+//                setTitleText("开始创作");
+//                maia_layout_title_bar.setVisibility(View.GONE);
+//                address_list.setVisibility(View.GONE);
                 break;
             case R.id.rlayout_business:
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
+                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 rbtn_business.setSelected(true);
                 changeFragment(businessFragment);
                 setTitleText("商圈");
@@ -395,6 +404,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 break;
 
             case R.id.rlayout_mine:
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
+                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 maia_layout_title_bar.setVisibility(View.GONE);
                 rbtn_me.setSelected(true);
                 changeFragment(mineFragment);

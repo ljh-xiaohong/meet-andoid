@@ -26,6 +26,66 @@ public class UrlConstant {
     }
 
     /**
+     * 发送手机验证码
+     */
+    public static String SEND_CODE() {
+        return apiUrl() + "api/user/sendSmsCode";
+    }
+
+
+    /**
+     * 用户登录
+     */
+    public static String LOGIN() {
+        return apiUrl() + "api/user/login";
+    }
+
+
+
+    /**
+     * 根据手机号,绑定手机
+     */
+    public final static String POST_BANGDIN_MOBILE = apiUrl() + "api/user/bindingMobile";
+
+
+    /**
+     * 注册
+     */
+    public static String POST_REGISTER2() {
+        return apiUrl() + "api/user/infosPersos";
+    }
+
+    //首页 动态列表
+    public static String ATTENTIONFAMILYCRICLE = apiUrl() + "api/dynamic/getDynamicList";
+
+    //首页 动态 发布
+    public static String POSTCREATEACTION = apiUrl() + "api/contentRelease/pushContentRelease";
+
+    //首页 动态 删除动态
+    public static String POSTDELECTACTION = apiUrl() + "api/contentRelease/delContentRelease";
+
+    //首页 动态 不感兴趣
+    public static String POSTLOSEINTEREST = apiUrl() + "api/contentRelease/loseInterest";
+
+    //首页 动态 举报
+    public static String POSTDOREPORT = apiUrl() + "api/contentRelease/doReport";
+
+    //首页 动态 搜索
+    public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * 我的 - 传承人 - 收益列表
      * customer_id
      *
@@ -110,26 +170,7 @@ public class UrlConstant {
     }
 
 
-    /**
-     * 发送手机验证码
-     */
-    public static String SEND_CODE() {
-        return apiUrl() + "api/user/sendSmsCode";
-    }
 
-    /**
-     * 发送手机验证码
-     */
-    public static String SEND_CODE4() {
-        return apiUrl() + "api/customer/sendSmsCode4";
-    }
-
-    /**
-     * 用户登录
-     */
-    public static String LOGIN() {
-        return apiUrl() + "api/user/login";
-    }
 
     /**
      * 获取姓接口
@@ -159,19 +200,7 @@ public class UrlConstant {
         return apiUrl() + "api/provinceCityArea/getAllArea";
     }
 
-    /**
-     * 注册
-     */
-    public static String POST_REGISTER() {
-        return apiUrl() + "api/customer/register";
-    }
 
-    /**
-     * 注册
-     */
-    public static String POST_REGISTER2() {
-        return apiUrl() + "api/user/infosPersos";
-    }
 
     /**
      * 判断第三方登录是否注册
@@ -660,10 +689,7 @@ public class UrlConstant {
      * 检查微信openId是否已注册
      */
     public final static String GET_CUSTOMEr_CHECK_WEIXIN_OPENID = apiUrl() + "api/customer/checkWeixinOpenId";
-    /**
-     * 根据手机号,绑定手机
-     */
-    public final static String POST_BANGDIN_MOBILE = apiUrl() + "api/user/bindingMobile";
+
     /**
      * 修改用户所属家族
      */
@@ -1017,8 +1043,7 @@ public class UrlConstant {
     //首页 同城
     public static String ICITYFAMILYCRICLE = apiUrl() + "api/familyCircle/getIcityFamilyCricle.do";
 
-    //首页 关注
-    public static String ATTENTIONFAMILYCRICLE = apiUrl() + "api/dynamic/getDynamicList";
+
     //首页 内容详情
     public static String CONTENTRELEASE = apiUrl() + "api/contentRelease/getContentRelease";
     //我的 - 我的创作
@@ -1045,7 +1070,7 @@ public class UrlConstant {
     //点赞
     public static String PRAISEARTICLES = apiUrl() + "api/contentRelease/praiseContent";
     //评论
-    public static String CONTENTCOMENT = apiUrl() + "api/contentComment/contentComent";
+    public static String CONTENTCOMENT = apiUrl() + "api/contentComment/contentComment";
     //回复评论
     public static String REPLYCOMENT = apiUrl() + "api/contentComment/replyContentComment";
     //获取评论列表

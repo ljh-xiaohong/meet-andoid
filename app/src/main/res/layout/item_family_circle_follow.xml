@@ -6,88 +6,87 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_radius_white">
-
-    <ImageView
-        android:id="@+id/iv_family_follow_item_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:visibility="gone"
-        android:layout_marginEnd="12dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/bg"
-        app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+        android:id="@+id/iv_family_follow_item_list_lay_lay"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_head" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/iv_family_follow_item_list"
-        android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_head"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/iv_family_follow_item_list_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.yuejian.meet.activities.custom.view.RoundAngleImageView
+                android:id="@+id/iv_family_follow_item_img"
+                android:layout_width="231dp"
+                android:layout_height="309dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/bg"/>
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_home_video_player"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/iv_family_follow_item_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <com.yuejian.meet.utils.FolderTextView
+            android:id="@+id/tv_family_follow_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:textColor="#333333"
+            app:foldLine="4"
+            android:textSize="14sp"/>
 
-    <com.yuejian.meet.utils.FolderTextView
-        android:id="@+id/tv_family_follow_item_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="21dp"
-        android:text="家圈 - 推荐，最多显示两行内容.家圈 - 推荐,家圈 - 推荐，最多显示两行内容.家圈 - 推荐"
-        android:textColor="#333333"
-        app:foldLine="4"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_list" />
-
-    <com.yuejian.meet.widgets.CircleImageView
-        android:id="@+id/iv_family_follow_item_head"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="21dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_default"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_family_follow_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="姓名"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
-        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
-
-    <ImageView
-        android:id="@+id/tv_family_follow_item_name_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:src="@mipmap/icon_home_vip"
-        app:layout_constraintStart_toEndOf="@+id/tv_family_follow_item_name"
-        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
-
-    <TextView
-        android:id="@+id/tv_family_follow_item_created_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="on hour ago"
-        android:textColor="#999999"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
-        app:layout_constraintTop_toBottomOf="@+id/tv_family_follow_item_name" />
-
+        <RelativeLayout
+            android:id="@+id/article_lay"
+            android:layout_width="351dp"
+            android:visibility="gone"
+            android:background="#F7F7F7"
+            android:layout_height="100dp">
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="11dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_toLeftOf="@+id/article_img"
+                android:text="青岛旅游日记 | 鼓浪屿打卡"
+                android:textColor="#ff333333"
+                android:textSize="17sp"/>
+            <TextView
+                android:id="@+id/article_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/article_title"
+                android:layout_toLeftOf="@+id/article_img"
+                android:layout_marginTop="11dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginLeft="11dp"
+                android:text="抵达青岛当天，就先入住酒店，如果不累的情况下您也可以自行前往市区附近景点，推..."
+                android:textColor="#ff333333"
+                android:textSize="13sp"/>
+            <com.yuejian.meet.activities.custom.view.RoundAngleImageView
+                android:id="@+id/article_img"
+                android:layout_width="80dp"
+                android:layout_margin="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/bg"/>
+        </RelativeLayout>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/ll_action_layout"
         android:layout_width="match_parent"
@@ -97,7 +96,7 @@
         android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_family_follow_item_content">
+        app:layout_constraintTop_toBottomOf="@+id/iv_family_follow_item_list_lay_lay">
 
         <CheckBox
             android:id="@+id/zan_check"
@@ -117,7 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
         <ImageView
             android:id="@+id/more_operation"
             android:layout_width="wrap_content"
@@ -125,8 +123,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_height="wrap_content" />
-
-
 
         <LinearLayout
             android:id="@+id/ll_family_follow_zan_root"
@@ -203,13 +199,70 @@
                 android:textSize="15sp" />
         </LinearLayout>
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_list"
-        android:layout_width="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/iv_family_follow_item_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/ll_action_layout"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="21dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_family_follow_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="姓名"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
+
+    <ImageView
+        android:id="@+id/tv_family_follow_item_name_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:src="@mipmap/icon_home_vip"
+        app:layout_constraintStart_toEndOf="@+id/tv_family_follow_item_name"
+        app:layout_constraintTop_toTopOf="@+id/iv_family_follow_item_head" />
+
+    <TextView
+        android:id="@+id/tv_family_follow_item_created_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="on hour ago"
+        android:textColor="#999999"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_family_follow_item_name" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_action_layout"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/comment_count"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="12dp"
+            android:text="去评论 >"
+            android:textColor="#ff999999"
+            android:textSize="12sp"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

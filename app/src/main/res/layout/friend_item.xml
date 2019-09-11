@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:layout_height="64dp">
+
+     <com.yuejian.meet.widgets.CircleImageView
+         android:id="@+id/shop_img"
+         android:layout_centerVertical="true"
+         android:layout_width="40dp"
+         android:layout_height="40dp" />
+
+     <TextView
+         android:id="@+id/name"
+         android:layout_width="wrap_content"
+         android:textSize="14sp"
+         android:layout_centerVertical="true"
+         android:textColor="#333333"
+         android:layout_toRightOf="@+id/shop_img"
+         android:layout_marginLeft="9dp"
+         android:text="颜佳佳"
+         android:layout_height="wrap_content" />
+     <ImageView
+         android:id="@+id/name_type"
+         android:layout_width="wrap_content"
+         android:src="@mipmap/icon_home_vip"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@+id/name"
+         android:layout_marginLeft="5dp"
+         android:layout_height="wrap_content" />
+
+     <TextView
+         android:id="@+id/attention"
+         android:layout_width="56dp"
+         android:text="关注"
+         android:textSize="13sp"
+         android:layout_centerVertical="true"
+         android:layout_alignParentRight="true"
+         android:gravity="center"
+         android:textColor="#FFFFFF"
+         android:background="@drawable/black18"
+         android:layout_height="22dp" />
+</RelativeLayout>

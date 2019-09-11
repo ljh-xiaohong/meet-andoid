@@ -22,14 +22,6 @@ public class FamilyFollowEntity implements Serializable{
     private String message;
     private boolean result;
     private List<DataBean> data;
-    private int totals;
-    public int getTotals() {
-        return totals;
-    }
-
-    public void setTotals(int totals) {
-        this.totals = totals;
-    }
     public int getCode() {
         return code;
     }
@@ -63,69 +55,101 @@ public class FamilyFollowEntity implements Serializable{
     }
 
     public static class DataBean implements Serializable {
+
         /**
          * commentNum : 0
-         * createTime : 1567416592
-         * vipType : 0
+         * photoAndVideoUrl :
+         * createTime : 1568012456
          * fabulousNum : 0
-         * name : 小女子
-         * photo : http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132
+         * customerId : 722583
+         * name :
+         * photo :
+         * vipType :
          * commentMap : []
-         * id : 99276
-         * title : 动态测试标题
-         * content : 这是一条动态
+         * id : 99461
+         * type : 1
+         * content : 只能看书睡觉睡觉睡觉睡觉睡觉玩手机上看手机的请加点链接在一起的时候可以看到这个世界上的东西了，宝贝我爱你自己问的问题。你在一起我也不想你的话就这样对他有一个想法就是说的话我不知道只能看书睡觉睡觉睡觉睡觉睡觉玩手机上看手机的请加点链接在一起的时候可以看到这个世界上的东西了，宝贝我爱你自己问的问题。你在一起我也不想你的话就这样对他有一个想法就是说的话我不知道
          */
 
-        private int commentNum;
-        private int createTime;
-        private int vipType;
-        private int fabulousNum;
+        private String commentNum;
+        private String photoAndVideoUrl;
+        private String createTime;
+        private String fabulousNum;
+        private String customerId;
         private String name;
         private String photo;
+        private String vipType;
         private int id;
-        private int type;
-        private String title;
+        private String type;
         private String content;
+        private String title;
+        private String isPraise;
+        private boolean isMe;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getIsPraise() {
+            return isPraise;
+        }
+
+        public void setIsPraise(String isPraise) {
+            this.isPraise = isPraise;
+        }
+
+        public boolean isMe() {
+            return isMe;
+        }
+
+        public void setMe(boolean me) {
+            isMe = me;
+        }
+
         private List<CommentBean> commentMap;
 
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getCommentNum() {
+        public String getCommentNum() {
             return commentNum;
         }
 
-        public void setCommentNum(int commentNum) {
+        public void setCommentNum(String commentNum) {
             this.commentNum = commentNum;
         }
 
-        public int getCreateTime() {
+        public String getPhotoAndVideoUrl() {
+            return photoAndVideoUrl;
+        }
+
+        public void setPhotoAndVideoUrl(String photoAndVideoUrl) {
+            this.photoAndVideoUrl = photoAndVideoUrl;
+        }
+
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(int createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 
-        public int getVipType() {
-            return vipType;
-        }
-
-        public void setVipType(int vipType) {
-            this.vipType = vipType;
-        }
-
-        public int getFabulousNum() {
+        public String getFabulousNum() {
             return fabulousNum;
         }
 
-        public void setFabulousNum(int fabulousNum) {
+        public void setFabulousNum(String fabulousNum) {
             this.fabulousNum = fabulousNum;
+        }
+
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
         }
 
         public String getName() {
@@ -144,6 +168,14 @@ public class FamilyFollowEntity implements Serializable{
             this.photo = photo;
         }
 
+        public String getVipType() {
+            return vipType;
+        }
+
+        public void setVipType(String vipType) {
+            this.vipType = vipType;
+        }
+
         public int getId() {
             return id;
         }
@@ -152,12 +184,12 @@ public class FamilyFollowEntity implements Serializable{
             this.id = id;
         }
 
-        public String getTitle() {
-            return title;
+        public String getType() {
+            return type;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getContent() {
@@ -191,14 +223,14 @@ public class FamilyFollowEntity implements Serializable{
              */
 
             private String articleCommentContent;
-            private int articleCommentId;
-            private long articleCommentTime;
-            private int articleCommentType;
-            private int articleObjectId;
-            private int articleReplyCnt;
-            private int customerId;
-            private int opCustomerId;
-            private int replyCommentId;
+            private String articleCommentId;
+            private String articleCommentTime;
+            private String articleCommentType;
+            private String articleObjectId;
+            private String articleReplyCnt;
+            private String customerId;
+            private String opCustomerId;
+            private String replyCommentId;
 
             public String getArticleCommentContent() {
                 return articleCommentContent;
@@ -208,67 +240,67 @@ public class FamilyFollowEntity implements Serializable{
                 this.articleCommentContent = articleCommentContent;
             }
 
-            public int getArticleCommentId() {
+            public String getArticleCommentId() {
                 return articleCommentId;
             }
 
-            public void setArticleCommentId(int articleCommentId) {
+            public void setArticleCommentId(String articleCommentId) {
                 this.articleCommentId = articleCommentId;
             }
 
-            public long getArticleCommentTime() {
+            public String getArticleCommentTime() {
                 return articleCommentTime;
             }
 
-            public void setArticleCommentTime(long articleCommentTime) {
+            public void setArticleCommentTime(String articleCommentTime) {
                 this.articleCommentTime = articleCommentTime;
             }
 
-            public int getArticleCommentType() {
+            public String getArticleCommentType() {
                 return articleCommentType;
             }
 
-            public void setArticleCommentType(int articleCommentType) {
+            public void setArticleCommentType(String articleCommentType) {
                 this.articleCommentType = articleCommentType;
             }
 
-            public int getArticleObjectId() {
+            public String getArticleObjectId() {
                 return articleObjectId;
             }
 
-            public void setArticleObjectId(int articleObjectId) {
+            public void setArticleObjectId(String articleObjectId) {
                 this.articleObjectId = articleObjectId;
             }
 
-            public int getArticleReplyCnt() {
+            public String getArticleReplyCnt() {
                 return articleReplyCnt;
             }
 
-            public void setArticleReplyCnt(int articleReplyCnt) {
+            public void setArticleReplyCnt(String articleReplyCnt) {
                 this.articleReplyCnt = articleReplyCnt;
             }
 
-            public int getCustomerId() {
+            public String getCustomerId() {
                 return customerId;
             }
 
-            public void setCustomerId(int customerId) {
+            public void setCustomerId(String customerId) {
                 this.customerId = customerId;
             }
 
-            public int getOpCustomerId() {
+            public String getOpCustomerId() {
                 return opCustomerId;
             }
 
-            public void setOpCustomerId(int opCustomerId) {
+            public void setOpCustomerId(String opCustomerId) {
                 this.opCustomerId = opCustomerId;
             }
 
-            public int getReplyCommentId() {
+            public String getReplyCommentId() {
                 return replyCommentId;
             }
 
-            public void setReplyCommentId(int replyCommentId) {
+            public void setReplyCommentId(String replyCommentId) {
                 this.replyCommentId = replyCommentId;
             }
         }

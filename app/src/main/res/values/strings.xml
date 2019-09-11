@@ -16,8 +16,8 @@
     <string name="title_bar_hint_search">输入关键字或昵称搜索</string>
     <string name="title_bar_txt_recorder_again">重拍</string>
     <string name="title_bar_txt_confirm">确定</string>
-
-
+    <string name="content_tips">请填写内容</string>
+    <string name="Please_enter_report">请输入举报内容</string>
     <!--我-->
     <string name="mine_txt_login_reg">登录</string>
     <string name="mine_txt_review">评价</string>

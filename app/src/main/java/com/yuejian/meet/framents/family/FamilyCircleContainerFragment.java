@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,13 @@ import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.GroupChatActivity;
 import com.yuejian.meet.activities.mine.ContactActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.mine.SettingActivity;
 import com.yuejian.meet.activities.search.MainSearchActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.bean.Mine;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.widgets.FamilyCircleTitleView;
 
 import java.util.ArrayList;
@@ -77,13 +78,12 @@ public class FamilyCircleContainerFragment extends BaseFragment
         super.initWidget(parentView);
 
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
-//        mFragmentList.add(new MyFamliyFragment());
         mFragmentList.add(followFragment = new FamilyCircleFollowFragment());
         mFragmentList.add(recommendFragment = new FamilyCircleRecommendFragment());
         mFragmentList.add(cityFragment = new FamilyCircleSameCityFragment());
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), mFragmentList);
         mContentPager.setAdapter(adapter);
-        mContentPager.setOffscreenPageLimit(2);
+        mContentPager.setOffscreenPageLimit(1);
         mContentPager.addOnPageChangeListener(this);
         mFamilyCircleTitleView.setOnTitleViewClickListener(this);
         setCurrentItem(1);
@@ -179,10 +179,13 @@ public class FamilyCircleContainerFragment extends BaseFragment
      * @param position 分类角标
      */
     private void setCurrentItem(int position) {
+        if (position==0&&!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")){
+            Intent intent= new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         mContentPager.setCurrentItem(position);
         resetFamilyCircleTitleView(position);
-
-
         if (position == 1) {
             //打开手势滑动
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -194,7 +197,6 @@ public class FamilyCircleContainerFragment extends BaseFragment
 
     private void resetFamilyCircleTitleView(int position) {
         mFamilyCircleTitleView.setSelectedTitle(position);
-
         switch (position) {
             //通讯录
             case 0:
@@ -243,6 +245,11 @@ public class FamilyCircleContainerFragment extends BaseFragment
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return super.onBackPressed();
     }
 
     @Override
