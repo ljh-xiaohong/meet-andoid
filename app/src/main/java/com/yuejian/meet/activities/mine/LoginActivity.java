@@ -38,6 +38,8 @@ import com.yuejian.meet.bean.QqLoginBean;
 import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.AppManager;
+import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.FCLoger;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -245,13 +247,13 @@ public class LoginActivity extends BaseActivity {
         apiImp.login(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 NewUserEntity loginBean=new Gson().fromJson(data, NewUserEntity.class);
                 if (loginBean.getData()!=null){
                     AppConfig.newUerEntity= loginBean;
                     upadate(loginBean.getData().toString());
                 }
-                if (dialog != null)
-                    dialog.dismiss();
                 //注册成功或者登录成功但未绑定手机号
                 if (loginBean.getCode() == 19999||loginBean.getCode()== 19997) {
                     intent = new Intent(getApplication(), BangDingPhoneActivity.class);
@@ -357,7 +359,11 @@ public class LoginActivity extends BaseActivity {
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        AppConfig.CustomerId = entity.getCustomer_id();
+        if (!CommonUtil.isNull(entity.getCustomer_id())){
+            AppConfig.CustomerId = entity.getCustomer_id();
+        }else {
+            AppConfig.CustomerId = entity.getCustomerId();
+        }
     }
 
     @Override

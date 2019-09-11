@@ -211,26 +211,16 @@ public class FamilyFollowEntity implements Serializable{
         public static class CommentBean implements Serializable {
 
             /**
-             * articleCommentContent : 2323423
-             * articleCommentId : 62
-             * articleCommentTime : 1567512525000
+             * articleCommentContent : 😄
+             * opName :
+             * userName : 凉凉
              * articleCommentType : 3
-             * articleObjectId : 27
-             * articleReplyCnt : 0
-             * customerId : 500103
-             * opCustomerId : 0
-             * replyCommentId : 0
              */
 
             private String articleCommentContent;
-            private String articleCommentId;
-            private String articleCommentTime;
+            private String opName;
+            private String userName;
             private String articleCommentType;
-            private String articleObjectId;
-            private String articleReplyCnt;
-            private String customerId;
-            private String opCustomerId;
-            private String replyCommentId;
 
             public String getArticleCommentContent() {
                 return articleCommentContent;
@@ -240,20 +230,20 @@ public class FamilyFollowEntity implements Serializable{
                 this.articleCommentContent = articleCommentContent;
             }
 
-            public String getArticleCommentId() {
-                return articleCommentId;
+            public String getOpName() {
+                return opName;
             }
 
-            public void setArticleCommentId(String articleCommentId) {
-                this.articleCommentId = articleCommentId;
+            public void setOpName(String opName) {
+                this.opName = opName;
             }
 
-            public String getArticleCommentTime() {
-                return articleCommentTime;
+            public String getUserName() {
+                return userName;
             }
 
-            public void setArticleCommentTime(String articleCommentTime) {
-                this.articleCommentTime = articleCommentTime;
+            public void setUserName(String userName) {
+                this.userName = userName;
             }
 
             public String getArticleCommentType() {
@@ -262,46 +252,6 @@ public class FamilyFollowEntity implements Serializable{
 
             public void setArticleCommentType(String articleCommentType) {
                 this.articleCommentType = articleCommentType;
-            }
-
-            public String getArticleObjectId() {
-                return articleObjectId;
-            }
-
-            public void setArticleObjectId(String articleObjectId) {
-                this.articleObjectId = articleObjectId;
-            }
-
-            public String getArticleReplyCnt() {
-                return articleReplyCnt;
-            }
-
-            public void setArticleReplyCnt(String articleReplyCnt) {
-                this.articleReplyCnt = articleReplyCnt;
-            }
-
-            public String getCustomerId() {
-                return customerId;
-            }
-
-            public void setCustomerId(String customerId) {
-                this.customerId = customerId;
-            }
-
-            public String getOpCustomerId() {
-                return opCustomerId;
-            }
-
-            public void setOpCustomerId(String opCustomerId) {
-                this.opCustomerId = opCustomerId;
-            }
-
-            public String getReplyCommentId() {
-                return replyCommentId;
-            }
-
-            public void setReplyCommentId(String replyCommentId) {
-                this.replyCommentId = replyCommentId;
             }
         }
     }

@@ -3,7 +3,7 @@
     <!-- 这里定义一个带圆角，边框颜色为白色 -->
     <item>
         <shape>
-            <solid android:color="#E5FFFFFF"/>
+            <solid android:color="#FFFFFF"/>
             <corners android:radius="11dp"/>
         </shape>
     </item>

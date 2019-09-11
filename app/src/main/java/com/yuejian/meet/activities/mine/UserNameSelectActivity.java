@@ -325,7 +325,12 @@ public class UserNameSelectActivity extends BaseActivity {
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        AppConfig.CustomerId = entity.getCustomer_id();
+
+        if (!CommonUtil.isNull(entity.getCustomer_id())){
+            AppConfig.CustomerId = entity.getCustomer_id();
+        }else {
+            AppConfig.CustomerId = entity.getCustomerId();
+        }
     }
 
 

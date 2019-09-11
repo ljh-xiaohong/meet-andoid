@@ -38,6 +38,7 @@
             android:paddingLeft="5dp"
             android:layout_marginRight="10dp"
             android:inputType="text"
+            android:singleLine="true"
             android:imeOptions="actionSearch"
             android:gravity="center_vertical"
             android:background="@color/pickerview_bg_topbar"

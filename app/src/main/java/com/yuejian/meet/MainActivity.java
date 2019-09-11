@@ -218,48 +218,48 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     //处理回调
     @BusReceiver
     public void onStringEvent(String event) {
-        if (event.contains(AppConfig.Toasshow)) {
-            if (user != null) {
-                ViewInject.shortToast(this, Utils.s2tOrT2s(event.replace(AppConfig.Toasshow, "")));
-            }
-        } else if (event.equals(AppConfig.userKick)) {
-            user = null;
-            Dialog dialog = new Dialog(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.hint);
-            builder.setMessage(R.string.main_no_longer_showing_hint_name);
-            builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("mine_login", true);
-                    startActivity(intent);
-                    dialog.dismiss();
-                }
-            });
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            dialog = builder.show();
-            dialog.show();
-            if (currentFragment instanceof MessageFragment)
-                setSelectBut(R.id.rlayout_one_to_one);
-        } else if (event.equals(AppConfig.user_freeze)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.hint);
-            builder.setMessage("您帐号被冻结");
-            builder.setPositiveButton(R.string.confirm, null);
-            builder.show();
-        } else if ("patch_download_success".equals(event)) {
-            Utils.showNoTitleDialog(this, Utils.s2tOrT2s("升级补丁版本,马上安装"), Utils.s2tOrT2s("安装"), "", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    System.exit(0);
-                }
-            }, null);
-        } else if ("bai_jia_xing_badge_bling".equals(event) || "ACTION_UNREAD".equals(event)) {
-            loadRedDot();
-        } else if ("bai_jia_xing_badge_dark".equals(event)) {
-            baiJiaXingBadge.setVisibility(View.GONE);
-        }
+//        if (event.contains(AppConfig.Toasshow)) {
+//            if (user != null) {
+//                ViewInject.shortToast(this, Utils.s2tOrT2s(event.replace(AppConfig.Toasshow, "")));
+//            }
+//        } else if (event.equals(AppConfig.userKick)) {
+//            user = null;
+//            Dialog dialog = new Dialog(this);
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle(R.string.hint);
+//            builder.setMessage(R.string.main_no_longer_showing_hint_name);
+//            builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intent = new Intent(mContext, LoginActivity.class);
+//                    intent.putExtra("mine_login", true);
+//                    startActivity(intent);
+//                    dialog.dismiss();
+//                }
+//            });
+//            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//            dialog = builder.show();
+//            dialog.show();
+//            if (currentFragment instanceof MessageFragment)
+//                setSelectBut(R.id.rlayout_one_to_one);
+//        } else if (event.equals(AppConfig.user_freeze)) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle(R.string.hint);
+//            builder.setMessage("您帐号被冻结");
+//            builder.setPositiveButton(R.string.confirm, null);
+//            builder.show();
+//        } else if ("patch_download_success".equals(event)) {
+//            Utils.showNoTitleDialog(this, Utils.s2tOrT2s("升级补丁版本,马上安装"), Utils.s2tOrT2s("安装"), "", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    System.exit(0);
+//                }
+//            }, null);
+//        } else if ("bai_jia_xing_badge_bling".equals(event) || "ACTION_UNREAD".equals(event)) {
+//            loadRedDot();
+//        } else if ("bai_jia_xing_badge_dark".equals(event)) {
+//            baiJiaXingBadge.setVisibility(View.GONE);
+//        }
     }
 
 

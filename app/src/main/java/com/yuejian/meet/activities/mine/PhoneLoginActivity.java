@@ -550,7 +550,11 @@ public class PhoneLoginActivity extends BaseActivity {
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        AppConfig.CustomerId = entity.getCustomer_id();
+        if (!CommonUtil.isNull(entity.getCustomer_id())){
+            AppConfig.CustomerId = entity.getCustomer_id();
+        }else {
+            AppConfig.CustomerId = entity.getCustomerId();
+        }
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
 //        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
 //        AppConfig.userEntity = userBean;

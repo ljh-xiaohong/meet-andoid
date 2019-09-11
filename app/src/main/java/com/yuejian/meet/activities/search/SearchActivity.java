@@ -190,6 +190,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
             }
         });
         cencel.setOnClickListener(v -> finish());
+        etSearchAll.setOnEditorActionListener(this);
     }
     private int mNextPageIndex = 1;
     private int pageCount = 20;

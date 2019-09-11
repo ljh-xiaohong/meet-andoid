@@ -140,6 +140,7 @@ public class NewUserEntity {
         private String company_link;
         private String company_name;
         private int customer_id;
+        private int customerId;
         private int customer_status;
         private String email;
         private String family_area;
@@ -196,6 +197,14 @@ public class NewUserEntity {
         private int vip_type;
         private String weixin;
         private String weixin_bound;
+
+        public int getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(int customerId) {
+            this.customerId = customerId;
+        }
 
         public int getAge() {
             return age;

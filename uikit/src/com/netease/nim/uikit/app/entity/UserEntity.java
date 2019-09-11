@@ -8,6 +8,8 @@ package com.netease.nim.uikit.app.entity;
 public class UserEntity {
     //用户编码
     public String customer_id;
+
+    public String customerId;
     //用户状态
     public String customer_status;//0:正常 1:被冻结 2:冻结一天 3:永久冻结
     //最后登录时间
@@ -73,6 +75,14 @@ public class UserEntity {
     public String home;
     public String friendStatus;
     public String address;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public String getAddress() {
         return address;

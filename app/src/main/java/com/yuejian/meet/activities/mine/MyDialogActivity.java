@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,10 +14,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
@@ -63,11 +66,18 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     FrameLayout emojicons;
     @Bind(R.id.dismiss)
     View dismiss;
+    @Bind(R.id.count)
+    TextView count;
+    @Bind(R.id.cencel)
+    ImageView cencel;
+    @Bind(R.id.window)
+    LinearLayout window;
     private CommentListAdapter commentAdapter;
     private List<CommentBean.DataBean> mcommentData = new ArrayList<CommentBean.DataBean>();
     private boolean hasClick;
     private ApiImp api = new ApiImp();
-    private String replyCommentId="";
+    private String replyCommentId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,14 +113,25 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         commentAdapter = new CommentListAdapter(this, mcommentData);
         commentList.setLayoutManager(new LinearLayoutManager(this));
         commentList.setAdapter(commentAdapter);
+        commentAdapter.setChange(new CommentListAdapter.OnChange() {
+            @Override
+            public void click(int postion) {
+                replyCommentId=mcommentData.get(postion).getReplyCommentId();
+                content.setHint("回复" + mcommentData.get(postion).getName());
+            }
+        });
         dismiss.setOnClickListener(v -> finish());
         content.setOnClickListener(v -> {
             emojicons.setVisibility(View.GONE);
             hasClick = false;
         });
         setEmojiconFragment(false);
+        if (!TextUtils.isEmpty(AppConfig.newUerEntity.getData().getPhoto())) {
+            Glide.with(this).load(AppConfig.newUerEntity.getData().getPhoto()).into(shopImg);
+        }
         initData();
         tvSend.setOnClickListener(v -> send());
+        cencel.setOnClickListener(v -> finish());
     }
 
     private void send() {
@@ -122,8 +143,13 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                CommentBean commentBean=new Gson().fromJson(data,CommentBean.class);
-                mcommentData.addAll(commentBean.getData());
+                content.setHint("留下你的评论吧~");
+                emojicons.setVisibility(View.GONE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(content.getWindowToken(), 0); //强制隐藏键盘
+                hasClick = false;
+                initData();
+                Toast.makeText(MyDialogActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -135,6 +161,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
 
     private int mNextPageIndex = 1;
     private int pageCount = 20;
+
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("myCustomerId", AppConfig.CustomerId);
@@ -144,7 +171,10 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         api.getContentComments(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-
+                CommentBean commentBean = new Gson().fromJson(data, CommentBean.class);
+                mcommentData.addAll(commentBean.getData());
+                count.setText("共"+mcommentData.size()+"条评论");
+                commentAdapter.notifyDataSetChanged();
             }
 
             @Override

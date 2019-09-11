@@ -39,6 +39,7 @@
             android:id="@+id/comment_list"
             android:layout_width="match_parent"
             android:background="#FFFFFF"
+            android:layout_below="@+id/count"
             android:layout_above="@+id/comment_edit_lay"
             android:layout_height="match_parent"/>
         <RelativeLayout

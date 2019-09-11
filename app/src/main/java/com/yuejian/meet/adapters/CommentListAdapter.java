@@ -8,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.umeng.socialize.utils.Log;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.widgets.CircleImageView;
+import com.yuejian.meet.widgets.CustomToast;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +34,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     private OnChange onChange;
     //接口回调
     public interface OnChange{
-        public void click(View view, int postion);
+        public void click(int postion);
     }
     public void setChange(OnChange onChange) {
         this.onChange = onChange;
@@ -48,7 +52,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         CommentBean.DataBean listBean=mData.get(position);
         holder.name.setText(listBean.getName());
         holder.content.setText(listBean.getComment());
-        if (listBean.getReplyCommentId()!=0){
+        if (!CommonUtil.isNull(listBean.getReplyCommentId())&&Integer.parseInt(listBean.getReplyCommentId())!=0){
            holder.reply.setVisibility(View.VISIBLE);
            holder.reply_name.setVisibility(View.VISIBLE);
            holder.reply_name.setText(listBean.getOpName());
@@ -64,6 +68,8 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(context).load(headUrl).into(holder.head_img);
         }
+        holder.head_img.setOnClickListener(v -> Log.e("asdasd","跳转个人主页"));
+        holder.content.setOnClickListener(v -> onChange.click(position));
     }
     @Override
     public int getItemCount() {

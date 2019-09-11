@@ -9,19 +9,16 @@ import java.util.List;
  * @desc : 评论实体类
  */
 public class CommentBean {
-
     /**
      * code : 0
-     * data : [{"createTime":1567222128000,"replyCommentId":49,"opName":"测试女子","customerId":500102,"name":"小女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论1","id":55,"opPhoto":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","type":4,"opCustomerId":500103},{"createTime":1567221345000,"replyCommentId":47,"opName":"小女子","customerId":500103,"name":"测试女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论回复内容","id":48,"opPhoto":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","type":4,"opCustomerId":500102},{"createTime":1567221142000,"replyCommentId":"","opName":"","customerId":500102,"name":"小女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论","id":47,"opPhoto":"","type":3,"opCustomerId":""}]
+     * data : [{"createTime":1568189434000,"replyCommentId":"","opName":"","customerId":500188,"name":"凉凉","photo":"https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png","comment":"我","id":67,"opPhoto":"","type":3,"opCustomerId":""}]
      * message : 操作成功
      * result : true
-     * totals : 0
      */
 
     private int code;
     private String message;
     private boolean result;
-    private int totals;
     private List<DataBean> data;
 
     public int getCode() {
@@ -48,14 +45,6 @@ public class CommentBean {
         this.result = result;
     }
 
-    public int getTotals() {
-        return totals;
-    }
-
-    public void setTotals(int totals) {
-        this.totals = totals;
-    }
-
     public List<DataBean> getData() {
         return data;
     }
@@ -66,21 +55,21 @@ public class CommentBean {
 
     public static class DataBean implements Serializable {
         /**
-         * createTime : 1567222128000
-         * replyCommentId : 49
-         * opName : 测试女子
-         * customerId : 500102
-         * name : 小女子
-         * photo : http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132
-         * comment : 测试动态评论1
-         * id : 55
-         * opPhoto : http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132
-         * type : 4
-         * opCustomerId : 500103
+         * createTime : 1568189434000
+         * replyCommentId :
+         * opName :
+         * customerId : 500188
+         * name : 凉凉
+         * photo : https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png
+         * comment : 我
+         * id : 67
+         * opPhoto :
+         * type : 3
+         * opCustomerId :
          */
 
         private long createTime;
-        private int replyCommentId;
+        private String replyCommentId;
         private String opName;
         private int customerId;
         private String name;
@@ -89,7 +78,7 @@ public class CommentBean {
         private int id;
         private String opPhoto;
         private int type;
-        private int opCustomerId;
+        private String opCustomerId;
 
         public long getCreateTime() {
             return createTime;
@@ -99,11 +88,11 @@ public class CommentBean {
             this.createTime = createTime;
         }
 
-        public int getReplyCommentId() {
+        public String getReplyCommentId() {
             return replyCommentId;
         }
 
-        public void setReplyCommentId(int replyCommentId) {
+        public void setReplyCommentId(String replyCommentId) {
             this.replyCommentId = replyCommentId;
         }
 
@@ -171,12 +160,22 @@ public class CommentBean {
             this.type = type;
         }
 
-        public int getOpCustomerId() {
+        public String getOpCustomerId() {
             return opCustomerId;
         }
 
-        public void setOpCustomerId(int opCustomerId) {
+        public void setOpCustomerId(String opCustomerId) {
             this.opCustomerId = opCustomerId;
         }
     }
+
+    /**
+     * code : 0
+     * data : [{"createTime":1567222128000,"replyCommentId":49,"opName":"测试女子","customerId":500102,"name":"小女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论1","id":55,"opPhoto":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","type":4,"opCustomerId":500103},{"createTime":1567221345000,"replyCommentId":47,"opName":"小女子","customerId":500103,"name":"测试女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论回复内容","id":48,"opPhoto":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","type":4,"opCustomerId":500102},{"createTime":1567221142000,"replyCommentId":"","opName":"","customerId":500102,"name":"小女子","photo":"http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132","comment":"测试动态评论","id":47,"opPhoto":"","type":3,"opCustomerId":""}]
+     * message : 操作成功
+     * result : true
+     * totals : 0
+     */
+
+
 }

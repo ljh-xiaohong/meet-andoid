@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.utils.CommonUtil;
 
 import java.util.List;
 
@@ -43,7 +44,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.NormalHo
     @Override
     public void onBindViewHolder(final NormalHolder holder, final int position) {
         FamilyFollowEntity.DataBean.CommentBean listBean=mData.get(position);
-//        holder.name.setText(listBean.);
+        holder.name.setText(listBean.getUserName());
+        if (!CommonUtil.isNull(listBean.getOpName())){
+            holder.reply_name.setText(listBean.getOpName());
+            holder.reply.setVisibility(View.VISIBLE);
+            holder.reply_name.setVisibility(View.VISIBLE);
+        }else {
+            holder.reply.setVisibility(View.GONE);
+            holder.reply_name.setVisibility(View.GONE);
+        }
+        holder.content.setText(listBean.getArticleCommentContent());
     }
     @Override
     public int getItemCount() {
