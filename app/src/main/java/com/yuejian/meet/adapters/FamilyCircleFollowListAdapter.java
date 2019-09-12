@@ -114,7 +114,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                     pb.setUrl("");
                     pb.setSelect(true);
                     pb.setTake(true);
-                    pb.setPath(imgs[0]);
+                    pb.setPath(imgs[i]);
                     picData.add(pb);
                 }
                 if (picData.size() == 1) {
