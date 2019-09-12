@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aliyun.svideo.editor.util.Common;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
@@ -70,6 +71,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     private List<HotSeacher> hotData = new ArrayList<>();
     private List<HotSeacher> historyData = new ArrayList<>();
     private List<HotSeacher> mDatas = new ArrayList<>();
+    private int positions=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         setCurrentItem(0);
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
         vpFamilyCircleContent.setAdapter(adapter);
-        vpFamilyCircleContent.setOffscreenPageLimit(4);
+        vpFamilyCircleContent.setOffscreenPageLimit(1);
         vpFamilyCircleContent.addOnPageChangeListener(this);
         familyCircleTitleView.setOnTitleViewClickListener(this);
         HotSeacher hotSeacher = new HotSeacher();
@@ -132,7 +134,6 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
 
                     @Override
                     public boolean setSelected(int position, HotSeacher groupListBean) {
-
                         return super.setSelected(position, groupListBean);
                     }
                 }
@@ -192,26 +193,22 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         cencel.setOnClickListener(v -> finish());
         etSearchAll.setOnEditorActionListener(this);
     }
-    private int mNextPageIndex = 1;
-    private int pageCount = 20;
     private void searching(HotSeacher hotSeacher) {
         hideView();
-        Map<String, Object> map = new HashMap<>();
-        map.put("customerId", AppConfig.CustomerId);
-        map.put("title", hotSeacher.getKeyword());
-        map.put("type", 0);
-        map.put("pageIndex", String.valueOf(mNextPageIndex));
-        map.put("pageItemCount", String.valueOf(pageCount));
-        apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
-            @Override
-            public void onSuccess(String data, int id) {
-
-            }
-
-            @Override
-            public void onFailed(String errCode, String errMsg, int id) {
-            }
-        });
+        if (CommonUtil.isNull(etSearchAll.getText().toString())){
+            return;
+        }
+        if(positions==0){
+            mFriendFragment.update(etSearchAll.getText().toString());
+        }else  if(positions==1){
+            mVideoFragment.update(etSearchAll.getText().toString());
+        }else if(positions==2){
+            mArticleFragment.update(etSearchAll.getText().toString());
+        }else if(positions==3){
+            mCommodityFragment.update(etSearchAll.getText().toString());
+        }else{
+            mProjectFragment.update(etSearchAll.getText().toString());
+        }
     }
 
     /**
@@ -273,18 +270,23 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         switch (position) {
             case 0:
                 setCurrentItem(0);
+                positions=0;
                 break;
             case 1:
                 setCurrentItem(1);
+                positions=1;
                 break;
             case 2:
                 setCurrentItem(2);
+                positions=2;
                 break;
             case 3:
                 setCurrentItem(3);
+                positions=3;
                 break;
             case 4:
                 setCurrentItem(4);
+                positions=4;
                 break;
             default:
                 break;
@@ -301,18 +303,23 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         switch (position) {
             case 0:
                 setCurrentItem(0);
+                positions=0;
                 break;
             case 1:
                 setCurrentItem(1);
+                positions=1;
                 break;
             case 2:
                 setCurrentItem(2);
+                positions=2;
                 break;
             case 3:
                 setCurrentItem(3);
+                positions=3;
                 break;
             case 4:
                 setCurrentItem(4);
+                positions=4;
                 break;
             default:
                 break;

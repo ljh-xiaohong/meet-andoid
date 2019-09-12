@@ -466,7 +466,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     if (pushPayload == null || !pushPayload.containsKey("sub_type")) {
                         return;
                     }
-
                     if (Integer.parseInt(pushPayload.get("sub_type").toString()) == ChatEnum.shop.getValue()) {
                         ImUtils.toAssemblyHall(this, message.getSessionId(), ChatEnum.shop, pushPayload.get("leader_id").toString());
                     } else if (Integer.parseInt(pushPayload.get("sub_type").toString()) == ChatEnum.FoundGroup.getValue()) {

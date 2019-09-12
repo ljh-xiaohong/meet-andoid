@@ -355,15 +355,27 @@ public class LoginActivity extends BaseActivity {
      * @param data
      */
     public void upadate(String data) {
-        UserEntity entity =new Gson().fromJson(data, UserEntity.class);
+        try {
+            PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
+            UserEntity entity =new Gson().fromJson(data, UserEntity.class);
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
-        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
-        AppConfig.userEntity = entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())){
-            AppConfig.CustomerId = entity.getCustomer_id();
-        }else {
-            AppConfig.CustomerId = entity.getCustomerId();
+            AppConfig.userEntity = entity;
+            if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
+                AppConfig.CustomerId = entity.getCustomer_id();
+            }else {
+                AppConfig.CustomerId = entity.getCustomerId();
+            }
+            DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
+        }catch (Exception e){
+            if (AppConfig.newUerEntity.getData().getCustomer_id()!=0){
+                AppConfig.CustomerId = AppConfig.newUerEntity.getData().getCustomer_id()+"";
+            }else {
+                AppConfig.CustomerId = AppConfig.newUerEntity.getData().getCustomerId()+"";
+            }
+            DadanPreference.getInstance(this).setString("photo",AppConfig.newUerEntity.getData().getPhoto());
         }
+        DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
+
     }
 
     @Override

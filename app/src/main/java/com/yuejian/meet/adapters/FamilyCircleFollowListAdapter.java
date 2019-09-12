@@ -220,7 +220,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         });
         if (entity.getCommentMap().size()>0){
             CommentAdapter commentAdapter=new CommentAdapter((Activity) mContext,entity.getCommentMap());
-            holder.comment_list.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.comment_list.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
             holder.comment_list.setAdapter(commentAdapter);
             commentAdapter.notifyDataSetChanged();
             holder.comment_list.setVisibility(View.VISIBLE);

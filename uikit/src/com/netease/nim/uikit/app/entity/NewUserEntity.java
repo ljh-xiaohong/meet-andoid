@@ -762,6 +762,7 @@ public class NewUserEntity {
         public String toString() {
             return "{" +
                     "age=" + age +
+                    ", customerId=" + customerId +
                     ", area='" + area + '\'' +
                     ", area_code='" + area_code + '\'' +
                     ", area_name='" + area_name + '\'' +

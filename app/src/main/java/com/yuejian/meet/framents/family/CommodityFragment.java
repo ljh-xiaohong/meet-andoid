@@ -29,6 +29,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -107,25 +108,28 @@ public class CommodityFragment extends BaseFragment
     //加载数据
     List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
     FamilyFollowEntity followEntitie;
-    private void loadDataFromNet(String type, int page, int count) {
+    private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
-        map.put("pageIndex", String.valueOf(page));
-        map.put("pageItemCount", String.valueOf(count));
-        apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
+        map.put("title", title);
+        map.put("type", type);
+        map.put("pageIndex", String.valueOf(mNextPageIndex));
+        map.put("pageItemCount", String.valueOf(pageCount));
+        apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                 followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
-                 if (followEntitie.getCode()!=0) {
-                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
-                     return;
-                 }
-                followEntities.addAll(followEntitie.getData());
-                if (followEntities.size() > 0 && firstLoad) {
-                    mEmptyList.setVisibility(View.GONE);
-                    firstLoad = false;
+                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                if (followEntitie.getCode()!=0) {
+                    ViewInject.shortToast(getActivity(),followEntitie.getMessage());
+                    return;
                 }
-                if (page <= 1) {
+                followEntities.addAll(followEntitie.getData());
+                if (followEntities.size() > 0) {
+                    mEmptyList.setVisibility(View.GONE);
+                }else {
+                    mEmptyList.setVisibility(View.VISIBLE);
+                }
+                if (mNextPageIndex <= 1) {
                     //上拉最新
                     mFollowListAdapter.refresh(followEntities);
                 } else {
@@ -152,16 +156,18 @@ public class CommodityFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
+        if (CommonUtil.isNull(title)) return;
         followEntities.clear();
-        mNextPageIndex = 0;
-        loadDataFromNet("0", mNextPageIndex, pageCount);
+        mNextPageIndex = 1;
+        loadDataFromNet("0",title);
     }
 
     @Override
     public void onLoadmore() {
-        loadDataFromNet("0", ++mNextPageIndex, pageCount);
+        if (CommonUtil.isNull(title)) return;
+        ++mNextPageIndex;
+        loadDataFromNet("0",title);
     }
-
     @Override
     public void onListItemClick(int type, int id) {
         //类型：1-随笔，2-文章，3-相册，4-视频
@@ -205,13 +211,12 @@ public class CommodityFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&resultCode==7){
-            followEntities.clear();
-            mNextPageIndex = 0;
-            loadDataFromNet("0", mNextPageIndex, pageCount);
-        }
+
+    String title="";
+    public void update(String titles) {
+        title=titles;
+        followEntities.clear();
+        mNextPageIndex = 1;
+        loadDataFromNet("0",titles);
     }
 }

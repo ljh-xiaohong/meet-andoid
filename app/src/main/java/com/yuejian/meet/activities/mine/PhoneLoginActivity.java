@@ -50,6 +50,7 @@ import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.FCLoger;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -550,11 +551,13 @@ public class PhoneLoginActivity extends BaseActivity {
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())){
+        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
+        DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
+        DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
 //        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
 //        AppConfig.userEntity = userBean;

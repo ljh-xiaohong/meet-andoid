@@ -106,9 +106,10 @@ public class VideoTemplate extends BaseFragment
                     return;
                 }
                 followEntities.addAll(followEntitie.getData());
-                if (followEntities.size() > 0 && firstLoad) {
+                if (followEntities.size() > 0 ) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
-                    firstLoad = false;
+                }else {
+                    llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
                 if (page <= 1) {
                     //上拉最新

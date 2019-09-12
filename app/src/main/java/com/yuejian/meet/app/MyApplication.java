@@ -192,16 +192,22 @@ public class MyApplication extends TinkerApplication {
      */
     public void initCustomId() {
         setlangage();
-
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
+        Log.e("userData", userData);
+        if (CommonUtil.isNull(userData)) {
+            AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
+            AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
+            return;
+        }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
-        if (!CommonUtil.isNull(entity.getCustomer_id())){
+        AppConfig.userEntity=entity;
+        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
+        Log.e("CustomerId", AppConfig.CustomerId);
 //        AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
-
 //        String userData = DadanPreference.getInstance(this).getString("CustomerId");
 //        if (StringUtils.isNotEmpty(userData)) {
 //            AppConfig.newUerEntity = CommonUtil.getBeanFromSp(this,"userData","userBean");

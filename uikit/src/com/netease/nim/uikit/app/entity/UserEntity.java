@@ -50,7 +50,7 @@ public class UserEntity {
     public String birthday;
     public String chat_group_tid;
 
-    public String  age;//年龄
+//    public String  age;//年龄
 
     public String  video_price;//视频价格
 
@@ -340,13 +340,13 @@ public class UserEntity {
         this.area = area;
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
+//    public String getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(String age) {
+//        this.age = age;
+//    }
 
     public String getVideo_price() {
         return video_price;
