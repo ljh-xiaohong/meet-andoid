@@ -142,11 +142,13 @@
                     android:textColor="@color/color_black_333333"
                     android:textSize="@dimen/sp_16" />
 
-                <TextView
+                <EditText
                     android:id="@+id/acitivity_user_name_referrer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_20"
+                    android:background="@null"
+                    android:inputType="phone"
                     android:gravity="center|left"
                     android:maxLength="13"
                     android:hint="@string/please_enter_your_cell_phone_number"

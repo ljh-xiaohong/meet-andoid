@@ -192,6 +192,9 @@ public class MyApplication extends TinkerApplication {
      */
     public void initCustomId() {
         setlangage();
+        if(!DadanPreference.getInstance(this).getBoolean("isLogin")){
+            return;
+        }
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
         Log.e("userData", userData);
         if (CommonUtil.isNull(userData)) {

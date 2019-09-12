@@ -184,12 +184,7 @@ public class BangDingPhoneActivity extends BaseActivity {
      * 监听
      */
     public void listener() {
-        addTextChangedListener(txt_content);
-        addTextChangedListener(et_check_code);
-    }
-
-    private void addTextChangedListener(EditText editText) {
-        editText.addTextChangedListener(new TextWatcher() {
+        txt_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -202,15 +197,33 @@ public class BangDingPhoneActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                check();
+                check(0);
+            }
+        });
+        et_check_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                check(1);
             }
         });
     }
 
-    private void check() {
+    private void check(int i) {
         if (!CommonUtil.isNull(txt_content.getText().toString())) {
-            phoneCode.setEnabled(true);
-            phoneCode.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
+            if (i==0){
+                phoneCode.setEnabled(true);
+                phoneCode.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
+            }
             if (!CommonUtil.isNull(et_check_code.getText().toString())) {
                 btn_Next.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
                 btn_Next.setEnabled(true);
@@ -299,9 +312,15 @@ public class BangDingPhoneActivity extends BaseActivity {
                 if (dialog != null)
                     dialog.dismiss();
                 if (loginBean.getCode()==0){
-                    intent = new Intent(getApplication(), MainActivity.class);
+                    intent = new Intent(getApplication(), UserNameSelectActivity.class);
+                    intent.putExtra("mobile", txt_content.getText().toString());
+                    intent.putExtra("areaCode", code);
+                    intent.putExtra("customer_id", AppConfig.CustomerId);
+                    intent.putExtra("phone_imei", phoneImei);///手机设备唯一deviceid
+                    intent.putExtra("phone_type", "1");//设备类型:0为IOS,1为android
+                    intent.putExtra("phone_version", phoneVersion);
+                    intent.putExtra("phone_model", phoneModel);
                     startActivity(intent);
-                    finish();
                 }else if (loginBean.getCode()==19996){
                     intent = new Intent(getApplication(), UserNameSelectActivity.class);
                     intent.putExtra("mobile", txt_content.getText().toString());
@@ -312,6 +331,10 @@ public class BangDingPhoneActivity extends BaseActivity {
                     intent.putExtra("phone_version", phoneVersion);
                     intent.putExtra("phone_model", phoneModel);
                     startActivity(intent);
+                }else if (loginBean.getCode()==19998){
+                    intent = new Intent(getApplication(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }else {
                     ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 }

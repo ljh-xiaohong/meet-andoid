@@ -49,6 +49,7 @@ public class StartUpActivity extends Activity implements AppWakeUpListener {
         }
         boolean hasFirstUp = PreferencesUtil.readBoolean(this, Constants.HAVE_START_UP);
         if (!hasFirstUp) {
+            setContentView(R.layout.activity_start_up);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

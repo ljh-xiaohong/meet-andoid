@@ -194,12 +194,6 @@ public class UserNameSelectActivity extends BaseActivity {
             ViewInject.shortToast(this, R.string.toast_name_not_data);
             return;
         }
-        if(!Utils.isMobileNO(acitivity_user_name_referrer.getText().toString())){
-            Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
-                    "请确认推荐人手机号","确定");
-            dialog.show();
-            return;
-        }
         params.put("referralMobile", acitivity_user_name_referrer.getText().toString());
         params.put("surname", tv_family_name.getText().toString());
         params.put("name", tv_given_name.getText().toString());
@@ -240,8 +234,7 @@ public class UserNameSelectActivity extends BaseActivity {
                     finish();
                 }else {
                     if(loginBean.getCode()==19985){
-                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
-                                "请确认推荐人手机号","确定");
+                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", loginBean.getMessage(),"确定");
                         dialog.show();
                         return;
                     }
@@ -282,6 +275,7 @@ public class UserNameSelectActivity extends BaseActivity {
                             updateCustomerData(loginBean.getData().toString());
                         }
                         if (loginBean.getCode() == 0) {
+                            DadanPreference.getInstance(UserNameSelectActivity.this).setBoolean("isLogin",true);
                             intent = new Intent(mContext, GifActivity.class);
                             startActivity(intent);
                             finish();
@@ -326,7 +320,7 @@ public class UserNameSelectActivity extends BaseActivity {
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
+        if (!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();

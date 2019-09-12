@@ -143,9 +143,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         if (AppConfig.isGeliPhone) {
             ImUtils.loginIm();//登录im
         }
-        if (!CommonUtil.isNull(AppConfig.CustomerId)) {
-            DadanPreference.getInstance(this).setBoolean("isLogin",true);
-        }
     }
 
     private void goToGuidePage() {
@@ -356,15 +353,9 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 }
                 maia_layout_title_bar.setVisibility(View.GONE);
                 address_list.setVisibility(View.VISIBLE);
-//                if (user == null) {
-//                    Intent intent = new Intent(getApplication(), LoginActivity.class);
-//                    intent.putExtra("mine_login", true);
-//                    startActivity(intent);
-//                } else {
                     rbtn_message.setSelected(true);
                     changeFragment(messageFragment);
                     setTitleText(getString(R.string.tab_rbtn_msg));
-//                }
                 break;
             case R.id.rlayout_creation:
                 if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
