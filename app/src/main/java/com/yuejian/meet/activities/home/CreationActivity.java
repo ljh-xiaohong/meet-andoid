@@ -1,14 +1,19 @@
 package com.yuejian.meet.activities.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.creation.ArticleEditActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
+import com.yuejian.meet.framents.creation.MyCreationFragment;
+import com.yuejian.meet.framents.creation.PosterFragment;
 import com.yuejian.meet.framents.family.VideoTemplate;
 import com.yuejian.meet.widgets.CreationTitleView;
 
@@ -16,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CreationActivity extends BaseActivity implements ViewPager.OnPageChangeListener, CreationTitleView.OnTitleViewClickListener {
 
@@ -34,9 +40,9 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
     @Bind(R.id.back)
     LinearLayout back;
 
-    private VideoTemplate recommendFragment;
+    private PosterFragment recommendFragment;
     private VideoTemplate followFragment;
-    private VideoTemplate cityFragment;
+    private MyCreationFragment cityFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +51,8 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
         ButterKnife.bind(this);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(followFragment = new VideoTemplate());
-        mFragmentList.add(recommendFragment = new VideoTemplate());
-        mFragmentList.add(cityFragment = new VideoTemplate());
+        mFragmentList.add(recommendFragment = new PosterFragment());
+        mFragmentList.add(cityFragment = new MyCreationFragment());
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
         vpFamilyCircleContent.setAdapter(adapter);
         vpFamilyCircleContent.setOffscreenPageLimit(2);
@@ -55,6 +61,21 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
         back.setOnClickListener(v -> finish());
         setCurrentItem(0);
 
+    }
+
+    @OnClick({R.id.article, R.id.take})
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.article:
+                startActivity(new Intent(mContext, ArticleEditActivity.class));
+                break;
+
+            case R.id.take:
+//                startActivity(new Intent(mContext, VideoLoadActivity.class));
+                break;
+        }
     }
 
     /**

@@ -11,13 +11,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
 import com.yuejian.meet.adapters.FamilyCircleSameCityListAdapter;
+import com.yuejian.meet.adapters.LifeAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilySameCityEntity;
+import com.yuejian.meet.bean.LifeEntity;
 import com.yuejian.meet.bean.PositionInfo;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SpacesItemDecoration;
@@ -50,6 +54,7 @@ public class FamilyCircleSameCityFragment extends BaseFragment
     private int mNextPageIndex = 1;
     private int pageCount = 10;
     private FamilyCircleSameCityListAdapter mSameCityListAdapter;
+    private LifeAdapter adapter;
 
     private String province = "",
             city = "";
@@ -69,14 +74,16 @@ public class FamilyCircleSameCityFragment extends BaseFragment
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mSameCityListAdapter = new FamilyCircleSameCityListAdapter(getActivity(), this);
-        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(decoration);
-        mRecyclerView.setAdapter(mSameCityListAdapter);
+//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//        mSameCityListAdapter = new FamilyCircleSameCityListAdapter(getActivity(), this);
+//        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+//        mRecyclerView.setLayoutManager(layoutManager);
+//        mRecyclerView.addItemDecoration(decoration);
+//        mRecyclerView.setAdapter(mSameCityListAdapter);
+        adapter = new LifeAdapter(mRecyclerView, getContext());
 
-        initDatas("0", mNextPageIndex, pageCount, city);
+        loadDataFromNet(mNextPageIndex, pageCount);
+//        initDatas("0", mNextPageIndex, pageCount, city);
 
     }
 
@@ -87,7 +94,7 @@ public class FamilyCircleSameCityFragment extends BaseFragment
                 public void onSuccess(PositionInfo data, int id) {
                     province = data.getProvince();
                     city = data.getCity();
-                    loadDataFromNet(type, page, count, city);
+//                    loadDataFromNet(type, page, count, city);
                 }
 
                 @Override
@@ -96,6 +103,56 @@ public class FamilyCircleSameCityFragment extends BaseFragment
                 }
             });
         }
+    }
+
+    private void loadDataFromNet(int page, int count) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("longitude", AppConfig.slongitude);
+        map.put("latitude", AppConfig.slatitude);
+        map.put("pageIndex", page);
+        map.put("pageItemCount", count);
+        map.put("customerId", AppConfig.CustomerId);
+        apiImp.getIcityFamilyCricleDo(map, this, new DataIdCallback<String>() {
+            List<LifeEntity> lifeEntities;
+
+            @Override
+            public void onSuccess(String data, int id) {
+
+                if (data != null) {
+                    JSONObject jo = (JSONObject) JSON.parse(data);
+                    String code = jo.getString("code");
+                    if (code != null && code.equalsIgnoreCase("0")) {
+                        lifeEntities = JSON.parseArray(jo.getString("data"), LifeEntity.class);
+                        if (lifeEntities.size() > 0 && firstLoad) {
+                            mEmptyList.setVisibility(View.GONE);
+                            firstLoad = false;
+                        }
+
+                        if (page <= 1) {
+                            //上拉最新
+                            adapter.refresh(lifeEntities);
+
+                        } else {
+                            //下拉更多
+                            adapter.Loadmore(lifeEntities);
+                        }
+                    }
+
+                }
+                if (mSpringView != null) {
+                    mSpringView.onFinishFreshAndLoad();
+                }
+
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+
+            }
+        });
+
     }
 
     private void loadDataFromNet(String type, int page, int count, String city) {
@@ -146,12 +203,12 @@ public class FamilyCircleSameCityFragment extends BaseFragment
     @Override
     public void onRefresh() {
         mNextPageIndex = 1;
-        loadDataFromNet("0", mNextPageIndex, pageCount, city);
+        loadDataFromNet(mNextPageIndex, pageCount);
     }
 
     @Override
     public void onLoadmore() {
-        loadDataFromNet("0", ++mNextPageIndex, pageCount, city);
+        loadDataFromNet(++mNextPageIndex, pageCount);
     }
 
     @Override

@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="44dp"
+    android:background="@drawable/underline_bg_half_dp"
     android:orientation="horizontal"
-    android:background="@drawable/underline_bg_half_dp">
+    android:paddingLeft="@dimen/dp_60"
+    android:paddingRight="@dimen/dp_60">
 
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:orientation="vertical"
-          android:layout_marginLeft="12dp"
-          android:gravity="center"
-          android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_title_one"
             android:layout_width="wrap_content"
@@ -21,33 +25,41 @@
             android:text="视频模板"
             android:textColor="#333333"
             android:textSize="16sp" />
-          <View
-              android:id="@+id/title_underline_red_one"
-              android:layout_width="20dp"
-              android:layout_height="3dp"
-              android:layout_marginTop="2dp"
-              android:background="#AB3A34" />
-      </LinearLayout>
+
+        <View
+            android:id="@+id/title_underline_red_one"
+            android:layout_width="20dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="2dp"
+            android:background="#AB3A34" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/change"
         android:layout_width="wrap_content"
-        android:text="竖版"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="3dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="13dp"
+        android:text="竖版"
         android:textColor="#ff999999"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:visibility="gone" />
+
     <View
         android:layout_width="8dp"
+        android:layout_height="7dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/dowm"
-        android:layout_height="7dp"/>
+        android:visibility="gone" />
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="25dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_title_two"
             android:layout_width="wrap_content"
@@ -57,6 +69,7 @@
             android:text="海报模板"
             android:textColor="#333333"
             android:textSize="16sp" />
+
         <View
             android:id="@+id/title_underline_red_two"
             android:layout_width="20dp"
@@ -64,12 +77,15 @@
             android:layout_marginTop="2dp"
             android:background="#AB3A34" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginLeft="25dp"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_title_three"
             android:layout_width="wrap_content"
@@ -79,6 +95,7 @@
             android:text="我的创作"
             android:textColor="#333333"
             android:textSize="16sp" />
+
         <View
             android:id="@+id/title_underline_red_three"
             android:layout_width="20dp"

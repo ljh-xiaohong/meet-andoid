@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <SurfaceView
+        android:id="@+id/sv_view_video_load"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_activity_video_load_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="26dp"
+            android:src="@mipmap/icon_nav_return_b"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_activity_video_load_return"
+            style="@style/video_btn_one"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="14dp"
+            android:drawableTop="@mipmap/icon_video_fanzhuan"
+            android:text="翻转"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_activity_video_load_countdown"
+            style="@style/video_btn_one"
+            android:layout_marginTop="25dp"
+            android:drawableTop="@mipmap/icon_video_jishi"
+            android:text="倒计时"
+            app:layout_constraintEnd_toEndOf="@+id/tv_activity_video_load_return"
+            app:layout_constraintStart_toStartOf="@+id/tv_activity_video_load_return"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_video_load_return" />
+
+
+        <TextView
+            android:id="@+id/tv_activity_video_load_speed"
+            style="@style/video_btn_one"
+            android:layout_marginTop="25dp"
+            android:drawableTop="@mipmap/icon_video_animate"
+            android:text="快慢速"
+            app:layout_constraintEnd_toEndOf="@+id/tv_activity_video_load_countdown"
+            app:layout_constraintStart_toStartOf="@+id/tv_activity_video_load_countdown"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_video_load_countdown" />
+
+
+        <TextView
+            android:id="@+id/tv_next_btn"
+            android:layout_width="72dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_next_btn"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_activity_video_load_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_activity_video_load_back" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_gravity="bottom"
+        android:background="@mipmap/video_view_editor_bg">
+
+        <com.yuejian.meet.widgets.CircleImageView
+            android:id="@+id/zdy_circleProgressBar"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_huishan_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:drawableTop="@mipmap/icon_video_huishan"-->
+        <!--android:drawablePadding="8dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="回删"-->
+        <!--android:textColor="@color/white_ffffff"-->
+        <!--android:textSize="11sp"-->
+        <!--android:visibility="gone"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/zdy_circleProgressBar"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/tv_music_btn"
+            style="@style/video_btn_two"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:drawableTop="@mipmap/icon_video_music"
+            android:text="音乐"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/zdy_circleProgressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_upload_btn"
+            style="@style/video_btn_two"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:drawableTop="@mipmap/icon_video_music"
+            android:text="上传"
+            app:layout_constraintEnd_toStartOf="@+id/zdy_circleProgressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_paster_btn"
+            style="@style/video_btn_two"
+            android:drawableTop="@mipmap/icon_video_tiezhi"
+            android:text="贴纸"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/zdy_circleProgressBar"
+            app:layout_constraintTop_toTopOf="@+id/tv_music_btn" />
+
+
+        <TextView
+            android:id="@+id/tv_lvjing_btn"
+            style="@style/video_btn_two"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@mipmap/icon_video_lvjing"
+            android:text="滤镜"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/zdy_circleProgressBar"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <com.yuejian.meet.widgets.aliyun.CountDownTextView
+        android:id="@+id/tv_activity_video_load_countdown_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="80sp" />
+
+
+</FrameLayout>

@@ -31,6 +31,7 @@ public class ApiImp {
         params.put("mobile", mobile);
         mHttpRequst.postRequst(UrlConstant.SEND_CODE(), params, tag, call);
     }
+
     /**
      * 登录接口
      *
@@ -41,6 +42,7 @@ public class ApiImp {
     public void login(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.LOGIN(), params, tag, call);
     }
+
     /**
      * 根据手机号,绑定手机
      *
@@ -75,39 +77,34 @@ public class ApiImp {
     public void postCreateAction(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POSTCREATEACTION, paramMap, paramObject, callback);
     }
+
     /**
      * 首页 动态 删除动态
      */
     public void postDelectAction(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POSTDELECTACTION, paramMap, paramObject, callback);
     }
+
     /**
      * 首页 动态 不感兴趣
      */
     public void postLoseInterest(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POSTLOSEINTEREST, paramMap, paramObject, callback);
     }
+
     /**
      * 首页 动态 举报
      */
     public void postDoReport(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POSTDOREPORT, paramMap, paramObject, callback);
     }
+
     /**
      * 首页 动态 搜索
      */
     public void getDoSearch(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GETDOSEARCH, paramMap, paramObject, callback);
     }
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -129,6 +126,7 @@ public class ApiImp {
     public void loginother(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.POST_LOGIN_OTHER(), params, tag, call);
     }
+
     /**
      * 收益列表
      *
@@ -139,6 +137,7 @@ public class ApiImp {
     public void doIncomeList(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
         logindb.postRequst(UrlConstant.POST_INCOME_LIST(), params, tag, call);
     }
+
     /**
      * 获取姓
      *
@@ -1111,7 +1110,7 @@ public class ApiImp {
     /**
      * 商圈 - 家圈- 点赞
      */
-    public void postDiscussPraise(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+    public void postDiscussPraise(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POST_DISCUSS_PRAISE(), paramMap, paramObject, callback);
     }
 
@@ -1366,7 +1365,6 @@ public class ApiImp {
     public void getWeixiCheckOpenid(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
         this.mHttpRequst.getRequst(UrlConstant.GET_CUSTOMEr_CHECK_WEIXIN_OPENID, paramMap, paramObject, paramDataIdCallback);
     }
-
 
 
     /**
@@ -1805,6 +1803,27 @@ public class ApiImp {
     }
 
     /**
+     * 发布文章 发布 rvs1
+     */
+    public void publishedArticlesNew(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.PUBLISHED_ARTICLES_NEW, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 内容详情 rvs1
+     */
+    public void getContentDetails(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+        this.mHttpRequst.postRequst(UrlConstant.CONTENT_DETAILS, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 收藏内容 RVS1
+     */
+    public void doCollection(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+        this.mHttpRequst.postRequst(UrlConstant.DO_COLLECTION, paramMap, paramObject, callback);
+    }
+
+    /**
      * 发布视频 发布
      */
     public void publishedVideo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
@@ -1815,18 +1834,46 @@ public class ApiImp {
      * 首页 推荐
      */
     public void getRecommendFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
-        this.mHttpRequst.postRequst(UrlConstant.RECOMMEND_FAMILY_CRICLE, paramMap, paramObject, callback);
+        this.mHttpRequst.postRequst(UrlConstant.RECOMMEND_FIND, paramMap, paramObject, callback);
+    }
+
+    //我的创作 列表
+    public void getContentList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.MY_CREAT_CONTENT_LIST, paramMap, paramObject, callback);
     }
 
     /**
-     * 首页 同城
+     * 首页 推荐
      */
-    public void getIcityFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
-        this.mHttpRequst.postRequst(UrlConstant.ICITYFAMILYCRICLE, paramMap, paramObject, callback);
+    public void findPostersModelById(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.FIND_POSTERS_MODEL_ID, paramMap, paramObject, callback);
     }
 
+    /**
+     * 推荐列表（poster）
+     */
+    public void getAppPostersModelDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTERMODEL_LIST, paramMap, paramObject, callback);
+    }
 
+    public void getAppPostersModelLabel(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POSTERMODEL_LABEL, paramMap, paramObject, callback);
+    }
 
+    /**
+     * 获取活动标签
+     * {"type":1} type：类型:1文章视频2视频模板3海报模板
+     */
+    public void getContentLabel(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.CONTENTLABEL, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 首页 生活
+     */
+    public void getIcityFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.RECOMMEND_LIFE, paramMap, paramObject, callback);
+    }
 
 
     /**
@@ -1881,7 +1928,7 @@ public class ApiImp {
     /**
      * 商圈 - 广场 - 申请成为封面人物(再次)
      */
-    public void doRankedDoAgain(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+    public void doRankedDoAgain(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.DORANKEDDO_AGAIN, paramMap, paramObject, callback);
     }
 
@@ -1917,7 +1964,7 @@ public class ApiImp {
     }
 
     //回复评论
-    public void replyComent(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+    public void replyComent(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.REPLYCOMENT, paramMap, paramObject, callback);
     }
 

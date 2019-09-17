@@ -234,6 +234,8 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     compile 'io.github.rockerhieu:emojicon:latest.release'
+    //视频控件
+    compile 'com.shuyu:gsyVideoPlayer-java:6.0.3'
 }
 
 allprojects {
@@ -243,6 +245,6 @@ allprojects {
     }
 }
 //bugly 配置
-apply from: 'tinker-support.gradle'
+//apply from: 'tinker-support.gradle'
 // 多渠道使用walle示例（注：多渠道使用）
 apply from: 'multiple-channel.gradle'

@@ -84,4 +84,11 @@
         <attr name="tailTextSize" format="integer" />//折叠文字颜色,默认'#999999'
         <attr name="canFoldAgain" format="boolean" />// 能否折叠,默认false
     </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="loadColor" format="color|reference"></attr>
+        <attr name="baseColor" format="color|reference"></attr>
+        <attr name="broder" format="dimension"></attr>
+        <attr name="progress_seconds" format="integer"></attr>
+    </declare-styleable>
 </resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00ffffff"
+    android:gravity="center">
+
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/item_pics_first"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="51dp"
+        android:scaleType="center"
+            app:border_color="#ffffff"
+        app:border_width="1dp" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/item_pics_second"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="34dp"
+        android:scaleType="center"
+        app:border_color="#ffffff"
+        app:border_width="1dp" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/item_pics_third"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="17dp"
+        android:scaleType="center"
+          app:border_color="#ffffff"
+        app:border_width="1dp" />
+
+    <com.yuejian.meet.widgets.CircleImageView
+        android:id="@+id/item_pics_fourth"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="center"
+        app:border_color="#ffffff"
+        app:border_width="1dp" />
+
+    <TextView
+        android:id="@+id/item_pics_info"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginLeft="80dp"
+        android:gravity="center"
+           android:textColor="#ffffff"
+        android:textSize="10sp" />
+
+
+</RelativeLayout>

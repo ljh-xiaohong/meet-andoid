@@ -34,12 +34,12 @@ public class DefaultHeader extends BaseHeader {
     private ImageView headerArrow;
     private ProgressBar headerProgressbar;
 
-    public DefaultHeader(Context context){
+    public DefaultHeader(Context context) {
         this(context, R.drawable.progress_small, R.mipmap.ic_pull_icon_big);
-        this.context=context;
+        this.context = context;
     }
 
-    public DefaultHeader(Context context,int rotationSrc,int arrowSrc){
+    public DefaultHeader(Context context, int rotationSrc, int arrowSrc) {
         this.context = context;
         this.rotationSrc = rotationSrc;
         this.arrowSrc = arrowSrc;
@@ -57,7 +57,12 @@ public class DefaultHeader extends BaseHeader {
     }
 
     @Override
-    public View getView(LayoutInflater inflater,ViewGroup viewGroup) {
+    public int getDragLimitHeight(View rootView) {
+        return rootView.getMeasuredHeight() / 2;
+    }
+
+    @Override
+    public View getView(LayoutInflater inflater, ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.default_header, viewGroup, true);
         headerTitle = (TextView) view.findViewById(R.id.default_header_title);
         headerTime = (TextView) view.findViewById(R.id.default_header_time);
@@ -70,19 +75,19 @@ public class DefaultHeader extends BaseHeader {
 
     @Override
     public void onPreDrag(View rootView) {
-        if (freshTime==0){
+        if (freshTime == 0) {
             freshTime = System.currentTimeMillis();
-        }else {
-            int m = (int) ((System.currentTimeMillis()-freshTime)/1000/60);
-            if(m>=1 && m<60){
-                headerTime.setText( m +context.getString(R.string.oto_minute_ago));
-            }else if (m>=60){
-                int h = m/60;
-                headerTime.setText( h +context.getString(R.string.oto_hour_ago));
-            }else if(m>60*24){
-                int d = m/(60*24);
-                headerTime.setText( d +context.getString(R.string.oto_day_ago));
-            }else if(m==0){
+        } else {
+            int m = (int) ((System.currentTimeMillis() - freshTime) / 1000 / 60);
+            if (m >= 1 && m < 60) {
+                headerTime.setText(m + context.getString(R.string.oto_minute_ago));
+            } else if (m >= 60) {
+                int h = m / 60;
+                headerTime.setText(h + context.getString(R.string.oto_hour_ago));
+            } else if (m > 60 * 24) {
+                int d = m / (60 * 24);
+                headerTime.setText(d + context.getString(R.string.oto_day_ago));
+            } else if (m == 0) {
                 headerTime.setText(R.string.spring_text3);
             }
         }
@@ -94,14 +99,13 @@ public class DefaultHeader extends BaseHeader {
 
     @Override
     public void onLimitDes(View rootView, boolean upORdown) {
-        if (!upORdown){
+        if (!upORdown) {
             headerTitle.setText(R.string.spring_text1);
-            if (headerArrow.getVisibility()==View.VISIBLE)
+            if (headerArrow.getVisibility() == View.VISIBLE)
                 headerArrow.startAnimation(mRotateUpAnim);
-        }
-        else {
+        } else {
             headerTitle.setText(R.string.spring_text);
-            if (headerArrow.getVisibility()==View.VISIBLE)
+            if (headerArrow.getVisibility() == View.VISIBLE)
                 headerArrow.startAnimation(mRotateDownAnim);
         }
     }

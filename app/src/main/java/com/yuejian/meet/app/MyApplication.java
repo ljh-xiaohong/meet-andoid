@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyun.common.httpfinal.QupaiHttpFinal;
+import com.aliyun.common.utils.MySystemParams;
 import com.aliyun.downloader.DownloaderManager;
 import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppInstallListener;
@@ -87,7 +88,6 @@ public class MyApplication extends TinkerApplication {
         context = this;
         AppConfig.context = this;
         OpenInstall.init(this);
-
         //小米推送
         if (shouldInit()) {
             MiPushClient.registerPush(this, "2882303761517614354", "5901761448354");
@@ -194,6 +194,7 @@ public class MyApplication extends TinkerApplication {
         setlangage();
 
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
+        if(!CommonUtil.isNull(userData))return;
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
         if (!CommonUtil.isNull(entity.getCustomer_id())){
             AppConfig.CustomerId = entity.getCustomer_id();

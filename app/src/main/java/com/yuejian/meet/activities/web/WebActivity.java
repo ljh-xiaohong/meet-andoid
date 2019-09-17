@@ -310,6 +310,20 @@ public class WebActivity extends BaseActivity {
                     public void onFailed(String errCode, String errMsg, int id) {
                     }
                 });
+            } else if (uri.getAuthority().equals("poster_share")) {
+                try {
+                    final String shareUrl = Utils.getValueByName(url, "previewUrl");
+                    final String title = URLDecoder.decode(Utils.getValueByName(url, "postersTitle"), "UTF-8");
+                    Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                        }
+                    });
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
             } else if (uri.getAuthority().equals("toBack")) {
                 finish();
             } else if (uri.getAuthority().equals("user_info")) {
