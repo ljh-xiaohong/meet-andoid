@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.poster.PosterDetailAcitivty">
+
+    <!-- 头部 -->
+
+    <include layout="@layout/layout_creation_head" />
+    <!-- 尾部 -->
+    <include layout="@layout/layout_creation_bottom" />
+
+    <!-- 内部 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@+id/head">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="13dp">
+
+            <!-- 图片 -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/activity_poster_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_18"
+                tools:cardCornerRadius="10dp"
+                tools:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/activity_poster_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+            </android.support.v7.widget.CardView>
+
+
+            <!-- 抬头 金币 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="21dp"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/activity_poster_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_17" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_6"
+                    android:layout_toRightOf="@+id/activity_poster_title"
+                    android:src="@mipmap/icon_home_vip" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/activity_poster_discount_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/activity_poster_unit"
+                        android:gravity="center"
+                        android:textColor="#BE3232"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/activity_poster_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_1"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:gravity="center|bottom"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:text="银锭"
+                        android:textColor="#BE3232"
+                        android:textSize="@dimen/sp_10" />
+
+                    <TextView
+                        android:id="@+id/activity_poster_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|bottom"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/sp_10" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <!-- 介绍 -->
+            <TextView
+                android:id="@+id/activity_poster_content"
+                android:layout_width="219dp"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="@dimen/dp_7"
+                android:text="适用中秋节活动海报制作，节日推广！可替换文字/图片适用中秋节活动海报制作，节日推广！可替换文字/图片"
+                android:textColor="#4C4C4C"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <!-- 标签列表 -->
+            <com.zhy.view.flowlayout.FlowLayout
+                android:id="@+id/activity_poster_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.zhy.view.flowlayout.FlowLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

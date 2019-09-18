@@ -937,6 +937,7 @@ public class Utils {
                 .setCallback(shareListener)//回调监听器
                 .share();
     }
+
     public static void umengShareByList(Activity activity, Bitmap shareLogo, String title, String description, String shareUrl) {
         UMWeb web = new UMWeb(shareUrl);
         web.setTitle(title);//标题
@@ -945,16 +946,16 @@ public class Utils {
 
         new ShareAction(activity).withMedia(web)
                 .setCallback(shareListener)
-                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
-                .addButton("umeng_sharebutton_custom","umeng_sharebutton_custom","icon_wh_tousu","icon_wh_tousu")
-                .setShareboardclickCallback( new  ShareBoardlistener() {
+                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
+                .addButton("umeng_sharebutton_custom", "umeng_sharebutton_custom", "icon_wh_tousu", "icon_wh_tousu")
+                .setShareboardclickCallback(new ShareBoardlistener() {
 
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                        if (share_media==null){
+                        if (share_media == null) {
                             //根据key来区分自定义按钮的类型，并进行对应的操作
-                            if (snsPlatform.mKeyword.equals("umeng_sharebutton_custom")){
-                                ClipboardManager  clipManager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);//获取剪切板管理对象
+                            if (snsPlatform.mKeyword.equals("umeng_sharebutton_custom")) {
+                                ClipboardManager clipManager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);//获取剪切板管理对象
                                 ClipData clipData = ClipData.newPlainText("copy text", shareUrl);//将数据放到clip对象
                                 clipManager.setPrimaryClip(clipData);//将clip对象放到剪切板
 
@@ -969,14 +970,14 @@ public class Utils {
                                 String label = description.getLabel().toString();
                                 //获取 text
                                 String copyText = clip.getItemAt(0).getText().toString();
-                                Toast.makeText(activity,"复制成功",Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity, "复制成功", Toast.LENGTH_LONG).show();
                             }
 
-                        }else {//社交平台的分享行为
-                            new ShareAction(activity)
+                        } else {//社交平台的分享行为
+                            new ShareAction(activity).withMedia(web)
                                     .setPlatform(share_media)
                                     .setCallback(shareListener)
-                                    .withText("多平台分享")
+                                    //.withText("多平台分享")
                                     .share();
                         }
                     }
@@ -1566,7 +1567,7 @@ public class Utils {
                                  final int width,
                                  final int height,
                                  final DialogInterface.OnDismissListener dismissListener) {
-        final String[] items = {"手机拍照", "从相册里选择相片","从相册里选择视频"};
+        final String[] items = {"手机拍照", "从相册里选择相片", "从相册里选择视频"};
         isSubmit = true;
 //        final OptionPicker picker = new OptionPicker(activity, items) {
 //            @Override
@@ -1607,7 +1608,7 @@ public class Utils {
                         selectAlbums(activity, false, requestCode, isCupture, width, height);
                     } else if ("从相册里选择相片".equals(option)) {
                         selectAlbums(activity, true, requestCode, isCupture, width, height);
-                    }else if("从相册里选择视频".equals(option)){
+                    } else if ("从相册里选择视频".equals(option)) {
                         //todo
                         PictureSelector.create(activity).openGallery(PictureMimeType.ofVideo()).isCamera(false).maxSelectNum(1).forResult(requestCode);
                     }

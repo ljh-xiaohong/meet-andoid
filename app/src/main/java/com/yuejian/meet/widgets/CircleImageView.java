@@ -1,5 +1,6 @@
 package com.yuejian.meet.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import com.yuejian.meet.R;
 
 
+@SuppressLint("AppCompatCustomView")
 public class CircleImageView extends ImageView {
 
 	private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;

@@ -6,13 +6,17 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Process;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyun.common.httpfinal.QupaiHttpFinal;
+import com.aliyun.common.utils.MySystemParams;
+import com.aliyun.demo.recorder.faceunity.FaceUnityManager;
 import com.aliyun.downloader.DownloaderManager;
+import com.aliyun.sys.AlivcSdkCore;
 import com.fm.openinstall.OpenInstall;
 import com.fm.openinstall.listener.AppInstallListener;
 import com.fm.openinstall.model.AppData;
@@ -82,6 +86,12 @@ public class MyApplication extends TinkerApplication {
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         context = this;
@@ -133,11 +143,13 @@ public class MyApplication extends TinkerApplication {
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "c2a5563620e06621e6d0df6fcb246e44");
         AppUitls.UMENG_Config(this);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-
-        com.aliyun.vod.common.httpfinal.QupaiHttpFinal.getInstance().initOkHttpFinal();
         // 初始化阿里云短视频SDK
+        com.aliyun.vod.common.httpfinal.QupaiHttpFinal.getInstance().initOkHttpFinal();
+        FaceUnityManager.getInstance().setUp(this);
         QupaiHttpFinal.getInstance().initOkHttpFinal();
         DownloaderManager.getInstance().init(this);
+        AlivcSdkCore.register(getApplicationContext());
+        AlivcSdkCore.setLogLevel(AlivcSdkCore.AlivcLogLevel.AlivcLogDebug);
     }
 
     private boolean shouldInit() {
@@ -196,12 +208,6 @@ public class MyApplication extends TinkerApplication {
             return;
         }
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
-        Log.e("userData", userData);
-        if (CommonUtil.isNull(userData)) {
-            AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
-            AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
-            return;
-        }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
         AppConfig.userEntity=entity;
         if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
@@ -209,8 +215,8 @@ public class MyApplication extends TinkerApplication {
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
-        Log.e("CustomerId", AppConfig.CustomerId);
 //        AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
+
 //        String userData = DadanPreference.getInstance(this).getString("CustomerId");
 //        if (StringUtils.isNotEmpty(userData)) {
 //            AppConfig.newUerEntity = CommonUtil.getBeanFromSp(this,"userData","userBean");

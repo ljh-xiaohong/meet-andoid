@@ -6,17 +6,25 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.netease.nim.uikit.api.DataCallback;
+import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
 import com.netease.nim.uikit.common.media.picker.model.PhotoInfo;
 import com.netease.nim.uikit.common.media.picker.model.PickerContract;
@@ -25,16 +33,18 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
 import com.yuejian.meet.bean.FeedsResourceBean;
+import com.yuejian.meet.bean.TypeEntity;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.BitmapLoader;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
+import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.MediaItemView;
 
+
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -77,7 +87,8 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
     EditText mTitleView;
     @Bind(R.id.iv_add_article_cover)
     ImageView mAddArticleCoverBtn;
-
+    @Bind(R.id.edit_article_layout_label)
+    RadioGroup mRadioGroupLabel;
     private static final int OPENPIC = 100;
     private static final int OPENCAM = 200;
     private static final int OPENVIDEO = 300;
@@ -87,6 +98,7 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
 
     private LoadingDialogFragment mLoadingDialog;
     private volatile int pudateCnt = 0;
+    private String lab = "";
 
     //作为替换时的锚 处理结束时，必须设置为null；
     private MediaItemView replaceObject = null;
@@ -109,6 +121,8 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         offset_px = Utils.dp2px(getApplicationContext(), offset_dp);
         videoViewHeight = Utils.dp2px(getApplicationContext(), 200);
         mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...");
+        getDataFromNet();
+        setListener();
     }
 
     @OnClick({R.id.iv_edit_article_back_btn, R.id.ll_add_image_edit_article, R.id.ll_add_text_edit_article,
@@ -159,6 +173,72 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         }
     }
 
+    private void setListener() {
+        mRadioGroupLabel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+
+                if (R.id.edit_label_init == checkedId) {
+                    lab = "";
+                    return;
+                }
+                RadioButton rb = radioGroup.findViewById(checkedId);
+                lab = ((TypeEntity) rb.getTag()).getId() + "";
+
+            }
+        });
+    }
+
+    /**
+     * 添加标签
+     */
+    private void getDataFromNet() {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", 1);
+
+        apiImp.getContentLabel(params, this, new DataIdCallback<String>() {
+
+            List<TypeEntity> typeEntities;
+
+            @Override
+            public void onSuccess(String data, int id) {
+
+
+                if (data != null) {
+                    JSONObject jo = (JSONObject) JSON.parse(data);
+                    String code = jo.getString("code");
+                    if (code != null && code.equalsIgnoreCase("0")) {
+                        typeEntities = JSON.parseArray(jo.getString("data"), TypeEntity.class);
+                        if (typeEntities != null && typeEntities.size() > 0) {
+
+                            for (TypeEntity label : typeEntities) {
+                                RadioButton radioButton = (RadioButton) LayoutInflater.from(mContext).inflate(R.layout.radiobutton_label, null);
+                                radioButton.setText(label.getTitle());
+                                ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                lp.leftMargin = 10;
+                                radioButton.setLayoutParams(lp);
+                                radioButton.setTag(label);
+                                mRadioGroupLabel.addView(radioButton);
+                            }
+
+
+                        }
+
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+
+            }
+        });
+    }
+
     /**
      * 打开图片选择器
      */
@@ -180,7 +260,7 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         if (photosInfos.size() > 0) {
             PhotoInfo photo = photosInfos.get(0);
             MediaItemView imageItemView = new MediaItemView(this, MediaItemView.MEDIA_IMAGE, mItemId, this);
-            LinearLayout.LayoutParams imageItemViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams imageItemViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(this) / 5 * 3);
             imageItemViewParams.setMargins(offset_px, offset_px + 5, offset_px, offset_px / 3);
             imageItemView.setImageContentView(photo.getAbsolutePath());
             // 上传图片
@@ -487,7 +567,8 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                 data.put(jsonObject);
             }
 //            Log.e("cchekc", data.toString());
-            releaseArticle(data.toString());
+//            releaseArticle(data.toString());
+            releaseArticleNew(data.toString());
         } catch (Exception e) {
             if (mLoadingDialog != null) {
                 mLoadingDialog.dismiss();
@@ -495,6 +576,38 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
             ViewInject.shortToast(getApplication(), "Error");
             e.printStackTrace();
         }
+    }
+
+    private void releaseArticleNew(String contentJson) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("type", 2);
+        params.put("title", mTitleView.getText().toString());
+        params.put("content", contentJson);
+        params.put("labelId", lab);
+        params.put("photoAndVideoUrl", coverImageUrl);
+        params.put("crLongitude", AppConfig.slongitude);
+        params.put("crLatitude", AppConfig.slatitude);
+        params.put("crdId", "");
+        apiImp.publishedArticlesNew(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (mLoadingDialog != null) {
+                    mLoadingDialog.dismiss();
+                }
+                ViewInject.shortToast(getApplicationContext(), R.string.release_success);
+                finish();
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                if (mLoadingDialog != null) {
+                    mLoadingDialog.dismiss();
+                }
+                ViewInject.shortToast(getApplicationContext(), "发布失败");
+            }
+        });
     }
 
     private void releaseArticle(String contentJson) {

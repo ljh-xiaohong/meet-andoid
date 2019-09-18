@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +22,18 @@ import com.yuejian.meet.activities.clan.MainClanActivity;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
+import com.yuejian.meet.activities.poster.PosterDetailAcitivty;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.activities.zuci.ZuciMainActivity;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
+import com.yuejian.meet.adapters.RecommendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.FamilyRecommendEntity;
+import com.yuejian.meet.bean.RecommendEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.framents.find.ForHomePfracticeActivity;
-import com.yuejian.meet.ui.SpacesItemDecoration;
-import com.yuejian.meet.utils.DensityUtils;
 import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -81,8 +82,9 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     LinearLayout ll_title;
 
     private int mNextPageIndex = 1;
-    private int pageCount = 20;
-    private FamilyCircleRecommendListAdapter mRecommendListAdapter;
+    private int pageCount = 10;
+    //    private FamilyCircleRecommendListAdapter mRecommendListAdapter;
+    private RecommendListAdapter recommendListAdapter;
     private boolean firstLoad = true;
     private boolean is_recommend = true;
     Type type = Type.video;
@@ -100,17 +102,34 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecommendListAdapter = new FamilyCircleRecommendListAdapter(getActivity(), this);
-        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-        mRecommendListView.setLayoutManager(layoutManager);
-        mRecommendListView.addItemDecoration(decoration);
-        mRecommendListView.setAdapter(mRecommendListAdapter);
+        recommendListAdapter = new RecommendListAdapter(mRecommendListView, getContext());
+        recommendListAdapter.setOnItemClickListener((view, position) -> {
 
-//         loadDataFromNet(type, mNextPageIndex, pageCount,is_recommend);
+            RecommendEntity item = recommendListAdapter.getData().get(position);
+            item.getId();
+            switch (item.getType()) {
+                //文章
+                case 1:
+                    break;
+                //视频
+                case 2:
+                    VideoActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId, item.getCoveSizeType() == 0 ? true : false);
+                    break;
+                //模板
+                case 3:
+//                    PosterDetailAcitivty.startActivity(mContext, item.getId(), AppConfig.CustomerId);
+                    break;
+                //活动
+                case 4:
+                    break;
+            }
+
+        });
+        loadDataFromNet(1, 10);
         mSpringView.callFresh();
         setItemWidth();
     }
+
 
     @OnClick({R.id.ll_family_circle_recomm_item_news, R.id.ll_family_circle_recomm_item_zupu,
             R.id.ll_family_circle_recomm_item_jiaci, R.id.ll_family_circle_recomm_item_zongqinhui,
@@ -181,15 +200,72 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
     }
 
-    public void loadDataFromNet(Type type, int page, int count, boolean is_recommend) {
-        this.is_recommend = is_recommend;
+
+    public void loadDataFromNet(int page, int count) {
         Map<String, Object> map = new HashMap<>();
-        this.type = type;
-        map.put("type", type.getType());
-        map.put("is_recommend", is_recommend ? "true" : "false");
-        map.put("customer_id", AppConfig.CustomerId);
+        //500102
+        map.put("customerId", AppConfig.CustomerId);
         map.put("pageIndex", String.valueOf(page));
         map.put("pageItemCount", count + "");
+
+        apiImp.getRecommendFamilyCricleDo(map, this, new DataIdCallback<String>() {
+
+            List<RecommendEntity> recommendEntities;
+
+            @Override
+            public void onSuccess(String data, int id) {
+
+
+                if (null != data) {
+
+
+                    JSONObject jo = (JSONObject) JSON.parse(data);
+                    if (jo.getInteger("code") == 0) {
+                        recommendEntities = JSON.parseArray(jo.getString("data"), RecommendEntity.class);
+                        if (recommendEntities.size() > 0 && firstLoad) {
+                            mEmptyList.setVisibility(View.GONE);
+                            firstLoad = false;
+                        }
+
+                        if (page <= 1) {
+                            //上拉最新
+                            recommendListAdapter.refresh(recommendEntities);
+
+                        } else {
+                            //下拉更多
+                            recommendListAdapter.Loadmore(recommendEntities);
+                        }
+                    }
+
+                }
+
+                if (mSpringView != null) {
+                    mSpringView.onFinishFreshAndLoad();
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                if (mSpringView != null) {
+                    mSpringView.onFinishFreshAndLoad();
+
+                }
+            }
+        });
+    }
+
+//    public void loadDataFromNet(Type type, int page, int count, boolean is_recommend) {
+//        this.is_recommend = is_recommend;
+//        Map<String, Object> map = new HashMap<>();
+//        this.type = type;
+//        map.put("type", type.getType());
+//        map.put("is_recommend", is_recommend ? "true" : "false");
+//        map.put("customer_id", AppConfig.CustomerId);
+//        map.put("pageIndex", String.valueOf(page));
+//        map.put("pageItemCount", count + "");
+//
+//
 //        apiImp.getRecommendFamilyCricleDo(map, this, new DataIdCallback<String>() {
 //            //2-video,4-article;
 //
@@ -220,11 +296,11 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 //
 //                if (page <= 1) {
 //                    //上拉最新
-//                    mRecommendListAdapter.refresh(recommendEntities);
+//                    mRecommendListAdapter.refresh(null);
 //
 //                } else {
 //                    //下拉更多
-//                    mRecommendListAdapter.Loadmore(recommendEntities);
+//                    mRecommendListAdapter.Loadmore(null);
 //                }
 //
 //
@@ -243,7 +319,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 //                }
 //            }
 //        });
-    }
+//    }
 
 
     @Override
@@ -251,7 +327,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         super.onBusCallback(event);
         switch (event.getCallType()) {
             case FAMILY_RECOMMEND_ZAN:
-                mRecommendListAdapter.notifyDataSetChanged();
+//                mRecommendListAdapter.notifyDataSetChanged();
                 break;
 
         }
@@ -261,12 +337,14 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @Override
     public void onRefresh() {
         mNextPageIndex = 1;
-        loadDataFromNet(type, mNextPageIndex, pageCount, is_recommend);
+//        loadDataFromNet(type, mNextPageIndex, pageCount, is_recommend);
+        loadDataFromNet(mNextPageIndex, pageCount);
     }
 
     @Override
     public void onLoadmore() {
-        loadDataFromNet(type, ++mNextPageIndex, pageCount, is_recommend);
+//        loadDataFromNet(type, ++mNextPageIndex, pageCount, is_recommend);
+        loadDataFromNet(++mNextPageIndex, pageCount);
     }
 
     @Override
@@ -275,7 +353,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         switch (type) {
             case article:
                 intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-                intent.putExtra("id",Integer.valueOf(entity.getId()));
+                intent.putExtra("id", Integer.valueOf(entity.getId()));
                 startActivity(intent);
 
                 break;
@@ -283,7 +361,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
             case video:
                 intent = new Intent(getActivity(), VideoDetailsActivity.class);
                 intent.putExtra("id", Integer.valueOf(entity.getId()));
-                intent.putExtra("customer_id", entity.getCustomer_id());
+//                intent.putExtra("customer_id", entity.getCustomer_id());
                 startActivity(intent);
                 break;
 

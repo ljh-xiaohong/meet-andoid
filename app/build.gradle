@@ -224,6 +224,7 @@ dependencies {
     compile project(':AliyunCrop:crop_demo')
     compile project(':AliyunEditor:editor_demo')
     compile project(':AliyunFileDownLoader:downloadermanager')
+     compile project(path: ':AliyunSvideoMusic')
 
     // 图片选择器，支持从相册或拍照选择图片或视频、音频（Glide v3版）
     compile project(':PictureSelectorLib')
@@ -234,6 +235,8 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     compile 'io.github.rockerhieu:emojicon:latest.release'
+    //视频控件
+    compile 'com.shuyu:gsyVideoPlayer-java:6.0.3'
 }
 
 allprojects {

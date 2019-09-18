@@ -3,66 +3,74 @@
     android:layout_width="fill_parent"
     android:layout_height="44dp"
     android:background="@color/white"
-    android:paddingLeft="12dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
-         <RelativeLayout
-             android:id="@+id/btn_release"
-             android:layout_width="32dp"
-             android:background="@drawable/cricle_bg"
-             android:layout_marginRight="8dp"
-             android:layout_height="32dp">
-             <ImageView
-                 android:layout_width="wrap_content"
-                 android:src="@mipmap/icon_home_fabu"
-                 android:layout_marginTop="@dimen/dp_5"
-                 android:layout_alignParentEnd="true"
-                 android:layout_height="wrap_content" />
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:text="发布"
-                 android:layout_centerInParent="true"
-                 android:textSize="11sp"
-                 android:textColor="#818181"
-                 android:layout_height="wrap_content" />
-         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_marginRight="12dp"
-            android:layout_height="32dp"
-            android:background="@drawable/shape_search_title_bar_new">
+    android:orientation="horizontal"
+    android:paddingLeft="12dp">
+
+    <RelativeLayout
+        android:id="@+id/btn_release"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/cricle_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@mipmap/icon_home_fabu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="发布"
+            android:textColor="#818181"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="32dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/shape_search_title_bar_new">
+
+        <ImageView
+            android:id="@+id/search_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="9dp"
+            android:src="@mipmap/icon_home_search"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/sweep_code"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center">
+
             <ImageView
-                android:id="@+id/search_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="9dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/icon_home_search"
-                android:visibility="visible" />
-            <LinearLayout
-                android:id="@+id/sweep_code"
-                android:layout_width="40dp"
-                android:layout_alignParentEnd="true"
-                android:gravity="center"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_home_qrcode" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/et_search_all"
-                android:layout_toRightOf="@+id/search_all"
-                android:layout_width="fill_parent"
-                android:layout_toLeftOf="@+id/sweep_code"
-                android:layout_centerVertical="true"
-                android:layout_height="fill_parent"
-                android:paddingLeft="5dp"
-                android:gravity="center_vertical"
-                android:background="@color/pickerview_bg_topbar"
-                android:hint="@string/verify_business_text5"
-                android:textColor="@color/praise_item_default"
-                android:textSize="@dimen/sp_14"
-                android:visibility="visible" />
-        </RelativeLayout>
+                android:src="@mipmap/icon_home_qrcode" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/et_search_all"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sweep_code"
+            android:layout_toRightOf="@+id/search_all"
+            android:background="@color/pickerview_bg_topbar"
+            android:gravity="center_vertical"
+            android:hint="@string/verify_business_text5"
+            android:paddingLeft="5dp"
+            android:textColor="@color/praise_item_default"
+            android:textSize="@dimen/sp_14"
+            android:visibility="visible" />
+    </RelativeLayout>
 </LinearLayout>

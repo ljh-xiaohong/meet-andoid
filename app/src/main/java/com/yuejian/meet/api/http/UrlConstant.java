@@ -25,13 +25,6 @@ public class UrlConstant {
         return UrlApi.mHttpUrl;
     }
 
-    /**
-     * 发送手机验证码
-     */
-    public static String SEND_CODE() {
-        return apiUrl() + "api/user/sendSmsCode";
-    }
-
 
     /**
      * 用户登录
@@ -39,7 +32,6 @@ public class UrlConstant {
     public static String LOGIN() {
         return apiUrl() + "api/user/login";
     }
-
 
 
     /**
@@ -72,17 +64,6 @@ public class UrlConstant {
 
     //首页 动态 搜索
     public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -170,6 +151,19 @@ public class UrlConstant {
     }
 
 
+    /**
+     * 发送手机验证码
+     */
+    public static String SEND_CODE() {
+        return apiUrl() + "api/user/sendSmsCode";
+    }
+
+    /**
+     * 发送手机验证码
+     */
+    public static String SEND_CODE4() {
+        return apiUrl() + "api/customer/sendSmsCode4";
+    }
 
 
     /**
@@ -200,6 +194,12 @@ public class UrlConstant {
         return apiUrl() + "api/provinceCityArea/getAllArea";
     }
 
+    /**
+     * 注册
+     */
+    public static String POST_REGISTER() {
+        return apiUrl() + "api/customer/register";
+    }
 
 
     /**
@@ -1034,15 +1034,40 @@ public class UrlConstant {
     // 发布文章 发布
     public static String PUBLISHED_ARTICLES = apiUrl() + "api/newArticle/publishedArticles";
 
+    public static String PUBLISHED_ARTICLES_NEW = apiUrl() + "api/contentRelease/pushContentRelease";
+
+    public static String CONTENT_DETAILS=apiUrl()+"api/contentRelease/getContentDetails";
+
+    // 收藏内容
+    public static String DO_COLLECTION = apiUrl() + "api/collection/doCollection";
+
     // 发布视频 发布
     public static String PUBLISHED_VIDEO = apiUrl() + "api/video/publishedVideo";
 
     // 首页 推荐
     public static String RECOMMEND_FAMILY_CRICLE = apiUrl() + "api/familyCircle/getRecommendFamilyCricle.do";
 
+    // 首页推荐 RSV 1.0
+    public static String RECOMMEND_FIND = apiUrl() + "api/homePage/findRecommend";
+
+    public static String MY_CREAT_CONTENT_LIST = apiUrl() + "api/contentRelease/getContentList";
+
+    //获取海报模板基础资源详情API
+    public static String FIND_POSTERS_MODEL_ID = apiUrl() + "api/appPostersModel/findPostersModelById";
+
+    //推荐标签
+    public static String POSTERMODEL_LIST = apiUrl() + "api/appPostersModel/queryList.do";
+
+    //海报ID标签
+    public static String POSTERMODEL_LABEL = apiUrl() + "api/appPostersModel/findPostersModelByLabelId";
+
+    //活动标签获取
+    public static String CONTENTLABEL = apiUrl() + "api/contentRelease/getContentLabel";
+
     //首页 同城
     public static String ICITYFAMILYCRICLE = apiUrl() + "api/familyCircle/getIcityFamilyCricle.do";
 
+    public static String RECOMMEND_LIFE = apiUrl() + "api/contentRelease/getLiveList";
 
     //首页 内容详情
     public static String CONTENTRELEASE = apiUrl() + "api/contentRelease/getContentRelease";
@@ -1057,7 +1082,7 @@ public class UrlConstant {
     //商圈 - 广场 - 申请成为封面人物
     public static String DORANKEDDO = apiUrl() + "api/coverPerson/doRanked.do";
     //商圈 - 广场 - 申请成为封面人物（再次）
-    public static String DORANKEDDO_AGAIN=apiUrl()+"api/coverPerson/doNextPayRank.do";
+    public static String DORANKEDDO_AGAIN = apiUrl() + "api/coverPerson/doNextPayRank.do";
     //商圈 - 广场 - 支付成为封面人物金额
     public static String DOPAYRANKDO = apiUrl() + "api/coverPerson/doPayRank.do";
     //商圈 - 需求

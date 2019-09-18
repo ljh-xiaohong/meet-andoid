@@ -245,4 +245,13 @@
     <color name="select_bg">#ffffff</color>
     <color name="nor_tv">#FF2D2E2F</color>
     <color name="select_tv">#ffab3a34</color>
+
+    <color name="white_ffffff">#ffffff</color>
+    <color name="white_fffffe">#FFFFFE</color>
+
+    <color name="black_fff2f5f7">#fff2f5f7</color>
+    <color name="black_000000">#000000</color>
+    <color name="black_333333">#333333</color>
+    <color name="black_666666">#666666</color>
+    <color name="black_4C5355">#4C5355</color>
 </resources>

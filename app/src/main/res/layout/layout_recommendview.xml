@@ -1,0 +1,504 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <!-- 文章 dp_256 -->
+
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_article_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/item_recommend_article_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_172"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/label_home_article" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_recommend_article_img"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_8">
+
+
+                <TextView
+                    android:id="@+id/item_recommend_article_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:textSize="@dimen/sp_14" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/item_recommend_article_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_toLeftOf="@+id/item_recommend_article_like"
+                        android:drawableLeft="@mipmap/icon_home_tab"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:ellipsize="end"
+                        android:gravity="left|center"
+                        android:maxLines="1"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+
+                        android:id="@+id/item_recommend_article_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:drawableLeft="@mipmap/icon_zan_nor"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:textSize="@dimen/sp_13" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+    <!-- 视频（竖屏） dp_278 -->
+
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_videos_vertical_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/item_recommend_video_vertical_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/label_home_video" />
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@mipmap/bg_home_video_bot"-->
+        <!--android:padding="@dimen/dp_8">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/item_recommend_video_vertical_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginTop="@dimen/dp_7"-->
+        <!--android:text="123456"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="@dimen/sp_14" />-->
+
+
+        <!--</RelativeLayout>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/bg_home_video_bot" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8">
+
+            <TextView
+                android:id="@+id/item_recommend_video_vertical_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/item_recommend_video_vertical_layout"
+                android:layout_marginBottom="@dimen/dp_9"
+                android:text="123456"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_14" />
+
+            <RelativeLayout
+                android:id="@+id/item_recommend_video_vertical_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_8">
+
+                <TextView
+                    android:id="@+id/item_recommend_video_vertical_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/item_recommend_video_vertical_like"
+                    android:drawableLeft="@mipmap/icon_home_tab_w"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:text="123456"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/item_recommend_video_vertical_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/icon_zan_nor_w"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:text="123456"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_13" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+
+    <!-- 视频（横屏）  -->
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_video_horizontal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/item_recommend_video_horizontal_blur"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="#3d000000" />
+
+            <ImageView
+                android:id="@+id/item_recommend_video_horizontal_video"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_106"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/label_home_video" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:padding="@dimen/dp_8">
+
+                <TextView
+                    android:id="@+id/item_recommend_video_horizontal_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/item_recommend_video_horizontal_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_recommend_video_horizontal_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:layout_toLeftOf="@+id/item_recommend_video_horizontal_like"
+                    android:drawableLeft="@mipmap/icon_home_tab_w"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/item_recommend_video_horizontal_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_recommend_video_horizontal_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:drawableLeft="@mipmap/icon_zan_sel"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_13" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+
+    <!--  模板  -->
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_mould_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/item_recommend_mould_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@mipmap/bg_home_video_top"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_11">
+
+
+                <com.yuejian.meet.widgets.PictureLayout
+                    android:id="@+id/item_recommend_mould_picturelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.yuejian.meet.widgets.PictureLayout>
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_84"
+                android:layout_alignParentBottom="true"
+                android:background="@mipmap/bg_home_video_bot"
+                android:padding="@dimen/dp_8">
+
+                <TextView
+                    android:id="@+id/item_recommend_mould_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_14" />
+
+                <LinearLayout
+                    android:id="@+id/item_recommend_mould_tag_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_recommend_mould_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/dp_9"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_recommend_mould_tag_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:drawableLeft="@mipmap/icon_home_tab_w"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/sp_12" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+
+    <!-- 活动  -->
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_activity_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/item_recommend_activity_img_blur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="#7a23252a" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/item_recommend_activity_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/icon_home_topic" />
+
+
+            <TextView
+                android:id="@+id/item_recommend_activity_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_recommend_activity_shop"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_13"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_17"
+
+                />
+
+            <com.yuejian.meet.widgets.PictureLayout
+                android:id="@+id/item_recommend_activity_picturelayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_recommend_activity_title"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_33"></com.yuejian.meet.widgets.PictureLayout>
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+    <!-- 海报 -->
+    <com.yuejian.meet.widgets.CircleViewGroup
+        android:id="@+id/item_recommend_poster_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/item_recommend_poster_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/label_home_video"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/bg_home_video_bot" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8">
+
+            <TextView
+                android:id="@+id/item_recommend_poster_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/item_recommend_poster_tag_layout"
+                android:layout_marginBottom="@dimen/dp_9"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_14" />
+
+            <RelativeLayout
+                android:id="@+id/item_recommend_poster_tag_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_8">
+
+                <com.zhy.view.flowlayout.FlowLayout
+                    android:id="@+id/item_recommend_poster_flowLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </com.zhy.view.flowlayout.FlowLayout>
+
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </com.yuejian.meet.widgets.CircleViewGroup>
+
+</merge>
+

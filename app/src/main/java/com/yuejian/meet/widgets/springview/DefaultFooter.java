@@ -12,7 +12,6 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.widgets.container.BaseFooter;
 
 
-
 /**
  * Created by Administrator on 2016/3/21.
  */
@@ -22,11 +21,11 @@ public class DefaultFooter extends BaseFooter {
     private TextView footerTitle;
     private ProgressBar footerProgressbar;
 
-    public DefaultFooter(Context context){
+    public DefaultFooter(Context context) {
         this(context, R.drawable.progress_small);
     }
 
-    public DefaultFooter(Context context,int rotationSrc){
+    public DefaultFooter(Context context, int rotationSrc) {
         this.context = context;
         this.rotationSrc = rotationSrc;
     }
@@ -42,6 +41,17 @@ public class DefaultFooter extends BaseFooter {
 
     @Override
     public void onPreDrag(View rootView) {
+    }
+
+    @Override
+    public int getDragMaxHeight(View rootView) {
+        return 0;
+    }
+
+
+    @Override
+    public int getDragLimitHeight(View rootView) {
+        return 0;
     }
 
     @Override

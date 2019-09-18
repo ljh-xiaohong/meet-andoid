@@ -1205,6 +1205,9 @@
     <string name="business_tag">热门名帖</string>
     <string name="business_more_up">收起</string>
 
+    <string name="poster_share">去分享</string>
+    <string name="poster_open_vip">去开通vip</string>
+    <string name="poster_experience">去体验</string>
 
 
     <string name="umeng_sharebutton_custom">复制链接</string>
