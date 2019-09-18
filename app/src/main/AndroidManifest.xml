@@ -69,26 +69,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,icon,theme,android:label">
-        <activity android:name=".activities.mine.InheritorEarningsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.search.SearchActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.creation.ArticleEditActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.creation.ArticleSelectTemplateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.creation.SuibiSelectTagActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.home.ReleaseActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.home.CreationActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.mine.GifActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.home.SelectImageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.home.ReportActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.mine.MyDialogActivity" android:screenOrientation="portrait" android:theme="@style/ActivityDialogTheme"/>
-        <activity android:name=".activities.home.PicturePreviewActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.CommentZanActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".framents.message.NewMessageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.NewFriendActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.ContactActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.MessageSettingActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.ProvinceActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.CustomerServiceDetails" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.message.NewChooseIndustryActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.mine.InheritorEarningsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.creation.ArticleEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.creation.ArticleSelectTemplateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.creation.SuibiSelectTagActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.home.ReleaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.home.CreationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.mine.GifActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.home.SelectImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.home.ReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.mine.MyDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogTheme" />
+        <activity
+            android:name=".activities.home.PicturePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.family.VideoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.creation.SuibiEditActivity"
             android:screenOrientation="portrait"
@@ -101,7 +121,7 @@
         <activity
             android:name=".activities.mine.BuyAllVipPermissionActivity"
             android:screenOrientation="portrait"
-      />
+            />
         <activity
             android:name=".activities.mine.BuySingleVipPermissionActivity"
             android:screenOrientation="portrait" />
@@ -114,11 +134,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -129,14 +149,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
-        <activity
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
             android:name=".activities.SplashActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="design_width"

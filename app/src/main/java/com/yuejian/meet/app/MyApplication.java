@@ -208,6 +208,11 @@ public class MyApplication extends TinkerApplication {
             return;
         }
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
+        if (CommonUtil.isNull(userData)) {
+            AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
+            AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
+            return;
+        }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
         AppConfig.userEntity=entity;
         if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
