@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF2F5F7">
+
+    <com.yuejian.meet.widgets.MyNestedScrollView
+        android:id="@+id/activity_activity_nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+            <!-- 消息头 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="173dp">
+
+                <ImageView
+                    android:id="@+id/activity_activity_background_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/bg" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#e623252A"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:id="@+id/activity_activity_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:src="@mipmap/icon_nav_return_w" />
+
+
+                    <LinearLayout
+                        android:id="@+id/activity_activity_layout_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/activity_activity_back"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center|left"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@mipmap/icon_home_topic_m" />
+
+                        <TextView
+                            android:id="@+id/activity_activity_title_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/activity_activity_layout_one"
+                        android:layout_marginTop="19dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/activity_activity_content"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="5dp"
+                            android:maxLines="2"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/activity_activity_follow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_activity_add"
+                            android:text="加关注"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </FrameLayout>
+            <!-- 消息体 -->
+            <!--<com.yuejian.meet.widgets.springview.SpringView-->
+                <!--android:id="@+id/activity_activity_springView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/activity_activity_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
+            <!--</com.yuejian.meet.widgets.springview.SpringView>-->
+
+
+        </LinearLayout>
+
+
+    </com.yuejian.meet.widgets.MyNestedScrollView>
+
+    <!-- 隐形抬头 -->
+    <RelativeLayout
+        android:id="@+id/activity_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#FFFFFFFF"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/activity_activity_back_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/icon_nav_return" />
+
+        <TextView
+            android:id="@+id/activity_activity_title_two"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+                 android:textColor="#FF333333"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>

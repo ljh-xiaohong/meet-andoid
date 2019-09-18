@@ -1810,16 +1810,23 @@ public class ApiImp {
     }
 
     /**
+     * 获取活动标签下的视频文章内容 rvs1
+     */
+    public void findContentByLabel(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.FIND_CONTENT_BY_LABEL, paramMap, paramObject, callback);
+    }
+
+    /**
      * 内容详情 rvs1
      */
-    public void getContentDetails(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+    public void getContentDetails(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.CONTENT_DETAILS, paramMap, paramObject, callback);
     }
 
     /**
      * 收藏内容 RVS1
      */
-    public void doCollection(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+    public void doCollection(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.DO_COLLECTION, paramMap, paramObject, callback);
     }
 

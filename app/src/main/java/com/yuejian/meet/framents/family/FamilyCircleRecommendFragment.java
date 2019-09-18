@@ -21,6 +21,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.clan.MainClanActivity;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.family.AcitivityLabActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
@@ -106,7 +107,6 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         recommendListAdapter.setOnItemClickListener((view, position) -> {
 
             RecommendEntity item = recommendListAdapter.getData().get(position);
-            item.getId();
             switch (item.getType()) {
                 //文章
                 case 1:
@@ -121,6 +121,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                     break;
                 //活动
                 case 4:
+                    AcitivityLabActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId);
                     break;
             }
 
