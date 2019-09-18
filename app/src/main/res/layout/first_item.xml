@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="160dp"
+    android:id="@+id/name_lay"
+    android:layout_height="44dp">
+   <TextView
+       android:id="@+id/name"
+       android:textColor="#ffab3a34"
+       android:textSize="15sp"
+       android:gravity="center"
+       android:background="#FFFFFFFF"
+       android:text="IT通信|电子|互联网"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" />
+</LinearLayout>

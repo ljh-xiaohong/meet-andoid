@@ -81,6 +81,14 @@
         <activity android:name=".activities.home.ReportActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activities.mine.MyDialogActivity" android:screenOrientation="portrait" android:theme="@style/ActivityDialogTheme"/>
         <activity android:name=".activities.home.PicturePreviewActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.CommentZanActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".framents.message.NewMessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.NewFriendActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.ContactActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.MessageSettingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.ProvinceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.CustomerServiceDetails" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.message.NewChooseIndustryActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.creation.SuibiEditActivity"
             android:screenOrientation="portrait"

@@ -1,290 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:background="#F2F5F7"
     android:layout_height="fill_parent"
-    android:background="#fff6f6f6"
     android:orientation="vertical">
 
-    <include layout="@layout/titlebar_layout" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_height="44dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_nav_return"
+            android:padding="12dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:text="精准推送设置"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:background="#FFFFFF"
+         android:layout_height="55dp">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="12dp"
+             android:text="指定地点推送"
+             android:textColor="#ff333333"
+             android:textSize="15sp"/>
 
-        <LinearLayout
-            android:id="@+id/renzheng_setting"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
+         <TextView
+             android:id="@+id/select_city"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_alignParentRight="true"
+             android:drawableRight="@mipmap/icon_list_more"
+             android:layout_marginRight="12dp"
+             android:text="珠海"
+             android:textColor="#ff999999"
+             android:textSize="15sp"
+             />
+     </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:background="#FFFFFF"
+         android:layout_height="55dp">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="12dp"
+             android:text="关注行业"
+             android:textColor="#ff333333"
+             android:textSize="15sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="认证中心"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
+         <TextView
+             android:id="@+id/select_industry"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_alignParentRight="true"
+             android:drawableRight="@mipmap/icon_list_more"
+             android:layout_marginRight="12dp"
+             android:text="电商、金融、互联网"
+             android:textColor="#ff999999"
+             android:textSize="15sp"/>
+     </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:background="#FFFFFF"
+         android:layout_height="55dp">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="12dp"
+             android:text="推荐行业相关用户"
+             android:textColor="#ff333333"
+             android:textSize="15sp"/>
+         <Switch
+             android:id="@+id/recommended_user_switch"
+             android:layout_width="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="12dp"
+             android:checked="true"
+             android:thumb="@drawable/switch_thumb"
+             android:track="@drawable/switch_track"
+             android:layout_height="wrap_content"/>
+     </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:background="#FFFFFF"
+         android:layout_height="55dp">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="12dp"
+             android:text="推荐商品"
+             android:textColor="#ff333333"
+             android:textSize="15sp"/>
 
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/message_setting"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/New_message_alert"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/chat_setting"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chat"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/privacy"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/privacy"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/langage"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/langage"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/modify_phone"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_mobile_phone_number"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/about"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/in_regard_to"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.0px"
-            android:background="#fff7f7f7" />
-
-        <LinearLayout
-            android:id="@+id/logout_account"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/px_88"
-            android:layout_marginTop="8.0dip"
-            android:background="@drawable/selector_bottom_bar_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/px_24"
-            android:paddingRight="@dimen/px_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_btn_logout"
-                android:textColor="@color/color_black_333333"
-                android:textSize="@dimen/px_30"
-                android:typeface="serif" />
-
-            <View
-                android:layout_width="0.0dip"
-                android:layout_height="1.0px"
-                android:layout_weight="1.0" />
-
-            <ImageView
-                android:layout_width="20.0dip"
-                android:layout_height="20.0dip"
-                android:src="@mipmap/icon_wd_gengduo" />
-        </LinearLayout>
-    </LinearLayout>
+         <Switch
+             android:id="@+id/recommended_product_switch"
+             android:layout_width="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="12dp"
+             android:thumb="@drawable/switch_thumb"
+             android:track="@drawable/switch_track"
+             android:layout_height="wrap_content"/>
+     </RelativeLayout>
 </LinearLayout>

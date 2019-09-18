@@ -190,59 +190,59 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         map.put("customer_id", AppConfig.CustomerId);
         map.put("pageIndex", String.valueOf(page));
         map.put("pageItemCount", count + "");
-        apiImp.getRecommendFamilyCricleDo(map, this, new DataIdCallback<String>() {
-            //2-video,4-article;
-
-
-            @Override
-            public void onSuccess(String data, int id) {
-
-                List<FamilyRecommendEntity> recommendEntities = toEntity(data);
-
-                switch (type) {
-                    case article:
-
-
-                        break;
-
-
-                    case video:
-
-
-                        break;
-
-                }
-
-                if (recommendEntities.size() > 0 && firstLoad) {
-                    mEmptyList.setVisibility(View.GONE);
-                    firstLoad = false;
-                }
-
-                if (page <= 1) {
-                    //上拉最新
-                    mRecommendListAdapter.refresh(recommendEntities);
-
-                } else {
-                    //下拉更多
-                    mRecommendListAdapter.Loadmore(recommendEntities);
-                }
-
-
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-
-                }
-
-            }
-
-            @Override
-            public void onFailed(String errCode, String errMsg, int id) {
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-
-                }
-            }
-        });
+//        apiImp.getRecommendFamilyCricleDo(map, this, new DataIdCallback<String>() {
+//            //2-video,4-article;
+//
+//
+//            @Override
+//            public void onSuccess(String data, int id) {
+//
+//                List<FamilyRecommendEntity> recommendEntities = toEntity(data);
+//
+//                switch (type) {
+//                    case article:
+//
+//
+//                        break;
+//
+//
+//                    case video:
+//
+//
+//                        break;
+//
+//                }
+//
+//                if (recommendEntities.size() > 0 && firstLoad) {
+//                    mEmptyList.setVisibility(View.GONE);
+//                    firstLoad = false;
+//                }
+//
+//                if (page <= 1) {
+//                    //上拉最新
+//                    mRecommendListAdapter.refresh(recommendEntities);
+//
+//                } else {
+//                    //下拉更多
+//                    mRecommendListAdapter.Loadmore(recommendEntities);
+//                }
+//
+//
+//                if (mSpringView != null) {
+//                    mSpringView.onFinishFreshAndLoad();
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailed(String errCode, String errMsg, int id) {
+//                if (mSpringView != null) {
+//                    mSpringView.onFinishFreshAndLoad();
+//
+//                }
+//            }
+//        });
     }
 
 

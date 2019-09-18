@@ -243,6 +243,6 @@ allprojects {
     }
 }
 //bugly 配置
-apply from: 'tinker-support.gradle'
+//apply from: 'tinker-support.gradle'
 // 多渠道使用walle示例（注：多渠道使用）
 apply from: 'multiple-channel.gradle'

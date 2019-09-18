@@ -240,4 +240,9 @@
     <color name="login_line">#CFD2D4</color>
     <color name="gray_f8">#F8F8F8</color>
     <color name="line_select">#BE3232</color>
+
+    <color name="nor_bg">#FFDEDEDE</color>
+    <color name="select_bg">#ffffff</color>
+    <color name="nor_tv">#FF2D2E2F</color>
+    <color name="select_tv">#ffab3a34</color>
 </resources>

@@ -26,8 +26,9 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.ViewHolder> {
 
     private List<Image> titles;
     private Context context;
-    private OnClickPic onClickPic;
     private boolean isUpdate;
+
+    private OnClickPic onClickPic;
     //接口回调
     public interface OnClickPic{
         public void clickPic(int position);
