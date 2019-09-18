@@ -44,7 +44,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.NormalHo
     @Override
     public void onBindViewHolder(final NormalHolder holder, final int position) {
         FamilyFollowEntity.DataBean.CommentBean listBean=mData.get(position);
-        holder.name.setText(listBean.getUserName());
+        holder.name.setText(listBean.getUserName()+"：");
         if (!CommonUtil.isNull(listBean.getOpName())){
             holder.reply_name.setText(listBean.getOpName());
             holder.reply.setVisibility(View.VISIBLE);

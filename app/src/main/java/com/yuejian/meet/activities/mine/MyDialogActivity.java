@@ -1,6 +1,7 @@
 package com.yuejian.meet.activities.mine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -126,8 +127,8 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
             hasClick = false;
         });
         setEmojiconFragment(false);
-        if (!TextUtils.isEmpty(AppConfig.newUerEntity.getData().getPhoto())) {
-            Glide.with(this).load(AppConfig.newUerEntity.getData().getPhoto()).into(shopImg);
+        if (!TextUtils.isEmpty(AppConfig.photo)) {
+            Glide.with(this).load(AppConfig.photo).into(shopImg);
         }
         initData();
         tvSend.setOnClickListener(v -> send());
@@ -143,11 +144,13 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                content.setText("");
                 content.setHint("留下你的评论吧~");
                 emojicons.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(content.getWindowToken(), 0); //强制隐藏键盘
                 hasClick = false;
+                mcommentData.clear();
                 initData();
                 Toast.makeText(MyDialogActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
             }
@@ -187,6 +190,8 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     //重写finish方法
     @Override
     public void finish() {
+        Intent i = new Intent();
+        setResult(7, i);
         super.finish();
         //finish时调用退出动画
         overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);

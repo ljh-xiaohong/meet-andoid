@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.poster.PosterDetailAcitivty;
 import com.yuejian.meet.adapters.PosterListLabelAdapter;
@@ -79,7 +78,7 @@ public class PosterListFragment extends BaseFragment {
             public void onItemClick(View view, int position) {
                 PosterModelEntity item = posterModelEntities.get(position);
 
-                PosterDetailAcitivty.startActivity(getActivity(), item.getId(), AppConfig.CustomerId);
+                PosterDetailAcitivty.startActivity(getActivity(), item.getId(), "500102");
 
             }
         });

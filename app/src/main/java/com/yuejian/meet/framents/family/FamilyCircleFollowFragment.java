@@ -24,6 +24,7 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
@@ -32,6 +33,7 @@ import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -98,7 +100,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
             public void onComment(int position) {
                 Intent intent=new Intent(getActivity(), MyDialogActivity.class);
                 intent.putExtra("crId",followEntities.get(position).getId()+"");
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
@@ -106,6 +108,9 @@ public class FamilyCircleFollowFragment extends BaseFragment
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
+        if (!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")){
+            return;
+        }
         mSpringView.callFresh();
     }
 
@@ -298,9 +303,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1&&resultCode==7){
-            followEntities.clear();
-            mNextPageIndex = 1;
-            loadDataFromNet("0", mNextPageIndex, pageCount);
+            onRefresh();
         }
     }
 }

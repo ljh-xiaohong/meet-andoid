@@ -24,6 +24,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -81,12 +82,14 @@ public class ArticleFragment extends BaseFragment
     //加载数据
     List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
     FamilyFollowEntity followEntitie;
-    private void loadDataFromNet(String type, int page, int count) {
+    private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
-        map.put("pageIndex", String.valueOf(page));
-        map.put("pageItemCount", String.valueOf(count));
-        apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
+        map.put("title", title);
+        map.put("type", type);
+        map.put("pageIndex", String.valueOf(mNextPageIndex));
+        map.put("pageItemCount", String.valueOf(pageCount));
+        apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
@@ -95,11 +98,12 @@ public class ArticleFragment extends BaseFragment
                     return;
                 }
                 followEntities.addAll(followEntitie.getData());
-                if (followEntities.size() > 0 && firstLoad) {
+                if (followEntities.size() > 0) {
                     mEmptyList.setVisibility(View.GONE);
-                    firstLoad = false;
+                }else {
+                    mEmptyList.setVisibility(View.VISIBLE);
                 }
-                if (page <= 1) {
+                if (mNextPageIndex <= 1) {
                     //上拉最新
                     mFollowListAdapter.refresh(followEntities);
                 } else {
@@ -126,15 +130,19 @@ public class ArticleFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
+        if (CommonUtil.isNull(title)) return;
         followEntities.clear();
-        mNextPageIndex = 0;
-        loadDataFromNet("0", mNextPageIndex, pageCount);
+        mNextPageIndex = 1;
+        loadDataFromNet("0",title);
     }
 
     @Override
     public void onLoadmore() {
-        loadDataFromNet("0", ++mNextPageIndex, pageCount);
+        if (CommonUtil.isNull(title)) return;
+        ++mNextPageIndex;
+        loadDataFromNet("0",title);
     }
+
 
     @Override
     public void onListItemClick(int type, int id) {
@@ -163,13 +171,11 @@ public class ArticleFragment extends BaseFragment
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&resultCode==7){
-            followEntities.clear();
-            mNextPageIndex = 0;
-            loadDataFromNet("0", mNextPageIndex, pageCount);
-        }
+    String title="";
+    public void update(String titles) {
+        title=titles;
+        followEntities.clear();
+        mNextPageIndex = 1;
+        loadDataFromNet("1",titles);
     }
 }

@@ -114,7 +114,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                     pb.setUrl("");
                     pb.setSelect(true);
                     pb.setTake(true);
-                    pb.setPath(imgs[0]);
+                    pb.setPath(imgs[i]);
                     picData.add(pb);
                 }
                 if (picData.size() == 1) {
@@ -220,7 +220,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         });
         if (entity.getCommentMap().size()>0){
             CommentAdapter commentAdapter=new CommentAdapter((Activity) mContext,entity.getCommentMap());
-            holder.comment_list.setLayoutManager(new LinearLayoutManager(mContext));
+            holder.comment_list.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
             holder.comment_list.setAdapter(commentAdapter);
             commentAdapter.notifyDataSetChanged();
             holder.comment_list.setVisibility(View.VISIBLE);

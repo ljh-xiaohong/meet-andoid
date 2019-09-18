@@ -50,6 +50,7 @@ import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.FCLoger;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -221,12 +222,7 @@ public class PhoneLoginActivity extends BaseActivity {
      * 监听
      */
     public void listener() {
-        addTextChangedListener(txt_content);
-        addTextChangedListener(et_check_code);
-    }
-
-    private void addTextChangedListener(EditText editText) {
-        editText.addTextChangedListener(new TextWatcher() {
+        txt_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -239,15 +235,34 @@ public class PhoneLoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                check();
+                check(0);
+            }
+        });
+        et_check_code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                check(1);
             }
         });
     }
 
-    private void check() {
+
+    private void check(int i) {
         if (!CommonUtil.isNull(txt_content.getText().toString())) {
-            phoneCode.setEnabled(true);
-            phoneCode.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
+            if (i==0){
+                phoneCode.setEnabled(true);
+                phoneCode.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
+            }
             if (!CommonUtil.isNull(et_check_code.getText().toString())) {
                 btn_Next.setBackgroundResource(R.drawable.bg_resg_grey_press_btn);
                 btn_Next.setEnabled(true);
@@ -258,7 +273,6 @@ public class PhoneLoginActivity extends BaseActivity {
         } else {
             phoneCode.setEnabled(false);
             phoneCode.setBackgroundResource(R.drawable.bg_resg_grey_unpress_btn);
-
             btn_Next.setBackgroundResource(R.drawable.bg_resg_grey_unpress_btn);
             btn_Next.setEnabled(false);
         }
@@ -515,6 +529,7 @@ public class PhoneLoginActivity extends BaseActivity {
                     startActivity(intent);
                     //登录成功
                 } else if (loginBean.getCode() == 19998) {
+                    DadanPreference.getInstance(PhoneLoginActivity.this).setBoolean("isLogin",true);
                     intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -550,11 +565,13 @@ public class PhoneLoginActivity extends BaseActivity {
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())){
+        if (!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
+        DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
+        DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
 //        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
 //        AppConfig.userEntity = userBean;

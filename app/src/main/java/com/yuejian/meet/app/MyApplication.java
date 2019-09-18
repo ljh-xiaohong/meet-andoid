@@ -97,6 +97,7 @@ public class MyApplication extends TinkerApplication {
         context = this;
         AppConfig.context = this;
         OpenInstall.init(this);
+
         //小米推送
         if (shouldInit()) {
             MiPushClient.registerPush(this, "2882303761517614354", "5901761448354");
@@ -203,11 +204,13 @@ public class MyApplication extends TinkerApplication {
      */
     public void initCustomId() {
         setlangage();
-
+        if(!DadanPreference.getInstance(this).getBoolean("isLogin")){
+            return;
+        }
         String userData = PreferencesUtil.get(context, PreferencesUtil.KEY_USER_INFO, "");
-        if(!CommonUtil.isNull(userData))return;
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
-        if (!CommonUtil.isNull(entity.getCustomer_id())){
+        AppConfig.userEntity=entity;
+        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();

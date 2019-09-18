@@ -17,7 +17,7 @@ public class AppConfig {
     public static boolean isLogin=false;///是否是格力手机包
     public static UserEntity userEntity;
     public static NewUserEntity newUerEntity;
-    public static String CustomerId="500102";//用户id
+    public static String CustomerId="";//用户id
     public static String UserSex;////用户性别
     public static String Token="";//
     public static Double moneySun=0.0;//总金额
