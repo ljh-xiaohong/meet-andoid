@@ -1035,8 +1035,10 @@ public class UrlConstant {
     public static String PUBLISHED_ARTICLES = apiUrl() + "api/newArticle/publishedArticles";
 
     public static String PUBLISHED_ARTICLES_NEW = apiUrl() + "api/contentRelease/pushContentRelease";
+    //获取活动标签下的视频文章内容
+    public static String FIND_CONTENT_BY_LABEL = apiUrl() + "api/contentLabelRecord/findContentByLabel";
 
-    public static String CONTENT_DETAILS=apiUrl()+"api/contentRelease/getContentDetails";
+    public static String CONTENT_DETAILS = apiUrl() + "api/contentRelease/getContentDetails";
 
     // 收藏内容
     public static String DO_COLLECTION = apiUrl() + "api/collection/doCollection";

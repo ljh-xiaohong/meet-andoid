@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -53,6 +51,7 @@ import com.aliyun.svideo.sdk.external.struct.common.AliyunDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoClip;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoParam;
 import com.aliyun.svideo.sdk.external.struct.common.VideoQuality;
+import com.aliyun.svideo.sdk.external.struct.effect.EffectBean;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectFilter;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectPaster;
 import com.aliyun.svideo.sdk.external.struct.encoder.VideoCodecs;
@@ -223,7 +222,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_video_load);
+        setContentView(R.layout.activity_video_load);
         MySystemParams.getInstance().init(this);
         boolean checkResult = PermissionUtils.checkPermissionsGroup(this, permission);
         if (!checkResult) {
@@ -923,7 +922,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
     }
 
     /**
-     * 设置传感，此值用于人脸识别功能，非常重要
+     * ※※※设置传感，此值用于人脸识别功能，非常重要
      */
     private void initOritationDetector() {
         orientationDetector = new OrientationDetector(this.getApplicationContext());
@@ -938,7 +937,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
     }
 
     /**
-     * 设置传感度的计算方式，非常重要
+     * ※※※设置传感度的计算方式，非常重要
      */
     private int getPictureRotation() {
 //        Log.e("switchCamera", cameraType + ":");
@@ -1159,7 +1158,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
         videoPath = "";
         //设置控件的状态
 //        setLoadingStatus(View.VISIBLE);
-        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_lvjingBtn);
+        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn);
         setVisibility(View.GONE, v_nextBtn);
         zdy_loadBtn.setBaseStatus();
         zdy_loadBtn.setClickable(true);
