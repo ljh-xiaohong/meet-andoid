@@ -20,6 +20,8 @@ import com.yuejian.meet.widgets.RecommendView;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.RecommendHoldView, RecommendEntity> {
 
 
@@ -84,13 +86,20 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isIsPraise(), entity.getFabulousNum() + "");
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
-                    Glide.with(context).load(entity.getCoverUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+//                    Glide.with(context).load(entity.getCoverUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                            rv.video_horizontal_blur.setBackground(new BitmapDrawable(BlurUtils.doBlur(resource, 30, false)));
+//                            rv.video_horizontal_video.setImageBitmap(resource);
+//                        }
+//                    });
+                    Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context,30)).into(new SimpleTarget<GlideDrawable>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            rv.video_horizontal_blur.setBackground(new BitmapDrawable(BlurUtils.doBlur(resource, 30, false)));
-                            rv.video_horizontal_video.setImageBitmap(resource);
+                        public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                            rv.video_horizontal_blur.setBackground(glideDrawable);
                         }
                     });
+                    Glide.with(context).load(entity.getCoverUrl()).into(rv.video_horizontal_video);
 
                     rv.video_horizontal_video.getLayoutParams().height = itemWidth / 16 * 9;
                     rv.video_horizontal_content.setText(entity.getTitle());
@@ -164,12 +173,19 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                 if (entity.getCustomerPhoto() != null && entity.getCustomerPhoto().size() > 0) {
                     rv.activity_picturelayout.initInformations(entity.getCustomerPhoto(), entity.getJoinnumTrue() + "人参与>", context);
                 }
-                Glide.with(context).load(entity.getCoverUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+//                Glide.with(context).load(entity.getCoverUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                        if (null != resource) {
+//                            rv.activity_img_blur.setImageBitmap(BlurUtils.doBlur(resource, 30, false));
+//                        }
+//                    }
+//                });
+
+                Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context,30)).into(new SimpleTarget<GlideDrawable>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        if (null != resource) {
-                            rv.activity_img_blur.setImageBitmap(BlurUtils.doBlur(resource, 30, false));
-                        }
+                    public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        rv.activity_img_blur.setBackground(glideDrawable);
                     }
                 });
 

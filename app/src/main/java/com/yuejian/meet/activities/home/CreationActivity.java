@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.creation.ArticleEditActivity;
+import com.yuejian.meet.activities.creation.VideoLoadActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.framents.creation.MyCreationFragment;
 import com.yuejian.meet.framents.creation.PosterFragment;
@@ -74,6 +75,7 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
 
             case R.id.take:
 //                startActivity(new Intent(mContext, VideoLoadActivity.class));
+                VideoLoadActivity.startRecord(mContext,"");
                 break;
         }
     }

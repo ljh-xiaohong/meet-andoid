@@ -27,6 +27,8 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_return"
             style="@style/video_btn_one"
             android:layout_marginTop="26dp"
@@ -37,6 +39,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_countdown"
             style="@style/video_btn_one"
             android:layout_marginTop="25dp"
@@ -48,6 +52,8 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_speed"
             style="@style/video_btn_one"
             android:layout_marginTop="25dp"
@@ -83,7 +89,7 @@
         android:layout_gravity="bottom"
         android:background="@mipmap/video_view_editor_bg">
 
-        <com.yuejian.meet.widgets.CircleImageView
+        <com.yuejian.meet.widgets.aliyun.CircleProgressBar
             android:id="@+id/zdy_circleProgressBar"
             android:layout_width="72dp"
             android:layout_height="72dp"
@@ -91,7 +97,7 @@
             android:layout_marginTop="7dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" ></com.yuejian.meet.widgets.aliyun.CircleProgressBar>
 
         <!--<TextView-->
         <!--android:id="@+id/tv_huishan_btn"-->
@@ -112,6 +118,8 @@
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_music_btn"
             style="@style/video_btn_two"
             android:layout_marginStart="8dp"
@@ -126,6 +134,8 @@
 
         <TextView
             android:id="@+id/tv_upload_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             style="@style/video_btn_two"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
@@ -138,6 +148,8 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_paster_btn"
             style="@style/video_btn_two"
             android:drawableTop="@mipmap/icon_video_tiezhi"
@@ -149,6 +161,8 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_lvjing_btn"
             style="@style/video_btn_two"
             android:layout_marginStart="8dp"
