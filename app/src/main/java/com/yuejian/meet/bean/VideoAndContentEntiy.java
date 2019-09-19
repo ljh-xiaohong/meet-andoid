@@ -6,32 +6,44 @@ public class VideoAndContentEntiy implements Serializable {
 
 
     /**
-     * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201908241519131913598158.jpg
-     * userPhoto : http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A / 132
-     * createTime : 1567581282    //创建时间
-     * contentVipType : 0        //vip配置类型：0募捐1活动2商品3专属
-     * crContent :
-     * customerId  : 500102      //详情用户id
-     * labelTitle : 测试标签     //标签名称
-     * contentTitle : 草稿文章测试标题  //标题
-     * vipDeployId : 0                 //vip配置广告id
-     * userName : 小女子               //用户名
-     * userVipType : 0                //会员类型（0：普通用户，1：VIP会员）
-     * isRelation : 0                 //是否关注      0-否  1-是
+     * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201908241519131913598158.jpg   //封面图url
+     * userPhoto : http://thirdwx.qlogo.cn/mmopen/vi_32/jGgQ7iaRQVqK2bichxjbASCTNcnZb9hb2m8mvJcibTz4vXNYsXyLrO7FS6rGicPDqVzaBGpdibIUhGSkEZicUqZNxu7A/132
+     * crContent : //创作内容
+     * shopName :  //商品名称
+     * contentTitle : 草稿文章测试标题   //创作标题
+     * userName : xiao女子   //用户名
+     * userVipType : 0   //0：普通用户，1：VIP会员
+     * isRelation : 0    //是否关注  0-否  1-是
+     * commentNum : 0    //评论数量
+     * labelId : 1,2,3,4   //标签id
+     * createTime : 1567581282  //创建时间
+     * fabulousNum : 0    //点赞数量
+     * customerId : 500102  //用户id
+     * isPraise : 0   //是否点赞    0-否1-是
+     * id : 99309    //创作id
+     * shopId :      //商品id
+     * labelName : #测试标签#测试活动标签2#国庆节#中秋节   // 标签名称
+     * contentType : 2    //创作类型：2-文章4-视频
      */
 
     private String photoAndVideoUrl;
     private String userPhoto;
-    private int createTime;
-    private int contentVipType;
     private String crContent;
-    private int customerId;
-    private String labelTitle;
+    private String shopName;
     private String contentTitle;
-    private int vipDeployId;
     private String userName;
-    private int userVipType;
+    private String userVipType;
     private int isRelation;
+    private String commentNum;
+    private String labelId;
+    private String createTime;
+    private String fabulousNum;
+    private String customerId;
+    private int isPraise;
+    private int id;
+    private String shopId;
+    private String labelName;
+    private String contentType;
 
     public String getPhotoAndVideoUrl() {
         return photoAndVideoUrl;
@@ -49,22 +61,6 @@ public class VideoAndContentEntiy implements Serializable {
         this.userPhoto = userPhoto;
     }
 
-    public int getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(int createTime) {
-        this.createTime = createTime;
-    }
-
-    public int getContentVipType() {
-        return contentVipType;
-    }
-
-    public void setContentVipType(int contentVipType) {
-        this.contentVipType = contentVipType;
-    }
-
     public String getCrContent() {
         return crContent;
     }
@@ -73,20 +69,12 @@ public class VideoAndContentEntiy implements Serializable {
         this.crContent = crContent;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getLabelTitle() {
-        return labelTitle;
-    }
-
-    public void setLabelTitle(String labelTitle) {
-        this.labelTitle = labelTitle;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getContentTitle() {
@@ -97,14 +85,6 @@ public class VideoAndContentEntiy implements Serializable {
         this.contentTitle = contentTitle;
     }
 
-    public int getVipDeployId() {
-        return vipDeployId;
-    }
-
-    public void setVipDeployId(int vipDeployId) {
-        this.vipDeployId = vipDeployId;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -113,11 +93,11 @@ public class VideoAndContentEntiy implements Serializable {
         this.userName = userName;
     }
 
-    public int getUserVipType() {
+    public String getUserVipType() {
         return userVipType;
     }
 
-    public void setUserVipType(int userVipType) {
+    public void setUserVipType(String userVipType) {
         this.userVipType = userVipType;
     }
 
@@ -127,5 +107,85 @@ public class VideoAndContentEntiy implements Serializable {
 
     public void setIsRelation(int isRelation) {
         this.isRelation = isRelation;
+    }
+
+    public String getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(String commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public String getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getFabulousNum() {
+        return fabulousNum;
+    }
+
+    public void setFabulousNum(String fabulousNum) {
+        this.fabulousNum = fabulousNum;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getIsPraise() {
+        return isPraise;
+    }
+
+    public void setIsPraise(int isPraise) {
+        this.isPraise = isPraise;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

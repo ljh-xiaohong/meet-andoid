@@ -78,7 +78,7 @@ public class VideoActivity extends BaseActivity {
                 parseJSON(data);
                 if (info == null) return;
                 initData();
-
+                initListener();
             }
 
             @Override
@@ -94,9 +94,22 @@ public class VideoActivity extends BaseActivity {
         Glide.with(mContext).load(info.getUserPhoto()).into(player.getHeadImagView());
         player.getNameText().setText(info.getUserName());
         player.getContenText().setText(info.getContentTitle());
+        //关注
         player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "66ffffff"));
         player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
+        //点赞数
+        //是否点赞
+        player.setLike(info.getIsPraise() == 1 ? true : false, info.getFabulousNum());
+        //评论数量
+        player.getDiscussButton().setText(info.getCommentNum());
+        player.getContenText().setText(info.getContentTitle());
 
+    }
+
+    private void initListener() {
+        player.getLikeButton().setOnClickListener(view -> {
+            like();
+        });
     }
 
     private void parseJSON(String data) {
@@ -110,16 +123,22 @@ public class VideoActivity extends BaseActivity {
         try {
             info.setPhotoAndVideoUrl(in.getString("photoAndVideoUrl"));
             info.setUserPhoto(in.getString("userPhoto"));
-            info.setCreateTime(in.getInteger("createTime"));
-            info.setContentVipType(in.getInteger("contentVipType"));
             info.setCrContent(in.getString("crContent"));
-            info.setCustomerId(in.getInteger("customerId"));
-            info.setLabelTitle(in.getString("labelTitle"));
+            info.setShopName(in.getString("shopName"));
             info.setContentTitle(in.getString("contentTitle"));
-            info.setVipDeployId(in.getInteger("vipDeployId"));
             info.setUserName(in.getString("userName"));
-            info.setUserVipType(in.getInteger("userVipType"));
+            info.setUserVipType(in.getString("userVipType"));
             info.setIsRelation(in.getInteger("isRelation"));
+            info.setCommentNum(in.getString("commentNum"));
+            info.setLabelId(in.getString("labelId"));
+            info.setCreateTime(in.getString("createTime"));
+            info.setFabulousNum(in.getString("fabulousNum"));
+            info.setCustomerId(in.getString("customerId"));
+            info.setIsPraise(in.getInteger("isPraise"));
+            info.setId(in.getInteger("id"));
+            info.setShopId(in.getString("shopId"));
+            info.setLabelName(in.getString("labelName"));
+            info.setContentType(in.getString("contentType"));
         } catch (NullPointerException e) {
 
         }
@@ -142,6 +161,16 @@ public class VideoActivity extends BaseActivity {
                 switch (praise.getCode()) {
                     //操作成功
                     case 0:
+                        int count = Integer.valueOf(info.getFabulousNum());
+                        if (info.getIsPraise() == 1) {
+                            info.setIsPraise(0);
+                            count = count - 1;
+                        } else {
+                            info.setIsPraise(1);
+                            count = count + 1;
+                        }
+                        info.setFabulousNum(count + "");
+                        player.setLike(info.getIsPraise() == 1 ? true : false, count + "");
 
                         break;
 

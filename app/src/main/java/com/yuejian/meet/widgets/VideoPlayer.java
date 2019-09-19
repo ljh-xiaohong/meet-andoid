@@ -82,6 +82,14 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         return this.findViewById(R.id.video_content);
     }
 
+    public void setLike(boolean isLike, String count) {
+        getLikeButton().setText(count);
+        getLikeButton().setCompoundDrawablesWithIntrinsicBounds(null,
+                getResources().getDrawable(isLike ? R.mipmap.icon_video_zan_sel : R.mipmap.icon_video_zan_nor),
+                null,
+                null);
+    }
+
 
     @Override
     public int getLayoutId() {
