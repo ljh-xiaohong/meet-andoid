@@ -116,10 +116,8 @@
                 android:layout_width="219dp"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="@dimen/dp_7"
-                android:text="适用中秋节活动海报制作，节日推广！可替换文字/图片适用中秋节活动海报制作，节日推广！可替换文字/图片"
                 android:textColor="#4C4C4C"
-                android:textSize="@dimen/sp_14"
-                android:visibility="gone" />
+                android:textSize="@dimen/sp_14" />
 
             <!-- 标签列表 -->
             <com.zhy.view.flowlayout.FlowLayout

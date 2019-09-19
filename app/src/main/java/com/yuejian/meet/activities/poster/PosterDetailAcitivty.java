@@ -218,6 +218,7 @@ public class PosterDetailAcitivty extends BaseActivity {
                     poster_title.setText(posterInfo.getPostersTitle());
                     poster_discount_price.setText(posterInfo.getDiscountPrice() + "");
                     poster_price.setText(String.format("%s银锭", posterInfo.getPostersPrice() + ""));
+                    poster_content.setText(posterInfo.getPostersDes());
                     check.setImageResource(posterInfo.isTemplateCollection() ? R.mipmap.icon_nav_collect_sel : R.mipmap.icon_nav_collect_nor);
                     if (posterInfo.getContentLabelList() != null && posterInfo.getContentLabelList().size() > 0) {
                         for (PosterDetailEntity.ContentLabelList labelList : posterInfo.getContentLabelList()) {
@@ -252,12 +253,14 @@ public class PosterDetailAcitivty extends BaseActivity {
             posterInfo.setLabelId(jo.getString("labelId"));
             posterInfo.setPostersJson(jo.getString("postersJson"));
             posterInfo.setPostersPrice(jo.getDouble("postersPrice"));
+            posterInfo.setPostersDes(jo.getString("postersDes"));
             posterInfo.setPostersTitle(jo.getString("postersTitle"));
             posterInfo.setPreviewUrl(jo.getString("previewUrl"));
             posterInfo.setRecFlag(jo.getInteger("recFlag"));
             posterInfo.setUpdateTime(jo.getInteger("updateTime"));
             posterInfo.setUsenumFalse(jo.getInteger("usenumFalse"));
             posterInfo.setUsenumTrue(jo.getInteger("usenumTrue"));
+
 
         }
 

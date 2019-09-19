@@ -21,6 +21,7 @@ public class PosterDetailEntity implements Serializable {
      * templateCollection: true,
      * updateTime : 1567601679
      * usenumFalse : 1
+     * postersDes:""
      * usenumTrue : 1
      */
 
@@ -38,7 +39,16 @@ public class PosterDetailEntity implements Serializable {
     private int usenumFalse;
     private int usenumTrue;
     private boolean templateCollection;
+    private String postersDes;
     private List<ContentLabelList> contentLabelList;
+
+    public String getPostersDes() {
+        return postersDes;
+    }
+
+    public void setPostersDes(String postersDes) {
+        this.postersDes = postersDes;
+    }
 
     public boolean isTemplateCollection() {
         return templateCollection;

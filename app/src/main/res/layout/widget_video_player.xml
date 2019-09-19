@@ -171,6 +171,7 @@
         android:background="@mipmap/video_view_bg_top">
 
         <ImageView
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

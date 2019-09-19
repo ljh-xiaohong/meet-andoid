@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff">
+
         <LinearLayout
             android:id="@+id/search_list"
-            android:orientation="vertical" 
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <com.yuejian.meet.widgets.CreationTitleView
                 android:id="@+id/family_circle_title_view"
                 android:layout_width="match_parent"
-                android:background="#ffffff"
-                android:layout_height="44dp" />
+                android:layout_height="44dp"
+                android:background="#ffffff" />
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_family_circle_content"
                 android:layout_width="match_parent"
@@ -26,69 +29,76 @@
                 android:background="#F2F5F7"
                 android:descendantFocusability="blocksDescendants" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:id="@+id/take"
             android:layout_width="62dp"
-            android:background="@drawable/write_cricle"
-            android:gravity="center"
+            android:layout_height="62dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="35dp"
             android:layout_marginBottom="20dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:layout_height="62dp">
-           <ImageView
-               android:layout_width="wrap_content"
-               android:src="@mipmap/icon_creation_player"
-               android:layout_height="wrap_content" />
+            android:background="@drawable/write_cricle"
+            android:gravity="center"
+            android:layerType="software"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_creation_player" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="拍摄"
                 android:textColor="#ffab3a34"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/article"
             android:layout_width="62dp"
-            android:background="@drawable/write_cricle"
-            android:gravity="center"
-            android:layout_marginRight="35dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="62dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:layout_height="62dp">
-           <ImageView
-               android:layout_width="wrap_content"
-               android:src="@mipmap/icon_creation_article"
-               android:layout_height="wrap_content" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/write_cricle"
+            android:gravity="center"
+            android:layerType="software"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_creation_article" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="文章"
                 android:textColor="#ffab3a34"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/back"
             android:layout_width="68dp"
-            android:background="@drawable/write11"
-            android:gravity="center"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginRight="35dp"
             android:layout_marginBottom="31dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:layout_height="40dp">
-          <ImageView
-              android:layout_width="wrap_content"
-              android:src="@mipmap/icon_creation_fold"
-              android:layout_height="wrap_content" />
+            android:background="@drawable/write11"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_creation_fold" />
         </LinearLayout>
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.yuejian.meet.widgets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,8 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
+
+    private View back;
 
 
     public VideoPlayer(Context context, Boolean fullFlag) {
@@ -31,15 +34,16 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 //        mBottomProgressBar.setLayoutParams(layoutParams1);
         mDismissControlTime = 0;
 
-
+        back = this.findViewById(R.id.back_btn);
+        back.setOnClickListener(view -> {
+            ((Activity) getContext()).finish();
+        });
     }
 
 
     @Override
     protected void init(Context context) {
         super.init(context);
-
-
     }
 
     public View getMoreButton() {

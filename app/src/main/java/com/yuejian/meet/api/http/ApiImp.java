@@ -1810,6 +1810,13 @@ public class ApiImp {
     }
 
     /**
+     * 用户添加取消关注活动标签接口
+     */
+    public void addContentLabelCustomer(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.ADD_CONTENT_LABEL_CUSTOMER, paramMap, paramObject, callback);
+    }
+
+    /**
      * 获取活动标签下的视频文章内容 rvs1
      */
     public void findContentByLabel(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
