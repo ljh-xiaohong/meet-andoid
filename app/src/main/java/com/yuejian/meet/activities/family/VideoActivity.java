@@ -2,6 +2,7 @@ package com.yuejian.meet.activities.family;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -9,10 +10,13 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.widgets.VideoPlayer;
 
@@ -73,8 +77,8 @@ public class VideoActivity extends BaseActivity {
             public void onSuccess(String data, int id) {
                 parseJSON(data);
                 if (info == null) return;
-                player.setUp(info.getCrContent(), true, "");
-                player.startPlayLogic();
+                initData();
+
             }
 
             @Override
@@ -82,6 +86,17 @@ public class VideoActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void initData() {
+        player.setUp(info.getCrContent(), true, "");
+        player.startPlayLogic();
+        Glide.with(mContext).load(info.getUserPhoto()).into(player.getHeadImagView());
+        player.getNameText().setText(info.getUserName());
+        player.getContenText().setText(info.getContentTitle());
+        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "66ffffff"));
+        player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
+
     }
 
     private void parseJSON(String data) {
@@ -109,6 +124,51 @@ public class VideoActivity extends BaseActivity {
 
         }
 
+    }
+
+    /**
+     * 点赞
+     */
+    //todo 点赞处理
+    private void like() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("crId", contentId);
+        apiImp.praiseContent(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
+                if (praise == null) return;
+                switch (praise.getCode()) {
+                    //操作成功
+                    case 0:
+
+                        break;
+
+                    //拉黑
+                    case 10205:
+
+                        break;
+
+                    //系统异常
+                    case 10001:
+
+                        break;
+
+                    //其他
+                    case -1:
+
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
     }
 
 

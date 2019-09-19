@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3e3e3e"
-    >
+    android:background="#3e3e3e">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -206,16 +205,15 @@
             android:layout_height="40dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="44dp"
-             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/video_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:gravity="center"
-            android:text="颜琦"
             android:textColor="#ffffff"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
@@ -223,41 +221,39 @@
             app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/video_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:background="@drawable/shape_like"
             android:gravity="center"
-            android:text="加关注"
             android:textColor="#ffffff"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/video_name"
             app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/video_content"
             android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="有幸参与最大的祭祖活动，荣幸荣幸！活动热闹非凡"
             android:textColor="#ffffff"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
-        <LinearLayout
+        <com.zhy.view.flowlayout.FlowLayout
             android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView6">
+            app:layout_constraintTop_toBottomOf="@+id/video_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -268,18 +264,17 @@
                 android:textColor="#3498DB"
                 android:textSize="15sp" />
 
-        </LinearLayout>
+        </com.zhy.view.flowlayout.FlowLayout>
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/video_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginRight="12dp"
             android:drawableTop="@mipmap/icon_video_zan_nor"
             android:gravity="center"
-            android:text="888"
             android:textColor="#ffffff"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -292,16 +287,15 @@
             android:layout_marginTop="18dp"
             android:drawableTop="@mipmap/icon_video_comm"
             android:gravity="center"
-            android:text="233"
             android:textColor="#ffffff"
             android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView3"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintEnd_toEndOf="@+id/video_like"
+            app:layout_constraintStart_toStartOf="@+id/video_like"
+            app:layout_constraintTop_toBottomOf="@+id/video_like" />
 
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/video_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -327,7 +321,7 @@
             android:textColor="#ffffff"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/video_share"
             tools:layout_editor_absoluteX="12dp" />
 
     </android.support.constraint.ConstraintLayout>

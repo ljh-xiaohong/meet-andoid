@@ -1810,6 +1810,20 @@ public class ApiImp {
     }
 
     /**
+     * 草稿箱列表
+     */
+    public void getDraftsList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_DRAFTS_LIST, paramMap, paramObject, callback);
+    }
+
+    /**
+     *内容（动态，视频，文章）点赞(测试通过)
+     */
+    public void praiseContent(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.PRAISE_CONTENT, paramMap, paramObject, callback);
+    }
+
+    /**
      * 用户添加取消关注活动标签接口
      */
     public void addContentLabelCustomer(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {

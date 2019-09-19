@@ -434,4 +434,9 @@
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="bottom_dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/anim_trans_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/anim_layout_bottom_out</item>
+    </style>
 </resources>

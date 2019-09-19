@@ -17,7 +17,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class RecommendView extends LinearLayout {
 
-    public View article, video_vertical, video_horizontal, mould, activity, poster;
+    public View article, video_vertical, video_horizontal, mould, activity, poster, draft;
 
     public ImageView article_img, video_vertical_img, video_horizontal_blur, video_horizontal_video, mould_img, activity_img_blur, poster_img;
 
@@ -104,10 +104,13 @@ public class RecommendView extends LinearLayout {
         poster_content = this.findViewById(R.id.item_recommend_poster_content);
         poster_tag = this.findViewById(R.id.item_recommend_poster_flowLayout);
 
+        //草稿
+        draft = this.findViewById(R.id.item_recommend_draft_layout);
+
     }
 
     public enum ViewType {
-        NONE, ARTICLE, VIDEO_VERTICAL, VIDEO_HORIZONTAL, MOULD, ACTIVITY, POSTER;
+        NONE, ARTICLE, VIDEO_VERTICAL, VIDEO_HORIZONTAL, MOULD, ACTIVITY, POSTER, DRAFT
     }
 
 
@@ -184,6 +187,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 article.getLayoutParams().height = height;
                 break;
 
@@ -195,6 +199,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 video_vertical.getLayoutParams().height = height;
                 break;
 
@@ -206,6 +211,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 video_horizontal.getLayoutParams().height = height;
                 break;
 
@@ -217,6 +223,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, VISIBLE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 mould.getLayoutParams().height = height;
                 break;
 
@@ -228,6 +235,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, VISIBLE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 activity.getLayoutParams().height = height;
                 break;
 
@@ -238,7 +246,19 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, VISIBLE);
+                setVisibilityStatus(draft, GONE);
                 poster.getLayoutParams().height = height;
+                break;
+
+            case DRAFT:
+                setVisibilityStatus(article, GONE);
+                setVisibilityStatus(video_vertical, GONE);
+                setVisibilityStatus(video_horizontal, GONE);
+                setVisibilityStatus(mould, GONE);
+                setVisibilityStatus(activity, GONE);
+                setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, VISIBLE);
+                draft.getLayoutParams().height = height;
                 break;
 
             case NONE:
@@ -248,6 +268,7 @@ public class RecommendView extends LinearLayout {
                 setVisibilityStatus(mould, GONE);
                 setVisibilityStatus(activity, GONE);
                 setVisibilityStatus(poster, GONE);
+                setVisibilityStatus(draft, GONE);
                 break;
 
         }

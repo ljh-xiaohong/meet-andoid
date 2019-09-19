@@ -5,9 +5,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
+
+import org.w3c.dom.Text;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
 
@@ -46,12 +49,37 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         super.init(context);
     }
 
+    public ImageView getHeadImagView() {
+        return this.findViewById(R.id.circleImageView);
+    }
+
     public View getMoreButton() {
         return this.findViewById(R.id.video_more);
     }
 
-    public View getDiscussButton() {
+    public TextView getDiscussButton() {
         return this.findViewById(R.id.video_discuss);
+    }
+
+    public TextView getLikeButton() {
+        return this.findViewById(R.id.video_like);
+    }
+
+    public TextView getShareButton() {
+        return this.findViewById(R.id.video_share);
+
+    }
+
+    public TextView getNameText() {
+        return this.findViewById(R.id.video_name);
+    }
+
+    public TextView getFollowText() {
+        return this.findViewById(R.id.video_follow);
+    }
+
+    public TextView getContenText() {
+        return this.findViewById(R.id.video_content);
     }
 
 
