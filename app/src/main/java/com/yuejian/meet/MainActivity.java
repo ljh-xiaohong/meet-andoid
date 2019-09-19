@@ -60,9 +60,11 @@ import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.BusinessFragment;
 import com.yuejian.meet.framents.creation.CreationFragment;
 import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
+import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.find.FindFragment;
 import com.yuejian.meet.framents.message.MessageFragment;
 import com.yuejian.meet.framents.message.NewMessageActivity;
+import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.MineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
@@ -125,13 +127,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private FragmentManager mFragmentManager;
     private BaseFragment currentFragment;
     //    private HomeFragment homeFragment = new HomeFragment();
-    private MessageFragment messageFragment = new MessageFragment();
+    private NewMessageFragment messageFragment = new NewMessageFragment();
     private CreationFragment creationFragment = new CreationFragment();
     private FindFragment findWebFragment = new FindFragment();
-    private BusinessFragment businessFragment = new BusinessFragment();
+    private MessageFragment businessFragment = new MessageFragment();
     private MineFragment mineFragment = new MineFragment();
     //    private CultureFragment cultureFragment = new CultureFragment();
-    private FamilyCircleContainerFragment familyFragment;
+    private FamilyCircleRecommendFragment familyFragment;
     //    private FamilyFragment familyFragment = new FamilyFragment();
     private Intent intent;
     private MainMoreUi mainMoreUi;
@@ -279,7 +281,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
 
-        familyFragment = new FamilyCircleContainerFragment();
+        familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
         mFragmentManager = this.getSupportFragmentManager();
@@ -350,9 +352,9 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 }
 //                maia_layout_title_bar.setVisibility(View.GONE);
 //                address_list.setVisibility(View.VISIBLE);
-//                rbtn_message.setSelected(true);
-//                changeFragment(messageFragment);
-                startActivity(new Intent(this, NewMessageActivity.class));
+                rbtn_message.setSelected(true);
+                changeFragment(messageFragment);
+//                startActivity(new Intent(this, NewMessageActivity.class));
                 break;
             case R.id.rlayout_creation:
                 if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {

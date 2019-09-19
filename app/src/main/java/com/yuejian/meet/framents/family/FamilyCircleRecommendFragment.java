@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -24,8 +25,9 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.AcitivityLabActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
+import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
-import com.yuejian.meet.activities.poster.PosterDetailAcitivty;
+import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.activities.zuci.ZuciMainActivity;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
@@ -47,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
@@ -81,6 +84,12 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     LinearLayout mEmptyList;
     @Bind(R.id.ll_family_circle_recomm_item_layout)
     LinearLayout ll_title;
+    @Bind(R.id.search_all)
+    ImageView searchAll;
+    @Bind(R.id.sweep_code)
+    LinearLayout sweepCode;
+    @Bind(R.id.et_search_all)
+    TextView etSearchAll;
 
     private int mNextPageIndex = 1;
     private int pageCount = 10;
@@ -135,10 +144,17 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @OnClick({R.id.ll_family_circle_recomm_item_news, R.id.ll_family_circle_recomm_item_zupu,
             R.id.ll_family_circle_recomm_item_jiaci, R.id.ll_family_circle_recomm_item_zongqinhui,
             R.id.ll_family_circle_recomm_item_xiuxing, R.id.ll_family_circle_recomm_item_college,
-            R.id.ll_family_circle_recomm_item_zongxianquan})
+            R.id.ll_family_circle_recomm_item_zongxianquan,R.id.search_all,R.id.sweep_code,R.id.et_search_all})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.search_all:
+            case R.id.et_search_all://搜索
+                getActivity().startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+            case R.id.sweep_code://扫码
+                getActivity().startActivity(new Intent(getActivity(), ScannerActivity.class));
+                break;
             case R.id.ll_family_circle_recomm_item_news: // 新闻动态
                 Intent newsIntent = new Intent(getActivity(), WebActivity.class);
                 // String newsUrl = UrlConstant.apiUrl().replace("yuejian-app", "yuejian-minih") + "weixin/genyuan.html?customerId=" + user.customer_id + "&surname=" + user.getSurname() +"&family_id=";
@@ -381,7 +397,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         for (Object o : jsonArray) {
             FamilyRecommendEntity entity = new FamilyRecommendEntity();
             List<FamilyRecommendEntity.Content> contents = new ArrayList<>();
-            JSONObject ob = (JSONObject) com.alibaba.fastjson.JSONObject.parse(o.toString());
+            JSONObject ob = (JSONObject) JSONObject.parse(o.toString());
             entity.setComment_num(ob.get("comment_num").toString());
             entity.setCreate_time(ob.get("create_time").toString());
             entity.setArticle_comment_time(ob.get("article_comment_time").toString());
@@ -412,7 +428,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                 if (null != ja) {
 
                     for (Object oi : ja) {
-                        JSONObject oib = (JSONObject) com.alibaba.fastjson.JSONObject.parse(oi.toString());
+                        JSONObject oib = (JSONObject) JSONObject.parse(oi.toString());
                         FamilyRecommendEntity.Content inner = new FamilyRecommendEntity.Content();
                         inner.setContent(oib.get("content").toString().replaceAll("\\\\n", ""));
                         inner.setIndex(oib.get("index").toString());
@@ -433,6 +449,20 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
 
         return entities;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     public enum Type {

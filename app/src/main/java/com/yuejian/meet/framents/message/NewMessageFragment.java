@@ -21,6 +21,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.ContactActivity;
 import com.yuejian.meet.activities.message.MessageSettingActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
+import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.widgets.MessageTitleView;
 
 import java.util.ArrayList;
@@ -41,40 +42,30 @@ import butterknife.ButterKnife;
  */
 
 
-public class NewMessageFragment extends Fragment implements ViewPager.OnPageChangeListener{
+public class NewMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, MessageTitleView.OnTitleViewClickListener {
 
-    //    @Bind(R.id.family_circle_title_view)
-//    MessageTitleView mFamilyCircleTitleView;
+        @Bind(R.id.family_circle_title_view)
+    MessageTitleView mFamilyCircleTitleView;
         @Bind(R.id.vp_family_circle_content)
         ViewPager mContentPager;
 //    @Bind(R.id.drawer_layout)
 //    DrawerLayout mDrawerLayout;
 //    @Bind(R.id.main_content)
 //    FrameLayout mainContent;
-    @Bind(R.id.iv_family_circle_title_left_btn)
-    ImageView ivFamilyCircleTitleLeftBtn;
-    @Bind(R.id.tv_title_one)
-    TextView tvTitleOne;
-    @Bind(R.id.tv_title_two)
-    TextView tvTitleTwo;
-    @Bind(R.id.title_underline_red_one)
-    View titleUnderlineRedOne;
-    @Bind(R.id.title_underline_red_two)
-    View titleUnderlineRedTwo;
-    @Bind(R.id.tv_family_circle_title_right_btn)
-    TextView tvFamilyCircleTitleRightBtn;
     private NotificationMessageFragment mNotificationMessageFragment;
     private HundredSecretariesFragment mCommentZanFragment;
     private View view;// 需要返回的布局
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {// 优化View减少View的创建次数
-            view = inflater.inflate(R.layout.fragment_new_message, null);
-        }
-        ButterKnife.bind(this, view);
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        return inflater.inflate(R.layout.fragment_new_message, container, false);
+    }
+
+
+    @Override
+    protected void initData() {
+        super.initData();
         initView();
-        return view;
     }
 
     // 布局管理器
@@ -89,68 +80,14 @@ public class NewMessageFragment extends Fragment implements ViewPager.OnPageChan
         mContentPager.setOffscreenPageLimit(1);
         mContentPager.addOnPageChangeListener(this);
         setCurrentItem(0);
-//        mFamilyCircleTitleView.setOnTitleViewClickListener(this);
-//        mFamilyCircleTitleView.setImageBtnClick(view -> startActivity(new Intent(getActivity(), ContactActivity.class)),
-//                view -> initPopwindow(view));
+        mFamilyCircleTitleView.setOnTitleViewClickListener(this);
+        mFamilyCircleTitleView.setImageBtnClick(view -> startActivity(new Intent(getActivity(), ContactActivity.class)),
+                view -> initPopwindow(view));
 //        fragManager = getFragmentManager();
 //        clickMenu(R.id.tv_title_one);
     }
 
 
-    /**
-     * 点击底部菜单事件
-     */
-    public void clickMenu(int vID) {
-        FragmentTransaction trans = fragManager.beginTransaction();
-        // 隐藏所有的fragment
-        hideFrament(trans);
-        // 设置Fragment
-        setFragment(vID, trans);
-        trans.commit();
-    }
-
-    /**
-     * 隐藏所有的fragment(编程初始化状态)
-     *
-     * @param trans
-     */
-    private void hideFrament(FragmentTransaction trans) {
-        if (mNotificationMessageFragment != null) {
-            trans.hide(mNotificationMessageFragment);
-        }
-        if (mCommentZanFragment != null) {
-            trans.hide(mCommentZanFragment);
-        }
-    }
-
-    /**
-     * 设置Fragment
-     *
-     * @param vID
-     * @param trans
-     */
-    private void setFragment(int vID, FragmentTransaction trans) {
-        switch (vID) {
-            case R.id.tv_title_one:
-                if (mNotificationMessageFragment == null) {
-                    mNotificationMessageFragment = new NotificationMessageFragment();
-                    trans.add(R.id.main_content, mNotificationMessageFragment);
-                } else {
-                    trans.show(mNotificationMessageFragment);
-                }
-                break;
-            case R.id.tv_title_two:
-                if (mCommentZanFragment == null) {
-                    mCommentZanFragment = new HundredSecretariesFragment();
-                    trans.add(R.id.main_content, mCommentZanFragment);
-                } else {
-                    trans.show(mCommentZanFragment);
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
     private View popupView;
     private PopupWindow window;
@@ -179,22 +116,20 @@ public class NewMessageFragment extends Fragment implements ViewPager.OnPageChan
         push.setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageSettingActivity.class)));
         read.setOnClickListener(v -> window.dismiss());
     }
-//
-//    @Override
-//    public void onTitleViewClick(int position) {
-//        switch (position) {
-//            case 0:
-//                clickMenu(R.id.tv_title_one);
-////                setCurrentItem(0);
-//                break;
-//            case 1:
-//                clickMenu(R.id.tv_title_two);
-////                setCurrentItem(1);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+
+    @Override
+    public void onTitleViewClick(int position) {
+        switch (position) {
+            case 0:
+                setCurrentItem(0);
+                break;
+            case 1:
+                setCurrentItem(1);
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * 切换页面
@@ -203,7 +138,7 @@ public class NewMessageFragment extends Fragment implements ViewPager.OnPageChan
      */
     private void setCurrentItem(int position) {
         mContentPager.setCurrentItem(position);
-//        mFamilyCircleTitleView.setSelectedTitle(position);
+        mFamilyCircleTitleView.setSelectedTitle(position);
 //        if (position == 1) {
 //            //打开手势滑动
 //            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
