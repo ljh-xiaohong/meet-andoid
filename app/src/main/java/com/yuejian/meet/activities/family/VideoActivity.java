@@ -8,7 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -27,6 +31,8 @@ import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
+
+import org.androidannotations.annotations.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +56,7 @@ public class VideoActivity extends BaseActivity {
 
     private String[] labelName, labelId;
 
-    private List<String> moreData = new ArrayList<>();
+    private List<String> moreData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +66,79 @@ public class VideoActivity extends BaseActivity {
         if (!getData()) return;
         player.setLooping(true);
         getDataFromNet();
+    }
+
+    private void initDialog() {
+        //初始化dialog
+        moreDialog = new MoreDialog();
+        moreData = new ArrayList<>();
+        //初始化内容
+        if (info.getCustomerId().equals(AppConfig.CustomerId)) {
+            moreData.add("编辑");
+            moreData.add("删除");
+        } else {
+            moreData.add(info.isCollection() ? "已收藏" : "收藏");
+            moreData.add("不感兴趣");
+            moreData.add("举报");
+        }
+        moreData.add("取消");
+        //初始化adapter
+        moreDialog.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return moreData.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return moreData.get(i);
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                View child = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_text_item, null);
+                TextView textView = child.findViewById(R.id.dialog_text_item_text);
+                textView.setText(moreData.get(i));
+                if (i == moreData.size() - 1) {
+                    textView.setBackgroundColor(Color.parseColor("#F2F5F7"));
+                }
+
+                return child;
+            }
+        });
+        moreDialog.setOnclickItemListener(position -> {
+            switch (moreData.get(position)) {
+
+                case "编辑":
+
+                    break;
+
+                case "删除":
+
+                    break;
+
+                case "收藏":
+                    Collection();
+                    break;
+
+                case "不感兴趣":
+
+                    break;
+
+                case "举报":
+
+                    break;
+
+                case "取消":
+                    moreDialog.dismiss();
+                    break;
+            }
+        });
     }
 
     /**
@@ -95,6 +174,7 @@ public class VideoActivity extends BaseActivity {
                 if (info == null) return;
                 initData();
                 initListener();
+                initDialog();
             }
 
             @Override
@@ -123,10 +203,15 @@ public class VideoActivity extends BaseActivity {
 
         labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
         labelId = info.getLabelId().split(",");
-
+        //标签
         player.setTagItem(labelName, labelId, view -> {
             AcitivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
         });
+        //更多
+        player.getMoreButton().setOnClickListener(view -> {
+            moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
+        });
+
 
     }
 
@@ -170,6 +255,7 @@ public class VideoActivity extends BaseActivity {
             info.setShopId(in.getString("shopId"));
             info.setLabelName(in.getString("labelName"));
             info.setContentType(in.getString("contentType"));
+            info.setCollection(in.getBoolean("isCollection"));
         } catch (NullPointerException e) {
 
         }
@@ -289,6 +375,33 @@ public class VideoActivity extends BaseActivity {
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
 
+            }
+        });
+    }
+
+    /**
+     * 收藏
+     */
+    public void Collection() {
+        Map<String, Object> params = new HashMap<>();
+        //type：5:文章, 6:视频, 7:视频模板, 8:项目, 9:商品，10:海报模板
+        params.put("type", 6);
+        params.put("relationId", info.getId());
+        params.put("customerId", AppConfig.CustomerId);
+        apiImp.doCollection(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null && jo.getInteger("code") != 0) return;
+                ViewInject.CollectionToast(mContext, "已收藏");
+                info.setCollection(true);
+                moreDialog.dismiss();
+                initDialog();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                moreDialog.dismiss();
             }
         });
     }

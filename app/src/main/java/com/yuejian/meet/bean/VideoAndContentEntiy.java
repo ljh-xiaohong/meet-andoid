@@ -23,6 +23,7 @@ public class VideoAndContentEntiy implements Serializable {
      * id : 99309    //创作id
      * shopId :      //商品id
      * labelName : #测试标签#测试活动标签2#国庆节#中秋节   // 标签名称
+     * isCollection:true            //收藏标识
      * contentType : 2    //创作类型：2-文章4-视频
      */
 
@@ -44,6 +45,15 @@ public class VideoAndContentEntiy implements Serializable {
     private String shopId;
     private String labelName;
     private String contentType;
+    private boolean isCollection;
+
+    public boolean isCollection() {
+        return isCollection;
+    }
+
+    public void setCollection(boolean collection) {
+        isCollection = collection;
+    }
 
     public String getPhotoAndVideoUrl() {
         return photoAndVideoUrl;

@@ -8,11 +8,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yuejian.meet.R;
 import com.yuejian.meet.widgets.CustomToast;
 
 
@@ -28,6 +32,8 @@ import com.yuejian.meet.widgets.CustomToast;
 public class ViewInject {
 
     private static CustomToast sCustomToast;
+
+    private static Toast myToast;
 
     private ViewInject() {
     }
@@ -45,7 +51,17 @@ public class ViewInject {
         return ClassHolder.instance;
     }
 
-
+    public static void CollectionToast(Context context, String message) {
+        if (null == myToast) {
+            myToast = new Toast(context);
+            myToast.setView(LayoutInflater.from(context).inflate(R.layout.toast_collection, null));
+        }
+        TextView tv = myToast.getView().findViewById(R.id.toast_tv);
+        tv.setText(message);
+        myToast.setDuration(Toast.LENGTH_LONG);
+        myToast.setGravity(Gravity.CENTER, 0, 0);
+        myToast.show();
+    }
 
     /**
      * 显示一个toast
@@ -53,35 +69,39 @@ public class ViewInject {
      * @param msg
      */
     public static void shortToast(Context context, String msg) {
-        showToast(context,msg,true);
+        showToast(context, msg, true);
     }
+
     public static void shortToast(Context context, int valuestringid) {
         String msg = context.getResources().getString(valuestringid);
-        showToast(context,msg,true);
+        showToast(context, msg, true);
     }
 
     public static void toast(Context context, int valuestringid) {
         String msg = context.getResources().getString(valuestringid);
         toast(context, msg);
     }
+
     public static void toast(String msg, Context context) {
         toast(context, msg);
     }
+
     public static void toast(Context context, String msg) {
-        showToast(context,msg,false);
+        showToast(context, msg, false);
     }
+
     /**
      * 显示一个toast
      *
      * @param msg
      */
-    private static void showToast(Context context, String msg,boolean isShort) {
+    private static void showToast(Context context, String msg, boolean isShort) {
         try {
             if (context != null) {
                 if (sCustomToast == null) {
                     sCustomToast = new CustomToast(context);
                 }
-                sCustomToast.show(msg,isShort? Toast.LENGTH_SHORT:Toast.LENGTH_LONG);
+                sCustomToast.show(msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
 
@@ -189,4 +209,6 @@ public class ViewInject {
 //    public static Context getAppContext() {
 //        return FolkApplication.mAppContext;
 //    }
+
+
 }
