@@ -1,16 +1,21 @@
 package com.yuejian.meet.activities.family;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nim.uikit.app.AppConfig;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
@@ -18,9 +23,14 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
+import com.yuejian.meet.dialogs.MoreDialog;
+import com.yuejian.meet.utils.Utils;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -31,10 +41,16 @@ public class VideoActivity extends BaseActivity {
     private String customerId = null;
     private boolean full_screen;
 
+    MoreDialog moreDialog;
+
     private VideoAndContentEntiy info;
 
     @Bind(R.id.activity_video_player)
     VideoPlayer player;
+
+    private String[] labelName, labelId;
+
+    private List<String> moreData = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,12 +119,27 @@ public class VideoActivity extends BaseActivity {
         //评论数量
         player.getDiscussButton().setText(info.getCommentNum());
         player.getContenText().setText(info.getContentTitle());
+        player.getGoodsButton().setText(info.getShopName());
+
+        labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
+        labelId = info.getLabelId().split(",");
+
+        player.setTagItem(labelName, labelId, view -> {
+            AcitivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
+        });
 
     }
 
     private void initListener() {
         player.getLikeButton().setOnClickListener(view -> {
             like();
+        });
+        player.getShareButton().setOnClickListener(view -> {
+            share();
+        });
+
+        player.getFollowText().setOnClickListener(view -> {
+            AddFollow();
         });
     }
 
@@ -200,10 +231,65 @@ public class VideoActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 分享
+     */
+    private void share() {
+        Glide.with(mContext).load(info.getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                Utils.umengShareByList(
+                        (Activity) mContext,
+                        bitmap,
+                        info.getContentTitle(),
+                        mContext.getResources().getString(R.string.share_description),
+                        String.format("http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=%s&id=%s", info.getContentType(), info.getId()));
+            }
+        });
+
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
         player.onVideoPause();
+    }
+
+    /**
+     * 关注
+     */
+    public void AddFollow() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("opCustomerId", info.getCustomerId());
+        params.put("customerId", customerId);
+        //2-取消关注 1-添加关注
+        params.put("type", info.getIsRelation() == 0 ? 1 : 2);
+        apiImp.bindRelation(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+
+                JSONObject jo = JSONObject.parseObject(data);
+                if (jo == null) return;
+                switch (jo.getInteger("code")) {
+
+                    case 0:
+                        info.setIsRelation(info.getIsRelation() == 0 ? 1 : 0);
+                        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "66ffffff"));
+                        player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
+                        break;
+
+                    case 19983:
+                    case 19981:
+                        ViewInject.shortToast(mContext, jo.getString("message"));
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
     }
 }

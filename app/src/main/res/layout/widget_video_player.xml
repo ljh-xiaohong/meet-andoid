@@ -234,35 +234,41 @@
             app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
         <TextView
-            android:id="@+id/video_content"
-            android:layout_width="216dp"
+            android:id="@+id/video_goods"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:ellipsize="end"
-            android:maxLines="2"
+            android:layout_marginTop="9dp"
+            android:drawableLeft="@mipmap/icon_video_goods"
+            android:drawableRight="@mipmap/video_view_more_tag"
+            android:drawablePadding="3dp"
+            android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="15sp"
+            android:textSize="@dimen/sp_13"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
-        <com.zhy.view.flowlayout.FlowLayout
+        <TextView
+            android:id="@+id/video_content"
             android:layout_width="216dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="11dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="6dp"
+            android:maxLines="2"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/video_goods"
+            app:layout_constraintTop_toBottomOf="@+id/video_goods" />
+
+        <com.zhy.view.flowlayout.FlowLayout
+            android:id="@+id/video_tag_layout"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/video_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/icon_video_tab"
-                android:gravity="center"
-                android:text="姓氏文化"
-                android:textColor="#3498DB"
-                android:textSize="15sp" />
 
         </com.zhy.view.flowlayout.FlowLayout>
 
@@ -312,7 +318,6 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_margin="12dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="6dp"
             android:background="@drawable/shape_video_input_bg"
             android:gravity="center|left"
@@ -321,7 +326,7 @@
             android:textColor="#ffffff"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/video_share"
+            app:layout_constraintTop_toBottomOf="@+id/video_tag_layout"
             tools:layout_editor_absoluteX="12dp" />
 
     </android.support.constraint.ConstraintLayout>

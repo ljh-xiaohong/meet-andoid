@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.ActivityLabAdapter;
@@ -111,6 +112,22 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
             @Override
             public void ScrollView(int l, int t, int oldl, int oldt) {
                 titleBar.setVisibility(t >= dip2px(AcitivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        adapter.setOnItemClickListener((view, position1) -> {
+            ActivityLabEntity.Content content = labEntity.getContent().get(position1);
+            switch (content.getType()) {
+
+                //文章
+                case 2:
+
+                    break;
+
+                //视频
+                case 4:
+                    VideoActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId, content.getCoveSizeType() == 0 ? true : false);
+                    break;
             }
         });
     }

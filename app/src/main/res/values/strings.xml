@@ -1209,6 +1209,8 @@
     <string name="poster_open_vip">去开通vip</string>
     <string name="poster_experience">去体验</string>
 
+    <string name="share_description">来自 约见·百家姓</string>
+
 
     <string name="umeng_sharebutton_custom">复制链接</string>
 </resources>

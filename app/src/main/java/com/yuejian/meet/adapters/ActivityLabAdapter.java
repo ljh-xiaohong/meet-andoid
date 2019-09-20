@@ -26,7 +26,7 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
     }
 
     @Override
-   public void refresh(List<ActivityLabEntity.Content> activityLabEntities) {
+    public void refresh(List<ActivityLabEntity.Content> activityLabEntities) {
         if (data == null) {
             data = new ArrayList<>();
         }
@@ -80,7 +80,7 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isIsPraise(), entity.getFabulousNum() + "");
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
-                    Glide.with(context).load(entity.getCoverPhoto()).bitmapTransform(new BlurTransformation(context,30)).into(new SimpleTarget<GlideDrawable>() {
+                    Glide.with(context).load(entity.getCoverPhoto()).bitmapTransform(new BlurTransformation(context, 30)).into(new SimpleTarget<GlideDrawable>() {
                         @Override
                         public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
                             rv.video_horizontal_blur.setBackground(glideDrawable);
@@ -99,7 +99,7 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
 
             //模板
             case 3:
-                rv.setViewStatus(RecommendView.ViewType.NONE,0);
+                rv.setViewStatus(RecommendView.ViewType.NONE, 0);
 //                rv.setViewStatus(RecommendView.ViewType.MOULD, itemHeight);
 //                Glide.with(context).load(entity.getCoverUrl()).into(rv.mould_img);
 //                rv.mould_content.setText(entity.getTitle());
@@ -148,6 +148,9 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
 
         public ActivityLab(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(view -> {
+                if (listener != null) listener.onItemClick(view, getAdapterPosition());
+            });
         }
     }
 

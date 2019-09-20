@@ -3,12 +3,15 @@ package com.yuejian.meet.widgets;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
+import com.zhy.view.flowlayout.FlowLayout;
 
 import org.w3c.dom.Text;
 
@@ -57,6 +60,10 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         return this.findViewById(R.id.video_more);
     }
 
+    public TextView getGoodsButton() {
+        return this.findViewById(R.id.video_goods);
+    }
+
     public TextView getDiscussButton() {
         return this.findViewById(R.id.video_discuss);
     }
@@ -80,6 +87,21 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     public TextView getContenText() {
         return this.findViewById(R.id.video_content);
+    }
+
+    public void setTagItem(String[] tab, String[] id, View.OnClickListener listener) {
+        if (tab.length == id.length) {
+            FlowLayout flowLayout = this.findViewById(R.id.video_tag_layout);
+            for (int i = 0; i < tab.length; i++) {
+                TextView item = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.textview_video_tag, null);
+                ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
+                lp.leftMargin = 10;
+                item.setText(tab[i]);
+                item.setTag(id[i]);
+                item.setOnClickListener(listener);
+                flowLayout.addView(item, lp);
+            }
+        }
     }
 
     public void setLike(boolean isLike, String count) {
