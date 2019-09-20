@@ -100,6 +100,9 @@
             android:name=".activities.home.ReportActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activities.family.ArticleActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.creation.DraftActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -22,6 +22,7 @@ import com.yuejian.meet.activities.clan.MainClanActivity;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.AcitivityLabActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
@@ -110,6 +111,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
             switch (item.getType()) {
                 //文章
                 case 1:
+                    ArticleActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId);
                     break;
                 //视频
                 case 2:

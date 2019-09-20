@@ -20,19 +20,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.home.ReportActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.PraiseEntity;
+import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
-
-import org.androidannotations.annotations.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+
 
 public class VideoActivity extends BaseActivity {
 
@@ -64,7 +66,7 @@ public class VideoActivity extends BaseActivity {
         setContentView(R.layout.activity_video);
 
         if (!getData()) return;
-        player.setLooping(true);
+
         getDataFromNet();
     }
 
@@ -119,7 +121,7 @@ public class VideoActivity extends BaseActivity {
                     break;
 
                 case "删除":
-
+                    delectContent();
                     break;
 
                 case "收藏":
@@ -127,11 +129,11 @@ public class VideoActivity extends BaseActivity {
                     break;
 
                 case "不感兴趣":
-
+                    notInterested();
                     break;
 
                 case "举报":
-
+                    ReportActivity.startActivityForResult(mContext, 1, info.getCustomerId(), info.getId() + "", "3");
                     break;
 
                 case "取消":
@@ -185,6 +187,7 @@ public class VideoActivity extends BaseActivity {
     }
 
     private void initData() {
+        player.setLooping(true);
         player.setUp(info.getCrContent(), true, "");
         player.startPlayLogic();
         Glide.with(mContext).load(info.getUserPhoto()).into(player.getHeadImagView());
@@ -402,6 +405,52 @@ public class VideoActivity extends BaseActivity {
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
                 moreDialog.dismiss();
+            }
+        });
+    }
+
+
+    /**
+     * 不感兴趣
+     */
+    private void notInterested() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("type", "1");
+        map.put("id", info.getId());
+        apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                moreDialog.dismiss();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+
+    /**
+     * 删除
+     */
+    private void delectContent() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("type", info.getContentType());
+        map.put("id", info.getId());
+        apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                moreDialog.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
             }
         });
     }

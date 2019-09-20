@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <ImageView
+            android:id="@+id/activity_article_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_nav_return" />
+
+        <TextView
+            android:id="@+id/activity_article_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="文章详情"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/activity_article_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_more_top" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_article_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.yuejian.meet.widgets.MyNestedScrollView
+                android:id="@+id/activity_article_myscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                        <!-- 人物资料 -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <com.yuejian.meet.widgets.CircleImageView
+                                android:id="@+id/activity_article_head_img"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/activity_article_name_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="6dp"
+                                android:layout_toRightOf="@id/activity_article_head_img"
+                                android:textColor="#333333"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/activity_article_name_vip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="6dp"
+                                android:layout_toRightOf="@id/activity_article_name_tv"
+                                android:src="@mipmap/icon_home_vip" />
+
+                            <TextView
+                                android:id="@+id/activity_article_name_follow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/shape_article_follow"
+                                android:text="关注"
+                                android:textColor="#ffffff"
+                                android:textSize="13sp" />
+
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="#e6e6e6" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:id="@+id/activity_activity_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="#FF333333"
+                                android:textSize="21sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/activity_activity_date"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="yyyy.MM.dd"
+                                    android:textColor="#FF999999"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/activity_activity_read"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="22dp"
+                                    android:text="阅读%s"
+                                    android:textColor="#FF999999"
+                                    android:textSize="11sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!-- 内容 -->
+                        <LinearLayout
+                            android:id="@+id/activity_article_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/activity_article_discuss"
+                            android:layout_width="match_parent"
+                            android:layout_height="46dp"
+                            android:gravity="bottom"
+                            android:paddingBottom="10dp"
+                            android:text="共16条评论"
+                            android:textColor="#666666" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/activity_article_recycleview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="blocksDescendants"
+                        android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+
+
+                </LinearLayout>
+
+
+            </com.yuejian.meet.widgets.MyNestedScrollView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_article_discuss_b"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="#ffffff"
+            android:gravity="bottom"
+            android:paddingBottom="10dp"
+            android:text="共16条评论"
+            android:textColor="#666666"
+            android:visibility="gone" />
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -121,7 +121,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
 
                 //文章
                 case 2:
-
+                    ArticleActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId);
                     break;
 
                 //视频

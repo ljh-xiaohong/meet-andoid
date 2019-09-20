@@ -60,7 +60,7 @@ public class UrlConstant {
     public static String POSTLOSEINTEREST = apiUrl() + "api/contentRelease/loseInterest";
 
     //首页 动态 举报
-    public static String POSTDOREPORT = apiUrl() + "api/contentRelease/doReport";
+    public static String POSTDOREPORT = apiUrl() + "api/dynamic/doReport";
 
     //首页 动态 搜索
     public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
