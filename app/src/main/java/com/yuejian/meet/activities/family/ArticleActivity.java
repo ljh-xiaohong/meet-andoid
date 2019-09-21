@@ -227,7 +227,7 @@ public class ArticleActivity extends BaseActivity {
         textView.setText(content);
         textView.setLineSpacing(0, 1.5f);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.topMargin = ScreenUtil.dip2px(28);
 //        layoutParams.leftMargin = ScreenUtil.dip2px(12);
 //        layoutParams.rightMargin = ScreenUtil.dip2px(12);
