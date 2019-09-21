@@ -24,6 +24,10 @@ public class VideoAndContentEntiy implements Serializable {
      * shopId :      //商品id
      * labelName : #测试标签#测试活动标签2#国庆节#中秋节   // 标签名称
      * isCollection:true            //收藏标识
+     * gPhoto:""                //商品封面缩略图路径
+     * gPriceVip:""             //商品VIP价格
+     * gPriceOriginal:""        //商品原价
+     * viewNum:1                //阅读数
      * contentType : 2    //创作类型：2-文章4-视频
      */
 
@@ -46,6 +50,42 @@ public class VideoAndContentEntiy implements Serializable {
     private String labelName;
     private String contentType;
     private boolean isCollection;
+    private String gPhoto;
+    private String gPriceVip;
+    private String gPriceOriginal;
+    private int viewNum;
+
+    public String getgPhoto() {
+        return gPhoto;
+    }
+
+    public void setgPhoto(String gPhoto) {
+        this.gPhoto = gPhoto;
+    }
+
+    public String getgPriceVip() {
+        return gPriceVip;
+    }
+
+    public void setgPriceVip(String gPriceVip) {
+        this.gPriceVip = gPriceVip;
+    }
+
+    public String getgPriceOriginal() {
+        return gPriceOriginal;
+    }
+
+    public void setgPriceOriginal(String gPriceOriginal) {
+        this.gPriceOriginal = gPriceOriginal;
+    }
+
+    public int getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(int viewNum) {
+        this.viewNum = viewNum;
+    }
 
     public boolean isCollection() {
         return isCollection;

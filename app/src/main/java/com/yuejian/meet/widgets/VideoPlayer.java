@@ -90,7 +90,7 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void setTagItem(String[] tab, String[] id, View.OnClickListener listener) {
-        if (tab.length == id.length) {
+        if ( tab != null && id != null && tab.length == id.length) {
             FlowLayout flowLayout = this.findViewById(R.id.video_tag_layout);
             for (int i = 0; i < tab.length; i++) {
                 TextView item = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.textview_video_tag, null);

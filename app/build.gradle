@@ -237,6 +237,8 @@ dependencies {
     compile 'io.github.rockerhieu:emojicon:latest.release'
     //视频控件
     compile 'com.shuyu:gsyVideoPlayer-java:6.0.3'
+
+    compile 'com.github.maning0303:MNImageBrowser:V1.2.4'
 }
 
 allprojects {

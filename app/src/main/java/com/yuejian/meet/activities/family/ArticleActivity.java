@@ -1,16 +1,19 @@
 package com.yuejian.meet.activities.family;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,16 +23,21 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.maning.imagebrowserlibrary.MNImageBrowser;
 import com.netease.nim.uikit.app.AppConfig;
+import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.dialogs.MoreDialog;
+import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.TextUtil;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.utils.load.GlideImageEngine;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +52,6 @@ public class ArticleActivity extends BaseActivity {
 
     private String contentId = null;
     private String customerId = null;
-
     private VideoAndContentEntiy info;
 
     @Bind(R.id.activity_article_back)
@@ -90,6 +97,12 @@ public class ArticleActivity extends BaseActivity {
 
     private List<String> moreData;
 
+    private List<ArticleContentEntity> contentEntities;
+
+    private ArrayList<String> pics = new ArrayList<String>();
+
+    int index;
+
     private String[] labelName, labelId;
 
     @Override
@@ -128,14 +141,103 @@ public class ArticleActivity extends BaseActivity {
         date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getCreateTime()))));
         discuss.setText(String.format("共%s条评论", info.getCommentNum()));
         discuss_b.setText(String.format("共%s条评论", info.getCommentNum()));
-
-        if(!TextUtils.isEmpty(info.getLabelName()) &&!TextUtils.isEmpty(info.getLabelId())){
+        read.setText(String.format("阅读 %s", info.getViewNum()));
+        if (!TextUtils.isEmpty(info.getLabelName()) && info.getLabelName().contains("#")) {
             labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
             labelId = info.getLabelId().split(",");
         }
 
+        contentEntities = JSON.parseArray(info.getCrContent(), ArticleContentEntity.class);
+        if (contentEntities != null && contentEntities.size() > 0) {
+
+            for (ArticleContentEntity entity : contentEntities) {
+                switch (entity.getType()) {
+                    case "image":
+                        ll.addView(creatPictureView(entity.getContent(), mContext));
+                        break;
+
+                    case "text":
+                        ll.addView(creatContentView(entity.getContent(), mContext));
+                        break;
+
+                    case "video":
+
+                        break;
+                }
+
+
+            }
+        }
 
     }
+
+
+    /**
+     * 图片处理
+     *
+     * @param url
+     * @param activity
+     * @return
+     */
+    private View creatPictureView(String url, Context activity) {
+        CardView cardView = new CardView(this);
+        cardView.setRadius(ScreenUtil.dip2px(4));
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        lp.topMargin = ScreenUtil.dip2px(28);
+        cardView.setLayoutParams(lp);
+        pics.add(url);
+        int position = index++;
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MNImageBrowser
+                        .with(activity)
+                        .setCurrentPosition(position)
+                        .setImageEngine(new GlideImageEngine())
+                        .setImageList(pics)
+                        .show(view);
+            }
+        });
+
+        ImageView imageView = new ImageView(this);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        int width = ScreenUtils.getScreenWidth(this) - (ScreenUtil.dip2px(12) * 2);
+        int height = width / 5 * 3;
+        ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(width, height);
+        imageView.setLayoutParams(ll);
+        cardView.addView(imageView);
+
+        Glide.with(this).load(url).into(imageView);
+
+        return cardView;
+    }
+
+
+    /**
+     * 文字处理
+     *
+     * @param content
+     * @return
+     */
+    private View creatContentView(String content, Context context) {
+        TextView textView = new TextView(context);
+        textView.setTextSize(15);
+        textView.setTextColor(Color.parseColor("#333333"));
+        textView.setText(content);
+        textView.setLineSpacing(0, 1.5f);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.topMargin = ScreenUtil.dip2px(28);
+//        layoutParams.leftMargin = ScreenUtil.dip2px(12);
+//        layoutParams.rightMargin = ScreenUtil.dip2px(12);
+        textView.setLayoutParams(layoutParams);
+
+
+        return textView;
+
+    }
+
 
     private void getDataFromNet() {
         Map<String, Object> params = new HashMap<>();
@@ -330,14 +432,18 @@ public class ArticleActivity extends BaseActivity {
             info.setLabelName(in.getString("labelName"));
             info.setContentType(in.getString("contentType"));
             info.setCollection(in.getBoolean("isCollection"));
+            info.setgPhoto(in.getString("gPhoto"));
+            info.setgPriceVip(in.getString("gPriceVip"));
+            info.setgPriceOriginal(in.getString("gPriceOriginal"));
+            info.setViewNum(in.getInteger("viewNum"));
         } catch (NullPointerException e) {
 
         }
 
     }
 
-    private void initListener(){
-        more.setOnClickListener(view->{
+    private void initListener() {
+        more.setOnClickListener(view -> {
             moreDialog.show(getSupportFragmentManager(), "ArticleActivity.moreDialog");
         });
     }

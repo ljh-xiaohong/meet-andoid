@@ -194,7 +194,7 @@ public class VideoActivity extends BaseActivity {
         player.getNameText().setText(info.getUserName());
         player.getContenText().setText(info.getContentTitle());
         //关注
-        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "66ffffff"));
+        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "#66ffffff"));
         player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
         //点赞数
         //是否点赞
@@ -203,9 +203,11 @@ public class VideoActivity extends BaseActivity {
         player.getDiscussButton().setText(info.getCommentNum());
         player.getContenText().setText(info.getContentTitle());
         player.getGoodsButton().setText(info.getShopName());
+        if (info.getLabelName() != null && info.getLabelName().contains("#")) {
+            labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
+            labelId = info.getLabelId().split(",");
+        }
 
-        labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
-        labelId = info.getLabelId().split(",");
         //标签
         player.setTagItem(labelName, labelId, view -> {
             AcitivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
@@ -363,7 +365,7 @@ public class VideoActivity extends BaseActivity {
 
                     case 0:
                         info.setIsRelation(info.getIsRelation() == 0 ? 1 : 0);
-                        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "66ffffff"));
+                        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "#66ffffff"));
                         player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
                         break;
 
