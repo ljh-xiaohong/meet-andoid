@@ -54,7 +54,7 @@ public class ProvinceActivity extends FragmentActivity {
         initData();
     }
     protected void initData() {
-        String json= Utils.getFromAssets("province.json", this);
+        String json= Utils.getFromAssets("province", this);
         ProvinceBean provinceBean= new Gson().fromJson(json, ProvinceBean.class);
         data.addAll(provinceBean.getData());
         for (int i=0;i<data.size();i++){
