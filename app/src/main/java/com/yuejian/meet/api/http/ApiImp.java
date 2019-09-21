@@ -282,9 +282,6 @@ public class ApiImp {
         mHttpRequst.postRequst(UrlConstant.POST_GET_RELATION_LIST, params, tag, call);
     }
 
-    public void bindRelation(Map<String, Object> params, Object tag, DataIdCallback<String> call) {
-        mHttpRequst.postRequst(UrlConstant.POST_BIND_RELATION, params, tag, call);
-    }
 
     /**
      * 动态点赞
@@ -1879,6 +1876,35 @@ public class ApiImp {
     public void publishedArticlesNew(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.PUBLISHED_ARTICLES_NEW, paramMap, paramObject, callback);
     }
+
+    /**
+     * 草稿箱列表
+     */
+    public void getDraftsList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_DRAFTS_LIST, paramMap, paramObject, callback);
+    }
+
+    /**
+     *内容（动态，视频，文章）点赞(测试通过)
+     */
+    public void praiseContent(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.PRAISE_CONTENT, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 用户添加取消关注活动标签接口
+     */
+    public void addContentLabelCustomer(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.ADD_CONTENT_LABEL_CUSTOMER, paramMap, paramObject, callback);
+    }
+
+    /**
+     * 关注用户
+     */
+    public void bindRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POST_BIND_RELATION, paramMap, paramObject, callback);
+    }
+
 
     /**
      * 获取活动标签下的视频文章内容 rvs1

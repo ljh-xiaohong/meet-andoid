@@ -1,5 +1,7 @@
 package com.yuejian.meet.activities.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,11 +44,16 @@ public class ReportActivity extends BaseActivity {
     TextView commit;
     private LoadingDialogFragment dialog;
 
+    private String reportCustomerId, crId, type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_activity);
         ButterKnife.bind(this);
+        reportCustomerId = getIntent().getStringExtra("ReportActivity.reportCustomerId");
+        crId = getIntent().getStringExtra("ReportActivity.crId");
+        type = getIntent().getStringExtra("ReportActivity.type");
         dialog = LoadingDialogFragment.newInstance(getString(R.string.is_requesting));
         reportEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,15 +89,30 @@ public class ReportActivity extends BaseActivity {
         }
     }
 
-    private void commit() {
-        if (dialog!=null)
-            dialog.show(getFragmentManager(),"");
+    /**
+     * @param context
+     * @param reportCustomerId 被举报人id
+     * @param crId             被举报内容信息id
+     * @param type             被举报内容信息类型：1动态2文章3视频
+     */
+    public static void startActivityForResult(Context context, int requestCode, String reportCustomerId, String crId, String type) {
+        Intent intent = new Intent(context, ReportActivity.class);
+        intent.putExtra("ReportActivity.reportCustomerId", reportCustomerId);
+        intent.putExtra("ReportActivity.crId", crId);
+        intent.putExtra("ReportActivity.type", type);
+        ((Activity) context).startActivityForResult(intent, requestCode);
 
-        if (!CommonUtil.isNull(reportEdit.getText().toString())){
+    }
+
+    private void commit() {
+        if (dialog != null)
+            dialog.show(getFragmentManager(), "");
+
+        if (!CommonUtil.isNull(reportEdit.getText().toString())) {
             ViewInject.shortToast(ReportActivity.this, R.string.Please_enter_report);
             return;
         }
-        if (!CommonUtil.isNull(phone.getText().toString())){
+        if (!CommonUtil.isNull(phone.getText().toString())) {
             ViewInject.shortToast(ReportActivity.this, R.string.reg_hint_phone);
             return;
         }
@@ -99,9 +121,10 @@ public class ReportActivity extends BaseActivity {
         map.put("customerId", AppConfig.CustomerId);
         map.put("reportDes", reportEdit.getText().toString());
         map.put("mobile", phone.getText().toString());
-        map.put("reportCustomerId", "");
-        map.put("crType", "1");
-        map.put("crId", getIntent().getStringExtra("id"));
+        map.put("reportCustomerId", reportCustomerId);
+        //1动态 2文章 3视频
+        map.put("crType", type);
+        map.put("crId", crId);
         apiImp.postDoReport(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

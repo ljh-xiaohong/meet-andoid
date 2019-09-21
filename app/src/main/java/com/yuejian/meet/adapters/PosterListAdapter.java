@@ -62,7 +62,7 @@ public class PosterListAdapter extends BaseAdapter<PosterListAdapter.ViewHolder,
     }
 
     @Override
-    void Loadmore(List<RecommendPosterEntity> recommendPosterEntities) {
+    public void Loadmore(List<RecommendPosterEntity> recommendPosterEntities) {
         if (data == null) {
             data = new ArrayList<>();
         }

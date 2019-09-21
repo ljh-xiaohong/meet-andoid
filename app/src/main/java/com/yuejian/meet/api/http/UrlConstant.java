@@ -60,7 +60,7 @@ public class UrlConstant {
     public static String POSTLOSEINTEREST = apiUrl() + "api/contentRelease/loseInterest";
 
     //首页 动态 举报
-    public static String POSTDOREPORT = apiUrl() + "api/contentRelease/doReport";
+    public static String POSTDOREPORT = apiUrl() + "api/dynamic/doReport";
 
     //首页 动态 搜索
     public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
@@ -1035,6 +1035,16 @@ public class UrlConstant {
     public static String PUBLISHED_ARTICLES = apiUrl() + "api/newArticle/publishedArticles";
 
     public static String PUBLISHED_ARTICLES_NEW = apiUrl() + "api/contentRelease/pushContentRelease";
+
+    //草稿箱列表
+    public static String GET_DRAFTS_LIST=apiUrl()+"api/contentRelease/getDraftsList";
+
+    //内容（动态，视频，文章）点赞(测试通过)
+    public static String PRAISE_CONTENT = apiUrl() + "api/contentRelease/praiseContent";
+
+    //用户添加取消关注活动标签接口
+    public static String ADD_CONTENT_LABEL_CUSTOMER = apiUrl() + "api/contentLabelCustomer/addContentLabelCustomer";
+
     //获取活动标签下的视频文章内容
     public static String FIND_CONTENT_BY_LABEL = apiUrl() + "api/contentLabelRecord/findContentByLabel";
 

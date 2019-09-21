@@ -93,14 +93,14 @@ public class FamilyCircleFollowFragment extends BaseFragment
         mFollowListAdapter.setOnClickListener(new FamilyCircleFollowListAdapter.onClickListener() {
             @Override
             public void onClick(int position, boolean me) {
-                initPopwindow(position,me);
+                initPopwindow(position, me);
             }
 
             @Override
             public void onComment(int position) {
-                Intent intent=new Intent(getActivity(), MyDialogActivity.class);
-                intent.putExtra("crId",followEntities.get(position).getId()+"");
-                startActivityForResult(intent,1);
+                Intent intent = new Intent(getActivity(), MyDialogActivity.class);
+                intent.putExtra("crId", followEntities.get(position).getId() + "");
+                startActivityForResult(intent, 1);
             }
         });
         mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
@@ -108,7 +108,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-        if (!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")){
+        if (!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")) {
             return;
         }
         mSpringView.callFresh();
@@ -139,20 +139,21 @@ public class FamilyCircleFollowFragment extends BaseFragment
         TextView delect = popupView.findViewById(R.id.delect);
         TextView uninterested = popupView.findViewById(R.id.uninterested);
         TextView report = popupView.findViewById(R.id.report);
-        if (me){
+        if (me) {
             delect.setVisibility(View.VISIBLE);
             uninterested.setVisibility(View.GONE);
             report.setVisibility(View.GONE);
             delect.setOnClickListener(v -> delectContent(followEntities.get(position).getId()));
-        }else {
+        } else {
             delect.setVisibility(View.GONE);
             uninterested.setVisibility(View.VISIBLE);
-            uninterested.setOnClickListener(v ->notInterested(followEntities.get(position).getId()));
+            uninterested.setOnClickListener(v -> notInterested(followEntities.get(position).getId()));
             report.setVisibility(View.VISIBLE);
             report.setOnClickListener(v -> {
-                Intent intent= new Intent(getActivity(), ReportActivity.class);
-                intent.putExtra("id",followEntities.get(position).getId());
-                startActivityForResult(intent,1);
+//                Intent intent = new Intent(getActivity(), ReportActivity.class);
+//                intent.putExtra("id", followEntities.get(position).getId());
+//                startActivityForResult(intent, 1);
+                ReportActivity.startActivityForResult(mContext, 1, followEntities.get(position).getCustomerId(), followEntities.get(position).getId() + "", "1");
             });
         }
     }
@@ -166,7 +167,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 onRefresh();
             }
@@ -176,6 +177,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
             }
         });
     }
+
     //不感兴趣
     private void notInterested(int id) {
         Map<String, Object> map = new HashMap<>();
@@ -185,7 +187,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 onRefresh();
             }
@@ -198,8 +200,9 @@ public class FamilyCircleFollowFragment extends BaseFragment
 
 
     //加载数据
-    List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
+    List<FamilyFollowEntity.DataBean> followEntities = new ArrayList<>();
     FamilyFollowEntity followEntitie;
+
     private void loadDataFromNet(String type, int page, int count) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -208,15 +211,15 @@ public class FamilyCircleFollowFragment extends BaseFragment
         apiImp.getAttentionFamilyCricleDo(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
-                if (followEntitie.getCode()!=0) {
-                    ViewInject.shortToast(getActivity(),followEntitie.getMessage());
+                followEntitie = new Gson().fromJson(data, FamilyFollowEntity.class);
+                if (followEntitie.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), followEntitie.getMessage());
                     return;
                 }
                 followEntities.addAll(followEntitie.getData());
                 if (followEntities.size() > 0) {
                     mEmptyList.setVisibility(View.GONE);
-                }else{
+                } else {
                     mEmptyList.setVisibility(View.VISIBLE);
                 }
                 if (page <= 1) {
@@ -224,9 +227,9 @@ public class FamilyCircleFollowFragment extends BaseFragment
                     mFollowListAdapter.refresh(followEntities);
                 } else {
                     //下拉更多
-                    if (followEntitie.getData().size()!=pageCount){
-                        ViewInject.shortToast(getActivity(),"已经是最后一页");
-                    }else {
+                    if (followEntitie.getData().size() != pageCount) {
+                        ViewInject.shortToast(getActivity(), "已经是最后一页");
+                    } else {
                         mFollowListAdapter.Loadmore(followEntities);
                     }
                 }
@@ -283,11 +286,11 @@ public class FamilyCircleFollowFragment extends BaseFragment
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.search_all, R.id.sweep_code, R.id.et_search_all,R.id.btn_release})
+    @OnClick({R.id.search_all, R.id.sweep_code, R.id.et_search_all, R.id.btn_release})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_release:
-                getActivity().startActivityForResult(new Intent(getActivity(), ReleaseActivity.class),1);
+                getActivity().startActivityForResult(new Intent(getActivity(), ReleaseActivity.class), 1);
                 break;
             case R.id.search_all:
             case R.id.et_search_all:
@@ -302,7 +305,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&resultCode==7){
+        if (requestCode == 1 && resultCode == 7) {
             onRefresh();
         }
     }

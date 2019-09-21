@@ -58,7 +58,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
         switch (type) {
             //海报模板
             case 3:
-                rv.setViewStatus(RecommendView.ViewType.MOULD, itemHeight);
+                rv.setViewStatus(RecommendView.ViewType.POSTER, itemHeight);
                 Glide.with(context).load(entity.getPreviewUrl()).into(rv.poster_img);
                 rv.poster_content.setText(entity.getContentTitle());
                 TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.textview_tag, null);
@@ -67,6 +67,11 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 break;
             //视频
             case 2:
+                //第一个默认草稿
+                if (position == 0) {
+                    rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
+                    return;
+                }
                 rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.video_vertical_img);
                 rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), entity.getFabulousNum() + "");
@@ -76,6 +81,11 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 break;
             //文章
             case 1:
+                //第一个默认草稿
+                if (position == 0) {
+                    rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
+                    return;
+                }
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.article_img);
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
@@ -88,13 +98,13 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+
         public ViewHolder(View itemView) {
             super(itemView);
-            if (listener != null) {
-                itemView.setOnClickListener(view -> {
-                    listener.onItemClick(view, this.getAdapterPosition());
-                });
-            }
+            itemView.setOnClickListener(view -> {
+                if (listener != null) listener.onItemClick(itemView, getAdapterPosition());
+            });
+
         }
     }
 }

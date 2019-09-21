@@ -1,14 +1,23 @@
 package com.yuejian.meet.widgets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
+import com.zhy.view.flowlayout.FlowLayout;
+
+import org.w3c.dom.Text;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
+
+    private View back;
 
 
     public VideoPlayer(Context context, Boolean fullFlag) {
@@ -31,23 +40,76 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 //        mBottomProgressBar.setLayoutParams(layoutParams1);
         mDismissControlTime = 0;
 
-
+        back = this.findViewById(R.id.back_btn);
+        back.setOnClickListener(view -> {
+            ((Activity) getContext()).finish();
+        });
     }
 
 
     @Override
     protected void init(Context context) {
         super.init(context);
+    }
 
-
+    public ImageView getHeadImagView() {
+        return this.findViewById(R.id.circleImageView);
     }
 
     public View getMoreButton() {
         return this.findViewById(R.id.video_more);
     }
 
-    public View getDiscussButton() {
+    public TextView getGoodsButton() {
+        return this.findViewById(R.id.video_goods);
+    }
+
+    public TextView getDiscussButton() {
         return this.findViewById(R.id.video_discuss);
+    }
+
+    public TextView getLikeButton() {
+        return this.findViewById(R.id.video_like);
+    }
+
+    public TextView getShareButton() {
+        return this.findViewById(R.id.video_share);
+
+    }
+
+    public TextView getNameText() {
+        return this.findViewById(R.id.video_name);
+    }
+
+    public TextView getFollowText() {
+        return this.findViewById(R.id.video_follow);
+    }
+
+    public TextView getContenText() {
+        return this.findViewById(R.id.video_content);
+    }
+
+    public void setTagItem(String[] tab, String[] id, View.OnClickListener listener) {
+        if ( tab != null && id != null && tab.length == id.length) {
+            FlowLayout flowLayout = this.findViewById(R.id.video_tag_layout);
+            for (int i = 0; i < tab.length; i++) {
+                TextView item = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.textview_video_tag, null);
+                ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
+                lp.leftMargin = 10;
+                item.setText(tab[i]);
+                item.setTag(id[i]);
+                item.setOnClickListener(listener);
+                flowLayout.addView(item, lp);
+            }
+        }
+    }
+
+    public void setLike(boolean isLike, String count) {
+        getLikeButton().setText(count);
+        getLikeButton().setCompoundDrawablesWithIntrinsicBounds(null,
+                getResources().getDrawable(isLike ? R.mipmap.icon_video_zan_sel : R.mipmap.icon_video_zan_nor),
+                null,
+                null);
     }
 
 

@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.creation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.creation.DraftActivity;
+import com.yuejian.meet.activities.web.WebActivity;
+import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.CreationAdapter;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.CreationEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.widgets.RecommendView;
 import com.yuejian.meet.widgets.springview.SpringView;
 
 import java.util.ArrayList;
@@ -54,6 +60,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         springView.setListener(this);
         if (!getData()) return;
         adapter = new CreationAdapter(recyclerView, getContext(), type);
+        setListener();
         getDataFromNet();
     }
 
@@ -84,7 +91,13 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                 if (null == jo) return;
                 if (!jo.getString("code").equals("0")) return;
                 parseJson(jo.getString("data"));
-                adapter.refresh(creationEntities);
+                if (pageIndex == 1) {
+                    setInit();
+                    adapter.refresh(creationEntities);
+                } else {
+                    adapter.Loadmore(creationEntities);
+                }
+
             }
 
             @Override
@@ -96,10 +109,22 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         });
     }
 
+    /**
+     * 第一个为草稿箱
+     */
+    private void setInit() {
+        if (type == 1 || type == 2) {
+            CreationEntity entity = new CreationEntity();
+            entity.setDraftsId(type);
+            if (creationEntities == null) creationEntities = new ArrayList<>();
+            creationEntities.add(entity);
+        }
+    }
+
     private void parseJson(String data) {
         if (data == null || TextUtils.isEmpty(data)) return;
         JSONArray ja = JSON.parseArray(data);
-        creationEntities = new ArrayList<>();
+        if (creationEntities == null) creationEntities = new ArrayList<>();
         for (int i = 0; i < ja.size(); i++) {
             JSONObject jo = (JSONObject) ja.get(i);
             CreationEntity entity = new CreationEntity();
@@ -131,5 +156,32 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     public void onLoadmore() {
         ++pageIndex;
         getDataFromNet();
+    }
+
+    private void setListener() {
+        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                switch (type) {
+                    //海报
+                    case 3:
+                        Intent intent = new Intent(mContext, WebActivity.class);
+                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, creationEntities.get(position).getId());
+                        intent.putExtra("url", hxmUrl);
+                        intent.putExtra("No_Title", true);
+                        startActivity(intent);
+                        break;
+
+                    case 1:
+                    case 2:
+                        if (position == 0) {
+                            DraftActivity.startActivity(mContext, type);
+                            return;
+                        }
+                        break;
+
+                }
+            }
+        });
     }
 }

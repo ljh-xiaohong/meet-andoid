@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.ActivityLabAdapter;
@@ -72,6 +73,8 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
     private int pageIndex = 1;
     private int pageItemCount = 10;
 
+    ActivityLabEntity labEntity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +89,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
 
     }
 
-    @OnClick({R.id.activity_activity_back, R.id.activity_activity_back_})
+    @OnClick({R.id.activity_activity_back, R.id.activity_activity_back_, R.id.activity_activity_follow})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -97,6 +100,9 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
             case R.id.activity_activity_back_:
                 finish();
                 break;
+            case R.id.activity_activity_follow:
+                AddFollow(labEntity.getLabel().isIsFocus());
+                break;
         }
 
     }
@@ -106,6 +112,22 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
             @Override
             public void ScrollView(int l, int t, int oldl, int oldt) {
                 titleBar.setVisibility(t >= dip2px(AcitivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        adapter.setOnItemClickListener((view, position1) -> {
+            ActivityLabEntity.Content content = labEntity.getContent().get(position1);
+            switch (content.getType()) {
+
+                //文章
+                case 2:
+                    ArticleActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId);
+                    break;
+
+                //视频
+                case 4:
+                    VideoActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId, content.getCoveSizeType() == 0 ? true : false);
+                    break;
             }
         });
     }
@@ -134,7 +156,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
             public void onSuccess(String data, int id) {
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && !jo.getString("code").equals("0")) return;
-                ActivityLabEntity labEntity = JSON.parseObject(jo.getString("data"), ActivityLabEntity.class);
+                labEntity = JSON.parseObject(jo.getString("data"), ActivityLabEntity.class);
                 if (labEntity != null) {
                     if (labEntity.getContent() != null && labEntity.getContent().size() > 0)
                         adapter.refresh(labEntity.getContent());
@@ -143,6 +165,8 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
                         title_one.setText(labEntity.getLabel().getTitle());
                         title_two.setText(labEntity.getLabel().getTitle());
                         content.setText(labEntity.getLabel().getDes());
+                        follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+                        follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
                     }
 
                 }
@@ -168,5 +192,30 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
     public void onLoadmore() {
         ++pageIndex;
         loadDataFromNet();
+    }
+
+    public void AddFollow(boolean isFollows) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("clId", clId);
+        params.put("customerId", customerId);
+        //0-取消关注 1-添加关注
+        params.put("type", isFollows ? 0 : 1);
+        apiImp.addContentLabelCustomer(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null || !jo.getString("code").equals("0")) return;
+                labEntity.getLabel().setIsFocus(!isFollows);
+                follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+                follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
     }
 }
