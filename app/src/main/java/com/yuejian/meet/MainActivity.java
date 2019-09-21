@@ -1,21 +1,20 @@
 package com.yuejian.meet;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,12 +60,14 @@ import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.BusinessFragment;
 import com.yuejian.meet.framents.creation.CreationFragment;
 import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
+import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.find.FindFragment;
 import com.yuejian.meet.framents.message.MessageFragment;
+import com.yuejian.meet.framents.message.NewMessageActivity;
+import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.MineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
-import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
@@ -82,6 +83,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -100,27 +102,42 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     View rbtn_me;
     @Bind(R.id.img_msg_tip)
     TextView img_msg_tip;
-    @Bind(R.id.address_list)
-    ImageView address_list;
-    @Bind(R.id.maia_layout_title_bar)
-    RelativeLayout maia_layout_title_bar;
+    @Bind(R.id.main_content)
+    FrameLayout mainContent;
+    @Bind(R.id.img_city_tip)
+    TextView imgCityTip;
+    @Bind(R.id.rlayout_one_to_one)
+    RelativeLayout rlayoutOneToOne;
+    @Bind(R.id.img_contact_tip)
+    TextView imgContactTip;
+    @Bind(R.id.rlayout_business)
+    RelativeLayout rlayoutBusiness;
+    @Bind(R.id.rlayout_creation)
+    RelativeLayout rlayoutCreation;
+    @Bind(R.id.rlayout_msg)
+    RelativeLayout rlayoutMsg;
+    @Bind(R.id.img_mine)
+    TextView imgMine;
+    @Bind(R.id.rlayout_mine)
+    RelativeLayout rlayoutMine;
+    @Bind(R.id.lay)
+    LinearLayout lay;
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
     private FragmentManager mFragmentManager;
     private BaseFragment currentFragment;
     //    private HomeFragment homeFragment = new HomeFragment();
-    private MessageFragment messageFragment = new MessageFragment();
+    private NewMessageFragment messageFragment = new NewMessageFragment();
     private CreationFragment creationFragment = new CreationFragment();
     private FindFragment findWebFragment = new FindFragment();
-    private BusinessFragment businessFragment = new BusinessFragment();
+    private MessageFragment businessFragment = new MessageFragment();
     private MineFragment mineFragment = new MineFragment();
     //    private CultureFragment cultureFragment = new CultureFragment();
-    private FamilyCircleContainerFragment familyFragment;
+    private FamilyCircleRecommendFragment familyFragment;
     //    private FamilyFragment familyFragment = new FamilyFragment();
     private Intent intent;
     private MainMoreUi mainMoreUi;
     private mine2Entity mine2;
-    private TextView baiJiaXingBadge = null;
 
 
     @Override
@@ -133,6 +150,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         AppConfig.isGeLiGuide = false;
         ACTIVITY_NAME = "首页";
         setContentView(R.layout.activity_main_new);
+        ButterKnife.bind(this);
         initView();
         SampleApplicationContext.application = getApplication();
         SampleApplicationContext.context = this;
@@ -263,29 +281,14 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
 
-        familyFragment = new FamilyCircleContainerFragment();
+        familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
         mFragmentManager = this.getSupportFragmentManager();
         setSelectBut(R.id.rlayout_one_to_one);
-        img_msg_tip = (TextView) findViewById(R.id.img_msg_tip);
-        ImMesssageRedDot.register(new ImMesssageRedDot.RedDotInterFace() {
-            @Override
-            public void redDotCount(String count) {
-                if (img_msg_tip != null) {
-                    img_msg_tip.setVisibility(count.equals("0") ? View.GONE : View.VISIBLE);
-                    img_msg_tip.setText(Integer.parseInt(count) > 99 ? "99+" : count);
-                }
-            }
-        });
-        baiJiaXingBadge = (TextView) findViewById(R.id.baijiaxing_badge);
         ImMesssageRedDot.CallMessageRigister();//群聊红点消息
     }
 
-    public void setTitleText(String text) {
-        TextView titleTv = (TextView) findViewById(R.id.title);
-        titleTv.setText(text);
-    }
 
     public void changeFragment(BaseFragment targetFragment) {
         this.changeFragment(R.id.main_content, targetFragment);
@@ -314,7 +317,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     }
 
     @OnClick({R.id.rlayout_one_to_one, R.id.rlayout_msg, R.id.rlayout_business, R.id.rlayout_creation,
-            R.id.rlayout_mine, R.id.baijiaxing, R.id.layout_search, R.id.navbar_more, R.id.address_list})
+            R.id.rlayout_mine})
     @Override
     public void onClick(View v) {
         setSelectBut(v.getId());
@@ -324,7 +327,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      * 选择的下标
      */
     public void setSelectBut(int vId) {
-        if (vId == R.id.navbar_more || vId == R.id.layout_search || vId == R.id.rlayout_creation) {
+        if (vId == R.id.rlayout_creation || vId == R.id.rlayout_msg) {
 
         } else {
             rbtn_home.setSelected(false);
@@ -332,7 +335,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             rbtn_creation.setSelected(false);
             rbtn_business.setSelected(false);
             rbtn_me.setSelected(false);
-            findViewById(R.id.baijiaxing_text).setSelected(false);
         }
         switch (vId) {
             case R.id.address_list:
@@ -341,25 +343,22 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             case R.id.rlayout_one_to_one:///
                 rbtn_home.setSelected(true);
                 changeFragment(familyFragment);
-                setTitleText(getString(R.string.The_family_dynamic));
-                maia_layout_title_bar.setVisibility(View.GONE);
-                address_list.setVisibility(View.GONE);
                 break;
             case R.id.rlayout_msg:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
-                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     return;
                 }
-                maia_layout_title_bar.setVisibility(View.GONE);
-                address_list.setVisibility(View.VISIBLE);
-                    rbtn_message.setSelected(true);
-                    changeFragment(messageFragment);
-                    setTitleText(getString(R.string.tab_rbtn_msg));
+//                maia_layout_title_bar.setVisibility(View.GONE);
+//                address_list.setVisibility(View.VISIBLE);
+                rbtn_message.setSelected(true);
+                changeFragment(messageFragment);
+//                startActivity(new Intent(this, NewMessageActivity.class));
                 break;
             case R.id.rlayout_creation:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
-                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     return;
                 }
@@ -371,16 +370,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 //                address_list.setVisibility(View.GONE);
                 break;
             case R.id.rlayout_business:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
-                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     return;
                 }
                 rbtn_business.setSelected(true);
                 changeFragment(businessFragment);
-                setTitleText("商圈");
-                maia_layout_title_bar.setVisibility(View.GONE);
-                address_list.setVisibility(View.GONE);
 
 //                address_list.setVisibility(View.GONE);
 //                try {
@@ -395,16 +391,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 break;
 
             case R.id.rlayout_mine:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")){
-                    Intent intent= new Intent(getBaseContext(), LoginActivity.class);
+                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     return;
                 }
-                maia_layout_title_bar.setVisibility(View.GONE);
                 rbtn_me.setSelected(true);
                 changeFragment(mineFragment);
-
-                setTitleText(getString(R.string.main_mine_name));
                 backPressListeners = new ArrayList<>();
                 backPressListeners.add(mineFragment);
                 setBackPressListener(backPressListeners);
@@ -412,20 +405,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 if (mineBagde.getVisibility() == View.VISIBLE) {
                     mineBagde.setVisibility(View.GONE);
                 }
-                break;
-            case R.id.baijiaxing:
-//                findViewById(R.id.baijiaxing_text).setSelected(true);
-//                changeFragment(homeFragment);
-                break;
-            case R.id.navbar_more:
-                if (mainMoreUi == null) {
-                    mainMoreUi = new MainMoreUi(this);
-                }
-                mainMoreUi.showBottomPopupWindow(findViewById(R.id.maia_layout_title_bar));
-                break;
-            case R.id.layout_search:
-                intent = new Intent(this, MainSearchActivity.class);
-                startActivity(intent);
                 break;
         }
 //        startActivity(new Intent(this, PhoneCodeActivity.class));
@@ -646,7 +625,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         } else if (event.getCallType() == BusEnum.LOGOUT) {//退出登录
             img_msg_tip.setVisibility(View.GONE);
             ImMesssageRedDot.CallMessageRigister();//群聊红点消息
-            baiJiaXingBadge.setVisibility(View.GONE);
         } else if (event.getCallType() == BusEnum.START_PAGE) {//落地页
             selectNext(event.getData());
         } else if (event.getCallType() == BusEnum.INTEN_CHAT) {
@@ -667,40 +645,12 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             img_msg_tip.setVisibility(a <= 0 ? View.GONE : View.VISIBLE);
             img_msg_tip.setText(count);
         } else if (event.getCallType() == BusEnum.ACTION_UNREAD) {
-            baiJiaXingBadge.setVisibility(View.VISIBLE);
         } else if (event.getCallType() == BusEnum.GROUP_UNREAD_COUNT) {
-            if (ImMesssageRedDot.getGroupUnreadCount() > 0)
-                baiJiaXingBadge.setVisibility(View.VISIBLE);
         } else if (event.getCallType() == BusEnum.Bangding_Family) {
             startActivity(new Intent(this, SelectFamilyCityActivity.class));
         }
     }
 
-    public void loadRedDot() {
-        if (user == null) {
-            baiJiaXingBadge.setVisibility(View.GONE);
-            return;
-        }
-        apiImp.getActioUNreadRemind(this, new DataIdCallback<String>() {
-            @Override
-            public void onSuccess(String data, int id) {
-                ActionUnreadMsgEntity unreadMsgEntity = JSON.parseObject(data, ActionUnreadMsgEntity.class);
-                if (!StringUtil.isEmpty(unreadMsgEntity.getCount())) {
-                    if (Integer.parseInt(unreadMsgEntity.getCount()) > 0 || ImMesssageRedDot.getGroupUnreadCount() > 0) {
-                        baiJiaXingBadge.setVisibility(View.VISIBLE);
-                    } else {
-                        baiJiaXingBadge.setVisibility(View.GONE);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailed(String errCode, String errMsg, int id) {
-
-            }
-        });
-    }
 
     //更新位置
     public void updatePosition() {

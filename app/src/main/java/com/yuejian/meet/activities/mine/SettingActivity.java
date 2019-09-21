@@ -1,10 +1,8 @@
 package com.yuejian.meet.activities.mine;
 
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -25,12 +23,10 @@ import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.Mine;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.PreferencesUtil;
-import com.yuejian.meet.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -46,7 +42,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_my_setting);
         setTitleText(getString(R.string.mine_txt_setting));
         mine = (Mine) getIntent().getSerializableExtra("mine");
         user = AppConfig.userEntity;

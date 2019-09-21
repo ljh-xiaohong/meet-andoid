@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/head_lay"
+    android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone"
+            android:layout_height="215dp" />
+    <com.yuejian.meet.widgets.SecretaryTitleView
+        android:id="@+id/family_circle_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/precise_push_list"
+            android:layout_marginTop="5dp"
+            android:paddingRight="12dp"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

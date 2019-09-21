@@ -134,7 +134,7 @@ public class MessageFragment extends BaseFragment implements AdapterView.OnItemC
 
     public void actionReadNum() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customer_id", user.getCustomer_id());
+        params.put("customer_id", AppConfig.CustomerId);
         apiImp.getActionReadNum(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -454,7 +454,7 @@ public class MessageFragment extends BaseFragment implements AdapterView.OnItemC
 
     public void getrequstCount() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customer_id", user.getCustomer_id());
+        params.put("customer_id", AppConfig.CustomerId);
         apiImp.getRequstCount(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

@@ -1,13 +1,16 @@
 package com.yuejian.meet.widgets;
 
+/**
+ * @author : ljh
+ * @time : 2019/9/8 12:56
+ * @desc :
+ */
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -16,41 +19,12 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
-import com.yuejian.meet.R;
-
 /**
- * 【Item侧滑删除菜单】
- * 继承自ViewGroup，实现滑动出现删除等选项的效果，
- * 思路：跟随手势将item向左滑动，
- * 在onMeasure时 将第一个Item设为屏幕宽度
- * 【解决屏幕上多个侧滑删除菜单】：内设一个类静态View类型变量 ViewCache，存储的是当前正处于右滑状态的CstSwipeMenuItemViewGroup，
- * 每次Touch时对比，如果两次Touch的不是一个View，那么令ViewCache恢复普通状态，并且设置新的CacheView
- * 只要有一个侧滑菜单处于打开状态， 就不给外层布局上下滑动了
- * <p/>
- * 平滑滚动使用的是Scroller,20160811，最新平滑滚动又用属性动画做了，因为这样更酷炫(设置加速器不同)
- * <p/>
- * 20160824,fix 【多指一起滑我的情况】：只接第一个客人(使用一个类静态布尔变量)
- * other:
- * 1 菜单处于侧滑时，拦截长按事件
- * 2 解决侧滑时 点击 的冲突
- * 3 通过 isIos 变量控制是否是IOS阻塞式交互，默认是打开的。
- * 4 通过 isSwipeEnable 变量控制是否开启右滑菜单，默认打开。（某些场景，复用item，没有编辑权限的用户不能右滑）
- * 5 2016 09 29 add,，通过开关 isLeftSwipe支持左滑右滑
- * 6 2016 10 21 add , 增加viewChache 的 get()方法，可以用在：当点击外部空白处时，关闭正在展开的侧滑菜单。
- * 7 2016 10 22 fix , 当父控件宽度不是全屏时的bug。
- * 2016 10 22 add , 仿QQ，侧滑菜单展开时，点击除侧滑菜单之外的区域，关闭侧滑菜单。
- * 8 2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
- * 9 2016 11 04 fix 长按事件和侧滑的冲突。
- * 10 2016 11 09 add,适配GridLayoutManager，将以第一个子Item(即ContentItem)的宽度为控件宽度。
- * 11 2016 11 14 add,支持padding,且后续计划加入上滑下滑，因此不再支持ContentItem的margin属性。
- * 2016 11 14 add,修改回弹的动画，更平滑。
- * 2016 11 14 fix,微小位移的move不回回弹的bug
- * 2016 11 18,fix 当ItemView存在高度可变的情况
- * 2016 12 07,fix 禁止侧滑时(isSwipeEnable false)，点击事件不受干扰。
- * 2016 12 09,fix ListView快速滑动快速删除时，偶现菜单不消失的bug。
- * Created by zhangxutong .
- * Date: 16/04/24
+ * author: wu
+ * date: on 2018/11/13.
+ * describe:实现RecyclerView 左滑/右滑 删除、置顶等功能
  */
+
 public class SwipeMenuLayout extends ViewGroup {
     private static final String TAG = "zxt/SwipeMenuLayout";
 
@@ -124,7 +98,6 @@ public class SwipeMenuLayout extends ViewGroup {
 
     /**
      * 设置侧滑功能开关
-     *
      * @param swipeEnable
      */
     public void setSwipeEnable(boolean swipeEnable) {
@@ -182,22 +155,6 @@ public class SwipeMenuLayout extends ViewGroup {
         isIos = true;
         //左滑右滑的开关,默认左滑打开菜单
         isLeftSwipe = true;
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SwipeMenuLayout, defStyleAttr, 0);
-        int count = ta.getIndexCount();
-        for (int i = 0; i < count; i++) {
-            int attr = ta.getIndex(i);
-            //如果引用成AndroidLib 资源都不是常量，无法使用switch case
-            if (attr == R.styleable.SwipeMenuLayout_swipeEnable) {
-                isSwipeEnable = ta.getBoolean(attr, true);
-            } else if (attr == R.styleable.SwipeMenuLayout_ios) {
-                isIos = ta.getBoolean(attr, true);
-            } else if (attr == R.styleable.SwipeMenuLayout_leftSwipe) {
-                isLeftSwipe = ta.getBoolean(attr, true);
-            }
-        }
-        ta.recycle();
-
-
     }
 
     @Override
@@ -408,7 +365,6 @@ public class SwipeMenuLayout extends ViewGroup {
                                 } else {
                                     //平滑展开Menu
                                     smoothExpand();
-
                                 }
                             }
                         } else {
@@ -435,7 +391,6 @@ public class SwipeMenuLayout extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        //Log.d(TAG, "onInterceptTouchEvent() called with: ev = [" + ev + "]");
         //add by zhangxutong 2016 12 07 begin:
         //禁止侧滑时，点击事件不受干扰。
         if (isSwipeEnable) {
@@ -603,8 +558,8 @@ public class SwipeMenuLayout extends ViewGroup {
     }
 
     //每次ViewDetach的时候，判断一下 ViewCache是不是自己，如果是自己，关闭侧滑菜单，且ViewCache设置为null，
-    // 理由：1 防止内存泄漏(ViewCache是一个静态变量)
-    // 2 侧滑删除后自己后，这个View被Recycler回收，复用，下一个进入屏幕的View的状态应该是普通状态，而不是展开状态。
+    // 理由：huise 防止内存泄漏(ViewCache是一个静态变量)
+    // huagnse 侧滑删除后自己后，这个View被Recycler回收，复用，下一个进入屏幕的View的状态应该是普通状态，而不是展开状态。
     @Override
     protected void onDetachedFromWindow() {
         if (this == mViewCache) {

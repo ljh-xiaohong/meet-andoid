@@ -16,6 +16,7 @@ import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nimlib.sdk.NimIntent;
 import com.yuejian.meet.MainActivity;
+//import com.yuejian.meet.NewMainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.session.avchat.activity.AVChatActivity;
@@ -78,6 +79,7 @@ public class StartUpActivity extends Activity implements AppWakeUpListener {
 //                        if (DadanPreference.getInstance(StartUpActivity.this).getBoolean("isLogin")){
 //                            intent= new Intent(getBaseContext(), LoginActivity.class);
 //                        }else {
+//                            intent= new Intent(getBaseContext(), MainActivity.class);
                             intent= new Intent(getBaseContext(), MainActivity.class);
 //                        }
                         if (isLogin) {

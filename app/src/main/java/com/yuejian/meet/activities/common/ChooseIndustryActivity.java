@@ -290,8 +290,8 @@ public class ChooseIndustryActivity extends BaseActivity implements AdapterView.
                     mSubAdapter.notifyDataSetChanged();
 //                    Intent intent = new Intent();
 //                    intent.putExtra("job", subData.get(position) + "");
-//                    ChooseIndustryActivity.this.setResult(RESULT_OK, intent);
-//                    ChooseIndustryActivity.this.finish();
+//                    NewChooseIndustryActivity.this.setResult(RESULT_OK, intent);
+//                    NewChooseIndustryActivity.this.finish();
                 }
             });
             return convertView;
@@ -349,8 +349,8 @@ public class ChooseIndustryActivity extends BaseActivity implements AdapterView.
                     seekJobAdapter.notifyDataSetChanged();
 //                    Intent intent = new Intent();
 //                    intent.putExtra("job", subData.get(position) + "");
-//                    ChooseIndustryActivity.this.setResult(RESULT_OK, intent);
-//                    ChooseIndustryActivity.this.finish();
+//                    NewChooseIndustryActivity.this.setResult(RESULT_OK, intent);
+//                    NewChooseIndustryActivity.this.finish();
                 }
             });
             return convertView;
