@@ -75,11 +75,11 @@ public class VideoActivity extends BaseActivity {
         moreDialog = new MoreDialog();
         moreData = new ArrayList<>();
         //初始化内容
-        if (info.getCustomerId().equals(AppConfig.CustomerId)) {
+        if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
             moreData.add("编辑");
             moreData.add("删除");
         } else {
-            moreData.add(info.isCollection() ? "已收藏" : "收藏");
+            moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
             moreData.add("不感兴趣");
             moreData.add("举报");
         }
@@ -133,7 +133,7 @@ public class VideoActivity extends BaseActivity {
                     break;
 
                 case "举报":
-                    ReportActivity.startActivityForResult(mContext, 1, info.getCustomerId(), info.getId() + "", "3");
+                    ReportActivity.startActivityForResult(mContext, 1, info.getContentDetail().getCustomerId(), info.getContentDetail().getId() + "", "3");
                     break;
 
                 case "取消":
@@ -175,8 +175,11 @@ public class VideoActivity extends BaseActivity {
                 parseJSON(data);
                 if (info == null) return;
                 initData();
-                initListener();
-                initDialog();
+                if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
+                    initListener();
+                    initDialog();
+                }
+
             }
 
             @Override
@@ -188,24 +191,26 @@ public class VideoActivity extends BaseActivity {
 
     private void initData() {
         player.setLooping(true);
-        player.setUp(info.getCrContent(), true, "");
+        player.setUp(info.getContentDetail().getCrContent(), true, "");
         player.startPlayLogic();
-        Glide.with(mContext).load(info.getUserPhoto()).into(player.getHeadImagView());
-        player.getNameText().setText(info.getUserName());
-        player.getContenText().setText(info.getContentTitle());
+        Glide.with(mContext).load(info.getContentDetail().getUserPhoto()).into(player.getHeadImagView());
+        player.getNameText().setText(info.getContentDetail().getUserName());
+        player.getContenText().setText(info.getContentDetail().getContentTitle());
         //关注
-        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "#66ffffff"));
-        player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
+        player.getFollowText().setTextColor(Color.parseColor(info.getContentDetail().getRelationType().equals("0")  ? "#ffffffff" : "#66ffffff"));
+        player.getFollowText().setText(info.getContentDetail().getRelationType().equals("0") ? "加关注" : "已关注");
         //点赞数
         //是否点赞
-        player.setLike(info.getIsPraise() == 1 ? true : false, info.getFabulousNum());
+        player.setLike(info.getContentDetail().getIsPraise() .equals("1") ? true : false, info.getContentDetail().getFabulousNum());
         //评论数量
-        player.getDiscussButton().setText(info.getCommentNum());
-        player.getContenText().setText(info.getContentTitle());
-        player.getGoodsButton().setText(info.getShopName());
-        if (info.getLabelName() != null && info.getLabelName().contains("#")) {
-            labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
-            labelId = info.getLabelId().split(",");
+        player.getDiscussButton().setText(info.getContentDetail().getCommentNum());
+        player.getContenText().setText(info.getContentDetail().getContentTitle());
+        if(info.getContentDetail().getShopList()!=null){
+            player.getGoodsButton().setText(info.getContentDetail().getShopList().getShopName());
+        }
+          if (info.getContentDetail().getLabelName() != null && info.getContentDetail().getLabelName().contains("#")) {
+            labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
+            labelId = info.getContentDetail().getLabelId().split(",");
         }
 
         //标签
@@ -234,33 +239,43 @@ public class VideoActivity extends BaseActivity {
     }
 
     private void parseJSON(String data) {
-        if (TextUtils.isEmpty(data)) return;
-        JSONObject jo = JSON.parseObject(data);
-        if (null == jo && !jo.getString("code").equals("0")) return;
-        JSONArray ja = jo.getJSONArray("data");
-        info = new VideoAndContentEntiy();
-        JSONObject in = ja.getJSONObject(0);
-        if (in == null && in.size() <= 0) return;
+
         try {
-            info.setPhotoAndVideoUrl(in.getString("photoAndVideoUrl"));
-            info.setUserPhoto(in.getString("userPhoto"));
-            info.setCrContent(in.getString("crContent"));
-            info.setShopName(in.getString("shopName"));
-            info.setContentTitle(in.getString("contentTitle"));
-            info.setUserName(in.getString("userName"));
-            info.setUserVipType(in.getString("userVipType"));
-            info.setIsRelation(in.getInteger("isRelation"));
-            info.setCommentNum(in.getString("commentNum"));
-            info.setLabelId(in.getString("labelId"));
-            info.setCreateTime(in.getString("createTime"));
-            info.setFabulousNum(in.getString("fabulousNum"));
-            info.setCustomerId(in.getString("customerId"));
-            info.setIsPraise(in.getInteger("isPraise"));
-            info.setId(in.getInteger("id"));
-            info.setShopId(in.getString("shopId"));
-            info.setLabelName(in.getString("labelName"));
-            info.setContentType(in.getString("contentType"));
-            info.setCollection(in.getBoolean("isCollection"));
+            if (TextUtils.isEmpty(data)) return;
+            JSONObject jo = JSON.parseObject(data);
+            if (null == jo && !jo.getString("code").equals("0")) return;
+            JSONObject in = jo.getJSONObject("data");
+            info = new VideoAndContentEntiy();
+
+            if (!TextUtils.isEmpty(in.getString("commentList")) && !in.getString("commentList").equals("null")) {
+                info.setCommentList(JSON.parseArray(in.getString("commentList"), VideoAndContentEntiy.CommentList.class));
+            }
+
+            if (!TextUtils.isEmpty(in.getString("contentDetail")) && !in.getString("contentDetail").equals("null")) {
+                VideoAndContentEntiy.ContentDetail contentDetail = new VideoAndContentEntiy.ContentDetail();
+                JSONObject jsonObject = JSONObject.parseObject(in.getString("contentDetail"));
+                if (null == jsonObject) return;
+                contentDetail.setPhotoAndVideoUrl(jsonObject.getString("photoAndVideoUrl"));
+                contentDetail.setUserPhoto(jsonObject.getString("userPhoto"));
+                contentDetail.setCrContent(jsonObject.getString("crContent"));
+                contentDetail.setContentTitle(jsonObject.getString("contentTitle"));
+                contentDetail.setUserName(jsonObject.getString("userName"));
+                contentDetail.setUserVipType(jsonObject.getString("userVipType"));
+                contentDetail.setRelationType(jsonObject.getString("relationType"));
+                contentDetail.setCommentNum(jsonObject.getString("commentNum"));
+                contentDetail.setLabelId(jsonObject.getString("labelId"));
+                contentDetail.setCreateTime(jsonObject.getString("createTime"));
+                contentDetail.setFabulousNum(jsonObject.getString("fabulousNum"));
+                contentDetail.setCustomerId(jsonObject.getString("customerId"));
+                contentDetail.setIsPraise(jsonObject.getString("isPraise"));
+                contentDetail.setId(jsonObject.getString("id"));
+                contentDetail.setIsCollection(jsonObject.getBoolean("isCollection"));
+                contentDetail.setLabelName(jsonObject.getString("labelName"));
+                contentDetail.setViewNum(jsonObject.getString("viewNum"));
+                contentDetail.setContentType(jsonObject.getString("contentType"));
+                info.setContentDetail(contentDetail);
+            }
+
         } catch (NullPointerException e) {
 
         }
@@ -283,16 +298,16 @@ public class VideoActivity extends BaseActivity {
                 switch (praise.getCode()) {
                     //操作成功
                     case 0:
-                        int count = Integer.valueOf(info.getFabulousNum());
-                        if (info.getIsPraise() == 1) {
-                            info.setIsPraise(0);
+                        int count = Integer.valueOf(info.getContentDetail().getFabulousNum());
+                        if (info.getContentDetail().getIsPraise().equals("1")) {
+                            info.getContentDetail().setIsPraise("0");
                             count = count - 1;
                         } else {
-                            info.setIsPraise(1);
+                            info.getContentDetail().setIsPraise("1");
                             count = count + 1;
                         }
-                        info.setFabulousNum(count + "");
-                        player.setLike(info.getIsPraise() == 1 ? true : false, count + "");
+                        info.getContentDetail().setFabulousNum(count + "");
+                        player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, count + "");
 
                         break;
 
@@ -326,15 +341,15 @@ public class VideoActivity extends BaseActivity {
      * 分享
      */
     private void share() {
-        Glide.with(mContext).load(info.getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+        Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,
-                        info.getContentTitle(),
+                        info.getContentDetail().getContentTitle(),
                         mContext.getResources().getString(R.string.share_description),
-                        String.format("http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=%s&id=%s", info.getContentType(), info.getId()));
+                        String.format("http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=%s&id=%s", info.getContentDetail().getContentType(), info.getContentDetail().getId()));
             }
         });
 
@@ -351,10 +366,10 @@ public class VideoActivity extends BaseActivity {
      */
     public void AddFollow() {
         Map<String, Object> params = new HashMap<>();
-        params.put("opCustomerId", info.getCustomerId());
+        params.put("opCustomerId", info.getContentDetail().getCustomerId());
         params.put("customerId", customerId);
         //2-取消关注 1-添加关注
-        params.put("type", info.getIsRelation() == 0 ? 1 : 2);
+        params.put("type", info.getContentDetail().getRelationType().equals("0") ? 1 : 2);
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -364,9 +379,9 @@ public class VideoActivity extends BaseActivity {
                 switch (jo.getInteger("code")) {
 
                     case 0:
-                        info.setIsRelation(info.getIsRelation() == 0 ? 1 : 0);
-                        player.getFollowText().setTextColor(Color.parseColor(info.getIsRelation() == 0 ? "#ffffffff" : "#66ffffff"));
-                        player.getFollowText().setText(info.getIsRelation() == 0 ? "加关注" : "已关注");
+                        info.getContentDetail().setRelationType(info.getContentDetail().getRelationType().equals("0") ? "1" : "0");
+                        player.getFollowText().setTextColor(Color.parseColor(info.getContentDetail().getRelationType().equals("0") ? "#ffffffff" : "#66ffffff"));
+                        player.getFollowText().setText(info.getContentDetail().getRelationType().equals("0") ? "加关注" : "已关注");
                         break;
 
                     case 19983:
@@ -391,7 +406,7 @@ public class VideoActivity extends BaseActivity {
         Map<String, Object> params = new HashMap<>();
         //type：5:文章, 6:视频, 7:视频模板, 8:项目, 9:商品，10:海报模板
         params.put("type", 6);
-        params.put("relationId", info.getId());
+        params.put("relationId", info.getContentDetail().getId());
         params.put("customerId", AppConfig.CustomerId);
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
@@ -399,7 +414,7 @@ public class VideoActivity extends BaseActivity {
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
-                info.setCollection(true);
+                info.getContentDetail().setCollection(true);
                 moreDialog.dismiss();
                 initDialog();
             }
@@ -419,7 +434,7 @@ public class VideoActivity extends BaseActivity {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("type", "1");
-        map.put("id", info.getId());
+        map.put("id", info.getContentDetail().getId());
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -440,8 +455,8 @@ public class VideoActivity extends BaseActivity {
     private void delectContent() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
-        map.put("type", info.getContentType());
-        map.put("id", info.getId());
+        map.put("type", info.getContentDetail().getContentType());
+        map.put("id", info.getContentDetail().getId());
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

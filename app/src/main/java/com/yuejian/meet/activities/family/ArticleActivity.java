@@ -38,6 +38,7 @@ import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.TextUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.load.GlideImageEngine;
+import com.zhy.view.flowlayout.FlowLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,6 +94,27 @@ public class ArticleActivity extends BaseActivity {
     @Bind(R.id.activity_activity_read)
     TextView read;
 
+    @Bind(R.id.activity_article_shop_img)
+    ImageView shop_img;
+
+    @Bind(R.id.activity_article_shop_name)
+    TextView shop_name;
+
+    @Bind(R.id.activity_article_shop_disct)
+    TextView shop_disct;
+
+    @Bind(R.id.activity_article_shop_price_discount)
+    TextView shop_discount;
+
+    @Bind(R.id.activity_article_shop_price_full)
+    TextView shop_price;
+
+    @Bind(R.id.activity_article_shop_layout)
+    View shop_layout;
+
+    @Bind(R.id.activity_article_flowlayout)
+    FlowLayout flowLayout;
+
     private MoreDialog moreDialog;
 
     private List<String> moreData;
@@ -132,22 +154,42 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void initData() {
-        Glide.with(mContext).load(info.getUserPhoto()).into(head);
-        name.setText(info.getUserName());
-        vip.setVisibility(info.getUserVipType().equals("0") ? View.INVISIBLE : View.VISIBLE);
-        follow.setText(info.getIsRelation() == 0 ? "关注" : "已关注");
-        follow.setBackgroundResource(info.getIsRelation() == 0 ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
-        title.setText(info.getContentTitle());
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getCreateTime()))));
-        discuss.setText(String.format("共%s条评论", info.getCommentNum()));
-        discuss_b.setText(String.format("共%s条评论", info.getCommentNum()));
-        read.setText(String.format("阅读 %s", info.getViewNum()));
-        if (!TextUtils.isEmpty(info.getLabelName()) && info.getLabelName().contains("#")) {
-            labelName = info.getLabelName().trim().substring(1, info.getLabelName().length()).split("#");
-            labelId = info.getLabelId().split(",");
+        Glide.with(mContext).load(info.getContentDetail().getUserPhoto()).into(head);
+        name.setText(info.getContentDetail().getUserName());
+        vip.setVisibility(info.getContentDetail().getUserVipType().equals("0") ? View.INVISIBLE : View.VISIBLE);
+        follow.setText(info.getContentDetail().getRelationType().equals("0") ? "关注" : "已关注");
+        follow.setBackgroundResource(info.getContentDetail().getRelationType().equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
+        title.setText(info.getContentDetail().getContentTitle());
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getContentDetail().getCreateTime()))));
+        discuss.setText(String.format("共%s条评论", info.getContentDetail().getCommentNum()));
+        discuss_b.setText(String.format("共%s条评论", info.getContentDetail().getCommentNum()));
+        read.setText(String.format("阅读 %s", info.getContentDetail().getViewNum()));
+        if (!TextUtils.isEmpty(info.getContentDetail().getLabelName()) && info.getContentDetail().getLabelName().contains("#")) {
+            labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
+            labelId = info.getContentDetail().getLabelId().split(",");
+            if (labelName == null) return;
+            for (int i = 0; i < labelName.length; i++) {
+                TextView item = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_article_tag, null);
+                ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+                params.leftMargin = 10;
+                item.setLayoutParams(params);
+                item.setText(labelName[i]);
+                flowLayout.addView(item);
+            }
+
+
         }
 
-        contentEntities = JSON.parseArray(info.getCrContent(), ArticleContentEntity.class);
+        if (info.getContentDetail().getShopList() != null) {
+            shop_layout.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(info.getContentDetail().getShopList().getGPhoto()).into(shop_img);
+            shop_name.setText(info.getContentDetail().getShopList().getShopName());
+            shop_disct.setText(info.getContentDetail().getShopList().getGDes());
+            shop_discount.setText(info.getContentDetail().getShopList().getGPriceVip());
+            shop_price.setText(info.getContentDetail().getShopList().getGPriceOriginal());
+        }
+
+        contentEntities = JSON.parseArray(info.getContentDetail().getCrContent(), ArticleContentEntity.class);
         if (contentEntities != null && contentEntities.size() > 0) {
 
             for (ArticleContentEntity entity : contentEntities) {
@@ -249,7 +291,11 @@ public class ArticleActivity extends BaseActivity {
                 parseJSON(data);
                 if (info == null) return;
                 initData();
-                initDialog();
+                if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
+                    initDialog();
+                    initListener();
+                }
+
             }
 
             @Override
@@ -264,11 +310,11 @@ public class ArticleActivity extends BaseActivity {
         moreDialog = new MoreDialog();
         moreData = new ArrayList<>();
         //初始化内容
-        if (info.getCustomerId().equals(AppConfig.CustomerId)) {
+        if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
             moreData.add("编辑");
             moreData.add("删除");
         } else {
-            moreData.add(info.isCollection() ? "已收藏" : "收藏");
+            moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
             moreData.add("不感兴趣");
             moreData.add("举报");
         }
@@ -322,7 +368,7 @@ public class ArticleActivity extends BaseActivity {
                     break;
 
                 case "举报":
-                    ReportActivity.startActivityForResult(mContext, 1, info.getCustomerId(), info.getId() + "", "3");
+                    ReportActivity.startActivityForResult(mContext, 1, info.getContentDetail().getCustomerId(), info.getContentDetail().getId() + "", "3");
                     break;
 
                 case "取消":
@@ -339,7 +385,7 @@ public class ArticleActivity extends BaseActivity {
         Map<String, Object> params = new HashMap<>();
         //type：5:文章, 6:视频, 7:视频模板, 8:项目, 9:商品，10:海报模板
         params.put("type", 5);
-        params.put("relationId", info.getId());
+        params.put("relationId", info.getContentDetail().getId());
         params.put("customerId", AppConfig.CustomerId);
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
@@ -347,7 +393,7 @@ public class ArticleActivity extends BaseActivity {
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
-                info.setCollection(true);
+                info.getContentDetail().setCollection(true);
                 moreDialog.dismiss();
                 initDialog();
             }
@@ -366,7 +412,7 @@ public class ArticleActivity extends BaseActivity {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("type", "1");
-        map.put("id", info.getId());
+        map.put("id", info.getContentDetail().getId());
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -387,8 +433,8 @@ public class ArticleActivity extends BaseActivity {
     private void delectContent() {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
-        map.put("type", info.getContentType());
-        map.put("id", info.getId());
+        map.put("type", info.getContentDetail().getContentType());
+        map.put("id", info.getContentDetail().getId());
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -404,38 +450,82 @@ public class ArticleActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 关注
+     */
+    public void AddFollow() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("opCustomerId", info.getContentDetail().getCustomerId());
+        params.put("customerId", customerId);
+        //2-取消关注 1-添加关注
+        params.put("type", info.getContentDetail().getRelationType().equals("0") ? 1 : 2);
+        apiImp.bindRelation(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+
+                JSONObject jo = JSONObject.parseObject(data);
+                if (jo == null) return;
+                switch (jo.getInteger("code")) {
+
+                    case 0:
+                        info.getContentDetail().setRelationType(info.getContentDetail().getRelationType().equals("0") ? "1" : "0");
+                        follow.setText(info.getContentDetail().getRelationType().equals("0") ? "关注" : "已关注");
+                        follow.setBackgroundResource(info.getContentDetail().getRelationType().equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
+                        break;
+
+                    case 19983:
+                    case 19981:
+                        ViewInject.shortToast(mContext, jo.getString("message"));
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+    }
+
     private void parseJSON(String data) {
-        if (TextUtils.isEmpty(data)) return;
-        JSONObject jo = JSON.parseObject(data);
-        if (null == jo && !jo.getString("code").equals("0")) return;
-        JSONArray ja = jo.getJSONArray("data");
-        info = new VideoAndContentEntiy();
-        JSONObject in = ja.getJSONObject(0);
-        if (in == null && in.size() <= 0) return;
+
         try {
-            info.setPhotoAndVideoUrl(in.getString("photoAndVideoUrl"));
-            info.setUserPhoto(in.getString("userPhoto"));
-            info.setCrContent(in.getString("crContent"));
-            info.setShopName(in.getString("shopName"));
-            info.setContentTitle(in.getString("contentTitle"));
-            info.setUserName(in.getString("userName"));
-            info.setUserVipType(in.getString("userVipType"));
-            info.setIsRelation(in.getInteger("isRelation"));
-            info.setCommentNum(in.getString("commentNum"));
-            info.setLabelId(in.getString("labelId"));
-            info.setCreateTime(in.getString("createTime"));
-            info.setFabulousNum(in.getString("fabulousNum"));
-            info.setCustomerId(in.getString("customerId"));
-            info.setIsPraise(in.getInteger("isPraise"));
-            info.setId(in.getInteger("id"));
-            info.setShopId(in.getString("shopId"));
-            info.setLabelName(in.getString("labelName"));
-            info.setContentType(in.getString("contentType"));
-            info.setCollection(in.getBoolean("isCollection"));
-            info.setgPhoto(in.getString("gPhoto"));
-            info.setgPriceVip(in.getString("gPriceVip"));
-            info.setgPriceOriginal(in.getString("gPriceOriginal"));
-            info.setViewNum(in.getInteger("viewNum"));
+            if (TextUtils.isEmpty(data)) return;
+            JSONObject jo = JSON.parseObject(data);
+            if (null == jo && !jo.getString("code").equals("0")) return;
+            JSONObject in = jo.getJSONObject("data");
+            info = new VideoAndContentEntiy();
+
+            if (!TextUtils.isEmpty(in.getString("commentList")) && !in.getString("commentList").equals("null")) {
+                info.setCommentList(JSON.parseArray(in.getString("commentList"), VideoAndContentEntiy.CommentList.class));
+            }
+
+            if (!TextUtils.isEmpty(in.getString("contentDetail")) && !in.getString("contentDetail").equals("null")) {
+                VideoAndContentEntiy.ContentDetail contentDetail = new VideoAndContentEntiy.ContentDetail();
+                JSONObject jsonObject = JSONObject.parseObject(in.getString("contentDetail"));
+                if (null == jsonObject) return;
+                contentDetail.setPhotoAndVideoUrl(jsonObject.getString("photoAndVideoUrl"));
+                contentDetail.setUserPhoto(jsonObject.getString("userPhoto"));
+                contentDetail.setCrContent(jsonObject.getString("crContent"));
+                contentDetail.setContentTitle(jsonObject.getString("contentTitle"));
+                contentDetail.setUserName(jsonObject.getString("userName"));
+                contentDetail.setUserVipType(jsonObject.getString("userVipType"));
+                contentDetail.setRelationType(jsonObject.getString("relationType"));
+                contentDetail.setCommentNum(jsonObject.getString("commentNum"));
+                contentDetail.setLabelId(jsonObject.getString("labelId"));
+                contentDetail.setCreateTime(jsonObject.getString("createTime"));
+                contentDetail.setFabulousNum(jsonObject.getString("fabulousNum"));
+                contentDetail.setCustomerId(jsonObject.getString("customerId"));
+                contentDetail.setIsPraise(jsonObject.getString("isPraise"));
+                contentDetail.setId(jsonObject.getString("id"));
+                contentDetail.setIsCollection(jsonObject.getBoolean("isCollection"));
+                contentDetail.setLabelName(jsonObject.getString("labelName"));
+                contentDetail.setViewNum(jsonObject.getString("viewNum"));
+                contentDetail.setContentType(jsonObject.getString("contentType"));
+                info.setContentDetail(contentDetail);
+            }
+
         } catch (NullPointerException e) {
 
         }
@@ -444,7 +534,12 @@ public class ArticleActivity extends BaseActivity {
 
     private void initListener() {
         more.setOnClickListener(view -> {
+
             moreDialog.show(getSupportFragmentManager(), "ArticleActivity.moreDialog");
+        });
+
+        follow.setOnClickListener(view -> {
+            AddFollow();
         });
     }
 }
