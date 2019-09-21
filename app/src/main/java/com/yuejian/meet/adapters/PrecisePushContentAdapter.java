@@ -76,8 +76,7 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
 
     @Override
     public int getItemCount() {
-//        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
-        return 8;
+        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

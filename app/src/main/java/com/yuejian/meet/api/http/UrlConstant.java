@@ -263,7 +263,7 @@ public class UrlConstant {
     public static String POST_ACTION_PRAISE = apiUrl() + "api/action/praise";
 
     public static String POST_GET_RELATION_LIST = apiUrl() + "api/customerRelation/getRelationList";
-
+    //关注用户
     public static String POST_BIND_RELATION = apiUrl() + "api/customerRelation/bindRelation";
     //获取单条动态信息
     public static String POST_ACTION_GETACTION_ONE = apiUrl() + "api/action/getAction";
@@ -1102,6 +1102,26 @@ public class UrlConstant {
     public static String REPLYCOMENT = apiUrl() + "api/contentComment/replyContentComment";
     //获取评论列表
     public static String GET_CONTENT_COMMENTS = apiUrl() + "api/contentComment/getContentComments";
+
+
+
+
+
+
+    //获取消息通知列表
+    public static String GET_GETMESSAGELIST = apiUrl() + "api/msg/getMessageList";
+    //新朋友
+    public static String GET_GETATTENTIONANDFRIEND = apiUrl() + "api/customerRelation/getAttentionAndFriend";
+    //获取用户收到的评论和赞列表
+    public static String GET_GETCOMMENTPRAISELIST = apiUrl() + "api/contentComment/getCommentPraiseList";
+    //获取用户服务信息
+    public static String GET_GETUSRSERVICEINFO = apiUrl() + "api/msg/getUsrServiceInfo";
+    //设置用户服务信息
+    public static String GET_MEESSAGESETTING = apiUrl() + "api/msg/eessageSetting";
+    //通讯录
+    public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
+    //获取消息通知详细
+    public static String GET_GETMESSAGEDETAIL = apiUrl() + "api/msg/getMessageDetail";
 
 
 }

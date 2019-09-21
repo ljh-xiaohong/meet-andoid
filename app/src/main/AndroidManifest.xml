@@ -104,6 +104,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogTheme" />
         <activity
+            android:name=".activities.message.MyMessageCommentDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogTheme" />
+        <activity
             android:name=".activities.home.PicturePreviewActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -942,6 +946,14 @@
         <activity android:name=".activities.FamilyTree.AddressBooNotekActivity" />
         <activity android:name=".activities.FamilyTree.AddRelationActivity" />
         <activity android:name=".activities.FamilyTree.AddNewFriendActivity" />
+        <activity android:name=".activities.message.CustomerServiceDetails" />
+        <activity android:name=".activities.message.NewFriendActivity" />
+        <activity android:name=".activities.message.CommentZanActivity" />
+        <activity android:name=".activities.message.ContactActivity" />
+        <activity android:name=".activities.message.CityACtivity" />
+        <activity android:name=".activities.message.MessageSettingActivity" />
+        <activity android:name=".activities.message.ProvinceActivity" />
+        <activity android:name=".activities.message.NewChooseIndustryActivity" />
         <activity
             android:name=".activities.FamilyTree.AddressListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />

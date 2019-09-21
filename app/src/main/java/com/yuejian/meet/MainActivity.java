@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private NewMessageFragment messageFragment = new NewMessageFragment();
     private CreationFragment creationFragment = new CreationFragment();
     private FindFragment findWebFragment = new FindFragment();
-    private MessageFragment businessFragment = new MessageFragment();
+    private BusinessFragment businessFragment = new BusinessFragment();
     private MineFragment mineFragment = new MineFragment();
     //    private CultureFragment cultureFragment = new CultureFragment();
     private FamilyCircleRecommendFragment familyFragment;
@@ -327,7 +327,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      * 选择的下标
      */
     public void setSelectBut(int vId) {
-        if (vId == R.id.rlayout_creation || vId == R.id.rlayout_msg) {
+        if (vId == R.id.rlayout_creation) {
 
         } else {
             rbtn_home.setSelected(false);

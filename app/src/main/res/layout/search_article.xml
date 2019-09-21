@@ -10,6 +10,7 @@
          android:id="@+id/shop_img"
          android:layout_centerVertical="true"
          android:layout_width="90dp"
+         android:scaleType="fitXY"
          android:layout_alignParentRight="true"
          android:layout_height="60dp" />
 

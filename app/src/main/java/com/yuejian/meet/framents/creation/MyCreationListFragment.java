@@ -74,7 +74,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         Map<String, Object> params = new HashMap<>();
         params.put("pageIndex", pageIndex);
         params.put("pageItemCount", pageItemCount);
-        params.put("customerId", "500102");
+        params.put("customerId", AppConfig.CustomerId);
         params.put("type", type);
 
         apiImp.getContentList(params, this, new DataIdCallback<String>() {

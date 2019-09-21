@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="74dp"
+    android:background="@drawable/line_bottom"
     android:clickable="true"
     android:id="@+id/swipeMenuLayout">
 
@@ -24,7 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:layout_toRightOf="@+id/iv_icon"
+            android:layout_toLeftOf="@+id/time"
+            android:layout_marginRight="15dp"
             android:singleLine="true"
+            android:ellipsize="end"
             android:text="百家姓氏"
             android:textColor="#333333"
             android:textSize="16sp"
@@ -37,42 +41,26 @@
             android:layout_toRightOf="@+id/iv_icon"
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="版本2.0更新"
             android:layout_marginLeft="12dp"
             android:textColor="#FF999999"
             android:textSize="14sp"
             android:layout_centerVertical="true" />
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:text="3分钟前"
             android:textColor="#FF999999"
-            android:textSize="10sp"
-            android:layout_centerVertical="true" />
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnTop"
-        android:layout_width="60dp"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:background="#d9dee4"
-        android:text="置顶"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/btnUnRead"
-        android:layout_width="60dp"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:background="#ecd50a"
-        android:clickable="true"
-        android:text="标记未读"
-        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/btnDelete"

@@ -31,8 +31,8 @@ public class ContactActivity extends AppCompatActivity implements ViewPager.OnPa
     @Bind(R.id.back)
     ImageView back;
     private FansFragment mFriendFragment;
-    private FansFragment mHundredSecretariesFragment;
-    private FansFragment mNotificationMessageFragment;
+    private FansFragment attentionFragment;
+    private FansFragment mutualPowderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,25 @@ public class ContactActivity extends AppCompatActivity implements ViewPager.OnPa
     private void initView() {
         title.setText("通讯录");
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(mFriendFragment = new FansFragment());
-        mFragmentList.add(mHundredSecretariesFragment = new FansFragment());
-        mFragmentList.add(mNotificationMessageFragment = new FansFragment());
+
+        mFriendFragment = new FansFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type",0);
+        mFriendFragment.setArguments(bundle);
+        mFragmentList.add(mFriendFragment);
+
+        attentionFragment = new FansFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("type",1);
+        attentionFragment.setArguments(bundle1);
+        mFragmentList.add(attentionFragment);
+
+        mutualPowderFragment = new FansFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt("type",2);
+        mutualPowderFragment.setArguments(bundle2);
+        mFragmentList.add(mutualPowderFragment);
+
         setCurrentItem(0);
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
         vpContact.setAdapter(adapter);

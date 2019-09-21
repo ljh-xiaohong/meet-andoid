@@ -1,11 +1,15 @@
 package com.yuejian.meet.activities.message;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yuejian.meet.R;
@@ -19,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +45,19 @@ public class NewChooseIndustryActivity extends Activity {
     RecyclerView secondRecyclerview;
     @Bind(R.id.select_recyclerview)
     RecyclerView selectRecyclerview;
+    @Bind(R.id.back)
+    ImageView back;
+    @Bind(R.id.sure_tv)
+    TextView sureTv;
+    @Bind(R.id.root_layout)
+    RelativeLayout rootLayout;
     private SecondAdapter secondAdapter;
     private FirstAdapter firstAdapter;
     private SelectAdapter selectAdapter;
 
-    private List<ChooseIndustryBean.DataBean> firstData=new ArrayList<>();
-    private List<ChooseIndustryBean.DataBean.JobsBean> secondData=new ArrayList<>();
-    private List<SelectBean> selectData=new ArrayList<>();
+    private List<ChooseIndustryBean.DataBean> firstData = new ArrayList<>();
+    private List<ChooseIndustryBean.DataBean.JobsBean> secondData = new ArrayList<>();
+    private List<SelectBean> selectData = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,37 +67,39 @@ public class NewChooseIndustryActivity extends Activity {
         initView();
         initData();
     }
+
     private int firstPosition;
     private int secondPosition;
+
     public void initView() {
-        firstAdapter = new FirstAdapter(this,firstData);
+        firstAdapter = new FirstAdapter(this, firstData);
         firstList.setLayoutManager(new LinearLayoutManager(this));
         firstList.setAdapter(firstAdapter);
         firstAdapter.setClick(new FirstAdapter.OnClick() {
             @Override
             public void click(int position) {
-                firstPosition=position;
+                firstPosition = position;
                 secondData.clear();
                 secondData.addAll(firstData.get(position).getJobs());
                 secondAdapter.notifyDataSetChanged();
             }
         });
-        secondAdapter = new SecondAdapter(this,secondData);
+        secondAdapter = new SecondAdapter(this, secondData);
         secondRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         secondRecyclerview.setAdapter(secondAdapter);
         secondAdapter.setClick(new SecondAdapter.OnClick() {
             @Override
             public void click(int position) {
-                secondPosition=position;
+                secondPosition = position;
                 if (secondData.get(position).isIsSelect()) {
                     SelectBean selectBean = new SelectBean();
                     selectBean.setName(secondData.get(position).getJob());
                     selectBean.setFirstPosition(firstPosition);
                     selectBean.setSecondPosition(secondPosition);
                     selectData.add(selectBean);
-                }else {
-                    for (int i=0;i<selectData.size();i++){
-                        if (selectData.get(i).getName().equals(secondData.get(position).getJob())){
+                } else {
+                    for (int i = 0; i < selectData.size(); i++) {
+                        if (selectData.get(i).getName().equals(secondData.get(position).getJob())) {
                             selectData.remove(i);
                             break;
                         }
@@ -96,7 +109,7 @@ public class NewChooseIndustryActivity extends Activity {
             }
         });
 //
-        selectAdapter = new SelectAdapter(this,selectData);
+        selectAdapter = new SelectAdapter(this, selectData);
         selectRecyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         selectRecyclerview.setAdapter(selectAdapter);
         selectAdapter.setClick(new SelectAdapter.OnClick() {
@@ -108,8 +121,17 @@ public class NewChooseIndustryActivity extends Activity {
                 selectAdapter.notifyDataSetChanged();
             }
         });
+
+        back.setOnClickListener(v -> finish());
+        sureTv.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra("selectData", (Serializable) selectData);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
-    public void initData(){
+
+    public void initData() {
         StringBuilder newstringBuilder = new StringBuilder();
         InputStream inputStream = null;
         try {
@@ -126,7 +148,7 @@ public class NewChooseIndustryActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String result =  newstringBuilder .toString();
+        String result = newstringBuilder.toString();
         Gson gson = new Gson();
         ChooseIndustryBean chooseIndustryBean = gson.fromJson(result, ChooseIndustryBean.class);
         firstData.addAll(chooseIndustryBean.getData());

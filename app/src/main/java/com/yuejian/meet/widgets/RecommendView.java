@@ -158,7 +158,6 @@ public class RecommendView extends LinearLayout {
     }
 
     public void setVideoHorizontalLike(boolean like, String count) {
-
         video_horizontal_like.setCompoundDrawablesWithIntrinsicBounds(
                 getResources().getDrawable(like ? R.mipmap.icon_zan_sel : R.mipmap.icon_zan_nor_w),
                 null,

@@ -17,6 +17,8 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.NewFriendBean;
+import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
@@ -32,6 +34,8 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * @author : g000gle
@@ -61,24 +65,54 @@ public class FriendFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp, getActivity());
+        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mFollowListAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
+                 //关注
+                getAttention(position);
             }
         });
         mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-        mSpringView.callFresh();
+//        mSpringView.callFresh();
+    }
+
+    private void getAttention(int position) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("opCustomerId", followEntities.get(position).getCustomerId());
+        if (followEntities.get(position).getRelationType()==0){
+            map.put("type", "1");
+        }else {
+            map.put("type", "2");
+        }
+        apiImp.bindRelation(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                if (followEntities.get(position).getRelationType()==0){
+                    followEntities.get(position).setRelationType(1);
+                }else {
+                    followEntities.get(position).setRelationType(0);
+                }
+                mFollowListAdapter.notifyItemChanged(position);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
     }
 
     //加载数据
-    List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
-    FamilyFollowEntity followEntitie;
+    List<NewFriendBean.DataBean> followEntities =new ArrayList<>();
+    NewFriendBean followEntitie;
     private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -89,7 +123,7 @@ public class FriendFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                 followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                 followEntitie=new Gson().fromJson(data,NewFriendBean.class);
                  if (followEntitie.getCode()!=0) {
                      ViewInject.shortToast(getActivity(),followEntitie.getMessage());
                      return;

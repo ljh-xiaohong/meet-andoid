@@ -22,6 +22,7 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.adapters.ArticleListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.VideoAndArticleBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
@@ -80,8 +81,8 @@ public class ArticleFragment extends BaseFragment
 
 
     //加载数据
-    List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
-    FamilyFollowEntity followEntitie;
+    List<VideoAndArticleBean.DataBean> followEntities =new ArrayList<>();
+    VideoAndArticleBean followEntitie;
     private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -92,7 +93,7 @@ public class ArticleFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                followEntitie=new Gson().fromJson(data,VideoAndArticleBean.class);
                 if (followEntitie.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
                     return;
@@ -133,14 +134,14 @@ public class ArticleFragment extends BaseFragment
         if (CommonUtil.isNull(title)) return;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("0",title);
+        loadDataFromNet("2",title);
     }
 
     @Override
     public void onLoadmore() {
         if (CommonUtil.isNull(title)) return;
         ++mNextPageIndex;
-        loadDataFromNet("0",title);
+        loadDataFromNet("2",title);
     }
 
 
@@ -176,6 +177,6 @@ public class ArticleFragment extends BaseFragment
         title=titles;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("1",titles);
+        loadDataFromNet("2",titles);
     }
 }

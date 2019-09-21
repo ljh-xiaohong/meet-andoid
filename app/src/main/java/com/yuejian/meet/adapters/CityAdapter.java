@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 
 import com.yuejian.meet.R;
+import com.yuejian.meet.bean.ProvinceBean;
 
 import java.util.List;
 

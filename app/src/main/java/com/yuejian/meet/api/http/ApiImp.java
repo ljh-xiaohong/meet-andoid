@@ -1665,6 +1665,77 @@ public class ApiImp {
     }
 
     /**
+     * 获取消息通知列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getMessageList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGELIST, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 新朋友
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getAttentionAndFriend(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETATTENTIONANDFRIEND, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取用户收到的评论和赞列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getCommentPraiseList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETCOMMENTPRAISELIST, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取用户服务信息
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getUsrServiceInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETUSRSERVICEINFO, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 设置用户服务信息
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void meessageSetting(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_MEESSAGESETTING, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 通讯录
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETRELATION, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取消息通知详细
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getMessageDetail(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGEDETAIL, paramMap, paramObject, paramDataIdCallback);
+    }
+
+    /**
      * 我的访客(版本:3)
      *
      * @param paramMap

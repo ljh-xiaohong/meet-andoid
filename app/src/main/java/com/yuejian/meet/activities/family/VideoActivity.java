@@ -95,12 +95,12 @@ public class VideoActivity extends BaseActivity {
         info.setPhotoAndVideoUrl(in.getString("photoAndVideoUrl"));
         info.setUserPhoto(in.getString("userPhoto"));
         info.setCreateTime(in.getInteger("createTime"));
-        info.setContentVipType(in.getInteger("contentVipType"));
+//        info.setContentVipType(in.getInteger("contentVipType"));
         info.setCrContent(in.getString("crContent"));
         info.setCustomerId(in.getInteger("customerId"));
         info.setLabelTitle(in.getString("labelTitle"));
         info.setContentTitle(in.getString("contentTitle"));
-        info.setVipDeployId(in.getInteger("vipDeployId"));
+//        info.setVipDeployId(in.getInteger("vipDeployId"));
         info.setUserName(in.getString("userName"));
         info.setUserVipType(in.getInteger("userVipType"));
         info.setIsRelation(in.getInteger("isRelation"));

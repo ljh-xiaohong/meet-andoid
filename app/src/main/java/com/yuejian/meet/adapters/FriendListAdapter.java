@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -27,14 +28,13 @@ import java.util.List;
  */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FamilyCircleFollowListViewHolder> {
 
-    private List<FamilyFollowEntity.DataBean> mFollowEntities;
+    private List<NewFriendBean.DataBean> mFollowEntities;
     private Context mContext;
     private Activity mActivity;
     private OnFollowListItemClickListener mListItemClickListener;
     private ApiImp apiImp;
     private boolean isCheckeds;
     private onClickListener mOnClickListener;
-
     public void setOnClickListener(onClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
     }
@@ -42,9 +42,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     public interface onClickListener {
         void onClick(int position);
     }
-    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, Activity activity) {
+    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp) {
         mContext = context;
-        mActivity =activity;
         mListItemClickListener = listItemClickListener;
         this.apiImp = apiImp;
     }
@@ -57,7 +56,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
 
     @Override
     public void onBindViewHolder(FamilyCircleFollowListViewHolder holder, int position) {
-        FamilyFollowEntity.DataBean entity = mFollowEntities.get(position);
+        NewFriendBean.DataBean entity = mFollowEntities.get(position);
         String headUrl = entity.getPhoto();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.shop_img);
@@ -67,9 +66,17 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         }else {
             holder.name_type.setVisibility(View.GONE);
         }
-        holder.name.setText(entity.getName());
-//        if ()
-        holder.attention.setText("关注");
+        holder.name.setText(entity.getNAME());
+        if (entity.getRelationType()==0){
+            holder.attention.setText("关注");
+            holder.attention.setVisibility(View.VISIBLE);
+            holder.attention.setBackgroundResource(R.drawable.black11);
+        }else {
+            holder.attention.setText("已关注");
+            holder.attention.setBackgroundResource(R.drawable.gray11);
+            holder.attention.setVisibility(View.VISIBLE);
+        }
+        holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
     }
 
     @Override
@@ -78,7 +85,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         return mFollowEntities.size();
     }
 
-    public void refresh(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void refresh(List<NewFriendBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
@@ -86,7 +93,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         notifyDataSetChanged();
     }
 
-    public void Loadmore(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void Loadmore(List<NewFriendBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }

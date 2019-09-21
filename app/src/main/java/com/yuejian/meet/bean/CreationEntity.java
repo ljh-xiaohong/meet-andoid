@@ -21,12 +21,30 @@ public class CreationEntity implements Serializable {
     private String labelId;
     private int id;
     private String contentTitle;
+    private String coveSizeType;
     private String photoAndVideoUrl;
     private int fabulousNum;
     private int contentId;
     private String labelName;
     private int draftsId;
     private String content;
+    private boolean isPraise;
+
+    public String getCoveSizeType() {
+        return coveSizeType;
+    }
+
+    public void setCoveSizeType(String coveSizeType) {
+        this.coveSizeType = coveSizeType;
+    }
+
+    public boolean isPraise() {
+        return isPraise;
+    }
+
+    public void setPraise(boolean praise) {
+        isPraise = praise;
+    }
 
     public String getLabelName() {
         return labelName;

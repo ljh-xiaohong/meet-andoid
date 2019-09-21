@@ -2,6 +2,7 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.VideoAndArticleBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
  */
 public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.FamilyCircleFollowListViewHolder> {
 
-    private List<FamilyFollowEntity.DataBean> mFollowEntities;
+    private List<VideoAndArticleBean.DataBean> mFollowEntities;
     private Context mContext;
     private Activity mActivity;
     private OnFollowListItemClickListener mListItemClickListener;
@@ -55,14 +57,26 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     @Override
     public void onBindViewHolder(FamilyCircleFollowListViewHolder holder, int position) {
-        FamilyFollowEntity.DataBean entity = mFollowEntities.get(position);
-        String headUrl = entity.getPhoto();
+        VideoAndArticleBean.DataBean entity = mFollowEntities.get(position);
+        String headUrl = entity.getCoverUrl();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.shop_img);
         }
-        holder.title.setText(entity.getName());
-
-        holder.zan_check_num.setText("99");
+        holder.title.setText(entity.getTitle());
+        if (entity.isIsPraise()){
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.mipmap.icon_zan_sel);
+            drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+            holder.zan_check_num.setCompoundDrawables(drawableLeft, null, null, null);
+            holder.zan_check_num.setCompoundDrawablePadding(5);
+        }else {
+            Drawable drawableLeft = mContext.getResources().getDrawable(
+                    R.mipmap.icon_zan_nor);
+            drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+            holder.zan_check_num.setCompoundDrawables(drawableLeft, null, null, null);
+            holder.zan_check_num.setCompoundDrawablePadding(5);
+        }
+        holder.zan_check_num.setText(entity.getFabulousNum()+"");
     }
 
     @Override
@@ -71,7 +85,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         return mFollowEntities.size();
     }
 
-    public void refresh(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void refresh(List<VideoAndArticleBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
@@ -79,7 +93,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         notifyDataSetChanged();
     }
 
-    public void Loadmore(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void Loadmore(List<VideoAndArticleBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
@@ -94,8 +108,6 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
         ImageView shop_img;
         TextView title,zan_check_num;
-
-
 
         public FamilyCircleFollowListViewHolder(View itemView) {
             super(itemView);

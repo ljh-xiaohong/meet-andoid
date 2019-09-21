@@ -69,7 +69,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
             case 2:
                 rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.video_vertical_img);
-                rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, false, entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), entity.getFabulousNum() + "");
                 rv.video_vertical_tag.setText(entity.getLabelName());
                 rv.video_vertical_content.setText(entity.getContentTitle());
 
@@ -78,7 +78,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
             case 1:
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.article_img);
-                rv.setLike(RecommendView.ViewType.ARTICLE, false, entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
                 rv.article_content.setText(entity.getContentTitle());
                 rv.article_content.setText(entity.getLabelName());
                 break;
@@ -88,9 +88,13 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         public ViewHolder(View itemView) {
             super(itemView);
+            if (listener != null) {
+                itemView.setOnClickListener(view -> {
+                    listener.onItemClick(view, this.getAdapterPosition());
+                });
+            }
         }
     }
 }

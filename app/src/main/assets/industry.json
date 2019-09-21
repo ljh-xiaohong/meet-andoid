@@ -1,124 +1,349 @@
-[
+{"data":[
   {
-    "job": "全部",
-    "jobs": [
-      "全部"
-    ]
-  },
-  {
+    "isSelect": true,
+    "pId": 1,
     "job": "IT|通信|电子|互联网",
     "jobs": [
-      "计算机软件",
-      "IT服务(系统/数据/维护)",
-      "电子技术/半导体/集成电路",
-      "计算机硬件",
-      "通信/电信/网络设备",
-      "通信/电信运营、增值服务",
-      "网络游戏"
+      {
+        "isSelect": false,
+        "job": "计算机软件",
+        "cId": 14
+      },
+      {
+        "isSelect": false,
+        "job": "IT服务(系统/数据/维护)",
+        "cId": 15
+      },
+      {
+        "isSelect": false,
+        "job": "电子技术/半导体/集成电路",
+        "cId": 16
+      },
+      {
+        "isSelect": false,
+        "job": "计算机硬件",
+        "cId": 17
+      },
+      {
+        "isSelect": false,
+        "job": "通信/电信/网络设备",
+        "cId": 18
+      },
+      {
+        "isSelect": false,
+        "job": "通信/电信运营、增值服务",
+        "cId": 19
+      },
+      {
+        "isSelect": false,
+        "job": "网络游戏",
+        "cId": 20
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "金融业",
+    "pId": 2,
     "jobs": [
-      "基金/证券/期货/投资",
-      "保险",
-      "银行",
-      "信托/担保/拍卖/典当"
+      {
+        "isSelect": false,
+        "job": "基金/证券/期货/投资",
+        "cId": 21
+      },
+      {
+        "isSelect": false,
+        "job": "保险",
+        "cId": 22
+      },
+      {
+        "isSelect": false,
+        "job": "银行",
+        "cId": 23
+      },
+      {
+        "isSelect": false,
+        "job": "信托/担保/拍卖/典当",
+        "cId": 24
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "房地产|建筑业",
+    "pId": 3,
     "jobs": [
-      "房地产/建筑/建材/工程",
-      "家居/室内设计/装饰装潢",
-      "物业管理/商业中心"
+      {
+        "isSelect": false,
+        "job": "房地产/建筑/建材/工程",
+        "cId": 25
+      },
+      {
+        "isSelect": false,
+        "job": "家居/室内设计/装饰装潢",
+        "cId": 26
+      },
+      {
+        "isSelect": false,
+        "job": "物业管理/商业中心",
+        "cId": 27
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "商业服务",
+    "pId": 4,
     "jobs": [
-      "专业服务/咨询",
-      "广告/会展/公关",
-      "中介服务",
-      "检验/检测/认证",
-      "外包服务"
+      {
+        "isSelect": false,
+        "job": "专业服务/咨询",
+        "cId": 28
+      },
+      {
+        "isSelect": false,
+        "job": "广告/会展/公关",
+        "cId": 29
+      },
+      {
+        "isSelect": false,
+        "job": "中介服务",
+        "cId": 30
+      },
+      {
+        "isSelect": false,
+        "job": "检验/检测/认证",
+        "cId": 31
+      },
+      {
+        "isSelect": false,
+        "job": "外包服务",
+        "cId": 32
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "贸易|批发|零售|租赁业",
+    "pId": 5,
     "jobs": [
-      "快速消费品",
-      "耐用消费品",
-      "贸易/进出口",
-      "零售/批发",
-      "租赁服务"
+      {
+        "isSelect": false,
+        "job": "快速消费品",
+        "cId": 33
+      },
+      {
+        "isSelect": false,
+        "job": "耐用消费品",
+        "cId": 34
+      },
+      {
+        "isSelect": false,
+        "job": "贸易/进出口",
+        "cId": 35
+      },
+      {
+        "isSelect": false,
+        "job": "零售/批发",
+        "cId": 36
+      },
+      {
+        "isSelect": false,
+        "job": "租赁服务",
+        "cId": 37
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "文体教育|工艺美术",
+    "pId": 6,
     "jobs": [
-      "教育/培训/院校",
-      "礼品/工艺美术/奢侈品"
+      {
+        "isSelect": false,
+        "job": "教育/培训/院校",
+        "cId": 38
+      },
+      {
+        "isSelect": false,
+        "job": "礼品/工艺美术/奢侈品",
+        "cId": 39
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "生产|加工|制造",
+    "pId": 7,
     "jobs": [
-      "汽车/摩托车",
-      "大型设备/机电设备/重工业",
-      "加工制造(原材料加工/模具)",
-      "仪器仪表及工业自动化",
-      "印刷/包装/造纸",
-      "办公用品及设备",
-      "医药/生物工程",
-      "医疗设备/器械",
-      "航空/航天研究与制造"
+      {
+        "isSelect": false,
+        "job": "汽车/摩托车",
+        "cId": 40
+      },
+      {
+        "isSelect": false,
+        "job": "大型设备/机电设备/重工业",
+        "cId": 41
+      },
+      {
+        "isSelect": false,
+        "job": "加工制造(原材料加工/模具)",
+        "cId": 42
+      },
+      {
+        "isSelect": false,
+        "job": "仪器仪表及工业自动化",
+        "cId": 43
+      },
+      {
+        "isSelect": false,
+        "job": "办公用品及设备",
+        "cId": 44
+      },
+      {
+        "isSelect": false,
+        "job": "印刷/包装/造纸",
+        "cId": 45
+      },
+      {
+        "isSelect": false,
+        "job": "医药/生物工程",
+        "cId": 46
+      },
+      {
+        "isSelect": false,
+        "job": "医疗设备/器械",
+        "cId": 47
+      },
+      {
+        "isSelect": false,
+        "job": "航空/航天研究与制造",
+        "cId": 48
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "交通|运输|物流|仓储",
+    "pId": 8,
     "jobs": [
-      "交通/运输",
-      "物流/仓储"
+      {
+        "isSelect": false,
+        "job": "交通/运输",
+        "cId": 49
+      },
+      {
+        "isSelect": false,
+        "job": "物流/仓储",
+        "cId": 50
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "服务业",
+    "pId": 9,
     "jobs": [
-      "医疗/护理/美容/保健/卫生",
-      "酒店/餐饮",
-      "旅游/度假"
+      {
+        "isSelect": false,
+        "job": "医疗/护理/美容/保健/卫生",
+        "cId": 51
+      },
+      {
+        "isSelect": false,
+        "job": "酒店/餐饮",
+        "cId": 52
+      },
+      {
+        "isSelect": false,
+        "job": "旅游/度假",
+        "cId": 53
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "文化|传媒|娱乐|体育",
+    "pId": 10,
     "jobs": [
-      "媒体/出版/影视/文化传播",
-      "娱乐/体育/休闲"
+      {
+        "isSelect": false,
+        "job": "媒体/出版/影视/文化传播",
+        "cId": 54
+      },
+      {
+        "isSelect": false,
+        "job": "娱乐/体育/休闲",
+        "cId": 55
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "能源|矿产|环保",
+    "pId": 11,
     "jobs": [
-      "能源/矿产/采掘/冶炼",
-      "石油/石化/化工",
-      "电气/电力/水利",
-      "环保"
+      {
+        "isSelect": false,
+        "job": "能源/矿产/采掘/冶炼",
+        "cId": 56
+      },
+      {
+        "isSelect": false,
+        "job": "石油/石化/化工",
+        "cId": 57
+      },
+      {
+        "isSelect": false,
+        "job": "电气/电力/水利",
+        "cId": 58
+      },
+      {
+        "isSelect": false,
+        "job": "环保",
+        "cId": 59
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "政府|非盈利机构",
+    "pId": 12,
     "jobs": [
-      "政府/公共事业/非盈利机构",
-      "学术/科研"
+      {
+        "isSelect": false,
+        "job": "政府/公共事业/非盈利机构",
+        "cId": 60
+      },
+      {
+        "isSelect": false,
+        "job": "学术/科研",
+        "cId": 61
+      }
     ]
   },
   {
+    "isSelect": false,
     "job": "农|林|牧|渔|其他",
+    "pId": 13,
     "jobs": [
-      "农/林/牧/渔",
-      "跨领域经营",
-      "其他"
+      {
+        "isSelect": false,
+        "job": "农/林/牧/渔",
+        "cId": 62
+      },
+      {
+        "isSelect": false,
+        "job": "跨领域经营",
+        "cId": 63
+      },
+      {
+        "isSelect": false,
+        "job": "其他",
+        "cId": 64
+      }
     ]
   }
 ]
+}

@@ -23,11 +23,14 @@
             android:layout_centerInParent="true"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <com.yuejian.meet.widgets.CommentZanTitleView
+        android:id="@+id/address_book_title_view"
         android:layout_width="match_parent"
-        android:layout_marginTop="6dp"
-        android:paddingBottom="13dp"
-        android:background="#FFFFFF"
         android:layout_height="wrap_content"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_contact"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" />
 </LinearLayout>
