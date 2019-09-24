@@ -30,6 +30,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.ActivityLabEntity;
 import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
@@ -174,6 +175,10 @@ public class ArticleActivity extends BaseActivity {
                 params.leftMargin = 10;
                 item.setLayoutParams(params);
                 item.setText(labelName[i]);
+                item.setTag(labelId[i]);
+                item.setOnClickListener(view -> {
+                    AcitivityLabActivity.startActivity(this, view.getTag() + "", AppConfig.CustomerId);
+                });
                 flowLayout.addView(item);
             }
 
