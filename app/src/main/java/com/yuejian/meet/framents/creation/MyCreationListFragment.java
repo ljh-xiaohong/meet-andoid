@@ -131,14 +131,12 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
             entity.setLabelId(jo.getString("labelId"));
             entity.setLabelName(jo.getString("labelName"));
             entity.setContentTitle(jo.getString("contentTitle"));
+            entity.setContentId(jo.getInteger("contentId"));
             if (type == 3) {
                 entity.setPreviewUrl(jo.getString("previewUrl"));
-                entity.setId(jo.getInteger("id"));
-
             } else {
                 entity.setPhotoAndVideoUrl(jo.getString("photoAndVideoUrl"));
                 entity.setFabulousNum(jo.getInteger("fabulousNum"));
-                entity.setContentId(jo.getInteger("contentId"));
                 entity.setContent(jo.getString("content"));
 
             }
@@ -166,7 +164,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                     //海报
                     case 3:
                         Intent intent = new Intent(mContext, WebActivity.class);
-                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, creationEntities.get(position).getId());
+                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, creationEntities.get(position).getContentId());
                         intent.putExtra("url", hxmUrl);
                         intent.putExtra("No_Title", true);
                         startActivity(intent);

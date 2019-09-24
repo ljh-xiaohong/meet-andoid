@@ -8,7 +8,6 @@ public class CreationEntity implements Serializable {
     /**
      * previewUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201909072205405403593.jpg
      * labelId : 1,2
-     * id : 29
      * contentTitle : 八月秋
      * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201909101022232223377349.png
      * fabulousNum : 0
@@ -19,7 +18,6 @@ public class CreationEntity implements Serializable {
 
     private String previewUrl;
     private String labelId;
-    private int id;
     private String contentTitle;
     private String photoAndVideoUrl;
     private int fabulousNum;
@@ -50,14 +48,6 @@ public class CreationEntity implements Serializable {
 
     public void setLabelId(String labelId) {
         this.labelId = labelId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getContentTitle() {
