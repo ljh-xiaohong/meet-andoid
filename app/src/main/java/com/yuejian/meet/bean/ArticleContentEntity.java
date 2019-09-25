@@ -9,6 +9,15 @@ public class ArticleContentEntity {
     public int index;
     public String type;
     public String content;
+    public String imgSize;
+
+    public String getImgSize() {
+        return imgSize;
+    }
+
+    public void setImgSize(String imgSize) {
+        this.imgSize = imgSize;
+    }
 
     public int getIndex() {
         return index;

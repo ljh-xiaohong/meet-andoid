@@ -1036,8 +1036,11 @@ public class UrlConstant {
 
     public static String PUBLISHED_ARTICLES_NEW = apiUrl() + "api/contentRelease/pushContentRelease";
 
+    //获取VIP配置商品列表API
+    public static String GET_VIP_SHOP_GOODS_LIST = apiUrl() + "api/shopGoods/getVipShopGoodsList";
+
     //草稿箱列表
-    public static String GET_DRAFTS_LIST=apiUrl()+"api/contentRelease/getDraftsList";
+    public static String GET_DRAFTS_LIST = apiUrl() + "api/contentRelease/getDraftsList";
 
     //内容（动态，视频，文章）点赞(测试通过)
     public static String PRAISE_CONTENT = apiUrl() + "api/contentRelease/praiseContent";

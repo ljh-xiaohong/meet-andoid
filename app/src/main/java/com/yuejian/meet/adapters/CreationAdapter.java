@@ -29,6 +29,13 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
         if (data == null) {
             data = new ArrayList<>();
         }
+        if (type == 1 || type == 2) {
+            CreationEntity entity = new CreationEntity();
+            entity.setDraftsId(type);
+            if (creationEntities == null) creationEntities = new ArrayList<>();
+            creationEntities.add(0, entity);
+        }
+
         data = creationEntities;
         notifyDataSetChanged();
     }
@@ -88,9 +95,9 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 }
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.article_img);
-                rv.setLike(RecommendView.ViewType.ARTICLE, false, entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
                 rv.article_content.setText(entity.getContentTitle());
-                rv.article_content.setText(entity.getLabelName());
+                rv.article_tag.setText(entity.getLabelName());
                 break;
         }
 

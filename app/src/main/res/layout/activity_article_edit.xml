@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".activities.creation.ArticleEditActivity">
 
+    <!-- 导航头 -->
     <RelativeLayout
         android:id="@+id/edit_article_layout_title_bar"
         android:layout_width="match_parent"
@@ -63,7 +64,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F2F5F7"
+                android:background="#ffffff"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -111,7 +112,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:background="#E6E6E6" />
@@ -134,26 +135,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <RadioGroup
-                            android:id="@+id/edit_article_layout_label"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center|left"
                             android:gravity="center"
-                            android:checkedButton="@+id/edit_label_init"
                             android:orientation="horizontal">
 
-                            <RadioButton
+                            <CheckBox
                                 android:id="@+id/edit_label_init"
                                 style="@style/article_tag_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:button="@null"
-                                android:drawableLeft="@null"
                                 android:layout_marginLeft="10dp"
+                                android:button="@null"
+                                android:checked="true"
+                                android:drawableLeft="@null"
                                 android:text="无" />
 
-                        </RadioGroup>
+                            <com.yuejian.meet.widgets.CheckLinearLayout
+                                android:id="@+id/edit_article_layout_label"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|left"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+
+                            </com.yuejian.meet.widgets.CheckLinearLayout>
+
+                        </LinearLayout>
+
                     </HorizontalScrollView>
 
 
@@ -161,12 +172,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:background="#E6E6E6" />
 
                 <android.support.constraint.ConstraintLayout
+                    android:id="@+id/activity_article_shop_select_layout"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="#ffffff"
@@ -213,6 +225,98 @@
 
                 </android.support.constraint.ConstraintLayout>
 
+                <!-- 商品 -->
+                <FrameLayout
+                    android:id="@+id/activity_article_good_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:background="#FFF7F7F7"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/activity_article_shop_img"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="9dp"
+                            android:layout_toRightOf="@+id/activity_article_shop_img"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/activity_article_shop_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:gravity="center|left"
+                                android:maxLines="1"
+                                android:textColor="#FF333333"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/activity_article_shop_disct"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:gravity="center|left"
+                                android:maxLines="1"
+                                android:textColor="#FF666666"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/activity_article_shop_price_discount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_article_btn"
+                                    android:drawableLeft="@mipmap/icon_vipprice"
+                                    android:gravity="center"
+                                    android:paddingLeft="1dp"
+                                    android:paddingRight="3dp"
+                                    android:textColor="#FFFFFFFF"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/activity_article_shop_price_full"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="3dp"
+                                    android:gravity="center"
+                                    android:textColor="#FFF54D4D"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/activity_article_good_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="6dp"
+                        android:src="@mipmap/icon_message_remove" />
+                </FrameLayout>
+
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
@@ -220,7 +324,7 @@
 
 
             </LinearLayout>
-
+            <!-- 标题 -->
             <EditText
                 android:id="@+id/et_article_edit_title"
                 android:layout_width="match_parent"

@@ -12,18 +12,22 @@ import android.view.ViewGroup;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.DraftActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.CreationAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.CreationEntity;
+import com.yuejian.meet.bean.ShopEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.widgets.RecommendView;
 import com.yuejian.meet.widgets.springview.SpringView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +45,6 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     private int pageItemCount = 10;
 
     private int type = -1;
-
-    private List<CreationEntity> creationEntities;
 
     private CreationAdapter adapter;
 
@@ -72,6 +74,11 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         return fragment;
     }
 
+    @BusReceiver
+    public void refreshData(ShopEntity entity) {
+        onRefresh();
+    }
+
     private boolean getData() {
         type = getArguments().getInt("type");
         return type != -1;
@@ -90,12 +97,11 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                 JSONObject jo = JSON.parseObject(data);
                 if (null == jo) return;
                 if (!jo.getString("code").equals("0")) return;
-                parseJson(jo.getString("data"));
+
                 if (pageIndex == 1) {
-                    setInit();
-                    adapter.refresh(creationEntities);
+                    adapter.refresh(parseJson(jo.getString("data")));
                 } else {
-                    adapter.Loadmore(creationEntities);
+                    adapter.Loadmore(parseJson(jo.getString("data")));
                 }
 
             }
@@ -109,22 +115,12 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         });
     }
 
-    /**
-     * 第一个为草稿箱
-     */
-    private void setInit() {
-        if (type == 1 || type == 2) {
-            CreationEntity entity = new CreationEntity();
-            entity.setDraftsId(type);
-            if (creationEntities == null) creationEntities = new ArrayList<>();
-            creationEntities.add(entity);
-        }
-    }
 
-    private void parseJson(String data) {
-        if (data == null || TextUtils.isEmpty(data)) return;
+    private List<CreationEntity> parseJson(String data) {
+        List<CreationEntity> creationEntities = null;
+        if (data == null || TextUtils.isEmpty(data)) return creationEntities;
         JSONArray ja = JSON.parseArray(data);
-        if (creationEntities == null) creationEntities = new ArrayList<>();
+        creationEntities = new ArrayList<>();
         for (int i = 0; i < ja.size(); i++) {
             JSONObject jo = (JSONObject) ja.get(i);
             CreationEntity entity = new CreationEntity();
@@ -132,6 +128,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
             entity.setLabelName(jo.getString("labelName"));
             entity.setContentTitle(jo.getString("contentTitle"));
             entity.setContentId(jo.getInteger("contentId"));
+            entity.setPraise(jo.getBoolean("isPraise"));
             if (type == 3) {
                 entity.setPreviewUrl(jo.getString("previewUrl"));
             } else {
@@ -142,6 +139,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
             }
             creationEntities.add(entity);
         }
+        return creationEntities;
     }
 
     @Override
@@ -164,18 +162,30 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                     //海报
                     case 3:
                         Intent intent = new Intent(mContext, WebActivity.class);
-                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, creationEntities.get(position).getContentId());
+                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, adapter.getData().get(position).getContentId());
                         intent.putExtra("url", hxmUrl);
                         intent.putExtra("No_Title", true);
                         startActivity(intent);
                         break;
 
-                    case 1:
+                    //视频
                     case 2:
                         if (position == 0) {
                             DraftActivity.startActivity(mContext, type);
                             return;
                         }
+
+
+                        break;
+
+                    //文章
+                    case 1:
+                        if (position == 0) {
+                            DraftActivity.startActivity(mContext, type);
+                            return;
+                        }
+
+                        ArticleActivity.startActivity(mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId);
                         break;
 
                 }

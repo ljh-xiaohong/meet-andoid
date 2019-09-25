@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
@@ -32,7 +35,9 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
+import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.FeedsResourceBean;
+import com.yuejian.meet.bean.ShopEntity;
 import com.yuejian.meet.bean.TypeEntity;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.BitmapLoader;
@@ -41,9 +46,11 @@ import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.CheckLinearLayout;
 import com.yuejian.meet.widgets.MediaItemView;
 
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 
 import java.io.FileInputStream;
@@ -87,18 +94,49 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
     EditText mTitleView;
     @Bind(R.id.iv_add_article_cover)
     ImageView mAddArticleCoverBtn;
+    //    @Bind(R.id.edit_article_layout_label)
+//    RadioGroup mRadioGroupLabel;
     @Bind(R.id.edit_article_layout_label)
-    RadioGroup mRadioGroupLabel;
+    CheckLinearLayout mCheckLinearLayout;
+
+    @Bind(R.id.edit_label_init)
+    CheckBox initCheckBox;
+
+    @Bind(R.id.activity_article_shop_select_layout)
+    View select_shop;
+
+    @Bind(R.id.activity_article_good_layout)
+    View goodLayout;
+
+    @Bind(R.id.activity_article_good_cancel)
+    View goodCancel;
+
+    @Bind(R.id.activity_article_shop_img)
+    ImageView goodImg;
+
+    @Bind(R.id.activity_article_shop_name)
+    TextView goodName;
+
+    @Bind(R.id.activity_article_shop_disct)
+    TextView goodDisct;
+
+    @Bind(R.id.activity_article_shop_price_discount)
+    TextView goodDiscount;
+
+    @Bind(R.id.activity_article_shop_price_full)
+    TextView goodPrice;
+
     private static final int OPENPIC = 100;
     private static final int OPENCAM = 200;
     private static final int OPENVIDEO = 300;
     private static final int OPENMUSIC = 400;
     private static final int REPLACEVIEW_PIC = 500;
     private static final int REPLACEVIEW_VIDEO = 600;
+    private static final int SHOP_GOOD = 700;
 
     private LoadingDialogFragment mLoadingDialog;
     private volatile int pudateCnt = 0;
-    private String lab = "";
+//    private String lab = "";
 
     //作为替换时的锚 处理结束时，必须设置为null；
     private MediaItemView replaceObject = null;
@@ -113,11 +151,14 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
     private int offset_px;
     private int videoViewHeight;
 
+    private ShopEntity good;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_edit);
-
+        initCheckBox.setEnabled(false);
         offset_px = Utils.dp2px(getApplicationContext(), offset_dp);
         videoViewHeight = Utils.dp2px(getApplicationContext(), 200);
         mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...");
@@ -125,9 +166,19 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         setListener();
     }
 
+    private void setGood() {
+        if (good == null) return;
+        goodLayout.setVisibility(View.VISIBLE);
+        Glide.with(mContext).load(good.getGPhoto()).into(goodImg);
+        goodName.setText(good.getGName());
+        goodDiscount.setText(String.format("￥%s", good.getGPriceVip()));
+        goodPrice.setText(String.format("￥%s", good.getGPriceOriginal()));
+        goodDisct.setText(good.getGDes());
+    }
+
     @OnClick({R.id.iv_edit_article_back_btn, R.id.ll_add_image_edit_article, R.id.ll_add_text_edit_article,
             R.id.ll_add_video_edit_article, R.id.ll_add_music_edit_article, R.id.ll_preview_edit_article,
-            R.id.tv_edit_article_submit, R.id.iv_add_article_cover})
+            R.id.tv_edit_article_submit, R.id.iv_add_article_cover, R.id.activity_article_shop_select_layout, R.id.activity_article_good_cancel})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -168,24 +219,48 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                 PickImageActivity.start(this, 404, from, outputPath, true, 1,
                         true, false, 0, 0);
                 break;
+
+            case R.id.activity_article_shop_select_layout:
+                ShopActivity.startActivityForResult(this, SHOP_GOOD);
+                break;
+
+            case R.id.activity_article_good_cancel:
+                goodLayout.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
     }
 
     private void setListener() {
-        mRadioGroupLabel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+//        mRadioGroupLabel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+//
+//                if (R.id.edit_label_init == checkedId) {
+//                    lab = "";
+//                    return;
+//                }
+//                RadioButton rb = radioGroup.findViewById(checkedId);
+//                lab = ((TypeEntity) rb.getTag()).getId() + "";
+//
+//            }
+//        });
 
-                if (R.id.edit_label_init == checkedId) {
-                    lab = "";
-                    return;
-                }
-                RadioButton rb = radioGroup.findViewById(checkedId);
-                lab = ((TypeEntity) rb.getTag()).getId() + "";
+        initCheckBox.setOnClickListener((view) -> {
 
+            if (initCheckBox.isChecked()) {
+                mCheckLinearLayout.clear();
+                initCheckBox.setEnabled(false);
             }
+
+        });
+
+
+        mCheckLinearLayout.setOnClickListener((layout, view) -> {
+            initCheckBox.setChecked(false);
+            initCheckBox.setEnabled(true);
+
         });
     }
 
@@ -213,14 +288,18 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                         if (typeEntities != null && typeEntities.size() > 0) {
 
                             for (TypeEntity label : typeEntities) {
-                                RadioButton radioButton = (RadioButton) LayoutInflater.from(mContext).inflate(R.layout.radiobutton_label, null);
-                                radioButton.setText(label.getTitle());
+                                CheckBox checkBox = (CheckBox) LayoutInflater.from(mContext).inflate(R.layout.radiobutton_label, null);
+                                checkBox.setText(label.getTitle());
                                 ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 lp.leftMargin = 10;
-                                radioButton.setLayoutParams(lp);
-                                radioButton.setTag(label);
-                                mRadioGroupLabel.addView(radioButton);
+                                checkBox.setLayoutParams(lp);
+                                checkBox.setTag(label.getId());
+//                                mRadioGroupLabel.addView(radioButton);
+//                                checkBoxes.add(checkBox);
+                                mCheckLinearLayout.addView(checkBox);
                             }
+
+//                            mCheckLinearLayout.seCheckBoxex(checkBoxes);
 
 
                         }
@@ -356,6 +435,14 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                     }
 
                 }
+                break;
+
+            case SHOP_GOOD://商品返回
+                if (resultCode == RESULT_OK) {
+                    good = (ShopEntity) data.getSerializableExtra(ShopActivity.RESULT_ENETIY);
+                    setGood();
+                }
+
                 break;
 
             case REPLACEVIEW_PIC://图片转换
@@ -543,32 +630,59 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
 
             });
 
+            List<ArticleContentEntity> entities = new ArrayList<>();
             int i = 0;
             for (Map.Entry<Integer, MediaItemView> ma : list) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("index", i++);
-//                Log.e("cchekc", ma.getKey() + "");
+                ArticleContentEntity entity = new ArticleContentEntity();
+                entity.setIndex(i++);
                 String mediaType = ma.getValue().getMediaType() == 1 ? "text" : ma.getValue().getMediaType() == 2 ? "image" : "video";
-                jsonObject.put("type", mediaType);
-                jsonObject.put("type", mediaType);
+                entity.setType(mediaType);
                 switch (mediaType) {
                     case "text":
-                        jsonObject.put("content", ma.getValue().getEditText());
+                        entity.setContent(ma.getValue().getEditText());
+//                        jsonObject.put("content", ma.getValue().getEditText());
                         break;
                     case "image":
-                        jsonObject.put("content", mMediaUrlMap.get(ma.getKey()));
-                        jsonObject.put("imgSize", mMediaUrlMapImg.get(ma.getKey()));
+                        entity.setContent(mMediaUrlMap.get(ma.getKey()));
+                        entity.setImgSize(mMediaUrlMapImg.get(ma.getKey()));
                         break;
+
                     case "video":
-                        jsonObject.put("content", mMediaUrlMap.get(ma.getKey()));
-                        jsonObject.put("imgSize", mMediaUrlMapImg.get(ma.getKey()));
+                        entity.setContent(mMediaUrlMap.get(ma.getKey()));
+                        entity.setImgSize(mMediaUrlMapImg.get(ma.getKey()));
+
                         break;
                 }
-                data.put(jsonObject);
+                entities.add(entity);
             }
+
+            String parse = JSON.toJSONString(entities);
+
+
+//            for (Map.Entry<Integer, MediaItemView> ma : list) {
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("index", i++);
+////                Log.e("cchekc", ma.getKey() + "");
+//                String mediaType = ma.getValue().getMediaType() == 1 ? "text" : ma.getValue().getMediaType() == 2 ? "image" : "video";
+//                jsonObject.put("type", mediaType);
+//                switch (mediaType) {
+//                    case "text":
+//                        jsonObject.put("content", ma.getValue().getEditText());
+//                        break;
+//                    case "image":
+//                        jsonObject.put("content", mMediaUrlMap.get(ma.getKey()));
+//                        jsonObject.put("imgSize", mMediaUrlMapImg.get(ma.getKey()));
+//                        break;
+//                    case "video":
+//                        jsonObject.put("content", mMediaUrlMap.get(ma.getKey()));
+//                        jsonObject.put("imgSize", mMediaUrlMapImg.get(ma.getKey()));
+//                        break;
+//                }
+//                data.put(jsonObject);
+//            }
 //            Log.e("cchekc", data.toString());
 //            releaseArticle(data.toString());
-            releaseArticleNew(data.toString());
+            releaseArticleNew(parse);
         } catch (Exception e) {
             if (mLoadingDialog != null) {
                 mLoadingDialog.dismiss();
@@ -584,19 +698,28 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         params.put("type", 2);
         params.put("title", mTitleView.getText().toString());
         params.put("content", contentJson);
-        params.put("labelId", lab);
+        params.put("labelId", mCheckLinearLayout.getLabId());
         params.put("photoAndVideoUrl", coverImageUrl);
         params.put("crLongitude", AppConfig.slongitude);
         params.put("crLatitude", AppConfig.slatitude);
         params.put("crdId", "");
+        params.put("vipDeployId", goodLayout.getVisibility() == View.VISIBLE ? good.getGid() : "");
         apiImp.publishedArticlesNew(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 if (mLoadingDialog != null) {
                     mLoadingDialog.dismiss();
                 }
-                ViewInject.shortToast(getApplicationContext(), R.string.release_success);
-                finish();
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null) return;
+                if (jo.getString("code").equals("0")) {
+                    ViewInject.shortToast(getApplicationContext(), R.string.release_success);
+                    Bus.getDefault().getDefault().post(new ShopEntity() );
+                    finish();
+                } else {
+                    ViewInject.shortToast(getApplicationContext(), jo.getString("message"));
+                }
+
 
             }
 

@@ -25,6 +25,15 @@ public class CreationEntity implements Serializable {
     private String labelName;
     private int draftsId;
     private String content;
+    private boolean isPraise;
+
+    public boolean isPraise() {
+        return isPraise;
+    }
+
+    public void setPraise(boolean praise) {
+        isPraise = praise;
+    }
 
     public String getLabelName() {
         return labelName;

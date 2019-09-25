@@ -155,16 +155,17 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void initData() {
-        Glide.with(mContext).load(info.getContentDetail().getUserPhoto()).into(head);
-        name.setText(info.getContentDetail().getUserName());
-        vip.setVisibility(info.getContentDetail().getUserVipType().equals("0") ? View.INVISIBLE : View.VISIBLE);
-        follow.setText(info.getContentDetail().getRelationType().equals("0") ? "关注" : "已关注");
-        follow.setBackgroundResource(info.getContentDetail().getRelationType().equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
-        title.setText(info.getContentDetail().getContentTitle());
+        if (info.getContentDetail() == null) return;
+        Glide.with(mContext).load(checkData(info.getContentDetail().getUserPhoto())).into(head);
+        name.setText(checkData(info.getContentDetail().getUserName()));
+        vip.setVisibility(checkData(info.getContentDetail().getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
+        follow.setText(checkData(info.getContentDetail().getRelationType()).equals("0") ? "关注" : "已关注");
+        follow.setBackgroundResource(checkData(info.getContentDetail().getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
+        title.setText(checkData(info.getContentDetail().getContentTitle()));
         date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getContentDetail().getCreateTime()))));
-        discuss.setText(String.format("共%s条评论", info.getContentDetail().getCommentNum()));
-        discuss_b.setText(String.format("共%s条评论", info.getContentDetail().getCommentNum()));
-        read.setText(String.format("阅读 %s", info.getContentDetail().getViewNum()));
+        discuss.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
+        discuss_b.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
+        read.setText(String.format("阅读 %s", checkData(info.getContentDetail().getViewNum())));
         if (!TextUtils.isEmpty(info.getContentDetail().getLabelName()) && info.getContentDetail().getLabelName().contains("#")) {
             labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
             labelId = info.getContentDetail().getLabelId().split(",");
@@ -187,14 +188,14 @@ public class ArticleActivity extends BaseActivity {
 
         if (info.getContentDetail().getShopList() != null) {
             shop_layout.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(info.getContentDetail().getShopList().getGPhoto()).into(shop_img);
-            shop_name.setText(info.getContentDetail().getShopList().getShopName());
-            shop_disct.setText(info.getContentDetail().getShopList().getGDes());
-            shop_discount.setText(info.getContentDetail().getShopList().getGPriceVip());
-            shop_price.setText(info.getContentDetail().getShopList().getGPriceOriginal());
+            Glide.with(mContext).load(checkData(info.getContentDetail().getShopList().getGPhoto())).into(shop_img);
+            shop_name.setText(checkData(info.getContentDetail().getShopList().getShopName()));
+            shop_disct.setText(checkData(info.getContentDetail().getShopList().getGDes()));
+            shop_discount.setText(checkData(info.getContentDetail().getShopList().getGPriceVip()));
+            shop_price.setText(checkData(info.getContentDetail().getShopList().getGPriceOriginal()));
         }
 
-        contentEntities = JSON.parseArray(info.getContentDetail().getCrContent(), ArticleContentEntity.class);
+        contentEntities = JSON.parseArray(checkData(info.getContentDetail().getCrContent()), ArticleContentEntity.class);
         if (contentEntities != null && contentEntities.size() > 0) {
 
             for (ArticleContentEntity entity : contentEntities) {
@@ -215,6 +216,13 @@ public class ArticleActivity extends BaseActivity {
 
             }
         }
+
+    }
+
+    private String checkData(String data) {
+        if (TextUtils.isEmpty(data)) data = "";
+
+        return data;
 
     }
 

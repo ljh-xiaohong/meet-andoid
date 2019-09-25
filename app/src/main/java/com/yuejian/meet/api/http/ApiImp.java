@@ -1807,6 +1807,13 @@ public class ApiImp {
     }
 
     /**
+     * 获取VIP配置商品列表API
+     */
+    public void getVipShopGoodsList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_VIP_SHOP_GOODS_LIST, paramMap, paramObject, callback);
+    }
+
+    /**
      * 草稿箱列表
      */
     public void getDraftsList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {

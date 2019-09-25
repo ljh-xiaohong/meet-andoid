@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFFFF">
+
+    <RelativeLayout
+        android:id="@+id/activity_shop_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#FFFFFFFF"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/activity_shop_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_nav_return" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="配置商品"
+            android:textColor="#FF333333"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/activity_shop_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_nav_search" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_shop_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_shop_confirm"
+        android:layout_below="@id/activity_shop_title"
+        android:background="#FFF2F5F7"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/activity_shop_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FF2D2D2D"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#FFFFFFFF"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>
