@@ -24,8 +24,8 @@ public class CreationTitleView extends LinearLayout {
     @Bind(R.id.change)
     TextView change;
     private Context mContext;
-    @Bind(R.id.tv_title_one)
-    TextView mTitleOne;
+//    @Bind(R.id.tv_title_one)
+//    TextView mTitleOne;
     @Bind(R.id.tv_title_two)
     TextView mTitleTwo;
     @Bind(R.id.tv_title_three)
@@ -55,9 +55,9 @@ public class CreationTitleView extends LinearLayout {
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.creation_title_view, this, true);
         ButterKnife.bind(this, view);
-        mTitleOne.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(0));
-        mTitleTwo.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(1));
-        mTitleThree.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(2));
+//        mTitleOne.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(0));
+        mTitleTwo.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(0));
+        mTitleThree.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(1));
         change.setOnClickListener(v -> {
             if (isChange){
                 isChange=false;
@@ -77,27 +77,29 @@ public class CreationTitleView extends LinearLayout {
     }
 
     public void setSelectedTitle(int position) {
-        boolean isOne = false;
+//        boolean isOne = false;
         boolean isTwo = false;
         boolean isThree = false;
         switch (position) {
             case 0:
-                isOne = true;
-                break;
-            case 1:
+//                isOne = true;
                 isTwo = true;
                 break;
-            case 2:
+            case 1:
+//                isTwo = true;
                 isThree = true;
                 break;
+//            case 2:
+//                isThree = true;
+//                break;
             default:
-                isOne = true;
+                isTwo = true;
                 break;
         }
-        mTitleOne.setTypeface(isOne ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+//        mTitleOne.setTypeface(isOne ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         mTitleTwo.setTypeface(isTwo ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         mTitleThree.setTypeface(isThree ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        mUnderLineOne.setVisibility(isOne ? VISIBLE : INVISIBLE);
+//        mUnderLineOne.setVisibility(isOne ? VISIBLE : INVISIBLE);
         mUnderLineTwo.setVisibility(isTwo ? VISIBLE : INVISIBLE);
         mUnderLineThree.setVisibility(isThree ? VISIBLE : INVISIBLE);
     }

@@ -191,27 +191,29 @@ public class VideoActivity extends BaseActivity {
     }
 
     private void initData() {
+        if (info == null || info.getContentDetail() == null) return;
+        VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
         player.setLooping(true);
-        player.setUp(info.getContentDetail().getCrContent(), true, "");
+        player.setUp(detail.getCrContent(), true, "");
         player.startPlayLogic();
-        Glide.with(mContext).load(info.getContentDetail().getUserPhoto()).into(player.getHeadImagView());
-        player.getNameText().setText(info.getContentDetail().getUserName());
-        player.getContenText().setText(info.getContentDetail().getContentTitle());
+        Glide.with(mContext).load(checkData(detail.getUserPhoto())).into(player.getHeadImagView());
+        player.getNameText().setText(checkData(detail.getUserName()));
+        player.getContenText().setText(checkData(detail.getContentTitle()));
         //关注
-        player.getFollowText().setTextColor(Color.parseColor(info.getContentDetail().getRelationType().equals("0") ? "#ffffffff" : "#66ffffff"));
-        player.getFollowText().setText(info.getContentDetail().getRelationType().equals("0") ? "加关注" : "已关注");
+        player.getFollowText().setTextColor(Color.parseColor(checkData(detail.getRelationType()).equals("0") ? "#ffffffff" : "#66ffffff"));
+        player.getFollowText().setText(checkData(detail.getRelationType()).equals("0") ? "加关注" : "已关注");
         //点赞数
         //是否点赞
-        player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, info.getContentDetail().getFabulousNum());
+        player.setLike(checkData(detail.getIsPraise()).equals("1") ? true : false, info.getContentDetail().getFabulousNum());
         //评论数量
-        player.getDiscussButton().setText(info.getContentDetail().getCommentNum());
-        player.getContenText().setText(info.getContentDetail().getContentTitle());
-        if (info.getContentDetail().getShopList() != null) {
-            player.getGoodsButton().setText(info.getContentDetail().getShopList().getShopName());
+        player.getDiscussButton().setText(checkData(detail.getCommentNum()));
+        player.getContenText().setText(checkData(detail.getContentTitle()));
+        if (detail.getShopList() != null && detail.getShopList().getShopId().length() > 0) {
+            player.getGoodsButton().setText(checkData(detail.getShopList().getShopName()));
         }
-        if (info.getContentDetail().getLabelName() != null && info.getContentDetail().getLabelName().contains("#")) {
-            labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
-            labelId = info.getContentDetail().getLabelId().split(",");
+        if (detail.getLabelName() != null && detail.getLabelName().contains("#")) {
+            labelName = detail.getLabelName().trim().substring(1, detail.getLabelName().length()).split("#");
+            labelId = detail.getLabelId().split(",");
         }
 
         //标签
@@ -243,6 +245,13 @@ public class VideoActivity extends BaseActivity {
             startActivityForResult(intent, 1);
 
         });
+    }
+
+    private String checkData(String data) {
+        if (TextUtils.isEmpty(data)) data = "";
+
+        return data;
+
     }
 
     private void parseJSON(String data) {
@@ -280,6 +289,7 @@ public class VideoActivity extends BaseActivity {
                 contentDetail.setLabelName(jsonObject.getString("labelName"));
                 contentDetail.setViewNum(jsonObject.getString("viewNum"));
                 contentDetail.setContentType(jsonObject.getString("contentType"));
+                contentDetail.setShopList(JSON.parseObject(jsonObject.getString("shopList"), VideoAndContentEntiy.shopList.class));
                 info.setContentDetail(contentDetail);
             }
 

@@ -134,6 +134,24 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
         }
     }
 
+    private void addStatusViewWithColor(Activity activity, int color, boolean isShow) {
+        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        View view = contentView.findViewById(R.id.titlebar);
+        if (isShow) {
+            if (view != null) return;
+            View statusBarView = new View(activity);
+            statusBarView.setId(R.id.titlebar);
+            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    getStatusBarHeight());
+            statusBarView.setBackgroundColor(color);
+            contentView.addView(statusBarView, lp);
+        } else {
+            if (view == null) return;
+            contentView.removeView(view);
+        }
+
+    }
+
     public int getStatusBarHeight() {
         int result = 0;
         //获取状态栏高度的资源id
@@ -172,6 +190,13 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
             @Override
             public void ScrollView(int l, int t, int oldl, int oldt) {
                 titleBar.setVisibility(t >= dip2px(AcitivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
+                if (t >= dip2px(AcitivityLabActivity.this, 44)) {
+                    titleBar.setVisibility(View.VISIBLE);
+                    addStatusViewWithColor(AcitivityLabActivity.this, Color.parseColor("#ffffff"), true);
+                } else {
+                    titleBar.setVisibility(View.GONE);
+                    addStatusViewWithColor(AcitivityLabActivity.this, Color.parseColor("#ffffffff"), false);
+                }
             }
         });
 

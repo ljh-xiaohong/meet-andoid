@@ -155,20 +155,21 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void initData() {
-        if (info.getContentDetail() == null) return;
-        Glide.with(mContext).load(checkData(info.getContentDetail().getUserPhoto())).into(head);
-        name.setText(checkData(info.getContentDetail().getUserName()));
-        vip.setVisibility(checkData(info.getContentDetail().getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
-        follow.setText(checkData(info.getContentDetail().getRelationType()).equals("0") ? "关注" : "已关注");
-        follow.setBackgroundResource(checkData(info.getContentDetail().getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
-        title.setText(checkData(info.getContentDetail().getContentTitle()));
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getContentDetail().getCreateTime()))));
-        discuss.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
-        discuss_b.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
-        read.setText(String.format("阅读 %s", checkData(info.getContentDetail().getViewNum())));
-        if (!TextUtils.isEmpty(info.getContentDetail().getLabelName()) && info.getContentDetail().getLabelName().contains("#")) {
-            labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
-            labelId = info.getContentDetail().getLabelId().split(",");
+        if (info == null || info.getContentDetail() == null) return;
+        VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
+        Glide.with(mContext).load(checkData(detail.getUserPhoto())).into(head);
+        name.setText(checkData(detail.getUserName()));
+        vip.setVisibility(checkData(detail.getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
+        follow.setText(checkData(detail.getRelationType()).equals("0") ? "关注" : "已关注");
+        follow.setBackgroundResource(checkData(detail.getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
+        title.setText(checkData(detail.getContentTitle()));
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime()))));
+        discuss.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
+        discuss_b.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
+        read.setText(String.format("阅读 %s", checkData(detail.getViewNum())));
+        if (!TextUtils.isEmpty(detail.getLabelName()) && detail.getLabelName().contains("#")) {
+            labelName = detail.getLabelName().trim().substring(1, detail.getLabelName().length()).split("#");
+            labelId = detail.getLabelId().split(",");
             if (labelName == null) return;
             for (int i = 0; i < labelName.length; i++) {
                 TextView item = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_article_tag, null);
@@ -186,16 +187,17 @@ public class ArticleActivity extends BaseActivity {
 
         }
 
-        if (info.getContentDetail().getShopList() != null) {
-            shop_layout.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(checkData(info.getContentDetail().getShopList().getGPhoto())).into(shop_img);
-            shop_name.setText(checkData(info.getContentDetail().getShopList().getShopName()));
-            shop_disct.setText(checkData(info.getContentDetail().getShopList().getGDes()));
-            shop_discount.setText(checkData(info.getContentDetail().getShopList().getGPriceVip()));
-            shop_price.setText(checkData(info.getContentDetail().getShopList().getGPriceOriginal()));
+        if (detail.getShopList() != null) {
+            VideoAndContentEntiy.shopList shopList = detail.getShopList();
+            shop_layout.setVisibility(shopList.getShopId().length() > 0 ? View.VISIBLE : View.GONE);
+            Glide.with(mContext).load(checkData(shopList.getGPhoto())).into(shop_img);
+            shop_name.setText(checkData(shopList.getShopName()));
+            shop_disct.setText(checkData(shopList.getGDes()));
+            shop_discount.setText(checkData(shopList.getGPriceVip()));
+            shop_price.setText(checkData(shopList.getGPriceOriginal()));
         }
 
-        contentEntities = JSON.parseArray(checkData(info.getContentDetail().getCrContent()), ArticleContentEntity.class);
+        contentEntities = JSON.parseArray(checkData(detail.getCrContent()), ArticleContentEntity.class);
         if (contentEntities != null && contentEntities.size() > 0) {
 
             for (ArticleContentEntity entity : contentEntities) {
@@ -536,6 +538,7 @@ public class ArticleActivity extends BaseActivity {
                 contentDetail.setLabelName(jsonObject.getString("labelName"));
                 contentDetail.setViewNum(jsonObject.getString("viewNum"));
                 contentDetail.setContentType(jsonObject.getString("contentType"));
+                contentDetail.setShopList(JSON.parseObject(jsonObject.getString("shopList"), VideoAndContentEntiy.shopList.class));
                 info.setContentDetail(contentDetail);
             }
 

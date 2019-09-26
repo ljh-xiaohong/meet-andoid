@@ -42,7 +42,7 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
     LinearLayout back;
 
     private PosterFragment recommendFragment;
-    private VideoTemplate followFragment;
+//    private VideoTemplate followFragment;
     private MyCreationFragment cityFragment;
 
     @Override
@@ -51,7 +51,7 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
         setContentView(R.layout.creation_activity);
         ButterKnife.bind(this);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(followFragment = new VideoTemplate());
+//        mFragmentList.add(followFragment = new VideoTemplate());
         mFragmentList.add(recommendFragment = new PosterFragment());
         mFragmentList.add(cityFragment = new MyCreationFragment());
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
@@ -130,21 +130,21 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
         switch (position) {
             case 0:
                 setCurrentItem(0);
-                followFragment.loadDataFromNet("0", 1, 10);
+//                followFragment.loadDataFromNet("0", 1, 10);
                 break;
             case 1:
                 setCurrentItem(1);
-                followFragment.loadDataFromNet("0", 1, 10);
+//                followFragment.loadDataFromNet("0", 1, 10);
                 break;
             case 2:
                 setCurrentItem(2);
-                followFragment.loadDataFromNet("0", 1, 10);
+//                followFragment.loadDataFromNet("0", 1, 10);
                 break;
             case 3:
-                followFragment.loadDataFromNet("0", 1, 10);
+//                followFragment.loadDataFromNet("0", 1, 10);
                 break;
             case 4:
-                followFragment.loadDataFromNet("0", 1, 10);
+//                followFragment.loadDataFromNet("0", 1, 10);
                 break;
             default:
                 break;
