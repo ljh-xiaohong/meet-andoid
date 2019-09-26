@@ -99,21 +99,24 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         //设置动画
         window.setAnimationStyle(R.style.popup_window_anim);
         // 设置背景颜色
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //设置可以获取焦点
         window.setFocusable(true);
         //设置可以触摸弹出框以外的区域
         window.setOutsideTouchable(true);
         // 更新popupwindow的状态
         window.update();
-        int width = window.getWidth();
-        int[] xy = new int[2];
-        view.getLocationInWindow(xy);
-        window.showAtLocation(view, Gravity.NO_GRAVITY,
-                xy[0] + (width - view.getWidth()) / 2, xy[1] + 70);
+//        int width = window.getWidth();
+//        int[] xy = new int[2];
+//        view.getLocationInWindow(xy);
+//        window.showAtLocation(view, Gravity.NO_GRAVITY,
+//                xy[0] + (width - view.getWidth()) / 2, xy[1] + 70);
+        window.showAsDropDown(view);
         TextView push = popupView.findViewById(R.id.push);
         TextView read = popupView.findViewById(R.id.read);
-        push.setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageSettingActivity.class)));
+        push.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MessageSettingActivity.class));
+            window.dismiss();});
         read.setOnClickListener(v -> window.dismiss());
     }
 
@@ -139,13 +142,6 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     private void setCurrentItem(int position) {
         mContentPager.setCurrentItem(position);
         mFamilyCircleTitleView.setSelectedTitle(position);
-//        if (position == 1) {
-//            //打开手势滑动
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//        } else {
-//            //禁止手势滑动
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//        }
     }
 
     @Override

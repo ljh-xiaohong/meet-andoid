@@ -2,18 +2,24 @@ package com.yuejian.meet.framents.message;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 
+import com.netease.nim.uikit.common.fragment.TabFragment;
 import com.yuejian.meet.R;
 import com.yuejian.meet.adapters.PrecisePushAdapter;
 import com.yuejian.meet.adapters.PrecisePushContentAdapter;
 import com.yuejian.meet.adapters.ServiceAdapter;
 import com.yuejian.meet.widgets.SecretaryTitleView;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,13 +29,18 @@ import butterknife.ButterKnife;
  * @time : 2019/9/8 11:10
  * @desc :
  */
-public class HundredSecretariesFragment extends Fragment implements SecretaryTitleView.OnTitleViewClickListener{
+public class HundredSecretariesFragment extends Fragment implements SecretaryTitleView.OnTitleViewClickListener, ViewPager.OnPageChangeListener {
+
+    @Bind(R.id.id_stickynavlayout_topview)
+    RelativeLayout idStickynavlayoutTopview;
+    @Bind(R.id.id_stickynavlayout_indicator)
     SecretaryTitleView mSecretaryTitleView;
-    RecyclerView precisePushList;
-    @Bind(R.id.precise_push_content_list)
-    RecyclerView precisePushContentList;
-    @Bind(R.id.service_list)
-    RecyclerView serviceList;
+    @Bind(R.id.id_stickynavlayout_viewpager)
+    ViewPager mViewPager;
+    private FragmentPagerAdapter mAdapter;
+
+    
+    
     private PrecisePushAdapter mPrecisePushAdapter;
     private PrecisePushContentAdapter mPrecisePushContentAdapter;
     private ServiceAdapter mServiceAdapter;
@@ -71,54 +82,110 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
             setParam();
         }
         ButterKnife.bind(this, view);
-        initView();
+        initDatas();
+        initEvents();
         return view;
     }
-    View header;
-    private void initView() {
-        header = LayoutInflater.from(getActivity()).inflate(R.layout.myheadview, null);
-        precisePushList=header.findViewById(R.id.precise_push_list);
-        mSecretaryTitleView=header.findViewById(R.id.family_circle_title_view);
+
+    private void initEvents()
+    {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageSelected(int position)
+            {
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels)
+            {
+                mSecretaryTitleView.scroll(position, positionOffset);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+
+            }
+        });
+
+    }
+
+    private void initDatas()
+    {
         mSecretaryTitleView.setOnTitleViewClickListener(this);
         mSecretaryTitleView.setSelectedTitle(0);
-        precisePushContentList.setVisibility(View.GONE);
-        precisePushList.setVisibility(View.GONE);
-        serviceList.setVisibility(View.VISIBLE);
+        ArrayList<Fragment> mFragmentList = new ArrayList<>();
+        mFragmentList.add(new ServiceFragment());
+        mFragmentList.add(new PrecisePushFragment());
+        mAdapter = new FragmentPagerAdapter(getFragmentManager())
+        {
+            @Override
+            public int getCount()
+            {
+                return mFragmentList.size();
+            }
 
-        precisePushList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mPrecisePushAdapter = new PrecisePushAdapter(getActivity());
-        precisePushList.setAdapter(mPrecisePushAdapter);
+            @Override
+            public Fragment getItem(int position)
+            {
+                return mFragmentList.get(position);
+            }
 
+        };
 
-        precisePushContentList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity());
-        precisePushContentList.setAdapter(mPrecisePushContentAdapter);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.addOnPageChangeListener(this);
+        setCurrentItem(0);
+    }
 
-        serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mServiceAdapter = new ServiceAdapter(getActivity());
-        serviceList.setAdapter(mServiceAdapter);
-        mServiceAdapter.setHeaderView(header);
+    /**
+     * 切换页面
+     *
+     * @param position 分类角标
+     */
+    private void setCurrentItem(int position) {
+        mViewPager.setCurrentItem(position);
+        mSecretaryTitleView.setSelectedTitle(position);
     }
 
     @Override
     public void onTitleViewClick(int position) {
         switch (position) {
             case 0:
-                mSecretaryTitleView.setSelectedTitle(position);
-                precisePushContentList.setVisibility(View.GONE);
-                precisePushList.setVisibility(View.GONE);
-                serviceList.setVisibility(View.VISIBLE);
-                mServiceAdapter.setHeaderView(header);
+                setCurrentItem(0);
                 break;
             case 1:
-                mSecretaryTitleView.setSelectedTitle(position);
-                precisePushContentList.setVisibility(View.VISIBLE);
-                precisePushList.setVisibility(View.VISIBLE);
-                serviceList.setVisibility(View.GONE);
-                mPrecisePushContentAdapter.setHeaderView(header);
+                setCurrentItem(1);
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                setCurrentItem(0);
+                break;
+            case 1:
+                setCurrentItem(1);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

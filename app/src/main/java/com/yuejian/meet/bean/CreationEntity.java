@@ -21,7 +21,7 @@ public class CreationEntity implements Serializable {
     private String labelId;
     private int id;
     private String contentTitle;
-    private String coveSizeType;
+    private String coverSizeType;
     private String photoAndVideoUrl;
     private int fabulousNum;
     private int contentId;
@@ -30,12 +30,12 @@ public class CreationEntity implements Serializable {
     private String content;
     private boolean isPraise;
 
-    public String getCoveSizeType() {
-        return coveSizeType;
+    public String getCoverSizeType() {
+        return coverSizeType;
     }
 
-    public void setCoveSizeType(String coveSizeType) {
-        this.coveSizeType = coveSizeType;
+    public void setCoverSizeType(String coverSizeType) {
+        this.coverSizeType = coverSizeType;
     }
 
     public boolean isPraise() {

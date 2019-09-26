@@ -1,10 +1,7 @@
 package com.yuejian.meet.framents.family;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +10,12 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
-import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
-import com.yuejian.meet.activities.find.ScannerActivity;
-import com.yuejian.meet.activities.home.ReleaseActivity;
-import com.yuejian.meet.activities.search.SearchActivity;
-import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.CreationAdapter;
-import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.CreationEntity;
 import com.yuejian.meet.bean.VideoAndArticleBean;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -40,7 +29,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author : g000gle
@@ -71,9 +59,9 @@ public class VideoFragment extends BaseFragment
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-        adapter = new CreationAdapter(mRecyclerView, getContext(), 2);
+        adapter = new CreationAdapter(mRecyclerView, getContext(), 2,false);
         adapter.setOnItemClickListener((view, position) -> {
-                VideoActivity.startActivity(mContext, creationEntities.get(position).getId() + "", AppConfig.CustomerId, Integer.parseInt(creationEntities.get(position).getCoveSizeType()) == 0 ? true : false);
+                VideoActivity.startActivity(mContext, creationEntities.get(position).getContentId() + "", AppConfig.CustomerId, Integer.parseInt(creationEntities.get(position).getCoverSizeType()) == 0 ? true : false);
         });
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));

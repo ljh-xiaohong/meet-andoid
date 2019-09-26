@@ -1712,6 +1712,16 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.GET_MEESSAGESETTING, paramMap, paramObject, paramDataIdCallback);
     }
     /**
+     * 获取某省的所有市
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void acquireCity(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_ACQUIRECITY, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
      * 通讯录
      *
      * @param paramMap
@@ -1720,6 +1730,16 @@ public class ApiImp {
      */
     public void getRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETRELATION, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 推送用户列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getPushList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETPUSHLIST, paramMap, paramObject, paramDataIdCallback);
     }
     /**
      * 获取消息通知详细

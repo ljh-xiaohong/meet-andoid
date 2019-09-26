@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
-import com.yuejian.meet.adapters.NewFriendAdapter;
+import com.yuejian.meet.adapters.ServiceAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
@@ -36,15 +35,15 @@ import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
  * @time : 2019/9/8 11:10
  * @desc :
  */
-public class FansFragment extends Fragment implements FriendListAdapter.OnFollowListItemClickListener {
+public class ServiceFragment extends Fragment{
 
     @Bind(R.id.list)
     RecyclerView fansList;
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
-    private FriendListAdapter mFansAdapter;
+    private ServiceAdapter mFansAdapter;
 
-    public FansFragment() {
+    public ServiceFragment() {
     }
 
     //是否可见
@@ -80,13 +79,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        if (getArguments().getInt("type") == 0) {
-            params.put("type", 0);
-        } else if (getArguments().getInt("type") == 1) {
-            params.put("type", 1);
-        } else {
-            params.put("type", 2);
-        }
+        params.put("type", 2);
         apiImp.getRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -102,7 +95,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
                 } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
-                mFansAdapter.refresh(mList);
+                mFansAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -127,15 +120,9 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     }
 
     private void initView() {
-        boolean isNew;
-        if (getArguments().getInt("type") == 0) {
-            isNew = true;
-        } else {
-            isNew = false;
-        }
-        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp);
+        mFansAdapter = new ServiceAdapter(getActivity());
         fansList.setAdapter(mFansAdapter);
-        mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
+        mFansAdapter.setOnClickListener(new ServiceAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
                 //关注
@@ -175,10 +162,5 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onListItemClick(int type, int id) {
-
     }
 }

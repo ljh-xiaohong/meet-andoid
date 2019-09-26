@@ -66,7 +66,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         }else {
             holder.name_type.setVisibility(View.GONE);
         }
-        holder.name.setText(entity.getNAME());
+        holder.name.setText(entity.getName());
         if (entity.getRelationType()==0){
             holder.attention.setText("关注");
             holder.attention.setVisibility(View.VISIBLE);

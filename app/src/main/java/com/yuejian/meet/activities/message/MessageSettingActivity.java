@@ -71,10 +71,10 @@ public class MessageSettingActivity extends AppCompatActivity {
                 }else {
                     selectCity.setText(bean.getData().getPushAddress());
                 }
-                if (CommonUtil.isNull(bean.getData().getAttentionIndustry())) {
+                if (CommonUtil.isNull(bean.getData().getIndustryName())) {
 
                 }else {
-                    selectIndustry.setText(bean.getData().getAttentionIndustry());
+                    selectIndustry.setText(bean.getData().getIndustryName());
                 }
             }
 
@@ -95,6 +95,7 @@ public class MessageSettingActivity extends AppCompatActivity {
                 }else {
                     recommendedUserSwitch.setChecked(true);
                 }
+                commit();
             }
         });
         recommendedProductSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -105,6 +106,7 @@ public class MessageSettingActivity extends AppCompatActivity {
                 }else {
                     recommendedProductSwitch.setChecked(true);
                 }
+                commit();
             }
         });
     }
@@ -130,7 +132,7 @@ public class MessageSettingActivity extends AppCompatActivity {
                 List<SelectBean> selectImages = (List<SelectBean>) data.getSerializableExtra("selectData");
                 for (int i=0;i<selectImages.size();i++){
                     selectIndustryTv+=selectImages.get(i).getName()+"、";
-                    industryId+=selectImages.get(i).getSecondPosition()+",";
+                    industryId+=selectImages.get(i).getId()+",";
                 }
                 if (!CommonUtil.isNull(selectIndustryTv)) {
                     selectIndustry.setText(selectIndustryTv.substring(0,selectIndustryTv.length()-1));
@@ -138,6 +140,7 @@ public class MessageSettingActivity extends AppCompatActivity {
                 commit();
             }else if (requestCode == 2){
                 selectCity.setText(data.getStringExtra("city"));
+                commit();
             }
         }
     }

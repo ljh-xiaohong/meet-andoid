@@ -49,21 +49,16 @@ import com.yuejian.meet.activities.home.InviteJoinGroupActivity;
 import com.yuejian.meet.activities.mine.BangDingWeChatActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
-import com.yuejian.meet.activities.search.MainSearchActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.app.MyApplication;
-import com.yuejian.meet.bean.ActionUnreadMsgEntity;
 import com.yuejian.meet.bean.mine2Entity;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.BusinessFragment;
 import com.yuejian.meet.framents.creation.CreationFragment;
-import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
 import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.find.FindFragment;
-import com.yuejian.meet.framents.message.MessageFragment;
-import com.yuejian.meet.framents.message.NewMessageActivity;
 import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.MineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
@@ -327,20 +322,16 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      * 选择的下标
      */
     public void setSelectBut(int vId) {
-        if (vId == R.id.rlayout_creation) {
-
-        } else {
-            rbtn_home.setSelected(false);
-            rbtn_message.setSelected(false);
-            rbtn_creation.setSelected(false);
-            rbtn_business.setSelected(false);
-            rbtn_me.setSelected(false);
-        }
         switch (vId) {
             case R.id.address_list:
                 startActivity(new Intent(this, AddressListActivity.class));
                 break;
             case R.id.rlayout_one_to_one:///
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_home.setSelected(true);
                 changeFragment(familyFragment);
                 break;
@@ -350,6 +341,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
 //                maia_layout_title_bar.setVisibility(View.GONE);
 //                address_list.setVisibility(View.VISIBLE);
                 rbtn_message.setSelected(true);
@@ -375,6 +371,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_business.setSelected(true);
                 changeFragment(businessFragment);
 
@@ -396,6 +397,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_me.setSelected(true);
                 changeFragment(mineFragment);
                 backPressListeners = new ArrayList<>();
@@ -572,6 +578,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         long nowTap = System.currentTimeMillis();
         if (nowTap - firstTap <= 2000) {
             moveTaskToBack(true);
+            System.exit(0);
         } else {
             Toast.makeText(mContext, "再按一次返回键退出约见百家姓", Toast.LENGTH_SHORT).show();
             firstTap = nowTap;

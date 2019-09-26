@@ -19,6 +19,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.adapters.ArticleListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
@@ -147,15 +148,7 @@ public class ArticleFragment extends BaseFragment
 
     @Override
     public void onListItemClick(int type, int id) {
-        //类型：1-随笔，2-文章，3-相册，4-视频
-        Intent intent = null;
-        if (type == 4) {
-            intent = new Intent(getActivity(), VideoDetailsActivity.class);
-        } else {
-            intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-        }
-        intent.putExtra("id", id);
-        startActivity(intent);
+            ArticleActivity.startActivity(mContext, id + "", AppConfig.CustomerId);
     }
 
     @Override

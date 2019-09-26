@@ -128,20 +128,14 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
         SoftKeyBoardListener.setListener(MyMessageCommentDialogActivity.this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {//软键盘展示
-                if (!emojicons.isShown()) {
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) commentEditLay.getLayoutParams();
-                    params.setMargins(0, 0, 0, height);
-                    Log.e("asdas","asdasd");
-                }
+//                if (!emojicons.isShown()) {
+//                    commentEditLay.setTranslationY(height);
+//                }
             }
 
             @Override
             public void keyBoardHide(int height) {//软键盘影藏
-                if (!emojicons.isShown()) {
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) commentEditLay.getLayoutParams();
-                    params.setMargins(0, 0, 0, height);
-                    Log.e("asdas","asdasd");
-                }
+//               commentEditLay.setTranslationY(height+50);
             }
         });
     }

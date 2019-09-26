@@ -14,6 +14,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
@@ -22,6 +23,7 @@ import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -71,6 +73,11 @@ public class FriendFragment extends BaseFragment
         mFollowListAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
+                if (!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                  //关注
                 getAttention(position);
             }

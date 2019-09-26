@@ -20,6 +20,7 @@ import com.yuejian.meet.adapters.CustomerServiceAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.MessageBean;
+import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
  * @time : 2019/9/8 11:10
  * @desc :
  */
-public class NotificationMessageFragment extends Fragment implements SpringView.OnFreshListener {
+public class NotificationMessageFragment extends BaseFragment implements SpringView.OnFreshListener {
 
     @Bind(R.id.new_firent)
     TextView newFirent;
@@ -76,14 +77,20 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
             //加载数据
-            initData();
+            initDatas();
         }
     }
 
     private int mNextPageIndex = 1;
     private int pageCount = 10;
     List<MessageBean.DataBean> mList =new ArrayList<>();
-    private void initData() {
+
+    @Override
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        return inflater.inflate(R.layout.notification_message_fragment, container, false);
+    }
+
+    public void initDatas() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
         params.put("msgType", "4");
@@ -92,6 +99,9 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
         apiImp.getMessageList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (mSpringView != null) {
+                    mSpringView.onFinishFreshAndLoad();
+                }
              MessageBean bean=new Gson().fromJson(data,MessageBean.class);
                 if (bean.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),bean.getMessage());
@@ -102,6 +112,7 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 }else{
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
+                    return;
                 }
                 if (mNextPageIndex <= 1) {
                     //上拉最新
@@ -114,9 +125,6 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
                         adapter.notifyDataSetChanged();
                     }
                 }
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-                }
             }
 
             @Override
@@ -128,17 +136,10 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
         });
     }
 
-    private View view;// 需要返回的布局
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {// 优化View减少View的创建次数
-            view = inflater.inflate(R.layout.notification_message_fragment, null);
-            isInit = true;
-        }
-        ButterKnife.bind(this, view);
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
         initView();
-        return view;
     }
 
     private void initView() {
@@ -151,19 +152,26 @@ public class NotificationMessageFragment extends Fragment implements SpringView.
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
         mSpringView.callFresh();
+        mSpringView.setVisibility(View.GONE);
     }
 
     @Override
     public void onRefresh() {
         mList.clear();
         mNextPageIndex = 1;
-        initData();
+        initDatas();
     }
 
     @Override
     public void onLoadmore() {
          ++mNextPageIndex;
-        initData();
+        initDatas();
+    }
+    String title="";
+    public void update() {
+        mList.clear();
+        mNextPageIndex = 1;
+        initDatas();
     }
     @Override
     public void onDestroyView() {

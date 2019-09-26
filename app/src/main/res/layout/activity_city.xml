@@ -27,6 +27,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/select_lay"
         android:layout_width="match_parent"
         android:background="#FFFFFF"
         android:layout_marginTop="6dp"
@@ -105,6 +106,7 @@
         </LinearLayout>
     </LinearLayout>
     <TextView
+        android:id="@+id/tips"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:padding="12dp"

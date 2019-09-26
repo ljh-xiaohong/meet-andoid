@@ -261,13 +261,13 @@ public class ImUtils {
      * 退出登录
      */
     public static void logout() {
-        AppConfig.userEntity = null;
-        PreferencesUtil.put(MyApplication.context, PreferencesUtil.KEY_USER_INFO, "");
-        AppConfig.CustomerId = "";
-        AppConfig.UserSex = null;
-        AppConfig.Token = "";
-        BusCallEntity busEnum=new BusCallEntity();
-        busEnum.setCallType(BusEnum.LOGOUT);
-        Bus.getDefault().post(busEnum);
+//        AppConfig.userEntity = null;
+//        PreferencesUtil.put(MyApplication.context, PreferencesUtil.KEY_USER_INFO, "");
+//        AppConfig.CustomerId = "";
+//        AppConfig.UserSex = null;
+//        AppConfig.Token = "";
+//        BusCallEntity busEnum=new BusCallEntity();
+//        busEnum.setCallType(BusEnum.LOGOUT);
+//        Bus.getDefault().post(busEnum);
     }
 }

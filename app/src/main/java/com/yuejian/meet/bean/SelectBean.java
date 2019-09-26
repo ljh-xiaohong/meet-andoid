@@ -9,8 +9,17 @@ import java.io.Serializable;
  */
 public class SelectBean implements Serializable {
     private String name;
+    private int id;
     private int firstPosition;
     private int secondPosition;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

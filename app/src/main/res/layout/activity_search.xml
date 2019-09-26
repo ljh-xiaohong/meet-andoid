@@ -44,6 +44,7 @@
             android:background="@color/pickerview_bg_topbar"
             android:hint="@string/verify_business_text5"
             android:textColor="@color/praise_item_default"
+            android:textColorHint="@color/txt_color_999999"
             android:textSize="@dimen/sp_14"
             android:visibility="visible" />
     </RelativeLayout>

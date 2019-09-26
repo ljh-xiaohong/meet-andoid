@@ -58,6 +58,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
     @Override
     public void onBindViewHolder(RecommendHoldView holder, int position) {
         RecommendEntity entity = data.get(position);
+        if (entity==null) return;
         if (!(holder.itemView instanceof RecommendView)) return;
         RecommendView rv = (RecommendView) holder.itemView;
 

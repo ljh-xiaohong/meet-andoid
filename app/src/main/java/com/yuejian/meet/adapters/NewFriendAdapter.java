@@ -57,8 +57,8 @@ public class NewFriendAdapter extends RecyclerView.Adapter<NewFriendAdapter.MyVi
         if (!TextUtils.isEmpty(dataBean.getPhoto())) {
             Glide.with(context).load(dataBean.getPhoto()).into(holder.iv_icon);
         }
-        if (!TextUtils.isEmpty(dataBean.getNAME())) {
-            holder.name.setText(dataBean.getNAME());
+        if (!TextUtils.isEmpty(dataBean.getName())) {
+            holder.name.setText(dataBean.getName());
         }else {
             holder.name.setText("");
         }

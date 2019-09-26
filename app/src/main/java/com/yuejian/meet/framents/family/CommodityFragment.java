@@ -75,7 +75,7 @@ public class CommodityFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         mFollowListAdapter = new CommodityListAdapter(getActivity(), this, apiImp, getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mSpringView.setFooter(new DefaultFooter(getContext()));

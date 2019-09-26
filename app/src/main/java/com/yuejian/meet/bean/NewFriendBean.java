@@ -12,7 +12,7 @@ public class NewFriendBean {
 
     /**
      * code : 0
-     * data : [{"relationType":1,"photo":"http://wx.qlogo.cn/mmopen/vi_32/CwRqACnfJtCoibFjDXax57558KVWdXiaiaEEMibayrbyujiaHQfz05ricUKZJ4n5IDdJFL8bVJuZV6QNQdrVciaOOxicfg/0","NAME":"张国良"},{"relationType":1,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1512699981300866_0_shuping.jpg","NAME":"罗安琪"},{"relationType":1,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3008211506050674219.jpg","NAME":"郑红"},{"relationType":1,"photo":null,"NAME":null},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1514277141300542_0_shuping.jpg","NAME":"第五太阳"},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3005541505179653823.jpg","NAME":"第五天"},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201809121438383838392405.png","NAME":"第五维钱"}]
+     * data : [{"relationType":1,"photo":"http://wx.qlogo.cn/mmopen/vi_32/CwRqACnfJtCoibFjDXax57558KVWdXiaiaEEMibayrbyujiaHQfz05ricUKZJ4n5IDdJFL8bVJuZV6QNQdrVciaOOxicfg/0","name":"张国良"},{"relationType":1,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1512699981300866_0_shuping.jpg","name":"罗安琪"},{"relationType":1,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3008211506050674219.jpg","name":"郑红"},{"relationType":1,"photo":null,"name":null},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1514277141300542_0_shuping.jpg","name":"第五太阳"},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3005541505179653823.jpg","name":"第五天"},{"relationType":2,"photo":"http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201809121438383838392405.png","NAME":"第五维钱"}]
      * message : 操作成功
      * result : true
      */
@@ -58,14 +58,14 @@ public class NewFriendBean {
         /**
          * relationType : 1
          * photo : http://wx.qlogo.cn/mmopen/vi_32/CwRqACnfJtCoibFjDXax57558KVWdXiaiaEEMibayrbyujiaHQfz05ricUKZJ4n5IDdJFL8bVJuZV6QNQdrVciaOOxicfg/0
-         * NAME : 张国良
+         * name : 张国良
          */
 
         private int relationType;
         private String vipType;
         private int customerId;
         private String photo;
-        private String NAME;
+        private String name;
 
 
         public int getCustomerId() {
@@ -100,12 +100,12 @@ public class NewFriendBean {
             this.photo = photo;
         }
 
-        public String getNAME() {
-            return NAME;
+        public String getName() {
+            return name;
         }
 
-        public void setNAME(String NAME) {
-            this.NAME = NAME;
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

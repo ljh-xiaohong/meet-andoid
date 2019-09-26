@@ -23,7 +23,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
     private Context context;
     private LayoutInflater inflater;
 
+    private ServiceAdapter.onClickListener mOnClickListener;
+    public void setOnClickListener(ServiceAdapter.onClickListener onClickListener) {
+        this.mOnClickListener = onClickListener;
+    }
 
+    public interface onClickListener {
+        void onClick(int position);
+    }
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
 

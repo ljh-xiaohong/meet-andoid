@@ -2,11 +2,11 @@ package com.yuejian.meet.activities.message;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,7 +24,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CityACtivity extends BaseActivity {
 
@@ -33,8 +32,13 @@ public class CityACtivity extends BaseActivity {
     ImageView back;
     @Bind(R.id.list)
     RecyclerView list;
-    List<String> datas=new ArrayList<>();
+    List<String> datas = new ArrayList<>();
     CityAdapter cityAdapter;
+    @Bind(R.id.select_lay)
+    LinearLayout selectLay;
+    @Bind(R.id.tips)
+    TextView tips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,14 +47,15 @@ public class CityACtivity extends BaseActivity {
         initView();
         getCity();
     }
+
     private void getCity() {
         Map<String, Object> params = new HashMap<>();
         params.put("province", getIntent().getStringExtra("province"));
-        apiImp.meessageSetting(params, this, new DataIdCallback<String>() {
+        apiImp.acquireCity(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                CityBean bean=new Gson().fromJson(data,CityBean.class);
-                for (int i=0;i<bean.getData().size();i++){
+                CityBean bean = new Gson().fromJson(data, CityBean.class);
+                for (int i = 0; i < bean.getData().size(); i++) {
                     datas.add(bean.getData().get(i).getCity());
                     cityAdapter.notifyDataSetChanged();
                 }
@@ -58,12 +63,15 @@ public class CityACtivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                ViewInject.shortToast(CityACtivity.this,errMsg);
+                ViewInject.shortToast(CityACtivity.this, errMsg);
             }
         });
     }
+
     private void initView() {
-        cityAdapter = new CityAdapter(this,datas);
+        selectLay.setVisibility(View.GONE);
+        tips.setText("选择城市");
+        cityAdapter = new CityAdapter(this, datas);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(cityAdapter);
         cityAdapter.setClick(new CityAdapter.OnClick() {

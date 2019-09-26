@@ -133,6 +133,7 @@ public class ArticleActivity extends BaseActivity {
         setContentView(R.layout.activity_article);
         if (!getData()) return;
         getDataFromNet();
+        back.setOnClickListener(v -> finish());
     }
 
     /**

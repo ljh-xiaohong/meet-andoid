@@ -96,6 +96,7 @@ public class NewChooseIndustryActivity extends Activity {
                     selectBean.setName(secondData.get(position).getJob());
                     selectBean.setFirstPosition(firstPosition);
                     selectBean.setSecondPosition(secondPosition);
+                    selectBean.setId(secondData.get(position).getcId());
                     selectData.add(selectBean);
                 } else {
                     for (int i = 0; i < selectData.size(); i++) {

@@ -12,12 +12,14 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
-import com.yuejian.meet.adapters.NewFriendAdapter;
+import com.yuejian.meet.adapters.PrecisePushAdapter;
+import com.yuejian.meet.adapters.PrecisePushContentAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
+import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.bean.PushUseBean;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.utils.ViewInject;
 
@@ -36,15 +38,16 @@ import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
  * @time : 2019/9/8 11:10
  * @desc :
  */
-public class FansFragment extends Fragment implements FriendListAdapter.OnFollowListItemClickListener {
+public class PrecisePushFragment extends Fragment implements FriendListAdapter.OnFollowListItemClickListener {
 
-    @Bind(R.id.list)
-    RecyclerView fansList;
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
-    private FriendListAdapter mFansAdapter;
+    @Bind(R.id.precise_push_content_list)
+    RecyclerView precisePushContentList;
+    @Bind(R.id.precise_push_list)
+    RecyclerView precisePushList;
 
-    public FansFragment() {
+    public PrecisePushFragment() {
     }
 
     //是否可见
@@ -70,39 +73,61 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
             //加载数据
-            initData();
+            initUserData();
+            initListData();
         }
     }
 
     public ApiImp apiImp = new ApiImp();
-    List<NewFriendBean.DataBean> mList = new ArrayList<>();
+    List<PushUseBean.DataBean> mList = new ArrayList<>();
+    List<PushListBean.DataBean> list = new ArrayList<>();
 
-    private void initData() {
+    private void initListData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        if (getArguments().getInt("type") == 0) {
-            params.put("type", 0);
-        } else if (getArguments().getInt("type") == 1) {
-            params.put("type", 1);
-        } else {
-            params.put("type", 2);
-        }
-        apiImp.getRelation(params, this, new DataIdCallback<String>() {
+        apiImp.getPushList(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                list.clear();
+                PushListBean bean = new Gson().fromJson(data, PushListBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                list.addAll(bean.getData());
+                if (list.size() > 0||mList.size() > 0) {
+                    llFamilyFollowListEmpty.setVisibility(View.GONE);
+                } else {
+                    llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
+                }
+                mPrecisePushContentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
+    }
+    private void initUserData() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        apiImp.getPushList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 mList.clear();
-                NewFriendBean bean = new Gson().fromJson(data, NewFriendBean.class);
+                PushUseBean bean = new Gson().fromJson(data, PushUseBean.class);
                 if (bean.getCode() != 0) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
                 mList.addAll(bean.getData());
-                if (mList.size() > 0) {
+                if (list.size() > 0||mList.size() > 0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
-                mFansAdapter.refresh(mList);
+                mPrecisePushAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -117,7 +142,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {// 优化View减少View的创建次数
-            view = inflater.inflate(R.layout.fans_fragment, null);
+            view = inflater.inflate(R.layout.precise_push_fragment, null);
             isInit = true;
             setParam();
         }
@@ -125,52 +150,53 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         initView();
         return view;
     }
-
+    PrecisePushAdapter mPrecisePushAdapter;
+    PrecisePushContentAdapter mPrecisePushContentAdapter;
     private void initView() {
-        boolean isNew;
-        if (getArguments().getInt("type") == 0) {
-            isNew = true;
-        } else {
-            isNew = false;
-        }
-        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp);
-        fansList.setAdapter(mFansAdapter);
-        mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
+        precisePushList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mPrecisePushAdapter = new PrecisePushAdapter(getActivity(),mList);
+        precisePushList.setAdapter(mPrecisePushAdapter);
+        mPrecisePushAdapter.setOnClickListener(new PrecisePushAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
                 //关注
                 getAttention(position);
             }
         });
-        fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        precisePushContentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity());
+        precisePushContentList.setAdapter(mPrecisePushContentAdapter);
     }
+
     private void getAttention(int position) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("opCustomerId", mList.get(position).getCustomerId());
-        if (mList.get(position).getRelationType()==0){
+        if (mList.get(position).getIsConcern().equals("0")) {
             map.put("type", "1");
-        }else {
+        } else {
             map.put("type", "2");
         }
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                if (mList.get(position).getRelationType()==0){
-                    mList.get(position).setRelationType(1);
-                }else {
-                    mList.get(position).setRelationType(0);
+                if (mList.get(position).getIsConcern() .equals("0") ) {
+                    mList.get(position).setIsConcern("1");
+                } else {
+                    mList.get(position).setIsConcern("0");
                 }
-                mFansAdapter.notifyItemChanged(position);
+                mPrecisePushAdapter.notifyItemChanged(position);
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

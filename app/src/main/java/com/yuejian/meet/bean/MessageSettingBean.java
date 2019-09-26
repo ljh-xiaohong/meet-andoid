@@ -67,6 +67,7 @@ public class MessageSettingBean {
          * userFlag : 0
          */
 
+        private String industryName;
         private String attentionIndustry;
         private int customerId;
         private boolean dynamicFlag;
@@ -77,6 +78,14 @@ public class MessageSettingBean {
         private int showDynamic;
         private int updateTime;
         private int userFlag;
+
+        public String getIndustryName() {
+            return industryName;
+        }
+
+        public void setIndustryName(String industryName) {
+            this.industryName = industryName;
+        }
 
         public String getAttentionIndustry() {
             return attentionIndustry;

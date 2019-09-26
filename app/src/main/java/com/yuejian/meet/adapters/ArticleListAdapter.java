@@ -114,6 +114,9 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             shop_img = (ImageView) itemView.findViewById(R.id.shop_img);
             title = (TextView) itemView.findViewById(R.id.title);
             zan_check_num = (TextView) itemView.findViewById(R.id.zan_check_num);
+            itemView.setOnClickListener(view -> {
+                if (mListItemClickListener != null) mListItemClickListener.onListItemClick(2, mFollowEntities.get(getAdapterPosition()).getId());
+            });
         }
     }
 }

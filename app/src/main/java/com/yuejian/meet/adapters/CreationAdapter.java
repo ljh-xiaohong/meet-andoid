@@ -18,10 +18,11 @@ import java.util.List;
 public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, CreationEntity> {
 
     private int type;
-
-    public CreationAdapter(RecyclerView recyclerView, Context context, int type) {
+    private boolean hasDraftBox;
+    public CreationAdapter(RecyclerView recyclerView, Context context, int type,boolean hasDraftBox) {
         super(recyclerView, context);
         this.type = type;
+        this.hasDraftBox = hasDraftBox;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
             //视频
             case 2:
                 //第一个默认草稿
-                if (position == 0) {
+                if (position == 0&&hasDraftBox) {
                     rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
                     return;
                 }
@@ -82,7 +83,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
             //文章
             case 1:
                 //第一个默认草稿
-                if (position == 0) {
+                if (position == 0&&hasDraftBox) {
                     rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
                     return;
                 }

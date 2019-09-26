@@ -59,7 +59,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         recyclerView = view.findViewById(R.id.fragment_poster_recyclerview);
         springView.setListener(this);
         if (!getData()) return;
-        adapter = new CreationAdapter(recyclerView, getContext(), type);
+        adapter = new CreationAdapter(recyclerView, getContext(), type,true);
         setListener();
         getDataFromNet();
     }
@@ -131,16 +131,13 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
             entity.setLabelId(jo.getString("labelId"));
             entity.setLabelName(jo.getString("labelName"));
             entity.setContentTitle(jo.getString("contentTitle"));
+            entity.setContentId(jo.getInteger("contentId"));
             if (type == 3) {
                 entity.setPreviewUrl(jo.getString("previewUrl"));
-                entity.setId(jo.getInteger("id"));
-
             } else {
                 entity.setPhotoAndVideoUrl(jo.getString("photoAndVideoUrl"));
                 entity.setFabulousNum(jo.getInteger("fabulousNum"));
-                entity.setContentId(jo.getInteger("contentId"));
                 entity.setContent(jo.getString("content"));
-
             }
             creationEntities.add(entity);
         }

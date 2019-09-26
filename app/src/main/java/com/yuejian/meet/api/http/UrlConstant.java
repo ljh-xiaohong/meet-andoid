@@ -1127,9 +1127,13 @@ public class UrlConstant {
     //获取用户服务信息
     public static String GET_GETUSRSERVICEINFO = apiUrl() + "api/msg/getUsrServiceInfo";
     //设置用户服务信息
-    public static String GET_MEESSAGESETTING = apiUrl() + "api/msg/eessageSetting";
+    public static String GET_MEESSAGESETTING = apiUrl() + "api/msg/meessageSetting";
+    //获取某省的所有市
+    public static String GET_ACQUIRECITY = apiUrl() + "api/provinceCityArea/acquireCity";
     //通讯录
     public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
+    //推送用户列表
+    public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
     //获取消息通知详细
     public static String GET_GETMESSAGEDETAIL = apiUrl() + "api/msg/getMessageDetail";
 
