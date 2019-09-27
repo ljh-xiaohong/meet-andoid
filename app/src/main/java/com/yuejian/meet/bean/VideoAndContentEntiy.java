@@ -9,7 +9,7 @@ public class VideoAndContentEntiy implements Serializable {
     private ContentDetail contentDetail;
 
     //评论列表
-    private List<CommentList> CommentList;
+    private List<CommentBean.DataBean> CommentList;
 
     public ContentDetail getContentDetail() {
         return contentDetail;
@@ -19,11 +19,11 @@ public class VideoAndContentEntiy implements Serializable {
         this.contentDetail = contentDetail;
     }
 
-    public List<VideoAndContentEntiy.CommentList> getCommentList() {
+    public List<CommentBean.DataBean> getCommentList() {
         return CommentList;
     }
 
-    public void setCommentList(List<VideoAndContentEntiy.CommentList> commentList) {
+    public void setCommentList(List<CommentBean.DataBean> commentList) {
         CommentList = commentList;
     }
 
@@ -232,122 +232,122 @@ public class VideoAndContentEntiy implements Serializable {
         }
     }
 
-    public static class CommentList implements Serializable {
-        /**
-         * replyCommentId : 0
-         * opName :
-         * customerId : 500193
-         * name : 张春杰
-         * photo : https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png
-         * comment : 不仅不会拒绝
-         * id : 74
-         * opPhoto :
-         * type : 3
-         * opCustomerId :
-         * createTime:1568971931
-         */
-
-        private String createTime;
-        private String replyCommentId;
-        private String opName;
-        private String customerId;
-        private String name;
-        private String photo;
-        private String comment;
-        private String id;
-        private String opPhoto;
-        private String type;
-        private String opCustomerId;
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getReplyCommentId() {
-            return replyCommentId;
-        }
-
-        public void setReplyCommentId(String replyCommentId) {
-            this.replyCommentId = replyCommentId;
-        }
-
-        public String getOpName() {
-            return opName;
-        }
-
-        public void setOpName(String opName) {
-            this.opName = opName;
-        }
-
-        public String getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPhoto() {
-            return photo;
-        }
-
-        public void setPhoto(String photo) {
-            this.photo = photo;
-        }
-
-        public String getComment() {
-            return comment;
-        }
-
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getOpPhoto() {
-            return opPhoto;
-        }
-
-        public void setOpPhoto(String opPhoto) {
-            this.opPhoto = opPhoto;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getOpCustomerId() {
-            return opCustomerId;
-        }
-
-        public void setOpCustomerId(String opCustomerId) {
-            this.opCustomerId = opCustomerId;
-        }
-
-    }
+//    public static class CommentList implements Serializable {
+//        /**
+//         * replyCommentId : 0
+//         * opName :
+//         * customerId : 500193
+//         * name : 张春杰
+//         * photo : https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png
+//         * comment : 不仅不会拒绝
+//         * id : 74
+//         * opPhoto :
+//         * type : 3
+//         * opCustomerId :
+//         * createTime:1568971931
+//         */
+//
+//        private String createTime;
+//        private String replyCommentId;
+//        private String opName;
+//        private String customerId;
+//        private String name;
+//        private String photo;
+//        private String comment;
+//        private String id;
+//        private String opPhoto;
+//        private String type;
+//        private String opCustomerId;
+//
+//        public String getCreateTime() {
+//            return createTime;
+//        }
+//
+//        public void setCreateTime(String createTime) {
+//            this.createTime = createTime;
+//        }
+//
+//        public String getReplyCommentId() {
+//            return replyCommentId;
+//        }
+//
+//        public void setReplyCommentId(String replyCommentId) {
+//            this.replyCommentId = replyCommentId;
+//        }
+//
+//        public String getOpName() {
+//            return opName;
+//        }
+//
+//        public void setOpName(String opName) {
+//            this.opName = opName;
+//        }
+//
+//        public String getCustomerId() {
+//            return customerId;
+//        }
+//
+//        public void setCustomerId(String customerId) {
+//            this.customerId = customerId;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getPhoto() {
+//            return photo;
+//        }
+//
+//        public void setPhoto(String photo) {
+//            this.photo = photo;
+//        }
+//
+//        public String getComment() {
+//            return comment;
+//        }
+//
+//        public void setComment(String comment) {
+//            this.comment = comment;
+//        }
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public void setId(String id) {
+//            this.id = id;
+//        }
+//
+//        public String getOpPhoto() {
+//            return opPhoto;
+//        }
+//
+//        public void setOpPhoto(String opPhoto) {
+//            this.opPhoto = opPhoto;
+//        }
+//
+//        public String getType() {
+//            return type;
+//        }
+//
+//        public void setType(String type) {
+//            this.type = type;
+//        }
+//
+//        public String getOpCustomerId() {
+//            return opCustomerId;
+//        }
+//
+//        public void setOpCustomerId(String opCustomerId) {
+//            this.opCustomerId = opCustomerId;
+//        }
+//
+//    }
 
     public static class shopList implements Serializable {
 

@@ -270,51 +270,59 @@
             app:layout_constraintTop_toBottomOf="@+id/video_content">
 
 
+
         </com.zhy.view.flowlayout.FlowLayout>
 
-
-        <TextView
-            android:id="@+id/video_like"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="12dp"
-            android:drawableTop="@mipmap/icon_video_zan_nor"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:textSize="13sp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="44dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/video_like"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_video_zan_nor"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/video_discuss"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_video_comm"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:id="@+id/video_share"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_video_share"
+                android:gravity="center"
+                android:text="分享"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/video_discuss"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:drawableTop="@mipmap/icon_video_comm"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/video_like"
-            app:layout_constraintStart_toStartOf="@+id/video_like"
-            app:layout_constraintTop_toBottomOf="@+id/video_like" />
-
-
-        <TextView
-            android:id="@+id/video_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:drawableTop="@mipmap/icon_video_share"
-            android:gravity="center"
-            android:text="分享"
-            android:textColor="#ffffff"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/video_discuss"
-            app:layout_constraintStart_toStartOf="@+id/video_discuss"
-            app:layout_constraintTop_toBottomOf="@+id/video_discuss" />
-
-        <TextView
+            android:id="@+id/video_discuss_edittext"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_margin="12dp"

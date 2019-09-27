@@ -1,5 +1,6 @@
 package com.yuejian.meet.activities.mine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -79,10 +80,55 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private ApiImp api = new ApiImp();
     private String replyCommentId = "";
 
+    private String crId = "";
+
+    public enum StyleType {NORMAL, BLACK}
+
+    StyleType styleType;
+
+    /**
+     * 开始Activity
+     *
+     * @param context     activity
+     * @param crId        id
+     * @param style       风格
+     * @param requestCode 返回值
+     */
+    public static void startActivityForResult(Activity context, String crId, StyleType style, int requestCode) {
+        Intent intent = new Intent(context, MyDialogActivity.class);
+        intent.putExtra("MyDialogActivity.crId", crId);
+        intent.putExtra("MyDialogActivity.styleType", style);
+        context.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 样式设置
+     */
+    private void setInit() {
+        crId = getIntent().getStringExtra("MyDialogActivity.crId");
+        styleType = (StyleType) getIntent().getSerializableExtra("MyDialogActivity.styleType");
+        switch (styleType) {
+            case NORMAL:
+                setContentView(R.layout.activity_mydialog);
+                break;
+
+            case BLACK:
+                setContentView(R.layout.activity_mydialog_black);
+                break;
+
+            default:
+                setContentView(R.layout.activity_mydialog);
+                break;
+        }
+        commentAdapter = new CommentListAdapter(this, mcommentData, styleType);
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mydialog);
+        setInit();
         ButterKnife.bind(this);
         TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
         int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
@@ -111,13 +157,12 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
                 hasClick = true;
             }
         });
-        commentAdapter = new CommentListAdapter(this, mcommentData);
         commentList.setLayoutManager(new LinearLayoutManager(this));
         commentList.setAdapter(commentAdapter);
         commentAdapter.setChange(new CommentListAdapter.OnChange() {
             @Override
             public void click(int postion) {
-                replyCommentId=mcommentData.get(postion).getReplyCommentId();
+                replyCommentId = mcommentData.get(postion).getId() + "";
                 content.setHint("回复" + mcommentData.get(postion).getName());
             }
         });
@@ -138,7 +183,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private void send() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getStringExtra("crId"));
+        params.put("crId", crId);
         params.put("commentContent", content.getText().toString());
         params.put("replyCommentId", replyCommentId);
         api.contentComent(params, this, new DataIdCallback<String>() {
@@ -168,7 +213,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("myCustomerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getStringExtra("crId"));
+        params.put("crId", crId);
         params.put("pageIndex", String.valueOf(mNextPageIndex));
         params.put("pageItemCount", String.valueOf(pageCount));
         api.getContentComments(params, this, new DataIdCallback<String>() {
@@ -176,7 +221,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
             public void onSuccess(String data, int id) {
                 CommentBean commentBean = new Gson().fromJson(data, CommentBean.class);
                 mcommentData.addAll(commentBean.getData());
-                count.setText("共"+mcommentData.size()+"条评论");
+                count.setText("共" + mcommentData.size() + "条评论");
                 commentAdapter.notifyDataSetChanged();
             }
 

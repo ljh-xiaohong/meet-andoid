@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/window"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yuejian.meet.activities.family.MyDialogActivity">
+
+    <View
+        android:id="@+id/dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#33000000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@drawable/bg_discuss">
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingTop="23dp"
+            android:paddingBottom="10dp"
+            android:text="共16条评论"
+            android:textColor="#FF999999"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/cencel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="19dp"
+            android:paddingRight="19dp"
+            android:paddingBottom="10dp"
+            android:src="@mipmap/icon_bottom_quit" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/comment_edit_lay"
+            android:layout_below="@+id/count"
+            android:background="#00ffffff" />
+
+        <RelativeLayout
+            android:id="@+id/comment_edit_lay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="#FF000000">
+
+            <com.yuejian.meet.widgets.CircleImageView
+                android:id="@+id/shop_img"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp" />
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/emoji"
+                android:layout_toRightOf="@+id/shop_img"
+                android:background="@null"
+                android:hint="留下你的评论吧~"
+                android:paddingLeft="10dp"
+                android:textColor="#333333"
+                android:textColorHint="#999999"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/line"
+                android:padding="12dp"
+                android:src="@mipmap/icon_bottom_emoji" />
+
+            <TextView
+                android:id="@+id/tv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:text="发送"
+                android:textColor="#999999"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="19dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_send"
+                android:background="#C5C5C5" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/emojicons"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:visibility="gone" />
+</LinearLayout>

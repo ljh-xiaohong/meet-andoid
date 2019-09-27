@@ -26,8 +26,10 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
@@ -36,6 +38,7 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,10 @@ public class VideoActivity extends BaseActivity {
 
     MoreDialog moreDialog;
 
+    private WeakReference<VideoActivity> reference;
+
+    private static final int INPUT_STATE = 154;
+
     private VideoAndContentEntiy info;
 
     @Bind(R.id.activity_video_player)
@@ -61,13 +68,15 @@ public class VideoActivity extends BaseActivity {
 
     private List<String> moreData;
 
+    private static final int REQUEST_CODE=200;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
         if (!getData()) return;
-
+        reference = new WeakReference<>(this);
         getDataFromNet();
     }
 
@@ -173,6 +182,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
@@ -220,10 +230,7 @@ public class VideoActivity extends BaseActivity {
         player.setTagItem(labelName, labelId, view -> {
             AcitivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
         });
-        //更多
-        player.getMoreButton().setOnClickListener(view -> {
-            moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
-        });
+
 
 
     }
@@ -240,10 +247,21 @@ public class VideoActivity extends BaseActivity {
             AddFollow();
         });
         player.getDiscussButton().setOnClickListener(view -> {
-            Intent intent = new Intent(mContext, MyDialogActivity.class);
-            intent.putExtra("crId", contentId + "");
-            startActivityForResult(intent, 1);
+//            Intent intent = new Intent(mContext, MyDialogActivity.class);
+//            intent.putExtra("crId", contentId + "");
+//            startActivityForResult(intent, 1);
 
+            MyDialogActivity.startActivityForResult(this, contentId, MyDialogActivity.StyleType.BLACK, REQUEST_CODE);
+
+
+        });
+        player.getDiscussEdittext().setOnClickListener(view -> {
+            InputActivity.startActivityForResult(this, contentId, "", "", INPUT_STATE);
+        });
+
+        //更多
+        player.getMoreButton().setOnClickListener(view -> {
+            moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
         });
     }
 
@@ -251,6 +269,34 @@ public class VideoActivity extends BaseActivity {
         if (TextUtils.isEmpty(data)) data = "";
 
         return data;
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (reference.get() == null || reference.get().isFinishing()) return;
+        switch (requestCode) {
+            //评论
+            case INPUT_STATE:
+
+                if (resultCode == RESULT_OK) {
+                    int count = Integer.valueOf(info.getContentDetail().getCommentNum());
+                    ;
+                    info.getContentDetail().setCommentNum(++count + "");
+                    player.getDiscussButton().setText(checkData(info.getContentDetail().getCommentNum()));
+
+                }
+
+                break;
+            //
+            case REQUEST_CODE:
+
+                break;
+
+
+
+        }
 
     }
 
@@ -264,7 +310,7 @@ public class VideoActivity extends BaseActivity {
             info = new VideoAndContentEntiy();
 
             if (!TextUtils.isEmpty(in.getString("commentList")) && !in.getString("commentList").equals("null")) {
-                info.setCommentList(JSON.parseArray(in.getString("commentList"), VideoAndContentEntiy.CommentList.class));
+                info.setCommentList(JSON.parseArray(in.getString("commentList"), CommentBean.DataBean.class));
             }
 
             if (!TextUtils.isEmpty(in.getString("contentDetail")) && !in.getString("contentDetail").equals("null")) {
@@ -310,6 +356,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.praiseContent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
                 if (praise == null) return;
                 switch (praise.getCode()) {
@@ -361,6 +408,7 @@ public class VideoActivity extends BaseActivity {
         Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,
@@ -390,7 +438,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -428,6 +476,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -455,6 +504,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
@@ -475,8 +525,10 @@ public class VideoActivity extends BaseActivity {
         map.put("type", info.getContentDetail().getContentType());
         map.put("id", info.getContentDetail().getId());
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
+
             @Override
             public void onSuccess(String data, int id) {
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
