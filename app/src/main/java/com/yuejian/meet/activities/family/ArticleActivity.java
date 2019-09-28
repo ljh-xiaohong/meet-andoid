@@ -174,7 +174,7 @@ public class ArticleActivity extends BaseActivity {
         reference = new WeakReference(this);
         initDiscussAdapter();
         getDataFromNet();
-        scrollView.setonScrollChanged((l, t, oldl, oldt) -> {
+        scrollView.setonScrollChanged((v,l, t, oldl, oldt) -> {
             int[] local = new int[2];
             discuss.getLocationInWindow(local);
 

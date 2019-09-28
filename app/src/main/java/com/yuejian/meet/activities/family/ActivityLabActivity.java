@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -27,7 +28,10 @@ import com.yuejian.meet.adapters.ActivityLabAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.ActivityLabEntity;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.MyNestedScrollView;
+import com.yuejian.meet.widgets.springview.DefaultFooter;
+import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
 import java.util.HashMap;
@@ -47,7 +51,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
     @Bind(R.id.activity_activity_nestedScrollView)
     MyNestedScrollView nestedScrollView;
-//
+
 //    @Bind(R.id.activity_activity_springView)
 //    SpringView springView;
 
@@ -97,8 +101,8 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         titleLp.topMargin = getStatusBarHeight();
 
 
-//        springView.setFooter(new DefaultFooter(mContext));
-//        springView.setHeader(new DefaultHeader(mContext));
+//        springView.setFooter(new DefaultFooter(this));
+//        springView.setHeader(new DefaultHeader(this));
 //        springView.setListener(this);
         if (!getInitData()) return;
         adapter = new ActivityLabAdapter(recyclerView, this);
@@ -206,7 +210,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
     }
 
     private void initListener() {
-        nestedScrollView.setonScrollChanged((l, t, oldl, oldt) -> {
+        nestedScrollView.setonScrollChanged((v, l, t, oldl, oldt) -> {
 
                     titleBar.setVisibility(t >= dip2px(ActivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
                     if (t >= dip2px(ActivityLabActivity.this, 44)) {
@@ -218,11 +222,17 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
                         setCommonUI(false);
                         setStatusBarColor(Color.parseColor("#00ffffff"));
                     }
+
+                    if (t == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                        onLoadmore();
+                    }
+
+
                 }
         );
 
         adapter.setOnItemClickListener((view, position1) -> {
-            ActivityLabEntity.Content content = labEntity.getContent().get(position1);
+            ActivityLabEntity.Content content = adapter.getData().get(position1);
             switch (content.getType()) {
 
                 //文章
@@ -264,8 +274,16 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
                 if (jo == null && !jo.getString("code").equals("0")) return;
                 labEntity = JSON.parseObject(jo.getString("data"), ActivityLabEntity.class);
                 if (labEntity != null) {
-                    if (labEntity.getContent() != null && labEntity.getContent().size() > 0)
-                        adapter.refresh(labEntity.getContent());
+                    if (labEntity.getContent() != null && labEntity.getContent().size() > 0) {
+                        if (pageIndex <= 1) {
+                            adapter.refresh(labEntity.getContent());
+                        } else {
+                            adapter.Loadmore(labEntity.getContent());
+                        }
+                        ++pageIndex;
+                    }
+
+
                     if (labEntity.getLabel() != null) {
                         Glide.with(ActivityLabActivity.this).load(labEntity.getLabel().getCoverUrl()).into(title_img);
                         title_one.setText(labEntity.getLabel().getTitle());
@@ -296,7 +314,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
     @Override
     public void onLoadmore() {
-        ++pageIndex;
+
         loadDataFromNet();
     }
 

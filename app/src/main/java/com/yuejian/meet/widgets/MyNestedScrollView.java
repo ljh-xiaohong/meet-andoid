@@ -26,11 +26,11 @@ public class MyNestedScrollView extends NestedScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (this.listener != null) this.listener.ScrollView(l, t, oldl, oldt);
+        if (this.listener != null) this.listener.ScrollView(this,l, t, oldl, oldt);
     }
 
     public interface OnScrollViewListener {
-        void ScrollView(int l, int t, int oldl, int oldt);
+        void ScrollView(NestedScrollView v ,int l, int t, int oldl, int oldt);
     }
 
     public void setonScrollChanged(OnScrollViewListener listener) {
