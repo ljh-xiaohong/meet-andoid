@@ -15,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -228,7 +227,7 @@ public class VideoActivity extends BaseActivity {
 
         //标签
         player.setTagItem(labelName, labelId, view -> {
-            AcitivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
+            ActivityLabActivity.startActivity(mContext, (String) (view.getTag()), AppConfig.CustomerId);
         });
 
 

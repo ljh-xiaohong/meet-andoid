@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,8 +21,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.ActivityLabAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
@@ -41,7 +40,7 @@ import butterknife.OnClick;
 import static com.aliyun.video.common.utils.DensityUtils.dip2px;
 
 
-public class AcitivityLabActivity extends AppCompatActivity implements SpringView.OnFreshListener, View.OnClickListener {
+public class ActivityLabActivity extends AppCompatActivity implements SpringView.OnFreshListener, View.OnClickListener {
 
     @Bind(R.id.activity_activity_recycleview)
     RecyclerView recyclerView;
@@ -134,23 +133,44 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
         }
     }
 
-    private void addStatusViewWithColor(Activity activity, int color, boolean isShow) {
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-        View view = contentView.findViewById(R.id.titlebar);
-        if (isShow) {
-            if (view != null) return;
-            View statusBarView = new View(activity);
-            statusBarView.setId(R.id.titlebar);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight());
-            statusBarView.setBackgroundColor(color);
-            contentView.addView(statusBarView, lp);
-        } else {
-            if (view == null) return;
-            contentView.removeView(view);
+    //设置6.0 状态栏深色浅色切换
+    public boolean setCommonUI(boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            if (decorView != null) {
+                int vis = decorView.getSystemUiVisibility();
+                if (dark) {
+                    vis |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                } else {
+                    vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                }
+                if (decorView.getSystemUiVisibility() != vis) {
+                    decorView.setSystemUiVisibility(vis);
+                }
+                return true;
+            }
         }
-
+        return false;
     }
+
+    /**
+     * 修改状态栏颜色，支持4.4以上版本
+     *
+     * @param colorId 颜色
+     */
+    public void setStatusBarColor(int colorId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(colorId);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //使用SystemBarTintManager,需要先将状态栏设置为透明
+            fullScreen(this);
+            SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
+            systemBarTintManager.setStatusBarTintEnabled(true);//显示状态栏
+            systemBarTintManager.setStatusBarTintColor(colorId);//设置状态栏颜色
+        }
+    }
+
 
     public int getStatusBarHeight() {
         int result = 0;
@@ -186,19 +206,20 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
     }
 
     private void initListener() {
-        nestedScrollView.setonScrollChanged(new MyNestedScrollView.OnScrollViewListener() {
-            @Override
-            public void ScrollView(int l, int t, int oldl, int oldt) {
-                titleBar.setVisibility(t >= dip2px(AcitivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
-                if (t >= dip2px(AcitivityLabActivity.this, 44)) {
-                    titleBar.setVisibility(View.VISIBLE);
-                    addStatusViewWithColor(AcitivityLabActivity.this, Color.parseColor("#ffffff"), true);
-                } else {
-                    titleBar.setVisibility(View.GONE);
-                    addStatusViewWithColor(AcitivityLabActivity.this, Color.parseColor("#ffffffff"), false);
+        nestedScrollView.setonScrollChanged((l, t, oldl, oldt) -> {
+
+                    titleBar.setVisibility(t >= dip2px(ActivityLabActivity.this, 44) ? View.VISIBLE : View.GONE);
+                    if (t >= dip2px(ActivityLabActivity.this, 44)) {
+                        titleBar.setVisibility(View.VISIBLE);
+                        setCommonUI(true);
+                        setStatusBarColor(Color.parseColor("#ffffff"));
+                    } else {
+                        titleBar.setVisibility(View.GONE);
+                        setCommonUI(false);
+                        setStatusBarColor(Color.parseColor("#00ffffff"));
+                    }
                 }
-            }
-        });
+        );
 
         adapter.setOnItemClickListener((view, position1) -> {
             ActivityLabEntity.Content content = labEntity.getContent().get(position1);
@@ -218,15 +239,15 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
     }
 
     public static void startActivity(Context context, String clId, String customerId) {
-        Intent intent = new Intent(context, AcitivityLabActivity.class);
-        intent.putExtra("AcitivityLabActivity.clId", clId);
-        intent.putExtra("AcitivityLabActivity.customerId", customerId);
+        Intent intent = new Intent(context, ActivityLabActivity.class);
+        intent.putExtra("ActivityLabActivity.clId", clId);
+        intent.putExtra("ActivityLabActivity.customerId", customerId);
         context.startActivity(intent);
     }
 
     private boolean getInitData() {
-        clId = getIntent().getStringExtra("AcitivityLabActivity.clId");
-        customerId = getIntent().getStringExtra("AcitivityLabActivity.customerId");
+        clId = getIntent().getStringExtra("ActivityLabActivity.clId");
+        customerId = getIntent().getStringExtra("ActivityLabActivity.customerId");
         return clId != null && customerId != null;
     }
 
@@ -246,7 +267,7 @@ public class AcitivityLabActivity extends AppCompatActivity implements SpringVie
                     if (labEntity.getContent() != null && labEntity.getContent().size() > 0)
                         adapter.refresh(labEntity.getContent());
                     if (labEntity.getLabel() != null) {
-                        Glide.with(AcitivityLabActivity.this).load(labEntity.getLabel().getCoverUrl()).into(title_img);
+                        Glide.with(ActivityLabActivity.this).load(labEntity.getLabel().getCoverUrl()).into(title_img);
                         title_one.setText(labEntity.getLabel().getTitle());
                         title_two.setText(labEntity.getLabel().getTitle());
                         content.setText(labEntity.getLabel().getDes());

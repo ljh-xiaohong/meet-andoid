@@ -128,7 +128,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name=".activities.family.AcitivityLabActivity"
+            android:name=".activities.family.ActivityLabActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity

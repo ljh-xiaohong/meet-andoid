@@ -19,10 +19,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -38,7 +36,6 @@ import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
-import com.yuejian.meet.bean.ActivityLabEntity;
 import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
@@ -46,7 +43,6 @@ import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.ScreenUtils;
-import com.yuejian.meet.utils.TextUtil;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.load.GlideImageEngine;
@@ -238,7 +234,7 @@ public class ArticleActivity extends BaseActivity {
                 item.setText(labelName[i]);
                 item.setTag(labelId[i]);
                 item.setOnClickListener(view -> {
-                    AcitivityLabActivity.startActivity(this, view.getTag() + "", AppConfig.CustomerId);
+                    ActivityLabActivity.startActivity(this, view.getTag() + "", AppConfig.CustomerId);
                 });
                 flowLayout.addView(item);
             }
@@ -293,7 +289,6 @@ public class ArticleActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setSmoothScrollbarEnabled(true);
         layoutManager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
