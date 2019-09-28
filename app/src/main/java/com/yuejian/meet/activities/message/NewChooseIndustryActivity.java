@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.FirstAdapter;
 import com.yuejian.meet.adapters.SecondAdapter;
 import com.yuejian.meet.adapters.SelectAdapter;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
  * @author lizhixin
  * @date 2016/4/11
  */
-public class NewChooseIndustryActivity extends Activity {
+public class NewChooseIndustryActivity extends BaseActivity {
 
 
     @Bind(R.id.first_list)

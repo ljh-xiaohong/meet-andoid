@@ -21,10 +21,12 @@ import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.CustomerServiceDetails;
 import com.yuejian.meet.bean.MessageBean;
+import com.yuejian.meet.utils.GlideUtils;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.widgets.CircleImageView;
 import com.yuejian.meet.widgets.SwipeMenuLayout;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,9 +35,18 @@ public class CustomerServiceAdapter extends RecyclerView.Adapter<CustomerService
     private Context context;
     private LayoutInflater inflater;
     private List<MessageBean.DataBean> list;
-    public CustomerServiceAdapter(Context context, List<MessageBean.DataBean> list) {
+
+    private onClickListener mOnClickListener;
+    public void setOnClickListener(onClickListener onClickListener) {
+        this.mOnClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void onDelect(int position);
+    }
+
+    public CustomerServiceAdapter(Context context) {
         this.context = context;
-        this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -58,14 +69,11 @@ public class CustomerServiceAdapter extends RecyclerView.Adapter<CustomerService
           intent.putExtra("content",dataBean.getMsgRemark());
             context.startActivity(intent);
         });
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,"删除", Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position));
         if (!TextUtils.isEmpty(dataBean.getMsgPhoto())) {
             Glide.with(context).load(dataBean.getMsgPhoto()).into(holder.iv_icon);
+        }else {
+            GlideUtils.displayNative(holder.iv_icon,R.mipmap.loading_unpic);
         }
         if (!TextUtils.isEmpty(dataBean.getTitle())) {
             holder.title.setText(dataBean.getTitle());
@@ -83,9 +91,25 @@ public class CustomerServiceAdapter extends RecyclerView.Adapter<CustomerService
     }
     @Override
     public int getItemCount() {
+        if (list == null) return 0;
         return list.size();
     }
 
+
+    public void refresh(List<MessageBean.DataBean> list) {
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+        }
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void Loadmore(List<MessageBean.DataBean> list) {
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+        }
+        notifyDataSetChanged();
+    }
     class MyViewHolder extends RecyclerView.ViewHolder {
         SwipeMenuLayout swipeMenuLayout;
         CircleImageView iv_icon;

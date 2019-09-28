@@ -26,6 +26,7 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
@@ -197,18 +198,18 @@ public class VideoActivity extends BaseActivity {
         player.getNameText().setText(info.getContentDetail().getUserName());
         player.getContenText().setText(info.getContentDetail().getContentTitle());
         //关注
-        player.getFollowText().setTextColor(Color.parseColor(info.getContentDetail().getRelationType().equals("0")  ? "#ffffffff" : "#66ffffff"));
+        player.getFollowText().setTextColor(Color.parseColor(info.getContentDetail().getRelationType().equals("0") ? "#ffffffff" : "#66ffffff"));
         player.getFollowText().setText(info.getContentDetail().getRelationType().equals("0") ? "加关注" : "已关注");
         //点赞数
         //是否点赞
-        player.setLike(info.getContentDetail().getIsPraise() .equals("1") ? true : false, info.getContentDetail().getFabulousNum());
+        player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, info.getContentDetail().getFabulousNum());
         //评论数量
         player.getDiscussButton().setText(info.getContentDetail().getCommentNum());
         player.getContenText().setText(info.getContentDetail().getContentTitle());
-        if(info.getContentDetail().getShopList()!=null){
+        if (info.getContentDetail().getShopList() != null) {
             player.getGoodsButton().setText(info.getContentDetail().getShopList().getShopName());
         }
-          if (info.getContentDetail().getLabelName() != null && info.getContentDetail().getLabelName().contains("#")) {
+        if (info.getContentDetail().getLabelName() != null && info.getContentDetail().getLabelName().contains("#")) {
             labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
             labelId = info.getContentDetail().getLabelId().split(",");
         }
@@ -235,6 +236,12 @@ public class VideoActivity extends BaseActivity {
 
         player.getFollowText().setOnClickListener(view -> {
             AddFollow();
+        });
+        player.getDiscussButton().setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, MyDialogActivity.class);
+            intent.putExtra("crId", contentId + "");
+            startActivityForResult(intent, 1);
+
         });
     }
 

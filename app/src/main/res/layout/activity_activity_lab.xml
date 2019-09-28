@@ -18,7 +18,7 @@
             <!-- 消息头 -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="173dp">
+                android:layout_height="193dp">
 
                 <ImageView
                     android:id="@+id/activity_activity_background_img"

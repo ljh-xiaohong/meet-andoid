@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -45,6 +44,8 @@ import io.github.rockerhieu.emojicon.emoji.Emojicon;
 public class MyMessageCommentDialogActivity extends FragmentActivity implements EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
     protected int activityCloseEnterAnimation;
     protected int activityCloseExitAnimation;
+    @Bind(R.id.dismiss_lay)
+    RelativeLayout dismiss_lay;
     @Bind(R.id.dismiss)
     View dismiss;
     @Bind(R.id.shop_img)
@@ -63,6 +64,8 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
     FrameLayout emojicons;
     @Bind(R.id.window)
     LinearLayout window;
+    @Bind(R.id.comment_list)
+    RecyclerView commentList;
     private boolean hasClick;
     private ApiImp api = new ApiImp();
 
@@ -99,6 +102,7 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
             }
         });
         dismiss.setOnClickListener(v -> finish());
+        dismiss_lay.setOnClickListener(v -> finish());
         content.setOnClickListener(v -> {
             emojicons.setVisibility(View.GONE);
             hasClick = false;
@@ -107,20 +111,22 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
         if (!TextUtils.isEmpty(AppConfig.photo)) {
             Glide.with(this).load(AppConfig.photo).into(shopImg);
         }
-        softKeyboardListener();
-        showSoftInputFromWindow(content);
+        content.setHint("回复" + getIntent().getStringExtra("userName"));
+//        softKeyboardListener();
+//        showSoftInputFromWindow(content);
         tvSend.setOnClickListener(v -> send());
     }
 
 
-    public void showSoftInputFromWindow(EditText editText){
+    public void showSoftInputFromWindow(EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
+
     /**
      * 软键盘显示与隐藏的监听
      */
@@ -139,12 +145,13 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
             }
         });
     }
+
     private void send() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getIntExtra("crId",0));
+        params.put("crId", getIntent().getIntExtra("crId", 0));
         params.put("commentContent", content.getText().toString());
-        params.put("replyCommentId", getIntent().getIntExtra("replyCommentId",0));
+        params.put("replyCommentId", getIntent().getIntExtra("replyCommentId", 0));
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

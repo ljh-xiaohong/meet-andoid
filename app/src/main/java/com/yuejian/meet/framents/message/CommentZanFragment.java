@@ -78,12 +78,12 @@ public class CommentZanFragment extends Fragment {
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId", "500103");
-        params.put("type",1);
-        apiImp.getCommentPraiseList(params, this, new DataIdCallback<String>() {
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("msgType",getArguments().getInt("type"));
+        apiImp.getCommentAndPraise(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (getArguments().getInt("type")==1){
+                if (getArguments().getInt("type")==2){
                     MessageCommentBean bean = new Gson().fromJson(data, MessageCommentBean.class);
                     if (bean.getCode() != 0) {
                         ViewInject.shortToast(getActivity(), bean.getMessage());
@@ -119,7 +119,27 @@ public class CommentZanFragment extends Fragment {
             }
         });
     }
+    private void delect(String id) {
+        Map<String, Object> params = new HashMap<>();
+//        params.put("customerId", AppConfig.CustomerId);
+        params.put("id",id);
+        apiImp.getDelMessage(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                MessageCommentBean bean = new Gson().fromJson(data, MessageCommentBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                initData();
+            }
 
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
+    }
     private View view;// 需要返回的布局
 
     @Override
@@ -141,9 +161,15 @@ public class CommentZanFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Intent intent=new Intent(getActivity(), MyMessageCommentDialogActivity.class);
-                intent.putExtra("crId",mCommentMapBeansList.get(position).getType());
-                intent.putExtra("replyCommentId",mCommentMapBeansList.get(position).getReplyCommentId());
+                intent.putExtra("crId",mCommentMapBeansList.get(position).getArticleObjectId());
+                intent.putExtra("userName",mCommentMapBeansList.get(position).getUserName());
+                intent.putExtra("replyCommentId","");
                 startActivityForResult(intent,1);
+            }
+
+            @Override
+            public void onDelect(int position) {
+                delect(mCommentMapBeansList.get(position).getMessageId());
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

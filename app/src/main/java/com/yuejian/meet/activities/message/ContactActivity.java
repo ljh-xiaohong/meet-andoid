@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.framents.message.FansFragment;
 import com.yuejian.meet.widgets.AddressBookTitleView;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ContactActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, AddressBookTitleView.OnTitleViewClickListener {
+public class ContactActivity extends BaseActivity implements ViewPager.OnPageChangeListener, AddressBookTitleView.OnTitleViewClickListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.vp_contact)

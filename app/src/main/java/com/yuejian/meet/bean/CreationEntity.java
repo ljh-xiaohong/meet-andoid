@@ -19,7 +19,6 @@ public class CreationEntity implements Serializable {
 
     private String previewUrl;
     private String labelId;
-    private int id;
     private String contentTitle;
     private String coverSizeType;
     private String photoAndVideoUrl;
@@ -68,14 +67,6 @@ public class CreationEntity implements Serializable {
 
     public void setLabelId(String labelId) {
         this.labelId = labelId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getContentTitle() {

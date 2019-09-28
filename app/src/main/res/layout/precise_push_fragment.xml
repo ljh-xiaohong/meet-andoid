@@ -17,6 +17,13 @@
         android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/precise_push_commodity_list"
+        android:layout_marginTop="5dp"
+        android:paddingRight="12dp"
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
         <LinearLayout
             android:id="@+id/ll_family_follow_list_empty"
             android:layout_width="wrap_content"

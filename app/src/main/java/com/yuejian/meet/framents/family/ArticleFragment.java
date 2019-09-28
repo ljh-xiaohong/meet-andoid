@@ -70,7 +70,6 @@ public class ArticleFragment extends BaseFragment
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mFollowListAdapter = new ArticleListAdapter(getActivity(), this, apiImp, getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
         mRecyclerView.setAdapter(mFollowListAdapter);
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));

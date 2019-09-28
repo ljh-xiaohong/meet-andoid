@@ -14,10 +14,11 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.adapters.FriendListAdapter;
 import com.yuejian.meet.adapters.PrecisePushAdapter;
+import com.yuejian.meet.adapters.PrecisePushCommodityAdapter;
 import com.yuejian.meet.adapters.PrecisePushContentAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.bean.NewFriendBean;
+import com.yuejian.meet.bean.PushCommodityBean;
 import com.yuejian.meet.bean.PushListBean;
 import com.yuejian.meet.bean.PushUseBean;
 import com.yuejian.meet.bean.ResultBean;
@@ -46,6 +47,8 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
     RecyclerView precisePushContentList;
     @Bind(R.id.precise_push_list)
     RecyclerView precisePushList;
+    @Bind(R.id.precise_push_commodity_list)
+    RecyclerView precisePushCommodityList;
 
     public PrecisePushFragment() {
     }
@@ -72,15 +75,25 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
      */
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
-            //加载数据
-            initUserData();
-            initListData();
+            if (mList.size() == 0) {
+                //加载数据
+                initUserData();
+            }
+            if (list.size() == 0) {
+                //加载数据
+                initListData();
+            }
+            if (listCommodity.size() == 0) {
+                //加载数据
+                initListCommodityData();
+            }
         }
     }
 
     public ApiImp apiImp = new ApiImp();
     List<PushUseBean.DataBean> mList = new ArrayList<>();
     List<PushListBean.DataBean> list = new ArrayList<>();
+    List<PushCommodityBean.DataBean> listCommodity = new ArrayList<>();
 
     private void initListData() {
         Map<String, Object> params = new HashMap<>();
@@ -95,7 +108,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
                     return;
                 }
                 list.addAll(bean.getData());
-                if (list.size() > 0||mList.size() > 0) {
+                if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
@@ -109,6 +122,34 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             }
         });
     }
+    private void initListCommodityData() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        apiImp.getThreeProject(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                listCommodity.clear();
+                PushCommodityBean bean = new Gson().fromJson(data, PushCommodityBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                listCommodity.addAll(bean.getData());
+                if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
+                    llFamilyFollowListEmpty.setVisibility(View.GONE);
+                } else {
+                    llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
+                }
+                mPrecisePushContentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
+    }
+
     private void initUserData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
@@ -122,7 +163,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
                     return;
                 }
                 mList.addAll(bean.getData());
-                if (list.size() > 0||mList.size() > 0) {
+                if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
@@ -150,11 +191,14 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
         initView();
         return view;
     }
+
     PrecisePushAdapter mPrecisePushAdapter;
     PrecisePushContentAdapter mPrecisePushContentAdapter;
+    PrecisePushCommodityAdapter mPrecisePushCommodityAdapter;
+
     private void initView() {
         precisePushList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mPrecisePushAdapter = new PrecisePushAdapter(getActivity(),mList);
+        mPrecisePushAdapter = new PrecisePushAdapter(getActivity(), mList);
         precisePushList.setAdapter(mPrecisePushAdapter);
         mPrecisePushAdapter.setOnClickListener(new PrecisePushAdapter.onClickListener() {
             @Override
@@ -164,8 +208,12 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             }
         });
         precisePushContentList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity());
+        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity(),list);
         precisePushContentList.setAdapter(mPrecisePushContentAdapter);
+
+        precisePushCommodityList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mPrecisePushCommodityAdapter = new PrecisePushCommodityAdapter(getActivity(),listCommodity);
+        precisePushCommodityList.setAdapter(mPrecisePushCommodityAdapter);
     }
 
     private void getAttention(int position) {
@@ -182,7 +230,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                if (mList.get(position).getIsConcern() .equals("0") ) {
+                if (mList.get(position).getIsConcern().equals("0")) {
                     mList.get(position).setIsConcern("1");
                 } else {
                     mList.get(position).setIsConcern("0");

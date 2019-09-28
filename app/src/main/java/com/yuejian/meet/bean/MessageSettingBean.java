@@ -66,7 +66,6 @@ public class MessageSettingBean {
          * updateTime : 1568706512
          * userFlag : 0
          */
-
         private String industryName;
         private String attentionIndustry;
         private int customerId;

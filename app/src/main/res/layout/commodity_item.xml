@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="171dp"
-    android:paddingLeft="12dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:layout_width="200dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="10dp"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <com.yuejian.meet.activities.custom.view.RoundAngleImageView
         android:id="@+id/msg_img"
-        android:layout_width="171dp"
+        android:layout_width="170dp"
+        android:layout_marginTop="20dp"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
-        android:layout_height="171dp" />
+        android:layout_height="170dp" />
 
     <TextView
         android:id="@+id/title"
@@ -29,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_below="@+id/title"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/vip_lay"

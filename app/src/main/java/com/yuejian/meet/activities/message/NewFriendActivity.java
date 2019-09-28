@@ -13,7 +13,6 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
-import com.yuejian.meet.adapters.NewFriendAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.bean.ResultBean;
@@ -59,14 +58,13 @@ public class NewFriendActivity extends BaseActivity implements FriendListAdapter
                     ViewInject.shortToast(NewFriendActivity.this,bean.getMessage());
                     return;
                 }
-                mList.clear();
                 mList.addAll(bean.getData());
                 if (mList.size() > 0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 }else{
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
-                adapter.notifyDataSetChanged();
+                adapter.refresh(mList);
             }
 
             @Override
@@ -79,7 +77,7 @@ public class NewFriendActivity extends BaseActivity implements FriendListAdapter
     private void initView() {
         title.setText("新朋友");
         back.setOnClickListener(v -> finish());
-        adapter = new FriendListAdapter(this, this, apiImp);
+        adapter = new FriendListAdapter(this, this, apiImp, false);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
@@ -87,22 +85,13 @@ public class NewFriendActivity extends BaseActivity implements FriendListAdapter
                 Map<String, Object> map = new HashMap<>();
                 map.put("customerId", AppConfig.CustomerId);
                 map.put("opCustomerId", mList.get(position).getCustomerId());
-                if (mList.get(position).getRelationType()==0){
-                    map.put("type", "1");
-                }else {
-                    map.put("type", "2");
-                }
+                map.put("type", "1");
                 apiImp.bindRelation(map, this, new DataIdCallback<String>() {
                     @Override
                     public void onSuccess(String data, int id) {
                         ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
                         ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                        if (mList.get(position).getRelationType()==0){
-                            mList.get(position).setRelationType(1);
-                        }else {
-                            mList.get(position).setRelationType(0);
-                        }
-                        adapter.notifyItemChanged(position);
+                        initData();
                     }
 
                     @Override

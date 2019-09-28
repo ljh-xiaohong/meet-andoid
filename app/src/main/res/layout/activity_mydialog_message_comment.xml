@@ -10,6 +10,17 @@
         android:layout_weight="1"
         android:background="#33000000"
         android:layout_height="0dp"/>
+    <RelativeLayout
+        android:id="@+id/dismiss_lay"
+        android:layout_width="match_parent"
+        android:layout_weight="4"
+        android:background="#33000000"
+        android:layout_height="0dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/comment_edit_lay"
+            android:layout_height="match_parent"/>
         <RelativeLayout
             android:id="@+id/comment_edit_lay"
             android:layout_width="match_parent"
@@ -25,6 +36,7 @@
             <EditText
                 android:id="@+id/content"
                 android:layout_width="match_parent"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/shop_img"
                 android:hint="留下你的评论吧~"
                 android:textSize="14sp"
@@ -60,6 +72,7 @@
                 android:background="#C5C5C5"
                 android:layout_height="19dp"/>
         </RelativeLayout>
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/emojicons"
         android:layout_width="match_parent"

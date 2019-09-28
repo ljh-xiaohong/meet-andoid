@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
 
     public interface onClickListener {
         void onClick(int position);
+        void onDelect(int position);
     }
 
     public CommtentZanAdapter(Context context, int type, List<MessageCommentBean.DataBean> commentMapBeansList, List<MessageZanBean.DataBean> praiseMapBeansList) {
@@ -62,22 +64,17 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        if (type==1) {
+        if (type==2) {
             holder.swipeMenuLayout.setIos(false);//设置是否开启IOS阻塞式交互
             holder.swipeMenuLayout.setLeftSwipe(true);//true往左滑动,false为往右侧滑动
             holder.swipeMenuLayout.setSwipeEnable(true);//设置侧滑功能开关
-            holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "删除", Toast.LENGTH_SHORT).show();
-                }
-            });
+            holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position));
             MessageCommentBean.DataBean commentMapBean=commentMapBeansList.get(position);
-            if (!TextUtils.isEmpty(commentMapBean.getUserPhoto())) {
-                Glide.with(context).load(commentMapBean.getUserPhoto()).into(holder.iv_icon);
+            if (!TextUtils.isEmpty(commentMapBean.getMsgPhoto())) {
+                Glide.with(context).load(commentMapBean.getMsgPhoto()).into(holder.iv_icon);
             }
-            if (!TextUtils.isEmpty(commentMapBean.getPhotoAndVideoUrl())) {
-                Glide.with(context).load(commentMapBean.getPhotoAndVideoUrl()).into(holder.content_img);
+            if (!TextUtils.isEmpty(commentMapBean.getPhoto())) {
+                Glide.with(context).load(commentMapBean.getPhoto()).into(holder.content_img);
                 holder.content_img.setVisibility(View.VISIBLE);
             }else {
                 holder.content_img.setVisibility(View.GONE);
@@ -94,16 +91,15 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
             }
             holder.zan_img.setVisibility(View.GONE);
             holder.comment_content.setVisibility(View.VISIBLE);
-            Date date = new Date(commentMapBean.getArticleCommentTime()*1000);
+            Date date = new Date(commentMapBean.getCreateTime()*1000);
             String createdTime = TimeUtils.formatDateTime(date);
             holder.time.setText(createdTime);
-            holder.comment_content.setOnClickListener(v -> mOnClickListener.onClick(position));
-
+            holder.rlItem.setOnClickListener(v -> mOnClickListener.onClick(position));
         }else {
             holder.swipeMenuLayout.setSwipeEnable(false);//设置侧滑功能开关
             MessageZanBean.DataBean commentMapBean=praiseMapBeansList.get(position);
-            if (!TextUtils.isEmpty(commentMapBean.getUserPhoto())) {
-                Glide.with(context).load(commentMapBean.getUserPhoto()).into(holder.iv_icon);
+            if (!TextUtils.isEmpty(commentMapBean.getPhoto())) {
+                Glide.with(context).load(commentMapBean.getPhoto()).into(holder.iv_icon);
             }
             if (!TextUtils.isEmpty(commentMapBean.getPhotoAndVideoUrl())) {
                 Glide.with(context).load(commentMapBean.getPhotoAndVideoUrl()).into(holder.content_img);
@@ -112,7 +108,7 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
                 holder.content_img.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(commentMapBean.getUserName())) {
-                holder.title.setText(commentMapBean.getUserName());
+                    holder.title.setText(commentMapBean.getUserName()+commentMapBean.getTitle());
             }else {
                 holder.title.setText("");
             }
@@ -126,7 +122,7 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
 
     @Override
     public int getItemCount() {
-        if (type==1){
+        if (type==2){
             return commentMapBeansList.size();
         }else {
             return praiseMapBeansList.size();
@@ -139,9 +135,11 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
         Button btnDelete;
         CircleImageView iv_icon;
         ImageView content_img,zan_img;
+        RelativeLayout rlItem;
         TextView time,title,comment_content;
         public MyViewHolder(View itemView) {
             super(itemView);
+            rlItem = itemView.findViewById(R.id.rlItem);
             iv_icon = itemView.findViewById(R.id.iv_icon);
             zan_img = itemView.findViewById(R.id.zan_img);
             time = itemView.findViewById(R.id.time);

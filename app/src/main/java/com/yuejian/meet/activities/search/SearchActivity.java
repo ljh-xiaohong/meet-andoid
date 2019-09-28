@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.aliyun.svideo.editor.util.Common;
 import com.netease.nim.uikit.app.AppConfig;
+import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -131,7 +132,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         hotFlowlayout.setAdapter(mAdapter = new TagAdapter<HotSeacher>(hotData) {
                     @Override
                     public View getView(FlowLayout parent, int position, HotSeacher s) {
-                        View view = LayoutInflater.from(SearchActivity.this).inflate(com.yuejian.meet.R.layout.hotflowlayout_tv,
+                        View view = LayoutInflater.from(SearchActivity.this).inflate(R.layout.hotflowlayout_tv,
                                 hotFlowlayout, false);
                         TextView tv = view.findViewById(com.yuejian.meet.R.id.tv);
                         tv.setText(s.getKeyword());

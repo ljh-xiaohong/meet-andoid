@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
@@ -33,7 +32,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     private Activity mActivity;
     private OnFollowListItemClickListener mListItemClickListener;
     private ApiImp apiImp;
-    private boolean isCheckeds;
+    private boolean isCancel;
     private onClickListener mOnClickListener;
     public void setOnClickListener(onClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
@@ -42,10 +41,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     public interface onClickListener {
         void onClick(int position);
     }
-    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp) {
+    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, boolean isCancel) {
         mContext = context;
         mListItemClickListener = listItemClickListener;
         this.apiImp = apiImp;
+        this.isCancel = isCancel;
     }
 
     @Override
@@ -67,15 +67,30 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
             holder.name_type.setVisibility(View.GONE);
         }
         holder.name.setText(entity.getName());
-        if (entity.getRelationType()==0){
-            holder.attention.setText("关注");
-            holder.attention.setVisibility(View.VISIBLE);
-            holder.attention.setBackgroundResource(R.drawable.black11);
+        if (isCancel){
+            if (entity.getRelationType()==1){
+                holder.attention.setText("关注");
+                holder.attention.setVisibility(View.VISIBLE);
+                holder.attention.setBackgroundResource(R.drawable.black11);
+            }else if (entity.getRelationType()==2){
+                holder.attention.setText("已关注");
+                holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setVisibility(View.VISIBLE);
+            }else if (entity.getRelationType()==3){
+                holder.attention.setText("已拉黑");
+                holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setVisibility(View.VISIBLE);
+            }
         }else {
-            holder.attention.setText("已关注");
-            holder.attention.setBackgroundResource(R.drawable.gray11);
-            holder.attention.setVisibility(View.VISIBLE);
+            if (entity.getRelationType()==1){
+                holder.attention.setText("关注");
+                holder.attention.setVisibility(View.VISIBLE);
+                holder.attention.setBackgroundResource(R.drawable.black11);
+            }else {
+                holder.attention.setVisibility(View.GONE);
+            }
         }
+
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
     }
 

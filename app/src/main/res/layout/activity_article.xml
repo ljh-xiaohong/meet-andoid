@@ -174,18 +174,18 @@
                         <!-- 商品 -->
                         <RelativeLayout
                             android:id="@+id/activity_article_shop_layout"
-                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:layout_margin="12dp"
                             android:background="#FFF7F7F7"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/activity_article_shop_img"
                                 android:layout_width="58dp"
                                 android:layout_height="58dp"
-                                android:scaleType="centerInside"
+                                android:scaleType="centerCrop"
                                 android:src="@mipmap/bg" />
 
                             <LinearLayout
@@ -228,9 +228,12 @@
                                     <TextView
                                         android:id="@+id/activity_article_shop_price_discount"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="#FF5B4113"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/bg_article_btn"
+                                        android:drawableLeft="@mipmap/icon_vipprice"
                                         android:gravity="center"
+                                        android:paddingLeft="1dp"
+                                        android:paddingRight="3dp"
                                         android:text="￥226"
                                         android:textColor="#FFFFFFFF"
                                         android:textSize="10sp" />

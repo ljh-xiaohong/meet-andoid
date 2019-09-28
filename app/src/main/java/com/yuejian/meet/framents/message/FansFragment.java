@@ -133,7 +133,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         } else {
             isNew = false;
         }
-        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp);
+        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp,false);
         fansList.setAdapter(mFansAdapter);
         mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
@@ -148,22 +148,13 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("opCustomerId", mList.get(position).getCustomerId());
-        if (mList.get(position).getRelationType()==0){
-            map.put("type", "1");
-        }else {
-            map.put("type", "2");
-        }
+        map.put("type", "1");
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                if (mList.get(position).getRelationType()==0){
-                    mList.get(position).setRelationType(1);
-                }else {
-                    mList.get(position).setRelationType(0);
-                }
-                mFansAdapter.notifyItemChanged(position);
+                initData();
             }
 
             @Override

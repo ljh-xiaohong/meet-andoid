@@ -2,7 +2,9 @@ package com.yuejian.meet.activities.message;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.yuejian.meet.R;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CommentZanActivity extends BaseActivity implements ViewPager.OnPageChangeListener, CommentZanTitleView.OnTitleViewClickListener {
+public class CommentZanActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, CommentZanTitleView.OnTitleViewClickListener {
     @Bind(R.id.back)
     ImageView back;
     @Bind(R.id.title)
@@ -38,20 +40,20 @@ public class CommentZanActivity extends BaseActivity implements ViewPager.OnPage
 
         mFriendFragment = new CommentZanFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type",1);
+        bundle.putInt("type",2);
         mFriendFragment.setArguments(bundle);
         mFragmentList.add(mFriendFragment);
 
         attentionFragment = new CommentZanFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("type",2);
+        bundle1.putInt("type",3);
         attentionFragment.setArguments(bundle1);
         mFragmentList.add(attentionFragment);
 
         setCurrentItem(0);
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
         vpContact.setAdapter(adapter);
-        vpContact.setOffscreenPageLimit(2);
+        vpContact.setOffscreenPageLimit(1);
         vpContact.addOnPageChangeListener(this);
         addressBookTitleView.setOnTitleViewClickListener(this);
         back.setOnClickListener(v -> finish());

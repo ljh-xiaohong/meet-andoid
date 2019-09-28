@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
+    android:background="@drawable/line_bottom"
     android:layout_height="64dp">
 
      <com.yuejian.meet.widgets.CircleImageView
          android:id="@+id/shop_img"
+         android:layout_marginLeft="12dp"
          android:layout_centerVertical="true"
          android:layout_width="40dp"
          android:layout_height="40dp" />
@@ -36,6 +36,7 @@
          android:layout_width="56dp"
          android:text="关注"
          android:textSize="13sp"
+         android:layout_marginRight="12dp"
          android:layout_centerVertical="true"
          android:layout_alignParentRight="true"
          android:gravity="center"

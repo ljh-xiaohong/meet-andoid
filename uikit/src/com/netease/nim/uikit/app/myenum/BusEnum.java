@@ -137,7 +137,9 @@ public enum BusEnum {
     /**
      * 家圈-推荐-点赞
      */
-    FAMILY_RECOMMEND_ZAN(91);
+    FAMILY_RECOMMEND_ZAN(91),
+
+    NOT_POINT(92);
     private int value;
     BusEnum(int value){
         this.value=value;

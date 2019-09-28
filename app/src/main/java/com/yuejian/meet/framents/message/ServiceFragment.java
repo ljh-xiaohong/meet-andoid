@@ -69,6 +69,7 @@ public class ServiceFragment extends Fragment{
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
             //加载数据
+            if(mList.size()==0)
             initData();
         }
     }

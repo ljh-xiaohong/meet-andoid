@@ -7,6 +7,7 @@ package com.yuejian.meet.adapters;
  */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +15,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
+import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushContentAdapter.MyViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-
+    private List<PushListBean.DataBean> list ;
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
 
-    private ArrayList<String> mDatas = new ArrayList<>();
 
     private View mHeaderView;
-    public PrecisePushContentAdapter(Context context) {
+    public PrecisePushContentAdapter(Context context, List<PushListBean.DataBean> list) {
         this.context = context;
+        this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -46,20 +51,21 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
-    }
-
-    public void setHeaderView(View headerView) {
-        mHeaderView = headerView;
-        notifyItemInserted(0);
-    }
-
-    public View getHeaderView() {
-        return mHeaderView;
-    }
-
-    public void addDatas(ArrayList<String> datas) {
-        mDatas.addAll(datas);
-        notifyDataSetChanged();
+        PushListBean.DataBean dataBean=list.get(position);
+        if (!TextUtils.isEmpty(dataBean.getUserPhoto())) {
+            Glide.with(context).load(dataBean.getUserPhoto()).into(holder.iv_icon);
+        }
+        if (!TextUtils.isEmpty(dataBean.getCoverUrl())) {
+            Glide.with(context).load(dataBean.getCoverUrl()).into(holder.msg_img);
+        }
+        if (!CommonUtil.isNull(dataBean.getVipType())&&Integer.parseInt(dataBean.getVipType())==1) {
+            holder.vip_img.setVisibility(View.VISIBLE);
+        }else {
+            holder.vip_img.setVisibility(View.GONE);
+        }
+        holder.name.setText(dataBean.getUserName());
+        holder.content.setText(dataBean.getContent()+"");
+        holder.title.setText(dataBean.getTitle()+"");
     }
 
     @Override
@@ -69,14 +75,10 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
         return TYPE_NORMAL;
     }
 
-    public int getRealPosition(RecyclerView.ViewHolder holder) {
-        int position = holder.getLayoutPosition();
-        return mHeaderView == null ? position : position - 1;
-    }
 
     @Override
     public int getItemCount() {
-        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
+        return mHeaderView == null ? list.size() : list.size() + 1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

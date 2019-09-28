@@ -57,51 +57,31 @@ public class MessageCommentBean {
 
     public static class DataBean implements Serializable {
         /**
-         * articleCommentId : 92
-         * userPhoto :
-         * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201909101512521252515460.jpg
-         * articleCommentContent : 操
-         * replyCommentId : 0
-         * articleCommentTime : 1568971931
-         * articleCommentType : 3
-         * userName :
-         * type : 2
-         * articleObjectId : 99731
+         * articleCommentId :
+         * articleCommentContent :
+         * createTime : 1504838842
+         * messageId : 641
+         * msgPhoto : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1504749630371.jpg
+         * photo : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1514277141300542_0_shuping.jpg
+         * userName : 第五太阳
+         * articleObjectId :
          */
 
-        private int articleCommentId;
-        private String userPhoto;
-        private String photoAndVideoUrl;
+        private String articleCommentId;
         private String articleCommentContent;
-        private int replyCommentId;
-        private int articleCommentTime;
-        private int articleCommentType;
+        private int createTime;
+        private String messageId;
+        private String msgPhoto;
+        private String photo;
         private String userName;
-        private int type;
-        private int articleObjectId;
+        private String articleObjectId;
 
-        public int getArticleCommentId() {
+        public String getArticleCommentId() {
             return articleCommentId;
         }
 
-        public void setArticleCommentId(int articleCommentId) {
+        public void setArticleCommentId(String articleCommentId) {
             this.articleCommentId = articleCommentId;
-        }
-
-        public String getUserPhoto() {
-            return userPhoto;
-        }
-
-        public void setUserPhoto(String userPhoto) {
-            this.userPhoto = userPhoto;
-        }
-
-        public String getPhotoAndVideoUrl() {
-            return photoAndVideoUrl;
-        }
-
-        public void setPhotoAndVideoUrl(String photoAndVideoUrl) {
-            this.photoAndVideoUrl = photoAndVideoUrl;
         }
 
         public String getArticleCommentContent() {
@@ -112,28 +92,36 @@ public class MessageCommentBean {
             this.articleCommentContent = articleCommentContent;
         }
 
-        public int getReplyCommentId() {
-            return replyCommentId;
+        public int getCreateTime() {
+            return createTime;
         }
 
-        public void setReplyCommentId(int replyCommentId) {
-            this.replyCommentId = replyCommentId;
+        public void setCreateTime(int createTime) {
+            this.createTime = createTime;
         }
 
-        public int getArticleCommentTime() {
-            return articleCommentTime;
+        public String getMessageId() {
+            return messageId;
         }
 
-        public void setArticleCommentTime(int articleCommentTime) {
-            this.articleCommentTime = articleCommentTime;
+        public void setMessageId(String messageId) {
+            this.messageId = messageId;
         }
 
-        public int getArticleCommentType() {
-            return articleCommentType;
+        public String getMsgPhoto() {
+            return msgPhoto;
         }
 
-        public void setArticleCommentType(int articleCommentType) {
-            this.articleCommentType = articleCommentType;
+        public void setMsgPhoto(String msgPhoto) {
+            this.msgPhoto = msgPhoto;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
         }
 
         public String getUserName() {
@@ -144,19 +132,11 @@ public class MessageCommentBean {
             this.userName = userName;
         }
 
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getArticleObjectId() {
+        public String getArticleObjectId() {
             return articleObjectId;
         }
 
-        public void setArticleObjectId(int articleObjectId) {
+        public void setArticleObjectId(String articleObjectId) {
             this.articleObjectId = articleObjectId;
         }
     }

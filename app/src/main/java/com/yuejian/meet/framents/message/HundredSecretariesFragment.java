@@ -39,12 +39,6 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
 
-    
-    
-    private PrecisePushAdapter mPrecisePushAdapter;
-    private PrecisePushContentAdapter mPrecisePushContentAdapter;
-    private ServiceAdapter mServiceAdapter;
-
 
     //是否可见
     public boolean isVisible = false;
@@ -82,34 +76,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
             setParam();
         }
         ButterKnife.bind(this, view);
-        initDatas();
-        initEvents();
         return view;
-    }
-
-    private void initEvents()
-    {
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
-        {
-            @Override
-            public void onPageSelected(int position)
-            {
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels)
-            {
-                mSecretaryTitleView.scroll(position, positionOffset);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state)
-            {
-
-            }
-        });
-
     }
 
     private void initDatas()
@@ -167,7 +134,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        mSecretaryTitleView.scroll(position, positionOffset);
     }
 
     @Override
@@ -188,4 +155,9 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    public void update() {
+        initDatas();
+    }
+
 }

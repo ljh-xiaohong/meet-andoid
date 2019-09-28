@@ -17,11 +17,9 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
-import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
@@ -67,7 +65,7 @@ public class FriendFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp);
+        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp, true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mFollowListAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
@@ -82,7 +80,6 @@ public class FriendFragment extends BaseFragment
                 getAttention(position);
             }
         });
-        mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
@@ -93,22 +90,32 @@ public class FriendFragment extends BaseFragment
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("opCustomerId", followEntities.get(position).getCustomerId());
-        if (followEntities.get(position).getRelationType()==0){
+        if (followEntities.get(position).getRelationType()==1){
             map.put("type", "1");
-        }else {
+        }else if (followEntities.get(position).getRelationType()==2){
             map.put("type", "2");
+        }else if (followEntities.get(position).getRelationType()==3){
+            map.put("type", "4");
         }
+
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                if (followEntities.get(position).getRelationType()==0){
-                    followEntities.get(position).setRelationType(1);
-                }else {
-                    followEntities.get(position).setRelationType(0);
-                }
-                mFollowListAdapter.notifyItemChanged(position);
+//                //未关注
+//                if (followEntities.get(position).getRelationType()==1){
+//                    followEntities.get(position).setRelationType(2);
+//                    //已关注
+//                }else if (followEntities.get(position).getRelationType()==2){
+//                    followEntities.get(position).setRelationType(1);
+//                    //拉黑
+//                }else if (followEntities.get(position).getRelationType()==3){
+//                    followEntities.get(position).setRelationType(1);
+//                }
+//                mFollowListAdapter.notifyItemChanged(position);
+
+                initData();
             }
 
             @Override

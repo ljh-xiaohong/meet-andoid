@@ -16,7 +16,7 @@ public class PosterModelEntity implements Serializable {
     private int id;
     private String postersTitle;
     private String previewUrl;
-    private List<String> labelName;
+    private String labelName;
 
     public int getId() {
         return id;
@@ -42,11 +42,11 @@ public class PosterModelEntity implements Serializable {
         this.previewUrl = previewUrl;
     }
 
-    public List<String> getLabelName() {
+    public String getLabelName() {
         return labelName;
     }
 
-    public void setLabelName(List<String> labelName) {
+    public void setLabelName(String labelName) {
         this.labelName = labelName;
     }
 }

@@ -1,23 +1,32 @@
 package com.yuejian.meet.activities.family;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.ActivityLabAdapter;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.ActivityLabEntity;
 import com.yuejian.meet.widgets.MyNestedScrollView;
 import com.yuejian.meet.widgets.springview.SpringView;
@@ -26,12 +35,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aliyun.video.common.utils.DensityUtils.dip2px;
 
 
-public class AcitivityLabActivity extends BaseActivity implements SpringView.OnFreshListener {
+public class AcitivityLabActivity extends AppCompatActivity implements SpringView.OnFreshListener, View.OnClickListener {
 
     @Bind(R.id.activity_activity_recycleview)
     RecyclerView recyclerView;
@@ -79,20 +89,70 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_lab);
+        fullScreen(this);
+        ButterKnife.bind(this);
+        Bus.getDefault().register(this);
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) back.getLayoutParams();
+        lp.topMargin = getStatusBarHeight();
+        ViewGroup.MarginLayoutParams titleLp = (ViewGroup.MarginLayoutParams) titleBar.getLayoutParams();
+        titleLp.topMargin = getStatusBarHeight();
+
+
 //        springView.setFooter(new DefaultFooter(mContext));
 //        springView.setHeader(new DefaultHeader(mContext));
 //        springView.setListener(this);
         if (!getInitData()) return;
-        adapter = new ActivityLabAdapter(recyclerView, mContext);
+        adapter = new ActivityLabAdapter(recyclerView, this);
         initListener();
         onRefresh();
 
     }
 
-    @OnClick({R.id.activity_activity_back, R.id.activity_activity_back_, R.id.activity_activity_follow})
+    private void fullScreen(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
+                Window window = activity.getWindow();
+                View decorView = window.getDecorView();
+                //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
+                int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                decorView.setSystemUiVisibility(option);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+                //导航栏颜色也可以正常设置
+//                window.setNavigationBarColor(Color.TRANSPARENT);
+            } else {
+                Window window = activity.getWindow();
+                WindowManager.LayoutParams attributes = window.getAttributes();
+                int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+                int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+                attributes.flags |= flagTranslucentStatus;
+//                attributes.flags |= flagTranslucentNavigation;
+                window.setAttributes(attributes);
+            }
+        }
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        //获取状态栏高度的资源id
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        Bus.getDefault().unregister(this);
+    }
+
+    @OnClick({R.id.activity_activity_back, R.id.activity_activity_back_, R.id.activity_activity_follow})
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.activity_activity_back:
                 finish();
@@ -121,12 +181,12 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
 
                 //文章
                 case 2:
-                    ArticleActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId);
+                    ArticleActivity.startActivity(this, content.getId() + "", AppConfig.CustomerId);
                     break;
 
                 //视频
                 case 4:
-                    VideoActivity.startActivity(mContext, content.getId() + "", AppConfig.CustomerId, content.getCoveSizeType() == 0 ? true : false);
+                    VideoActivity.startActivity(this, content.getId() + "", AppConfig.CustomerId, content.getCoveSizeType() == 0 ? true : false);
                     break;
             }
         });
@@ -151,7 +211,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
         params.put("customerId", customerId);
         params.put("pageIndex", pageIndex);
         params.put("pageItemCount", pageItemCount);
-        apiImp.findContentByLabel(params, this, new DataIdCallback<String>() {
+        new ApiImp().findContentByLabel(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 JSONObject jo = JSON.parseObject(data);
@@ -161,7 +221,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
                     if (labEntity.getContent() != null && labEntity.getContent().size() > 0)
                         adapter.refresh(labEntity.getContent());
                     if (labEntity.getLabel() != null) {
-                        Glide.with(mContext).load(labEntity.getLabel().getCoverUrl()).into(title_img);
+                        Glide.with(AcitivityLabActivity.this).load(labEntity.getLabel().getCoverUrl()).into(title_img);
                         title_one.setText(labEntity.getLabel().getTitle());
                         title_two.setText(labEntity.getLabel().getTitle());
                         content.setText(labEntity.getLabel().getDes());
@@ -200,7 +260,7 @@ public class AcitivityLabActivity extends BaseActivity implements SpringView.OnF
         params.put("customerId", customerId);
         //0-取消关注 1-添加关注
         params.put("type", isFollows ? 0 : 1);
-        apiImp.addContentLabelCustomer(params, this, new DataIdCallback<String>() {
+        new ApiImp().addContentLabelCustomer(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
 

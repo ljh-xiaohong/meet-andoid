@@ -18,6 +18,14 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.netease.nim.uikit.app.AppConfig;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
+import com.yuejian.meet.bean.GetMessageBean;
+import com.yuejian.meet.framents.message.NewMessageFragment;
+import com.yuejian.meet.widgets.MessageTitleView;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -29,6 +37,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

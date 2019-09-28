@@ -55,20 +55,25 @@ public class MessageZanBean {
     }
 
     public static class DataBean implements Serializable {
+
+
         /**
-         * userPhoto : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3005411504837504687.jpg
-         * createTime : 0
-         * praiseType : 1
-         * userName : 第五个
-         * objectId : 118
+         * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3005411569479916422.jpg
+         * createTime : 1569501295
+         * contentId : 99777
+         * messageId : 185271
+         * photo : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1533781688_0_shuping.jpg
+         * title : 赞了你的文章《古古怪怪》
+         * userName : 关羽
          */
 
-        private String userPhoto;
         private String photoAndVideoUrl;
         private int createTime;
-        private int praiseType;
+        private String contentId;
+        private String messageId;
+        private String photo;
+        private String title;
         private String userName;
-        private int objectId;
 
         public String getPhotoAndVideoUrl() {
             return photoAndVideoUrl;
@@ -76,14 +81,6 @@ public class MessageZanBean {
 
         public void setPhotoAndVideoUrl(String photoAndVideoUrl) {
             this.photoAndVideoUrl = photoAndVideoUrl;
-        }
-
-        public String getUserPhoto() {
-            return userPhoto;
-        }
-
-        public void setUserPhoto(String userPhoto) {
-            this.userPhoto = userPhoto;
         }
 
         public int getCreateTime() {
@@ -94,12 +91,36 @@ public class MessageZanBean {
             this.createTime = createTime;
         }
 
-        public int getPraiseType() {
-            return praiseType;
+        public String getContentId() {
+            return contentId;
         }
 
-        public void setPraiseType(int praiseType) {
-            this.praiseType = praiseType;
+        public void setContentId(String contentId) {
+            this.contentId = contentId;
+        }
+
+        public String getMessageId() {
+            return messageId;
+        }
+
+        public void setMessageId(String messageId) {
+            this.messageId = messageId;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
 
         public String getUserName() {
@@ -109,14 +130,5 @@ public class MessageZanBean {
         public void setUserName(String userName) {
             this.userName = userName;
         }
-
-        public int getObjectId() {
-            return objectId;
-        }
-
-        public void setObjectId(int objectId) {
-            this.objectId = objectId;
-        }
-
     }
 }

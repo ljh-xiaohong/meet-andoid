@@ -62,7 +62,7 @@ public class PrecisePushAdapter extends RecyclerView.Adapter<PrecisePushAdapter.
         }
         holder.name.setText(dataBean.getUserName());
         holder.content.setText(dataBean.getLastLoginCity()+"");
-          holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
+        holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
     }
 
     @Override

@@ -17,9 +17,11 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.CommentZanActivity;
 import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.adapters.CustomerServiceAdapter;
+import com.yuejian.meet.adapters.ProjectListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.MessageBean;
+import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
@@ -60,26 +62,8 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
     public boolean isInit = false;
     //是否已经加载过
     public boolean isLoadOver = false;
+    private View view;
 
-    //界面可见时再加载数据(该方法在onCreate()方法之前执行。)
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        this.isVisible = isVisibleToUser;
-        setParam();
-    }
-
-    /**
-     * 初始化一些参数，完成懒加载和数据只加载一次的效果
-     * isInit = true：此Fragment初始化完成
-     * isLoadOver = false：此Fragment没有加载过
-     * isVisible = true：此Fragment可见
-     */
-    private void setParam() {
-        if (isInit && !isLoadOver && isVisible) {
-            //加载数据
-            initDatas();
-        }
-    }
 
     private int mNextPageIndex = 1;
     private int pageCount = 10;
@@ -90,6 +74,32 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         return inflater.inflate(R.layout.notification_message_fragment, container, false);
     }
 
+    @Override
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
+        initView();
+    }
+    private void delect(int id) {
+        Map<String, Object> params = new HashMap<>();
+//        params.put("customerId", AppConfig.CustomerId);
+        params.put("id",id);
+        apiImp.getDelMessage(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                MessageCommentBean bean = new Gson().fromJson(data, MessageCommentBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                onRefresh();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
+    }
     public void initDatas() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
@@ -99,9 +109,6 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         apiImp.getMessageList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-                }
              MessageBean bean=new Gson().fromJson(data,MessageBean.class);
                 if (bean.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),bean.getMessage());
@@ -112,18 +119,20 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 }else{
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
-                    return;
                 }
                 if (mNextPageIndex <= 1) {
                     //上拉最新
-                    adapter.notifyDataSetChanged();
+                    adapter.refresh(mList);
                 } else {
                     //下拉更多
                     if (bean.getData().size()!=pageCount){
                         ViewInject.shortToast(getActivity(),"已经是最后一页");
                     }else {
-                        adapter.notifyDataSetChanged();
+                        adapter.Loadmore(mList);
                     }
+                }
+                if (mSpringView != null) {
+                    mSpringView.onFinishFreshAndLoad();
                 }
             }
 
@@ -136,23 +145,23 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         });
     }
 
-    @Override
-    protected void initWidget(View parentView) {
-        super.initWidget(parentView);
-        initView();
-    }
 
     private void initView() {
-        adapter = new CustomerServiceAdapter(getActivity(),mList);
+        adapter = new CustomerServiceAdapter(getActivity());
         recyclerView.setAdapter(adapter);
+        adapter.setOnClickListener(new CustomerServiceAdapter.onClickListener() {
+            @Override
+            public void onDelect(int position) {
+                delect(mList.get(position).getId());
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         newFirent.setOnClickListener(v -> startActivity(new Intent(getActivity(), NewFriendActivity.class)));
         commentAndZan.setOnClickListener(v -> startActivity(new Intent(getActivity(), CommentZanActivity.class)));
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-        mSpringView.callFresh();
-        mSpringView.setVisibility(View.GONE);
+//        mSpringView.callFresh();
     }
 
     @Override
@@ -167,15 +176,23 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
          ++mNextPageIndex;
         initDatas();
     }
-    String title="";
     public void update() {
         mList.clear();
         mNextPageIndex = 1;
         initDatas();
     }
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 }

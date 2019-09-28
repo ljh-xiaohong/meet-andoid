@@ -316,6 +316,7 @@ public class UrlConstant {
     public static String POST_FAMILY_SAMESURNAME_CICYGROPLIST = apiUrl() + "api/familyChatGroup/sameSurnameCityGroupList";
 
     public static String POST_IN_CASH = apiUrl() + "api/inCash/doInCash";
+    public static String PCREATESHOPORDERPAY = apiUrl() + "api/shopOrder/createShopOrderPay";
     //开通VIP
     public static String POST_IN_CASH_VIP = apiUrl() + "api/inCash/doInCashVip";
     //获取VIP详情列表
@@ -1036,8 +1037,11 @@ public class UrlConstant {
 
     public static String PUBLISHED_ARTICLES_NEW = apiUrl() + "api/contentRelease/pushContentRelease";
 
+    //获取VIP配置商品列表API
+    public static String GET_VIP_SHOP_GOODS_LIST = apiUrl() + "api/shopGoods/getVipShopGoodsList";
+
     //草稿箱列表
-    public static String GET_DRAFTS_LIST=apiUrl()+"api/contentRelease/getDraftsList";
+    public static String GET_DRAFTS_LIST = apiUrl() + "api/contentRelease/getDraftsList";
 
     //内容（动态，视频，文章）点赞(测试通过)
     public static String PRAISE_CONTENT = apiUrl() + "api/contentRelease/praiseContent";
@@ -1124,6 +1128,8 @@ public class UrlConstant {
     public static String GET_GETATTENTIONANDFRIEND = apiUrl() + "api/customerRelation/getAttentionAndFriend";
     //获取用户收到的评论和赞列表
     public static String GET_GETCOMMENTPRAISELIST = apiUrl() + "api/contentComment/getCommentPraiseList";
+    //获取用户收到的评论和赞列表
+    public static String GET_GETCOMMENTANDPRAISE = apiUrl() + "api/contentComment/getCommentAndPraise";
     //获取用户服务信息
     public static String GET_GETUSRSERVICEINFO = apiUrl() + "api/msg/getUsrServiceInfo";
     //设置用户服务信息
@@ -1134,8 +1140,18 @@ public class UrlConstant {
     public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
     //推送用户列表
     public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
+    //获取精准推送商品列表API
+    public static String GET_GETTHREEPROJECT = apiUrl() + "api/msg/getThreeProject";
     //获取消息通知详细
     public static String GET_GETMESSAGEDETAIL = apiUrl() + "api/msg/getMessageDetail";
+    //删除内容下评论
+    public static String GET_GETDELCONTENTCOMMENT = apiUrl() + "api/contentComment/delContentComment";
+    //消息删除
+    public static String GET_GETDELMESSAGE = apiUrl() + "api/msg/delMessage";
+    //获取新消息通知标识API
+    public static String GET_GETMESSAGE = apiUrl() + "api/msg/getMessage";
+    //设置通知消息全部为已读API
+    public static String GET_DOSETTINGREAD = apiUrl() + "api/msg/doSettingRead";
 
 
 }

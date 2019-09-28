@@ -75,6 +75,17 @@ public class MessageSettingActivity extends AppCompatActivity {
 
                 }else {
                     selectIndustry.setText(bean.getData().getIndustryName());
+                    industryId=bean.getData().getAttentionIndustry();
+                }
+                if (bean.getData().getUserFlag()==1){
+                    recommendedUserSwitch.setChecked(true);
+                }else {
+                    recommendedUserSwitch.setChecked(false);
+                }
+                if (bean.getData().getGoodsFlag()==1){
+                    recommendedProductSwitch.setChecked(true);
+                }else {
+                    recommendedProductSwitch.setChecked(false);
                 }
             }
 
@@ -90,22 +101,12 @@ public class MessageSettingActivity extends AppCompatActivity {
         recommendedUserSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    recommendedUserSwitch.setChecked(false);
-                }else {
-                    recommendedUserSwitch.setChecked(true);
-                }
                 commit();
             }
         });
         recommendedProductSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    recommendedProductSwitch.setChecked(false);
-                }else {
-                    recommendedProductSwitch.setChecked(true);
-                }
                 commit();
             }
         });

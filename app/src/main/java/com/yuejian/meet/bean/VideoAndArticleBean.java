@@ -74,6 +74,17 @@ public class VideoAndArticleBean {
         private int type;
         private String title;
         private String labelName;
+        private String coverSizeType;
+
+
+
+        public String getCoverSizeType() {
+            return coverSizeType;
+        }
+
+        public void setCoverSizeType(String coverSizeType) {
+            this.coverSizeType = coverSizeType;
+        }
 
         public String getCoverUrl() {
             return coverUrl;
