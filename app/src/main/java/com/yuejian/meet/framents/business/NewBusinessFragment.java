@@ -29,6 +29,7 @@ import com.yuejian.meet.activities.mine.SelectGoodsActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;

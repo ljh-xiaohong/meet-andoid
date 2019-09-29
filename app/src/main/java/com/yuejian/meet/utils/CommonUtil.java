@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -611,5 +612,55 @@ public class CommonUtil {
             throw new RuntimeException(e);
         }
         return encryptStr;
+    }
+
+
+    //数量转换
+    public static String changeNum(String num) {
+        if (StringUtils.isEmpty(num)) {
+            // 数据为空直接返回0
+            return "0";
+        }
+        try {
+            StringBuffer sb = new StringBuffer();
+            BigDecimal b1 = new BigDecimal("10000");
+            BigDecimal b2 = new BigDecimal("100000000");
+            BigDecimal b3 = new BigDecimal(num);
+
+            String formatedNum = "";//输出结果
+            String unit = "";//单位
+
+            if (b3.compareTo(b1) == -1) {
+                sb.append(b3.toString());
+            }else if ((b3.compareTo(b1) == 0 && b3.compareTo(b1) == 1)
+                    || b3.compareTo(b2) == -1) {
+                formatedNum = b3.divide(b1).toString();
+                unit = "w";
+            } else if (b3.compareTo(b2) == 0 || b3.compareTo(b2) == 1) {
+                formatedNum = b3.divide(b2).toString();
+                unit = "亿";
+            }
+            if (!"".equals(formatedNum)) {
+                int i = formatedNum.indexOf(".");
+                if (i == -1) {
+                    sb.append(formatedNum).append(unit);
+                } else {
+                    i = i + 1;
+                    String v = formatedNum.substring(i, i + 1);
+                    if (!v.equals("0")) {
+                        sb.append(formatedNum.substring(0, i + 1)).append(unit);
+                    } else {
+                        sb.append(formatedNum.substring(0, i - 1)).append(unit);
+                    }
+                }
+            }
+            if (sb.length() == 0)
+                return "0";
+            return sb.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return num;
+        }
     }
 }

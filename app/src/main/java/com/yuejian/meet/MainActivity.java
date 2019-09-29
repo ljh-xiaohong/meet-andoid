@@ -63,6 +63,7 @@ import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.NewMineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
