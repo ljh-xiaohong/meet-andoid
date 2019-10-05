@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.yuejian.meet.bean.CommodityBean;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
+import com.yuejian.meet.ui.SpacesItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -75,8 +77,10 @@ public class CommodityFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         mFollowListAdapter = new CommodityListAdapter(getActivity(), this, apiImp, getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL, false);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));

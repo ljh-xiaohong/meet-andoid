@@ -98,9 +98,10 @@ public class FamilyCircleFollowFragment extends BaseFragment
 
             @Override
             public void onComment(int position) {
-                Intent intent = new Intent(getActivity(), MyDialogActivity.class);
-                intent.putExtra("crId", followEntities.get(position).getId() + "");
-                startActivityForResult(intent, 1);
+//                Intent intent = new Intent(getActivity(), MyDialogActivity.class);
+//                intent.putExtra("crId", followEntities.get(position).getId() + "");
+//                startActivityForResult(intent, 1);
+                MyDialogActivity.startActivityForResult(getActivity(), followEntities.get(position).getId() + "", MyDialogActivity.StyleType.NORMAL, 1);
             }
         });
         mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));

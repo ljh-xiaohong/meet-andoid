@@ -18,6 +18,7 @@ public class AppConfig {
     public static UserEntity userEntity;
     public static NewUserEntity newUerEntity;
     public static String CustomerId="";//用户id
+    public static String surname="";//用户id
     public static String photo="";//用户id
     public static String UserSex;////用户性别
     public static String Token="";//

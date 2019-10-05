@@ -30,6 +30,7 @@ import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.bean.ZanBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.FolderTextView;
+import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.widgets.CircleImageView;
@@ -85,6 +86,9 @@ public class CommodityListAdapter extends RecyclerView.Adapter<CommodityListAdap
         String headUrl = entity.getGPhoto();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.msg_img);
+            int itemWidth = (ScreenUtils.getScreenWidth(mContext) - 20 * 3) / 2;
+            int itemHeight = itemWidth;
+            holder.msg_img.getLayoutParams().height =itemHeight;
         }
         holder.title.setText(entity.getGName());
         if (entity.getGPriceVip()>0){

@@ -84,8 +84,8 @@ public class NewMineFragment extends BaseFragment {
     }
     private void initView() {
         initWxPayApi();
-//        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId=500220");
+        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
+//        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId=500220");
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=500102&gId=6");
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);

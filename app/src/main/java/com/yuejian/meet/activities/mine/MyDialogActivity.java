@@ -1,5 +1,6 @@
 package com.yuejian.meet.activities.mine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +33,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.CircleImageView;
 
 import java.util.ArrayList;
@@ -80,11 +84,57 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private boolean hasClick;
     private ApiImp api = new ApiImp();
     private String replyCommentId = "";
+    //字数限制范围
+    private int limit = 200;
+    private String crId = "";
+
+    public enum StyleType {NORMAL, BLACK}
+
+    StyleType styleType;
+
+    /**
+     * 开始Activity
+     *
+     * @param context     activity
+     * @param crId        id
+     * @param style       风格
+     * @param requestCode 返回值
+     */
+    public static void startActivityForResult(Activity context, String crId, StyleType style, int requestCode) {
+        Intent intent = new Intent(context, MyDialogActivity.class);
+        intent.putExtra("MyDialogActivity.crId", crId);
+        intent.putExtra("MyDialogActivity.styleType", style);
+        context.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 样式设置
+     */
+    private void setInit() {
+        crId = getIntent().getStringExtra("MyDialogActivity.crId");
+        styleType = (StyleType) getIntent().getSerializableExtra("MyDialogActivity.styleType");
+        switch (styleType) {
+            case NORMAL:
+                setContentView(R.layout.activity_mydialog);
+                break;
+
+            case BLACK:
+                setContentView(R.layout.activity_mydialog_black);
+                break;
+
+            default:
+                setContentView(R.layout.activity_mydialog);
+                break;
+        }
+        commentAdapter = new CommentListAdapter(this, mcommentData, styleType);
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mydialog);
+        setInit();
         ButterKnife.bind(this);
         TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
         int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
@@ -113,13 +163,12 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
                 hasClick = true;
             }
         });
-        commentAdapter = new CommentListAdapter(this, mcommentData);
         commentList.setLayoutManager(new LinearLayoutManager(this));
         commentList.setAdapter(commentAdapter);
         commentAdapter.setChange(new CommentListAdapter.OnChange() {
             @Override
             public void click(int postion) {
-                replyCommentId=mcommentData.get(postion).getReplyCommentId();
+                replyCommentId = mcommentData.get(postion).getId() + "";
                 content.setHint("回复" + mcommentData.get(postion).getName());
             }
         });
@@ -127,6 +176,26 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         content.setOnClickListener(v -> {
             emojicons.setVisibility(View.GONE);
             hasClick = false;
+        });
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (content.getText().toString().length() > limit) {
+                    content.setText(content.getText().toString().substring(0, limit));
+                    content.setSelection(content.length());
+                    ViewInject.shortToast(content.getContext(), "字数限制，不超：" + limit);
+                }
+            }
         });
         setEmojiconFragment(false);
         if (!TextUtils.isEmpty(AppConfig.photo)) {
@@ -146,7 +215,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private void send() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getStringExtra("crId"));
+        params.put("crId", crId);
         params.put("commentContent", content.getText().toString());
         params.put("replyCommentId", replyCommentId);
         api.contentComent(params, this, new DataIdCallback<String>() {
@@ -181,7 +250,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("myCustomerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getStringExtra("crId"));
+        params.put("crId", crId);
         params.put("pageIndex", String.valueOf(mNextPageIndex));
         params.put("pageItemCount", String.valueOf(pageCount));
         api.getContentComments(params, this, new DataIdCallback<String>() {
@@ -189,7 +258,7 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
             public void onSuccess(String data, int id) {
                 CommentBean commentBean = new Gson().fromJson(data, CommentBean.class);
                 mcommentData.addAll(commentBean.getData());
-                count.setText("共"+mcommentData.size()+"条评论");
+                count.setText("共" + mcommentData.size() + "条评论");
                 commentAdapter.notifyDataSetChanged();
             }
 

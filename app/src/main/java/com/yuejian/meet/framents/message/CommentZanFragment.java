@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.MyMessageCommentDialogActivity;
-import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.adapters.CommtentZanAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
@@ -78,7 +76,8 @@ public class CommentZanFragment extends Fragment {
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId", AppConfig.CustomerId);
+//        params.put("customerId", AppConfig.CustomerId);
+        params.put("customerId", "500102");
         params.put("msgType",getArguments().getInt("type"));
         apiImp.getCommentAndPraise(params, this, new DataIdCallback<String>() {
             @Override
@@ -163,13 +162,17 @@ public class CommentZanFragment extends Fragment {
                 Intent intent=new Intent(getActivity(), MyMessageCommentDialogActivity.class);
                 intent.putExtra("crId",mCommentMapBeansList.get(position).getArticleObjectId());
                 intent.putExtra("userName",mCommentMapBeansList.get(position).getUserName());
-                intent.putExtra("replyCommentId","");
+                intent.putExtra("replyCommentId",mCommentMapBeansList.get(position).getArticleCommentId());
                 startActivityForResult(intent,1);
             }
 
             @Override
-            public void onDelect(int position) {
-                delect(mCommentMapBeansList.get(position).getMessageId());
+            public void onDelect(int position, int i) {
+                if (i==2){
+                    delect(mCommentMapBeansList.get(position).getMessageId());
+                }else {
+                    delect(mPraiseMapBeansList.get(position).getMessageId());
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

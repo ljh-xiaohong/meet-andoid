@@ -77,6 +77,10 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     }
 
+    public TextView getDiscussEdittext(){
+        return this.findViewById(R.id.video_discuss_edittext);
+    }
+
     public TextView getNameText() {
         return this.findViewById(R.id.video_name);
     }

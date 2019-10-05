@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -69,7 +70,12 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
                 rv.article_img.getLayoutParams().height = itemWidth;
                 Glide.with(context).load(entity.getCoverUrl()).into(rv.article_img);
-                rv.article_tag.setText(entity.getLabelName());
+                if (!TextUtils.isEmpty(entity.getLabelName())) {
+                    rv.article_tag.setText(entity.getLabelName().replaceAll("#", ""));
+                    rv.article_tag.setVisibility(View.VISIBLE);
+                } else {
+                    rv.article_tag.setVisibility(View.GONE);
+                }
                 rv.article_content.setText(entity.getTitle());
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isIsPraise(), entity.getFabulousNum() + "");
 
@@ -83,7 +89,12 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                     Glide.with(context).load(entity.getCoverUrl()).into(rv.video_vertical_img);
                     rv.video_vertical_content.setText(entity.getTitle());
-                    rv.video_vertical_tag.setText(entity.getLabelName());
+                    if (!TextUtils.isEmpty(entity.getLabelName())) {
+                        rv.video_vertical_tag.setText(entity.getLabelName().replaceAll("#", ""));
+                        rv.video_vertical_tag.setVisibility(View.VISIBLE);
+                    } else {
+                        rv.video_vertical_tag.setVisibility(View.GONE);
+                    }
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isIsPraise(), entity.getFabulousNum() + "");
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
@@ -94,7 +105,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
 //                            rv.video_horizontal_video.setImageBitmap(resource);
 //                        }
 //                    });
-                    Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context,30)).into(new SimpleTarget<GlideDrawable>() {
+                    Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context, 30)).into(new SimpleTarget<GlideDrawable>() {
                         @Override
                         public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
                             rv.video_horizontal_blur.setBackground(glideDrawable);
@@ -104,7 +115,13 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
 
                     rv.video_horizontal_video.getLayoutParams().height = itemWidth / 16 * 9;
                     rv.video_horizontal_content.setText(entity.getTitle());
-                    rv.video_horizontal_tag.setText(entity.getLabelName());
+                    if (!TextUtils.isEmpty(entity.getLabelName())){
+                        rv.video_horizontal_tag.setText(entity.getLabelName().replaceAll("#", ""));
+                        rv.video_horizontal_tag.setVisibility(View.VISIBLE);
+                    }else{
+                        rv.video_horizontal_tag.setVisibility(View.GONE);
+                    }
+
                     rv.setLike(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.isIsPraise(), entity.getFabulousNum() + "");
                 }
 
@@ -183,7 +200,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
 //                    }
 //                });
 
-                Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context,30)).into(new SimpleTarget<GlideDrawable>() {
+                Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context, 30)).into(new SimpleTarget<GlideDrawable>() {
                     @Override
                     public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
                         rv.activity_img_blur.setBackground(glideDrawable);

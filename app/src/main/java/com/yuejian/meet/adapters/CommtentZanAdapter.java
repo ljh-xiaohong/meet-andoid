@@ -15,12 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.bean.MessageZanBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.TimeUtils;
 import com.yuejian.meet.widgets.CircleImageView;
 import com.yuejian.meet.widgets.SwipeMenuLayout;
@@ -43,7 +43,7 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
 
     public interface onClickListener {
         void onClick(int position);
-        void onDelect(int position);
+        void onDelect(int i, int position);
     }
 
     public CommtentZanAdapter(Context context, int type, List<MessageCommentBean.DataBean> commentMapBeansList, List<MessageZanBean.DataBean> praiseMapBeansList) {
@@ -64,11 +64,10 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        holder.swipeMenuLayout.setIos(false);//设置是否开启IOS阻塞式交互
+        holder.swipeMenuLayout.setLeftSwipe(true);//true往左滑动,false为往右侧滑动
+        holder.swipeMenuLayout.setSwipeEnable(true);//设置侧滑功能开关
         if (type==2) {
-            holder.swipeMenuLayout.setIos(false);//设置是否开启IOS阻塞式交互
-            holder.swipeMenuLayout.setLeftSwipe(true);//true往左滑动,false为往右侧滑动
-            holder.swipeMenuLayout.setSwipeEnable(true);//设置侧滑功能开关
-            holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position));
             MessageCommentBean.DataBean commentMapBean=commentMapBeansList.get(position);
             if (!TextUtils.isEmpty(commentMapBean.getMsgPhoto())) {
                 Glide.with(context).load(commentMapBean.getMsgPhoto()).into(holder.iv_icon);
@@ -91,12 +90,17 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
             }
             holder.zan_img.setVisibility(View.GONE);
             holder.comment_content.setVisibility(View.VISIBLE);
-            Date date = new Date(commentMapBean.getCreateTime()*1000);
-            String createdTime = TimeUtils.formatDateTime(date);
-            holder.time.setText(createdTime);
+
+            if (!CommonUtil.isNull(commentMapBean.getCreateTime())){
+                Date date = new Date(Long.parseLong(commentMapBean.getCreateTime())*1000);
+                String createdTime = TimeUtils.formatDateTime(date);
+                holder.time.setText(createdTime);
+            }else {
+                holder.time.setText("");
+            }
             holder.rlItem.setOnClickListener(v -> mOnClickListener.onClick(position));
+            holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position,type));
         }else {
-            holder.swipeMenuLayout.setSwipeEnable(false);//设置侧滑功能开关
             MessageZanBean.DataBean commentMapBean=praiseMapBeansList.get(position);
             if (!TextUtils.isEmpty(commentMapBean.getPhoto())) {
                 Glide.with(context).load(commentMapBean.getPhoto()).into(holder.iv_icon);
@@ -114,9 +118,14 @@ public class CommtentZanAdapter extends RecyclerView.Adapter<CommtentZanAdapter.
             }
             holder.zan_img.setVisibility(View.VISIBLE);
             holder.comment_content.setVisibility(View.GONE);
-            Date date = new Date(commentMapBean.getCreateTime()*1000);
-            String createdTime = TimeUtils.formatDateTime(date);
-            holder.time.setText(createdTime);
+            if (!CommonUtil.isNull(commentMapBean.getCreateTime())){
+                Date date = new Date(Long.parseLong(commentMapBean.getCreateTime())*1000);
+                String createdTime = TimeUtils.formatDateTime(date);
+                holder.time.setText(createdTime);
+            }else {
+                holder.time.setText("");
+            }
+            holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position,type));
         }
     }
 

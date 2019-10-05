@@ -69,7 +69,7 @@ public class MessageCommentBean {
 
         private String articleCommentId;
         private String articleCommentContent;
-        private int createTime;
+        private String createTime;
         private String messageId;
         private String msgPhoto;
         private String photo;
@@ -92,11 +92,11 @@ public class MessageCommentBean {
             this.articleCommentContent = articleCommentContent;
         }
 
-        public int getCreateTime() {
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(int createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 

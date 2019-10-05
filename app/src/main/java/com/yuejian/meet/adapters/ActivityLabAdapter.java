@@ -22,7 +22,9 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
 
     public ActivityLabAdapter(RecyclerView recyclerView, Context context) {
         super(recyclerView, context);
-
+        this.layoutManager.setAutoMeasureEnabled(true);
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override

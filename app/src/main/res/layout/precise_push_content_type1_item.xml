@@ -29,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:layout_height="30dp">
     <com.yuejian.meet.widgets.CircleImageView
         android:id="@+id/iv_icon"

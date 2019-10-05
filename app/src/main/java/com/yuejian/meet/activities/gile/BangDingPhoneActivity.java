@@ -30,6 +30,7 @@ import com.netease.nim.uikit.common.util.string.StringUtil;
 import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.mine.GifActivity;
 import com.yuejian.meet.activities.mine.UserNameSelectActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
@@ -332,6 +333,7 @@ public class BangDingPhoneActivity extends BaseActivity {
                     intent.putExtra("phone_model", phoneModel);
                     startActivity(intent);
                 }else if (loginBean.getCode()==19998){
+                    DadanPreference.getInstance(BangDingPhoneActivity.this).setBoolean("isLogin",true);
                     intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
                     finish();

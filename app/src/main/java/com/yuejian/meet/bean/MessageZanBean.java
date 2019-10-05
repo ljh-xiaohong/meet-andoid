@@ -68,7 +68,7 @@ public class MessageZanBean {
          */
 
         private String photoAndVideoUrl;
-        private int createTime;
+        private String createTime;
         private String contentId;
         private String messageId;
         private String photo;
@@ -83,11 +83,11 @@ public class MessageZanBean {
             this.photoAndVideoUrl = photoAndVideoUrl;
         }
 
-        public int getCreateTime() {
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(int createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 

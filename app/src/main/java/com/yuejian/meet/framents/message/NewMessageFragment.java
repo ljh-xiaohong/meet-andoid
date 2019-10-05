@@ -1,50 +1,34 @@
 package com.yuejian.meet.framents.message;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
-import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.ContactActivity;
 import com.yuejian.meet.activities.message.MessageSettingActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.GetMessageBean;
-import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.utils.CommonUtil;
-import com.yuejian.meet.utils.ViewInject;
-import com.yuejian.meet.widgets.CustomToast;
 import com.yuejian.meet.widgets.MessageTitleView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * 信息
@@ -82,7 +66,6 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     }
 
     // 布局管理器
-    private FragmentManager fragManager;
 
     private void initView() {
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
@@ -97,8 +80,6 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         mFamilyCircleTitleView.setImageBtnClick(view -> startActivity(new Intent(getActivity(), ContactActivity.class)),
                 view -> initPopwindow(view));
         readPoint();
-//        fragManager = getFragmentManager();
-//        clickMenu(R.id.tv_title_one);
 
     }
     public void readPoint(){
@@ -135,11 +116,6 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         window.setOutsideTouchable(true);
         // 更新popupwindow的状态
         window.update();
-//        int width = window.getWidth();
-//        int[] xy = new int[2];
-//        view.getLocationInWindow(xy);
-//        window.showAtLocation(view, Gravity.NO_GRAVITY,
-//                xy[0] + (width - view.getWidth()) / 2, xy[1] + 70);
         window.showAsDropDown(view);
         TextView push = popupView.findViewById(R.id.push);
         TextView read = popupView.findViewById(R.id.read);

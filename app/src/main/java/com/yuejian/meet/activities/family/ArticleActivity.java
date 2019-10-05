@@ -3,10 +3,12 @@ package com.yuejian.meet.activities.family;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,9 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.maning.imagebrowserlibrary.MNImageBrowser;
 import com.netease.nim.uikit.app.AppConfig;
@@ -29,18 +32,24 @@ import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.mine.InputActivity;
+import com.yuejian.meet.activities.mine.MyDialogActivity;
+import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
-import com.yuejian.meet.bean.ActivityLabEntity;
 import com.yuejian.meet.bean.ArticleContentEntity;
+import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.ScreenUtils;
-import com.yuejian.meet.utils.TextUtil;
+import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.load.GlideImageEngine;
+import com.yuejian.meet.widgets.MyNestedScrollView;
 import com.zhy.view.flowlayout.FlowLayout;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,12 +58,14 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class ArticleActivity extends BaseActivity {
 
     private String contentId = null;
     private String customerId = null;
     private VideoAndContentEntiy info;
+    private CommentListAdapter commentAdapter;
 
     @Bind(R.id.activity_article_back)
     View back;
@@ -116,6 +127,26 @@ public class ArticleActivity extends BaseActivity {
     @Bind(R.id.activity_article_flowlayout)
     FlowLayout flowLayout;
 
+    @Bind(R.id.activity_article_like)
+    ImageView like_img;
+
+    @Bind(R.id.activity_article_like_count)
+    TextView like_count;
+
+    @Bind(R.id.activity_article_share)
+    ImageView share_img;
+
+    @Bind(R.id.activity_article_myscrollview)
+    MyNestedScrollView scrollView;
+
+    @Bind(R.id.activity_article_entry)
+    TextView entry;
+
+    @Bind(R.id.activity_article_showMore)
+    TextView showMoe;
+
+    private WeakReference<ArticleActivity> reference;
+
     private MoreDialog moreDialog;
 
     private List<String> moreData;
@@ -126,6 +157,13 @@ public class ArticleActivity extends BaseActivity {
 
     int index;
 
+    int mNextPageIndex = 1, pageCount = 10;
+
+    private static final int DISCUSS = 120;
+
+    private static final int DISCUSS_DISCUSS = 110;
+
+
     private String[] labelName, labelId;
 
     @Override
@@ -133,7 +171,21 @@ public class ArticleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         if (!getData()) return;
+        reference = new WeakReference(this);
+        initDiscussAdapter();
         getDataFromNet();
+        scrollView.setonScrollChanged((v, l, t, oldl, oldt) -> {
+            int[] local = new int[2];
+            discuss.getLocationInWindow(local);
+
+            if (local[1] - ScreenUtils.getStatusBarHeight(getBaseContext()) - discuss.getHeight() <= 0) {
+                discuss_b.setVisibility(View.VISIBLE);
+            } else {
+                discuss_b.setVisibility(View.GONE);
+            }
+        });
+
+
         back.setOnClickListener(v -> finish());
     }
 
@@ -156,20 +208,24 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void initData() {
-        if (info.getContentDetail() == null) return;
-        Glide.with(mContext).load(checkData(info.getContentDetail().getUserPhoto())).into(head);
-        name.setText(checkData(info.getContentDetail().getUserName()));
-        vip.setVisibility(checkData(info.getContentDetail().getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
-        follow.setText(checkData(info.getContentDetail().getRelationType()).equals("0") ? "关注" : "已关注");
-        follow.setBackgroundResource(checkData(info.getContentDetail().getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
-        title.setText(checkData(info.getContentDetail().getContentTitle()));
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(info.getContentDetail().getCreateTime()))));
-        discuss.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
-        discuss_b.setText(String.format("共%s条评论", checkData(info.getContentDetail().getCommentNum())));
-        read.setText(String.format("阅读 %s", checkData(info.getContentDetail().getViewNum())));
-        if (!TextUtils.isEmpty(info.getContentDetail().getLabelName()) && info.getContentDetail().getLabelName().contains("#")) {
-            labelName = info.getContentDetail().getLabelName().trim().substring(1, info.getContentDetail().getLabelName().length()).split("#");
-            labelId = info.getContentDetail().getLabelId().split(",");
+        if (info == null || info.getContentDetail() == null) return;
+
+        VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
+        Glide.with(mContext).load(checkData(detail.getUserPhoto())).into(head);
+        name.setText(checkData(detail.getUserName()));
+        vip.setVisibility(checkData(detail.getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
+        like_img.setImageResource(checkData(detail.getIsPraise()).equals("0") ? R.mipmap.icon_home_zan_nor : R.mipmap.icon_home_zan_sel);
+        like_count.setText(detail.getFabulousNum());
+        follow.setText(checkData(detail.getRelationType()).equals("0") ? "关注" : "已关注");
+        follow.setBackgroundResource(checkData(detail.getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
+        title.setText(checkData(detail.getContentTitle()));
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime()))));
+        discuss.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
+        discuss_b.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
+        read.setText(String.format("阅读 %s", checkData(detail.getViewNum())));
+        if (!TextUtils.isEmpty(detail.getLabelName()) && detail.getLabelName().contains("#")) {
+            labelName = detail.getLabelName().trim().substring(1, detail.getLabelName().length()).split("#");
+            labelId = detail.getLabelId().split(",");
             if (labelName == null) return;
             for (int i = 0; i < labelName.length; i++) {
                 TextView item = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_article_tag, null);
@@ -179,7 +235,7 @@ public class ArticleActivity extends BaseActivity {
                 item.setText(labelName[i]);
                 item.setTag(labelId[i]);
                 item.setOnClickListener(view -> {
-                    AcitivityLabActivity.startActivity(this, view.getTag() + "", AppConfig.CustomerId);
+                    ActivityLabActivity.startActivity(this, view.getTag() + "", AppConfig.CustomerId);
                 });
                 flowLayout.addView(item);
             }
@@ -187,16 +243,17 @@ public class ArticleActivity extends BaseActivity {
 
         }
 
-        if (info.getContentDetail().getShopList() != null) {
-            shop_layout.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(checkData(info.getContentDetail().getShopList().getGPhoto())).into(shop_img);
-            shop_name.setText(checkData(info.getContentDetail().getShopList().getShopName()));
-            shop_disct.setText(checkData(info.getContentDetail().getShopList().getGDes()));
-            shop_discount.setText(checkData(info.getContentDetail().getShopList().getGPriceVip()));
-            shop_price.setText(checkData(info.getContentDetail().getShopList().getGPriceOriginal()));
+        if (detail.getShopList() != null) {
+            VideoAndContentEntiy.shopList shopList = detail.getShopList();
+            shop_layout.setVisibility(shopList.getShopId().length() > 0 ? View.VISIBLE : View.GONE);
+            Glide.with(mContext).load(checkData(shopList.getGPhoto())).into(shop_img);
+            shop_name.setText(checkData(shopList.getShopName()));
+            shop_disct.setText(checkData(shopList.getGDes()));
+            shop_discount.setText(checkData(shopList.getGPriceVip()));
+            shop_price.setText(checkData(shopList.getGPriceOriginal()));
         }
 
-        contentEntities = JSON.parseArray(checkData(info.getContentDetail().getCrContent()), ArticleContentEntity.class);
+        contentEntities = JSON.parseArray(checkData(detail.getCrContent()), ArticleContentEntity.class);
         if (contentEntities != null && contentEntities.size() > 0) {
 
             for (ArticleContentEntity entity : contentEntities) {
@@ -218,6 +275,30 @@ public class ArticleActivity extends BaseActivity {
             }
         }
 
+        //评论
+        if (info == null || info.getCommentList() == null) return;
+        List<CommentBean.DataBean> discusses = info.getCommentList();
+        if (discusses.size() >= pageCount) showMoe.setVisibility(View.VISIBLE);
+        commentAdapter.refreshData(discusses);
+
+    }
+
+    /**
+     * 初始化 评论列表 adapter
+     */
+    private void initDiscussAdapter() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        layoutManager.setAutoMeasureEnabled(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+        commentAdapter = new CommentListAdapter(this, new ArrayList<>(), MyDialogActivity.StyleType.NORMAL);
+        commentAdapter.setChange(postion -> {
+            if (info.getCommentList() == null) return;
+            InputActivity.startActivityForResult(this, info.getContentDetail().getId(), commentAdapter.getData().get(postion).getId() + "", commentAdapter.getData().get(postion).getName(), DISCUSS_DISCUSS);
+        });
+        recyclerView.setAdapter(commentAdapter);
     }
 
     private String checkData(String data) {
@@ -302,12 +383,13 @@ public class ArticleActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
                 if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
                     initDialog();
-                    initListener();
                 }
 
             }
@@ -393,6 +475,63 @@ public class ArticleActivity extends BaseActivity {
     }
 
     /**
+     * 点赞
+     */
+    //todo 点赞处理
+    private void like() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("crId", contentId);
+        apiImp.praiseContent(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
+                PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
+                if (praise == null) return;
+                switch (praise.getCode()) {
+                    //操作成功
+                    case 0:
+                        int count = Integer.valueOf(info.getContentDetail().getFabulousNum());
+                        if (info.getContentDetail().getIsPraise().equals("1")) {
+                            info.getContentDetail().setIsPraise("0");
+                            count = count - 1;
+                        } else {
+                            info.getContentDetail().setIsPraise("1");
+                            count = count + 1;
+                        }
+                        info.getContentDetail().setFabulousNum(count + "");
+                        like_img.setImageResource(info.getContentDetail().getIsPraise().equals("1") ? R.mipmap.icon_home_zan_sel : R.mipmap.icon_home_zan_nor);
+                        like_count.setText(count + "");
+                        break;
+
+                    //拉黑
+                    case 10205:
+
+                        break;
+
+                    //系统异常
+                    case 10001:
+
+                        break;
+
+                    //其他
+                    case -1:
+
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+    }
+
+    /**
      * 收藏
      */
     public void Collection() {
@@ -402,8 +541,11 @@ public class ArticleActivity extends BaseActivity {
         params.put("relationId", info.getContentDetail().getId());
         params.put("customerId", AppConfig.CustomerId);
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
+
             @Override
             public void onSuccess(String data, int id) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -414,6 +556,8 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 moreDialog.dismiss();
             }
         });
@@ -452,6 +596,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
@@ -476,7 +622,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -502,6 +649,26 @@ public class ArticleActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 分享
+     */
+    private void share() {
+        Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
+                Utils.umengShareByList(
+                        (Activity) mContext,
+                        bitmap,
+                        info.getContentDetail().getContentTitle(),
+                        mContext.getResources().getString(R.string.share_description),
+                        String.format("http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=%s&id=%s", info.getContentDetail().getContentType(), info.getContentDetail().getId()));
+            }
+        });
+
+    }
+
     private void parseJSON(String data) {
 
         try {
@@ -512,7 +679,7 @@ public class ArticleActivity extends BaseActivity {
             info = new VideoAndContentEntiy();
 
             if (!TextUtils.isEmpty(in.getString("commentList")) && !in.getString("commentList").equals("null")) {
-                info.setCommentList(JSON.parseArray(in.getString("commentList"), VideoAndContentEntiy.CommentList.class));
+                info.setCommentList(JSON.parseArray(in.getString("commentList"), CommentBean.DataBean.class));
             }
 
             if (!TextUtils.isEmpty(in.getString("contentDetail")) && !in.getString("contentDetail").equals("null")) {
@@ -537,6 +704,7 @@ public class ArticleActivity extends BaseActivity {
                 contentDetail.setLabelName(jsonObject.getString("labelName"));
                 contentDetail.setViewNum(jsonObject.getString("viewNum"));
                 contentDetail.setContentType(jsonObject.getString("contentType"));
+                contentDetail.setShopList(JSON.parseObject(jsonObject.getString("shopList"), VideoAndContentEntiy.shopList.class));
                 info.setContentDetail(contentDetail);
             }
 
@@ -546,14 +714,125 @@ public class ArticleActivity extends BaseActivity {
 
     }
 
-    private void initListener() {
-        more.setOnClickListener(view -> {
+    @OnClick({R.id.activity_article_like, R.id.activity_article_share, R.id.activity_article_name_follow, R.id.activity_article_more, R.id.activity_article_entry, R.id.activity_article_showMore, R.id.activity_article_back})
+    @Override
+    public void onClick(View v) {
+        if (AppConfig.CustomerId == null && AppConfig.CustomerId.length() < 0) return;
 
-            moreDialog.show(getSupportFragmentManager(), "ArticleActivity.moreDialog");
-        });
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.activity_article_like:
+                like();
+                break;
+            case R.id.activity_article_share:
+                share();
+                break;
+            case R.id.activity_article_name_follow:
+                AddFollow();
+                break;
+            case R.id.activity_article_more:
+                moreDialog.show(getSupportFragmentManager(), "ArticleActivity.moreDialog");
+                break;
+            case R.id.activity_article_entry:
+                InputActivity.startActivityForResult(this, info.getContentDetail().getId(), "", null, DISCUSS);
+                break;
+            case R.id.activity_article_showMore:
+                switch (showMoe.getText().toString()) {
 
-        follow.setOnClickListener(view -> {
-            AddFollow();
+                    case "展开":
+                        mNextPageIndex = 1;
+                        break;
+
+                    case "收起":
+
+                        break;
+
+                }
+                getDiscuss();
+                break;
+            case R.id.activity_article_back:
+                finish();
+                break;
+        }
+    }
+
+    private void getDiscuss() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("myCustomerId", AppConfig.CustomerId);
+        params.put("crId", contentId);
+        params.put("pageIndex", String.valueOf(mNextPageIndex));
+        params.put("pageItemCount", String.valueOf(pageCount));
+        apiImp.getContentComments(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                CommentBean commentBean = JSON.parseObject(data, CommentBean.class);
+
+
+                if (commentBean == null || commentBean.getCode() != 0) {
+                    ViewInject.shortToast(mContext, commentBean.getMessage());
+                    return;
+                }
+                //为空时，不处理
+                if (commentBean.getData() == null) {
+                    showMoe.setText("收起");
+                    return;
+                }
+
+                //评论为空时，不显示
+                if (commentBean.getData().size() < pageCount) {
+                    showMoe.setText("收起");
+                } else {
+                    showMoe.setText("展开");
+                }
+
+
+                if (mNextPageIndex == 1) {
+                    commentAdapter.refreshData(commentBean.getData());
+                } else {
+                    commentAdapter.loadMoreData(commentBean.getData());
+                }
+                int count = Integer.valueOf(info.getContentDetail().getCommentNum());
+
+                info.getContentDetail().setCommentNum(++count + "");
+
+                discuss.setText(String.format("共%s条评论", count));
+                ;
+                discuss_b.setText(String.format("共%s条评论", count));
+                mNextPageIndex++;
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(mContext, errMsg);
+            }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            //评论
+            case DISCUSS:
+                if (resultCode == RESULT_OK) {
+                    mNextPageIndex = 1;
+                    getDiscuss();
+                }
+
+
+                break;
+
+            //评论评论
+            case DISCUSS_DISCUSS:
+                if (resultCode == RESULT_OK) {
+                    mNextPageIndex = 1;
+                    getDiscuss();
+                }
+                break;
+
+
+        }
+
     }
 }

@@ -22,7 +22,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.clan.MainClanActivity;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
-import com.yuejian.meet.activities.family.AcitivityLabActivity;
+import com.yuejian.meet.activities.family.ActivityLabActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
@@ -132,7 +132,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                     break;
                 //活动
                 case 4:
-                    AcitivityLabActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId);
+                    ActivityLabActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId);
                     break;
             }
 

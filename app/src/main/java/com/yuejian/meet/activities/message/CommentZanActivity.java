@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CommentZanActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, CommentZanTitleView.OnTitleViewClickListener {
+public class CommentZanActivity extends BaseActivity implements ViewPager.OnPageChangeListener, CommentZanTitleView.OnTitleViewClickListener {
     @Bind(R.id.back)
     ImageView back;
     @Bind(R.id.title)

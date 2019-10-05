@@ -77,7 +77,7 @@ public class NewBusinessFragment extends BaseFragment {
 
     }
     private void initView() {
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=500102&gId=6");
+        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
