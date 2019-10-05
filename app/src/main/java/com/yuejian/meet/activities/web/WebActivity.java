@@ -51,6 +51,8 @@ import com.umeng.socialize.media.UMWeb;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.FamilyTree.AddRelationActivity;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.find.SurnameWikiActivity;
 import com.yuejian.meet.activities.home.ActionInfoActivity;
 import com.yuejian.meet.activities.mine.BuyAllVipPermissionActivity;
@@ -310,6 +312,7 @@ public class WebActivity extends BaseActivity {
                     public void onFailed(String errCode, String errMsg, int id) {
                     }
                 });
+                return true;
             } else if (uri.getAuthority().equals("poster_share")) {
                 try {
                     final String shareUrl = Utils.getValueByName(url, "previewUrl");
@@ -323,13 +326,33 @@ public class WebActivity extends BaseActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-
+                return true;
             } else if (uri.getAuthority().equals("toBack")) {
                 finish();
+                return true;
             } else if (uri.getAuthority().equals("user_info")) {
 
                 AppUitls.goToPersonHome(this, getIntent().getStringExtra("customer_id"));
+                return true;
+            } else if (uri.getAuthority().equals("articleVideo")) {
+                String id = Utils.getValueByName(url, "id");
+                String type = Utils.getValueByName(url, "type");
+                String coverSizetype = Utils.getValueByName(url, "coverSizetype");
+                String customerID = Utils.getValueByName(orginalUrl, "opCustomerId");
+                switch (type) {
+                    //文章
+                    case "1":
+                        ArticleActivity.startActivity(mContext, id, customerID);
+                        break;
 
+                    //视频
+                    case "2":
+                        VideoActivity.startActivity(mContext, id, customerID, coverSizetype.equals("0"));
+                        break;
+                }
+//                Toast.makeText(mContext, id + ":" + type, Toast.LENGTH_SHORT).show();
+
+                return true;
             } else if (uri.getAuthority().equals("continueWebapp")) {
 
                 //TODO

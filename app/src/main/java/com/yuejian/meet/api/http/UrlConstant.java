@@ -65,6 +65,8 @@ public class UrlConstant {
     //首页 动态 搜索
     public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
 
+    //分享链接
+    public static String SHARE = apiUrl() + "release/blank.html";
 
     /**
      * 我的 - 传承人 - 收益列表
@@ -857,6 +859,21 @@ public class UrlConstant {
         public static final String FAXIAN = getWebUrl() + "faxian/game_worship.html";
         public static final String FAXIAN_SCHOOL = getWebUrl() + "faxian/school.html";
         public static final String FIND_XIUXING = getWebUrl() + "faxian/xiuxing.html";
+
+        /**
+         * 商品详情
+         */
+        public static final String SHOP_DETAIL = getWebUrl() + "personal_center/shop/item.html";
+
+        /**
+         * 个人主页（非VIP）
+         */
+        public static final String PERSON_INFORMATION_UNVIP = getWebUrl() + "personal_center/userHome3.html";
+
+        /**
+         * 个人主页（VIP）
+         */
+        public static final String PERSON_INFORMATION_VIP = getWebUrl() + "personal_center/personHome2.html";
 
         /**
          * 发现 优选商城 亿课商城   正式地址getYikeWebUrl()
