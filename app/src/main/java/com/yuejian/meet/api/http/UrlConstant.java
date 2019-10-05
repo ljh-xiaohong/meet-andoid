@@ -317,6 +317,10 @@ public class UrlConstant {
 
     public static String POST_IN_CASH = apiUrl() + "api/inCash/doInCash";
     public static String PCREATESHOPORDERPAY = apiUrl() + "api/shopOrder/createShopOrderPay";
+    //充值贡献值API
+    public static String INCONTRIBUTION = apiUrl() + "api/userPay/inContribution";
+    //升级VIP API
+    public static String UPGRADEVIP = apiUrl() + "api/userPay/upgradeVip";
     //开通VIP
     public static String POST_IN_CASH_VIP = apiUrl() + "api/inCash/doInCashVip";
     //获取VIP详情列表

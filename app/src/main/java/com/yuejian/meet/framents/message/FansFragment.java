@@ -12,16 +12,19 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.adapters.FriendListAdapter;
-import com.yuejian.meet.adapters.NewFriendAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
+import com.yuejian.meet.widgets.letterList.LetterComparator;
+import com.yuejian.meet.widgets.letterList.LetterSideBarView;
+import com.yuejian.meet.widgets.letterList.PinnedHeaderDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,8 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     RecyclerView fansList;
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
+    @Bind(R.id.main_side_bar)
+    LetterSideBarView mainSideBar;
     private FriendListAdapter mFansAdapter;
 
     public FansFragment() {
@@ -79,7 +84,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId", AppConfig.CustomerId);
+        params.put("customerId", "300542");
         if (getArguments().getInt("type") == 0) {
             params.put("type", 0);
         } else if (getArguments().getInt("type") == 1) {
@@ -96,6 +101,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
+                Collections.sort(bean.getData());
                 mList.addAll(bean.getData());
                 if (mList.size() > 0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
@@ -125,7 +131,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         initView();
         return view;
     }
-
+    private LinearLayoutManager llm;
     private void initView() {
         boolean isNew;
         if (getArguments().getInt("type") == 0) {
@@ -133,7 +139,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         } else {
             isNew = false;
         }
-        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp,false);
+        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp, 0);
         fansList.setAdapter(mFansAdapter);
         mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
@@ -142,8 +148,42 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
                 getAttention(position);
             }
         });
-        fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        llm= new LinearLayoutManager(getActivity());
+        fansList.setLayoutManager(llm);
+        final PinnedHeaderDecoration decoration = new PinnedHeaderDecoration();
+        decoration.registerTypePinnedHeader(1, new PinnedHeaderDecoration.PinnedHeaderCreator() {
+            @Override
+            public boolean create(RecyclerView parent, int adapterPosition) {
+                return true;
+            }
+        });
+        fansList.addItemDecoration(decoration);
+        fansList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();//可见范围内的第一项的位置
+                    for (int i=0;i<mainSideBar.getIndexItems().length;i++){
+                        if (mainSideBar.getIndexItems()[i].equals(FirstLetterUtil.getFirstLetter(mList.get(firstVisibleItemPosition).getName()))){
+                            mainSideBar.setCurrentIndex(i);
+                        }
+                    }
+            }
+        });
+        mainSideBar.setVisibility(View.VISIBLE);
+        mainSideBar.setOnSelectIndexItemListener(new LetterSideBarView.OnSelectIndexItemListener() {
+            @Override
+            public void onSelectIndexItem(String letter) {
+                for (int i=0; i<mList.size(); i++) {
+                    if (FirstLetterUtil.getFirstLetter(mList.get(i).getName()).equals(letter)) {
+                        ((LinearLayoutManager) fansList.getLayoutManager()).scrollToPositionWithOffset(i, 0);
+                        return;
+                    }
+                }
+            }
+        });
     }
+
     private void getAttention(int position) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -152,7 +192,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 initData();
             }
@@ -162,6 +202,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
             }
         });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -224,17 +224,15 @@ public class UserNameSelectActivity extends BaseActivity {
                     AppConfig.newUerEntity= loginBean;
                     updateCustomerData(loginBean.getData().toString());
                 }
-//                if (loginBean.getData()!=null) {
-//                    AppConfig.userEntity= (UserEntity) loginBean.getData();
-//                    updateCustomerData(AppConfig.userEntity.customer_id);
-//                }
                 if (loginBean.getCode() == 0) {
+                    DadanPreference.getInstance(UserNameSelectActivity.this).setBoolean("isLogin",true);
                     intent = new Intent(mContext, GifActivity.class);
                     startActivity(intent);
                     finish();
                 }else {
                     if(loginBean.getCode()==19985){
-                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", loginBean.getMessage(),"确定");
+                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                                "请确认推荐人手机号","确定");
                         dialog.show();
                         return;
                     }
@@ -453,7 +451,6 @@ public class UserNameSelectActivity extends BaseActivity {
 
                     Toast.makeText(UserNameSelectActivity.this, data.imageUrl, Toast.LENGTH_LONG).show();
                     photo = data.imageUrl;
-                    //     itnetnRegister();
                 }
 
                 @Override

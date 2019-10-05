@@ -215,7 +215,7 @@ public class MyApplication extends TinkerApplication {
         }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
         AppConfig.userEntity=entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
+        if (!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();

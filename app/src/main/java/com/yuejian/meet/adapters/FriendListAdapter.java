@@ -16,6 +16,7 @@ import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
+import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     private Activity mActivity;
     private OnFollowListItemClickListener mListItemClickListener;
     private ApiImp apiImp;
-    private boolean isCancel;
+    private int tyep;
     private onClickListener mOnClickListener;
     public void setOnClickListener(onClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
@@ -41,11 +42,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     public interface onClickListener {
         void onClick(int position);
     }
-    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, boolean isCancel) {
+    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, int tyep) {
         mContext = context;
         mListItemClickListener = listItemClickListener;
         this.apiImp = apiImp;
-        this.isCancel = isCancel;
+        this.tyep = tyep;
     }
 
     @Override
@@ -67,7 +68,23 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
             holder.name_type.setVisibility(View.GONE);
         }
         holder.name.setText(entity.getName());
-        if (isCancel){
+        if (tyep==0){
+            holder.tv_index.setVisibility(View.VISIBLE);
+            String anotherFirstLetter = "";
+            String firstLetter = FirstLetterUtil.getFirstLetter(entity.getName()); // 获取拼音首字母并转成大写
+            if (position>0) {
+                anotherFirstLetter = FirstLetterUtil.getFirstLetter(mFollowEntities.get(position - 1).getName());
+            }
+            if (position == 0 || !anotherFirstLetter.equals(firstLetter)) {
+                holder.tv_index.setVisibility(View.VISIBLE);
+                holder.tv_index.setText(firstLetter);
+            } else {
+                holder.tv_index.setVisibility(View.GONE);
+            }
+        }else {
+            holder.tv_index.setVisibility(View.GONE);
+        }
+        if (tyep==1){
             if (entity.getRelationType()==1){
                 holder.attention.setText("关注");
                 holder.attention.setVisibility(View.VISIBLE);
@@ -123,7 +140,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
 
         CircleImageView shop_img;
         ImageView name_type;
-        TextView name,attention;
+        TextView name,attention,tv_index;
 
 
 
@@ -133,6 +150,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
             name = (TextView) itemView.findViewById(R.id.name);
             name_type = (ImageView) itemView.findViewById(R.id.name_type);
             attention = (TextView) itemView.findViewById(R.id.attention);
+            tv_index = (TextView) itemView.findViewById(R.id.tv_index);
         }
     }
 }

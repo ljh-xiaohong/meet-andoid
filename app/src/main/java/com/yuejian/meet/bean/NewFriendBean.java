@@ -1,5 +1,10 @@
 package com.yuejian.meet.bean;
 
+import android.support.annotation.NonNull;
+
+import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -54,7 +59,7 @@ public class NewFriendBean {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean implements Comparable<DataBean> {
         /**
          * relationType : 1
          * photo : http://wx.qlogo.cn/mmopen/vi_32/CwRqACnfJtCoibFjDXax57558KVWdXiaiaEEMibayrbyujiaHQfz05ricUKZJ4n5IDdJFL8bVJuZV6QNQdrVciaOOxicfg/0
@@ -66,6 +71,7 @@ public class NewFriendBean {
         private int customerId;
         private String photo;
         private String name;
+
 
 
         public int getCustomerId() {
@@ -103,9 +109,21 @@ public class NewFriendBean {
         public String getName() {
             return name;
         }
-
         public void setName(String name) {
             this.name = name;
+        }
+
+        @Override
+        public int compareTo(@NonNull DataBean another) {
+            String firstLetter = FirstLetterUtil.getFirstLetter(getName()); // 获取拼音首字母并转成大写
+            String anotherFirstLetter=FirstLetterUtil.getFirstLetter(another.getName());
+            if (firstLetter.equals("#") && !anotherFirstLetter.equals("#")) {
+                return 1;
+            } else if (!firstLetter.equals("#") && anotherFirstLetter.equals("#")){
+                return -1;
+            } else {
+                return firstLetter.compareToIgnoreCase(anotherFirstLetter);
+            }
         }
     }
 }

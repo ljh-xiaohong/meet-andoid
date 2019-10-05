@@ -65,7 +65,7 @@ public class FriendFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp, true);
+        mFollowListAdapter = new FriendListAdapter(getActivity(), this, apiImp, 1);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mFollowListAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
@@ -114,7 +114,6 @@ public class FriendFragment extends BaseFragment
 //                    followEntities.get(position).setRelationType(1);
 //                }
 //                mFollowListAdapter.notifyItemChanged(position);
-
                 initData();
             }
 

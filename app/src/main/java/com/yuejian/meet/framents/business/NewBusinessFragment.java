@@ -159,7 +159,7 @@ public class NewBusinessFragment extends BaseFragment {
                 return true;//表示我已经处理过了
             }else if (url.contains("yuejian://createShopOrderPay")){
                //yuejian://createShopOrderPay?oid=28&payType=3
-                String[] s=url.split("&");
+               String[] s=url.split("&");
                String oid=s[0].split("=")[1];
                String payType=s[1].split("=")[1];
                 doInCash(oid,payType);
@@ -171,12 +171,12 @@ public class NewBusinessFragment extends BaseFragment {
     };
     //sourceType 1:支付宝，2.微信，3.银联方式
     private void doInCash(String oid,String payType) {
-        if (payType.equals("3")) {
+        if (payType.equals("2")) {
             if (!Utils.isWeixinAvilible(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else if (payType.equals("2")){
+        }else if (payType.equals("1")){
             if (!Utils.isAliPayInstalled(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text9, Toast.LENGTH_SHORT).show();
                 return;
@@ -189,7 +189,7 @@ public class NewBusinessFragment extends BaseFragment {
         apiImp.createShopOrderPay(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (payType.equals("2")) {
+                if (payType.equals("1")) {
                     try {
                         JSONObject oo = new JSONObject(data);
                         final String orderInfo =oo.getString("data");
@@ -207,7 +207,7 @@ public class NewBusinessFragment extends BaseFragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else if (payType.equals("3")) {
+                } else if (payType.equals("2")) {
                     try {
                         JSONObject  oo = new JSONObject(data);
                         final String data1 =oo.getString("data");
@@ -259,5 +259,14 @@ public class NewBusinessFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (wxWebview.canGoBack()){
+            wxWebview.goBack();
+            return true;
+        }
+        return super.onBackPressed();
     }
 }

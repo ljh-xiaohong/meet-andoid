@@ -96,7 +96,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         }else {
             holder.tv_family_follow_item_name_tag.setVisibility(View.GONE);
         }
-        holder.zan_check_num.setText(entity.getFabulousNum()+"");
+        holder.zan_check_num.setText(CommonUtil.changeNum(entity.getFabulousNum()));
         holder.more_operation.setOnClickListener(v -> {
               mOnClickListener.onClick(position,entity.isMe());
         });
@@ -202,7 +202,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                         ZanBean zanBean= new Gson().fromJson(data, ZanBean.class);
                         if (zanBean.getCode()==0){
                             holder.zan_check.setChecked(zanBean.getData().getIsPraise() == 1 ?true : false);
-                            holder.zan_check_num.setText(zanBean.getData().getPraiseCnt()+"");
+                            holder.zan_check_num.setText(CommonUtil.changeNum(zanBean.getData().getPraiseCnt()+""));
                         }else {
                             holder.zan_check.setChecked(false);
                         }

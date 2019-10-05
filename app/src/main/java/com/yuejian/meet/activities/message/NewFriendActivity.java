@@ -77,7 +77,7 @@ public class NewFriendActivity extends BaseActivity implements FriendListAdapter
     private void initView() {
         title.setText("新朋友");
         back.setOnClickListener(v -> finish());
-        adapter = new FriendListAdapter(this, this, apiImp, false);
+        adapter = new FriendListAdapter(this, this, apiImp, 2);
         recyclerView.setAdapter(adapter);
         adapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override

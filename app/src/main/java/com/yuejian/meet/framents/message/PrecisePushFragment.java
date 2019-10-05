@@ -75,18 +75,12 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
      */
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
-            if (mList.size() == 0) {
                 //加载数据
                 initUserData();
-            }
-            if (list.size() == 0) {
                 //加载数据
                 initListData();
-            }
-            if (listCommodity.size() == 0) {
                 //加载数据
                 initListCommodityData();
-            }
         }
     }
 
@@ -94,7 +88,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
     List<PushUseBean.DataBean> mList = new ArrayList<>();
     List<PushListBean.DataBean> list = new ArrayList<>();
     List<PushCommodityBean.DataBean> listCommodity = new ArrayList<>();
-
+    //获取项目列表
     private void initListData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
@@ -122,6 +116,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             }
         });
     }
+    //获取商品列表
     private void initListCommodityData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
@@ -140,7 +135,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
                 } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
-                mPrecisePushContentAdapter.notifyDataSetChanged();
+                mPrecisePushCommodityAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -149,7 +144,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             }
         });
     }
-
+    //获取用户列表
     private void initUserData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);

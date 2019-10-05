@@ -456,6 +456,14 @@ public class ApiImp {
     public void createShopOrderPay(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
         mHttpRequst.postRequst(UrlConstant.PCREATESHOPORDERPAY, params, tag, callback);
     }
+    //充值贡献值API
+    public void inContribution(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
+        mHttpRequst.postRequst(UrlConstant.INCONTRIBUTION, params, tag, callback);
+    }
+    //升级VIP API
+    public void upgradeVip(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
+        mHttpRequst.postRequst(UrlConstant.UPGRADEVIP, params, tag, callback);
+    }
 
     //提现
     public void applyOutCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
