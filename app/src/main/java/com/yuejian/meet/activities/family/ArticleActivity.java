@@ -34,13 +34,16 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
 import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.Utils;
@@ -66,6 +69,8 @@ public class ArticleActivity extends BaseActivity {
     private String customerId = null;
     private VideoAndContentEntiy info;
     private CommentListAdapter commentAdapter;
+
+    Intent intent;
 
     @Bind(R.id.activity_article_back)
     View back;
@@ -577,6 +582,7 @@ public class ArticleActivity extends BaseActivity {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
+
             }
 
             @Override
@@ -714,7 +720,7 @@ public class ArticleActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.activity_article_like, R.id.activity_article_share, R.id.activity_article_name_follow, R.id.activity_article_more, R.id.activity_article_entry, R.id.activity_article_showMore, R.id.activity_article_back})
+    @OnClick({R.id.activity_article_like, R.id.activity_article_share, R.id.activity_article_name_follow, R.id.activity_article_more, R.id.activity_article_entry, R.id.activity_article_showMore, R.id.activity_article_back, R.id.activity_article_head_img, R.id.activity_article_name_tv, R.id.activity_article_shop_layout})
     @Override
     public void onClick(View v) {
         if (AppConfig.CustomerId == null && AppConfig.CustomerId.length() < 0) return;
@@ -752,6 +758,38 @@ public class ArticleActivity extends BaseActivity {
                 break;
             case R.id.activity_article_back:
                 finish();
+                break;
+            case R.id.activity_article_head_img:
+            case R.id.activity_article_name_tv:
+                if (info == null || info.getContentDetail() == null) return;
+                VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
+                String urlVip = "";
+                if (checkData(detail.getUserVipType()).equals("0")) {
+                    //非VIP
+//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_UNVIP;
+                    urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+                } else {
+                    //VIP
+//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
+                    urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+                }
+                urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
+
+                intent = new Intent(this, WebActivity.class);
+                intent.putExtra(Constants.URL, urlVip);
+                intent.putExtra("No_Title", true);
+                startActivity(intent);
+                break;
+            case R.id.activity_article_shop_layout:
+                if (info == null || info.getContentDetail() == null || info.getContentDetail().getShopList() == null)
+                    return;
+                String urlShop = "";
+//                urlShop = String.format(UrlConstant.ExplainURL.SHOP_DETAIL + "?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
+                urlShop = String.format( "http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
+                intent = new Intent(this, WebActivity.class);
+                intent.putExtra(Constants.URL, urlShop);
+                intent.putExtra("No_Title", true);
+                startActivity(intent);
                 break;
         }
     }

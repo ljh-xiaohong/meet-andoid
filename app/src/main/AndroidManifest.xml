@@ -141,7 +141,9 @@
             android:windowFullscreen="true" />
         <activity
             android:name=".activities.creation.PulishActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            />
         <activity
             android:name=".activities.mine.BuyAllVipPermissionActivity"
             android:screenOrientation="portrait" />

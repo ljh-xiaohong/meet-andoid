@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.common.utils.DensityUtil;
 import com.aliyun.svideo.editor.publish.CoverEditActivity;
-import com.aliyun.svideo.editor.publish.PublishActivity;
 import com.aliyun.svideo.sdk.external.struct.common.CropKey;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunIThumbnailFetcher;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunThumbnailFetcherFactory;
@@ -41,11 +39,9 @@ import com.yuejian.meet.bean.TypeEntity;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.OssUtils;
-import com.yuejian.meet.utils.TextUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.TagFlowLayout;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -404,7 +400,7 @@ public class PulishActivity extends BaseActivity {
                     if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                         mLoadingDialog.dismiss();
                     }
-                    ViewInject.shortToast(getApplicationContext(), jo.getString("message"));
+                    ViewInject.shortToast(mContext, jo.getString("message"));
                 }
 
 
@@ -415,7 +411,7 @@ public class PulishActivity extends BaseActivity {
                 if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                     mLoadingDialog.dismiss();
                 }
-                ViewInject.shortToast(getApplicationContext(), "发布失败");
+                ViewInject.shortToast(mContext, "发布失败");
             }
         });
     }
