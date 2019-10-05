@@ -1,9 +1,13 @@
 package com.yuejian.meet.common;
 
+import android.os.Environment;
+
 import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.utils.StringUtils;
+
+import java.io.File;
 
 public interface Constants {
     /**

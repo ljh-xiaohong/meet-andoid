@@ -7,7 +7,9 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +24,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
+import com.yuejian.meet.utils.ViewInject;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -48,6 +51,8 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
     private String replyCommentId = "";
 
     private String hint;
+
+    private int limit = 200;
 
     InputMethodManager imm;
 
@@ -119,6 +124,26 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
             emojicons.setVisibility(View.GONE);
             hasClick = false;
         });
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (content.getText().toString().length() > limit) {
+                    content.setText(content.getText().toString().substring(0, limit));
+                    content.setSelection(content.length());
+                    ViewInject.shortToast(mContext, "字数限制，不超：" + limit);
+                }
+            }
+        });
         setEmojiconFragment(false);
 
         if (!TextUtils.isEmpty(hint)) content.setHint(String.format("回复：%s", hint));
@@ -189,7 +214,7 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(reference.get()==null || reference.get().isFinishing()) return;
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 content.setText("");
                 content.setHint("留下你的评论吧~");
                 emojicons.setVisibility(View.GONE);
@@ -202,7 +227,7 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                if(reference.get()==null || reference.get().isFinishing()) return;
+                if (reference.get() == null || reference.get().isFinishing()) return;
                 Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show();
             }
         });

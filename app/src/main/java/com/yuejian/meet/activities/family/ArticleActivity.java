@@ -174,7 +174,7 @@ public class ArticleActivity extends BaseActivity {
         reference = new WeakReference(this);
         initDiscussAdapter();
         getDataFromNet();
-        scrollView.setonScrollChanged((v,l, t, oldl, oldt) -> {
+        scrollView.setonScrollChanged((v, l, t, oldl, oldt) -> {
             int[] local = new int[2];
             discuss.getLocationInWindow(local);
 
@@ -382,7 +382,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
@@ -483,7 +484,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.praiseContent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
                 if (praise == null) return;
                 switch (praise.getCode()) {
@@ -541,7 +543,8 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -552,7 +555,8 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 moreDialog.dismiss();
             }
         });
@@ -569,7 +573,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
@@ -592,7 +597,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
@@ -617,7 +623,8 @@ public class ArticleActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -650,7 +657,8 @@ public class ArticleActivity extends BaseActivity {
         Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                    return;
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,

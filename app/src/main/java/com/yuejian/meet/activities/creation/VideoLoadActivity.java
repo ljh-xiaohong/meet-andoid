@@ -1,7 +1,6 @@
 package com.yuejian.meet.activities.creation;
 
 
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -19,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ import com.aliyun.recorder.supply.AliyunIClipManager;
 import com.aliyun.recorder.supply.AliyunIRecorder;
 import com.aliyun.recorder.supply.RecordCallback;
 import com.aliyun.svideo.base.ActionInfo;
+import com.aliyun.svideo.base.AlivcSvideoEditParam;
 import com.aliyun.svideo.base.AliyunSvideoActionConfig;
 import com.aliyun.svideo.base.widget.ProgressDialog;
 import com.aliyun.svideo.base.widget.beauty.enums.BeautyLevel;
@@ -50,6 +53,8 @@ import com.aliyun.svideo.base.widget.beauty.listener.OnBeautyFaceItemSeletedList
 import com.aliyun.svideo.sdk.external.struct.common.AliyunDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoClip;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoParam;
+import com.aliyun.svideo.sdk.external.struct.common.CropKey;
+import com.aliyun.svideo.sdk.external.struct.common.VideoDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.common.VideoQuality;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectBean;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectFilter;
@@ -75,9 +80,10 @@ import java.lang.ref.WeakReference;
 import java.util.LinkedHashMap;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetector.OnScaleGestureListener{
+public class VideoLoadActivity extends AppCompatActivity implements ScaleGestureDetector.OnScaleGestureListener, View.OnClickListener {
 
     private String TAG = VideoLoadActivity.this.getClass().toString();
 
@@ -137,6 +143,11 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
 //    MusicDialog musicChooser;
 
     AliyunVideoParam mVideoParam;
+
+    /**
+     * 裁剪参数
+     */
+    private AlivcSvideoEditParam mAlivcSvideoEditParam;
 
     /**
      * 记录美颜选中的索引, 默认为3
@@ -222,7 +233,11 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video_load);
+        ButterKnife.bind(this);
         MySystemParams.getInstance().init(this);
         boolean checkResult = PermissionUtils.checkPermissionsGroup(this, permission);
         if (!checkResult) {
@@ -328,8 +343,6 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
         });
         filterEffectChooser.show(getSupportFragmentManager(), TAG_FILTER_CHOOSER);
     }
-
-
 
 
 //    /**
@@ -440,6 +453,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
     protected void onDestroy() {
         super.onDestroy();
 //        stopRecord();
+        ButterKnife.unbind(this);
         mRecorder.destroy();
     }
 
@@ -747,10 +761,22 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
                 .crf(0)
                 .frameRate(30)
                 .outputWidth(ScreenUtils.getWidth(this))
-                .outputHeight(ScreenUtils.getHeight(this))
-                .videoQuality(VideoQuality.HD)
+                .outputHeight(ScreenUtils.getWidth(this) / 9 * 16)
+                .videoQuality(VideoQuality.SSD)
                 .build();
-
+        mAlivcSvideoEditParam = new AlivcSvideoEditParam.Build()
+                .setRatio(AlivcSvideoEditParam.RATIO_MODE_9_16)
+                .setResolutionMode(AlivcSvideoEditParam.RESOLUTION_540P)
+                .setHasTailAnimation(false)
+                .setEntrance("svideo")
+                .setCropMode(VideoDisplayMode.FILL)
+                .setFrameRate(30)
+                .setGop(30)
+                .setBitrate(0)
+                .setVideoQuality(VideoQuality.SSD)
+                .setVideoCodec(VideoCodecs.H264_HARDWARE)
+                .build();
+        mAlivcSvideoEditParam.setCropAction(CropKey.ACTION_TRANSCODE);
     }
 
     /**
@@ -760,7 +786,7 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
 
         mRecorder = AliyunRecorderCreator.getRecorderInstance(this);
         mRecorder.setMediaInfo(mOutputInfo);
-        mRecorder.setVideoQuality(VideoQuality.HD);
+        mRecorder.setVideoQuality(VideoQuality.SSD);
         mRecorder.setVideoBitrate(25);
         mRecorder.setFocusMode(CameraParam.FOCUS_MODE_CONTINUE);
         mRecorder.setFaceTrackInternalMaxFaceCount(2);
@@ -800,22 +826,30 @@ public class VideoLoadActivity extends BaseActivity implements ScaleGestureDetec
                                 .displayMode(AliyunDisplayMode.DEFAULT)
                                 .build());
 
+//                        String projectJsonPath = mImport.generateProjectConfigure();
+//                        Intent intent = new Intent();
+//                        ActionInfo action = AliyunSvideoActionConfig.getInstance().getAction();
+//                        //获取录制完成的配置页面
+//                        String tagClassName = action.getTagClassName(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME);
+//
+//                        intent.setClassName(VideoLoadActivity.this, tagClassName);
+//                        if (tagClassName.equals(ActionInfo.getDefaultTargetConfig(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME))) {
+////                            intent.putExtra("isReplaceMusic", isUseMusic);
+//                        }
+//                        intent.putExtra("video_param", mVideoParam);
+//                        intent.putExtra("project_json_path", projectJsonPath);
+////                        intent.putExtra(INTENT_PARAM_KEY_ENTRANCE, mRecordEntrance);
+////                        intent.putExtra(INTENT_PARAM_KEY_HAS_MUSIC, videoRecordView.isHasMusic());
+//                        startActivity(intent);
+//                        mImport.release();
                         String projectJsonPath = mImport.generateProjectConfigure();
-                        Intent intent = new Intent();
-                        ActionInfo action = AliyunSvideoActionConfig.getInstance().getAction();
-                        //获取录制完成的配置页面
-                        String tagClassName = action.getTagClassName(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME);
-
-                        intent.setClassName(VideoLoadActivity.this, tagClassName);
-                        if (tagClassName.equals(ActionInfo.getDefaultTargetConfig(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME))) {
-//                            intent.putExtra("isReplaceMusic", isUseMusic);
-                        }
-                        intent.putExtra("video_param", mVideoParam);
-                        intent.putExtra("project_json_path", projectJsonPath);
-//                        intent.putExtra(INTENT_PARAM_KEY_ENTRANCE, mRecordEntrance);
-//                        intent.putExtra(INTENT_PARAM_KEY_HAS_MUSIC, videoRecordView.isHasMusic());
-                        startActivity(intent);
+                        com.aliyun.svideo.base.MediaInfo mediaInfo = new com.aliyun.svideo.base.MediaInfo();
+                        mediaInfo.filePath = clipManager.getVideoPathList().get(0);
+                        mediaInfo.duration = clipManager.getDuration();
+                        mAlivcSvideoEditParam.setMediaInfo(mediaInfo);
+                        VideoCropActivity.startCropForResult(VideoLoadActivity.this, mAlivcSvideoEditParam, projectJsonPath);
                         mImport.release();
+                        finish();
                     }
                 });
                 Log.e(TAG, "onFinish");

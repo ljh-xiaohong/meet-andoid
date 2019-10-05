@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF2F5F7"
+    android:orientation="vertical">
+
+    <!-- 抬头 start -->
+    <LinearLayout
+        android:id="@+id/activity_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#FFFFFFFF">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:src="@mipmap/icon_nav_return" />
+
+    </LinearLayout>
+
+    <!-- 抬头 end -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_back_bar"
+        android:layout_below="@+id/activity_title_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="25dp">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/activity_publish_img_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp">
+
+                    <ImageView
+                        android:id="@+id/activity_publish_img"
+                        android:layout_width="90dp"
+                        android:layout_height="120dp"
+                        android:scaleType="center"
+                        android:src="@drawable/bg_cross" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_gravity="bottom"
+                        android:background="#66000000"
+                        android:gravity="center"
+                        android:text="选封面"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="13sp" />
+
+                </android.support.v7.widget.CardView>
+
+                <EditText
+                    android:id="@+id/activity_publish_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_toRightOf="@+id/activity_publish_img_layout"
+                    android:background="@null"
+                    android:hint="介绍你的视频"
+                    android:textColorHint="#FF999999" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/activity_publish_edittext"
+                    android:layout_marginLeft="17dp"
+                    android:layout_toRightOf="@+id/activity_publish_img_layout"
+                    android:background="#FFD0D0D0" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/activity_publish_shop_select_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="配置商品"
+                        android:textColor="#333333"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:src="@mipmap/icon_home_vip"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                        app:layout_constraintStart_toEndOf="@+id/textView18"
+                        app:layout_constraintTop_toTopOf="@+id/textView18" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:rotation="180"
+                        android:src="@mipmap/icon_nav_return"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </android.support.constraint.ConstraintLayout>
+                <!-- 商品 -->
+                <FrameLayout
+                    android:id="@+id/activity_publish_good_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:background="#FFF7F7F7"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/activity_publish_shop_img"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="9dp"
+                            android:layout_toRightOf="@+id/activity_publish_shop_img"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/activity_publish_shop_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:gravity="center|left"
+                                android:maxLines="1"
+                                android:textColor="#FF333333"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/activity_publish_shop_disct"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:ellipsize="end"
+                                android:gravity="center|left"
+                                android:maxLines="1"
+                                android:textColor="#FF666666"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/activity_publish_shop_price_discount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_article_btn"
+                                    android:drawableLeft="@mipmap/icon_vipprice"
+                                    android:gravity="center"
+                                    android:paddingLeft="1dp"
+                                    android:paddingRight="3dp"
+                                    android:textColor="#FFFFFFFF"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/activity_publish_shop_price_full"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="3dp"
+                                    android:gravity="center"
+                                    android:textColor="#FFF54D4D"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/activity_article_good_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="6dp"
+                        android:src="@mipmap/icon_message_remove" />
+                </FrameLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/icon_tag"
+                    android:drawablePadding="9dp"
+                    android:gravity="center"
+                    android:text="选择标签"
+                    android:textColor="#FF666666"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <com.yuejian.meet.widgets.TagFlowLayout
+                android:id="@+id/activity_publish_taglayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#ffffff"
+                android:paddingBottom="10dp">
+
+                <CheckBox
+                    android:id="@+id/edit_label_init"
+                    style="@style/article_tag_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@null"
+                    android:text="无" />
+
+            </com.yuejian.meet.widgets.TagFlowLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/activity_back_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="23dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="21dp"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_creation_caogao"
+                android:gravity="center"
+                android:text="存草稿"
+                android:textColor="#FF666666"
+                android:textSize="11sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/activity_publish_publish_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="5"
+                android:background="@drawable/bg_poster_btn"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="发布"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/activity_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/selector_agree"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="阅读并同意"
+                android:textColor="#FF999999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/activity_publish_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="《用户协议》"
+                android:textColor="#FF3498DB"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/activity_publish_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="《隐私政策》"
+                android:textColor="#FF3498DB"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

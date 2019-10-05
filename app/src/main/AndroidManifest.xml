@@ -115,8 +115,8 @@
         <activity
             android:name=".activities.mine.InputActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateUnchanged|adjustResize"
-            android:theme="@style/ActivityDialogTheme" />
+            android:theme="@style/ActivityDialogTheme"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".activities.home.PicturePreviewActivity"
             android:screenOrientation="portrait" />
@@ -134,8 +134,10 @@
         <activity
             android:name=".activities.creation.VideoLoadActivity"
             android:screenOrientation="portrait"
-            android:windowFullscreen="true"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
+            android:windowFullscreen="true" />
+        <activity
+            android:name=".activities.creation.PulishActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.mine.BuyAllVipPermissionActivity"
             android:screenOrientation="portrait" />
@@ -144,6 +146,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.mine.LightUpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.creation.VideoCropActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.StartUpActivity"

@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,6 +31,7 @@ import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.CircleImageView;
 
 import java.util.ArrayList;
@@ -79,7 +82,8 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
     private boolean hasClick;
     private ApiImp api = new ApiImp();
     private String replyCommentId = "";
-
+    //字数限制范围
+    private int limit = 200;
     private String crId = "";
 
     public enum StyleType {NORMAL, BLACK}
@@ -170,6 +174,26 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         content.setOnClickListener(v -> {
             emojicons.setVisibility(View.GONE);
             hasClick = false;
+        });
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (content.getText().toString().length() > limit) {
+                    content.setText(content.getText().toString().substring(0, limit));
+                    content.setSelection(content.length());
+                    ViewInject.shortToast(content.getContext(), "字数限制，不超：" + limit);
+                }
+            }
         });
         setEmojiconFragment(false);
         if (!TextUtils.isEmpty(AppConfig.photo)) {
