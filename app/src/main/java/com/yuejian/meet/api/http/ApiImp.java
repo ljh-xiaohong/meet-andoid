@@ -1891,6 +1891,13 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.RECOMMEND_FIND, paramMap, paramObject, callback);
     }
 
+    /**
+     * 个人中心 - 获取用户基本信息API（测试通过）
+     */
+    public void findCustomerBaseInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+        this.mHttpRequst.postRequst(UrlConstant.FIND_CUSTOMER_BASE_INFO, paramMap, paramObject, callback);
+    }
+
     //我的创作 列表
     public void getContentList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.MY_CREAT_CONTENT_LIST, paramMap, paramObject, callback);

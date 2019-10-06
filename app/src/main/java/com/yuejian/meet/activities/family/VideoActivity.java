@@ -87,7 +87,7 @@ public class VideoActivity extends BaseActivity {
         moreData = new ArrayList<>();
         //初始化内容
         if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
-            moreData.add("编辑");
+//            moreData.add("编辑");
             moreData.add("删除");
         } else {
             moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
@@ -156,8 +156,9 @@ public class VideoActivity extends BaseActivity {
 
     /**
      * @param context
-     * @param contentId  内容ID
-     * @param customerId 用户ID
+     * @param contentId    内容ID
+     * @param customerId   用户ID
+     * @param SCREEN_MATCH 是否全屏
      */
     public static void startActivity(Context context, String contentId, String customerId, boolean SCREEN_MATCH) {
         Intent intent = new Intent(context, VideoActivity.class);
@@ -168,16 +169,20 @@ public class VideoActivity extends BaseActivity {
     }
 
     /**
+     * 主要用于删除不感兴趣，及删除视频
      * @param context
-     * @param contentId  内容ID
-     * @param customerId 用户ID
+     * @param contentId
+     * @param customerId
+     * @param position
+     * @param SCREEN_MATCH
      */
-    public static void startActivityForResult(Activity context, String contentId, String customerId, int position,boolean SCREEN_MATCH) {
+    public static void startActivityForResult(Activity context, String contentId, String customerId, int position, int requestCode, boolean SCREEN_MATCH) {
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("VideoActivity.contentId", contentId);
         intent.putExtra("VideoActivity.customerId", customerId);
         intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
-        context.startActivity(intent);
+        intent.putExtra("VideoActivity.position", position);
+        context.startActivityForResult(intent, requestCode);
     }
 
     private boolean getData() {
@@ -565,10 +570,20 @@ public class VideoActivity extends BaseActivity {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
+                int position = getIntent().getIntExtra("VideoActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife()) return;
             }
         });
     }
@@ -589,7 +604,16 @@ public class VideoActivity extends BaseActivity {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-                finish();
+                int position = getIntent().getIntExtra("VideoActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
             }
 
             @Override

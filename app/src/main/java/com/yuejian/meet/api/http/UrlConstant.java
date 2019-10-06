@@ -327,12 +327,12 @@ public class UrlConstant {
     /**
      * 升级VIP API
      */
-    public static String UPGRADE_VIP=apiUrl()+"api/userPay/upgradeVip";
+    public static String UPGRADE_VIP = apiUrl() + "api/userPay/upgradeVip";
 
     /**
      * 创建商品支付订单
      */
-    public static String CREATE_SHOP_ORDER_PAY=apiUrl()+"api/shopOrder/createShopOrderPay";
+    public static String CREATE_SHOP_ORDER_PAY = apiUrl() + "api/shopOrder/createShopOrderPay";
 
     //开通VIP
     public static String POST_IN_CASH_VIP = apiUrl() + "api/inCash/doInCashVip";
@@ -1102,6 +1102,9 @@ public class UrlConstant {
 
     // 首页推荐 RSV 1.0
     public static String RECOMMEND_FIND = apiUrl() + "api/homePage/findRecommend";
+
+    //个人中心 - 获取用户基本信息API（测试通过）
+    public static String FIND_CUSTOMER_BASE_INFO = apiUrl() + "api/customer/findCustomerBaseInfo";
 
     public static String MY_CREAT_CONTENT_LIST = apiUrl() + "api/contentRelease/getContentList";
 

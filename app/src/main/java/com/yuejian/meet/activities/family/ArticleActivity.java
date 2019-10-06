@@ -70,6 +70,8 @@ public class ArticleActivity extends BaseActivity {
     private VideoAndContentEntiy info;
     private CommentListAdapter commentAdapter;
 
+    private boolean discussData = false;
+
     Intent intent;
 
     @Bind(R.id.activity_article_back)
@@ -203,6 +205,22 @@ public class ArticleActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * 主要用于删除不感兴趣，及删除视频
+     *
+     * @param context
+     * @param contentId
+     * @param customerId
+     * @param position
+     */
+    public static void startActivityForResult(Activity context, String contentId, String customerId, int position, int requestCode) {
+        Intent intent = new Intent(context, ArticleActivity.class);
+        intent.putExtra("ArticleActivity.contentId", contentId);
+        intent.putExtra("ArticleActivity.customerId", customerId);
+        intent.putExtra("ArticleActivity.position", position);
+        context.startActivityForResult(intent, requestCode);
+    }
+
     private boolean getData() {
         contentId = getIntent().getStringExtra("ArticleActivity.contentId");
         customerId = getIntent().getStringExtra("ArticleActivity.customerId");
@@ -221,7 +239,7 @@ public class ArticleActivity extends BaseActivity {
         follow.setText(checkData(detail.getRelationType()).equals("0") ? "关注" : "已关注");
         follow.setBackgroundResource(checkData(detail.getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
         title.setText(checkData(detail.getContentTitle()));
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime()))));
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime())*1000)));
         discuss.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         discuss_b.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         read.setText(String.format("阅读 %s", checkData(detail.getViewNum())));
@@ -408,7 +426,7 @@ public class ArticleActivity extends BaseActivity {
         moreData = new ArrayList<>();
         //初始化内容
         if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
-            moreData.add("编辑");
+//            moreData.add("编辑");
             moreData.add("删除");
         } else {
             moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
@@ -576,7 +594,15 @@ public class ArticleActivity extends BaseActivity {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-
+                int position = getIntent().getIntExtra("ArticleActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
@@ -600,7 +626,15 @@ public class ArticleActivity extends BaseActivity {
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-                finish();
+                int position = getIntent().getIntExtra("ArticleActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
@@ -737,11 +771,11 @@ public class ArticleActivity extends BaseActivity {
                 switch (showMoe.getText().toString()) {
 
                     case "展开":
-                        mNextPageIndex = 1;
+
                         break;
 
                     case "收起":
-
+                        mNextPageIndex = 1;
                         break;
 
                 }
@@ -776,7 +810,7 @@ public class ArticleActivity extends BaseActivity {
                     return;
                 String urlShop = "";
 //                urlShop = String.format(UrlConstant.ExplainURL.SHOP_DETAIL + "?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
-                urlShop = String.format( "http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
+                urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
                 intent = new Intent(this, WebActivity.class);
                 intent.putExtra(Constants.URL, urlShop);
                 intent.putExtra("No_Title", true);
@@ -821,13 +855,18 @@ public class ArticleActivity extends BaseActivity {
                 } else {
                     commentAdapter.loadMoreData(commentBean.getData());
                 }
-                int count = Integer.valueOf(info.getContentDetail().getCommentNum());
+                if (discussData) {
+                    int count = Integer.valueOf(info.getContentDetail().getCommentNum());
 
-                info.getContentDetail().setCommentNum(++count + "");
+                    info.getContentDetail().setCommentNum(++count + "");
 
-                discuss.setText(String.format("共%s条评论", count));
-                ;
-                discuss_b.setText(String.format("共%s条评论", count));
+                    discuss.setText(String.format("共%s条评论", count));
+
+                    discuss_b.setText(String.format("共%s条评论", count));
+
+                    discussData = false;
+                }
+
                 mNextPageIndex++;
             }
 
@@ -848,7 +887,9 @@ public class ArticleActivity extends BaseActivity {
             case DISCUSS:
                 if (resultCode == RESULT_OK) {
                     mNextPageIndex = 1;
+                    discussData = true;
                     getDiscuss();
+
                 }
 
 
@@ -858,7 +899,9 @@ public class ArticleActivity extends BaseActivity {
             case DISCUSS_DISCUSS:
                 if (resultCode == RESULT_OK) {
                     mNextPageIndex = 1;
+                    discussData = true;
                     getDiscuss();
+
                 }
                 break;
 

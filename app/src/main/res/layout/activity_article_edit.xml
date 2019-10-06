@@ -178,6 +178,7 @@
                     android:background="#E6E6E6" />
 
                 <android.support.constraint.ConstraintLayout
+                    android:visibility="gone"
                     android:id="@+id/activity_article_shop_select_layout"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"

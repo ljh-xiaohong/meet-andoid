@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.creation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.DraftActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.CreationAdapter;
@@ -37,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 public class MyCreationListFragment extends BaseFragment implements SpringView.OnFreshListener {
 
     private SpringView springView;
@@ -50,6 +54,8 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     private int type = -1;
 
     private CreationAdapter adapter;
+
+    private final static int CANCEL_DELECT = 142;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -101,7 +107,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         apiImp.getContentList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (checkIsLife())return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (null == jo) return;
                 if (!jo.getString("code").equals("0")) return;
@@ -116,7 +122,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                if (checkIsLife())return;
+                if (checkIsLife()) return;
                 if (springView != null) {
                     springView.onFinishFreshAndLoad();
                 }
@@ -153,14 +159,14 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
     @Override
     public void onRefresh() {
-        if (checkIsLife())return;
+        if (checkIsLife()) return;
         pageIndex = 1;
         getDataFromNet();
     }
 
     @Override
     public void onLoadmore() {
-        if (checkIsLife())return;
+        if (checkIsLife()) return;
         ++pageIndex;
         getDataFromNet();
     }
@@ -185,7 +191,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                             DraftActivity.startActivity(mContext, type);
                             return;
                         }
-
+                        VideoActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, false);
 
                         break;
 
@@ -196,11 +202,23 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                             return;
                         }
 
-                        ArticleActivity.startActivity(mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId);
+                        ArticleActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT);
                         break;
 
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CANCEL_DELECT && requestCode == RESULT_OK) {
+            int position = -1;
+            position = data.getIntExtra("position", position);
+            if (position == -1) return;
+            adapter.getData().remove(position);
+        }
     }
 }

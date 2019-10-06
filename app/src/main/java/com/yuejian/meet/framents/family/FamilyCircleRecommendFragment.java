@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.family;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
@@ -92,6 +94,8 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @Bind(R.id.et_search_all)
     TextView etSearchAll;
 
+    private static final int CANCEL_DELECT_POSITION = 101;
+
     private int mNextPageIndex = 1;
     private int pageCount = 10;
     //    private FamilyCircleRecommendListAdapter mRecommendListAdapter;
@@ -120,11 +124,11 @@ public class FamilyCircleRecommendFragment extends BaseFragment
             switch (item.getType()) {
                 //文章
                 case 1:
-                    ArticleActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId);
+                    ArticleActivity.startActivityForResult((Activity) mContext, item.getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION);
                     break;
                 //视频
                 case 2:
-                    VideoActivity.startActivity(mContext, item.getId() + "", AppConfig.CustomerId, item.getCoveSizeType() == 0 ? true : false);
+                    VideoActivity.startActivityForResult((Activity) mContext, item.getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION, item.getCoveSizeType() == 0 ? true : false);
                     break;
                 //模板
                 case 3:
@@ -142,11 +146,21 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         setItemWidth();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CANCEL_DELECT_POSITION && resultCode == RESULT_OK) {
+            int position = data.getIntExtra("position", -1);
+            if (position == -1) return;
+            recommendListAdapter.getData().remove(position);
+            recommendListAdapter.notifyDataSetChanged();
+        }
+    }
 
     @OnClick({R.id.ll_family_circle_recomm_item_news, R.id.ll_family_circle_recomm_item_zupu,
             R.id.ll_family_circle_recomm_item_jiaci, R.id.ll_family_circle_recomm_item_zongqinhui,
             R.id.ll_family_circle_recomm_item_xiuxing, R.id.ll_family_circle_recomm_item_college,
-            R.id.ll_family_circle_recomm_item_zongxianquan,R.id.search_all,R.id.sweep_code,R.id.et_search_all})
+            R.id.ll_family_circle_recomm_item_zongxianquan, R.id.search_all, R.id.sweep_code, R.id.et_search_all})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -234,6 +248,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
             @Override
             public void onSuccess(String data, int id) {
 
+                if (checkIsLife()) return;
 
                 if (null != data) {
 
@@ -266,6 +281,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife()) return;
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
 
@@ -344,6 +360,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @Override
     public void onBusCallback(BusCallEntity event) {
         super.onBusCallback(event);
+        if (checkIsLife()) return;
         switch (event.getCallType()) {
             case FAMILY_RECOMMEND_ZAN:
 //                mRecommendListAdapter.notifyDataSetChanged();
@@ -355,6 +372,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
+        if (checkIsLife()) return;
         mNextPageIndex = 1;
 //        loadDataFromNet(type, mNextPageIndex, pageCount, is_recommend);
         loadDataFromNet(mNextPageIndex, pageCount);
@@ -362,6 +380,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
     @Override
     public void onLoadmore() {
+        if (checkIsLife()) return;
 //        loadDataFromNet(type, ++mNextPageIndex, pageCount, is_recommend);
         loadDataFromNet(++mNextPageIndex, pageCount);
     }
