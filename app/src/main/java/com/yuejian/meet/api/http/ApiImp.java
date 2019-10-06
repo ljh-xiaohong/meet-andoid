@@ -452,6 +452,20 @@ public class ApiImp {
     public void doInCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
         mHttpRequst.postRequst(UrlConstant.POST_IN_CASH, params, tag, callback);
     }
+    //购买海报模板api
+    public void buyPosterTemplate(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.BUY_POSTER_TEMPLATE, params, tag, callback);
+    }
+
+    //购买VIP api
+    public void upgradeVip(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.UPGRADE_VIP, params, tag, callback);
+    }
+
+    //购买商品 api
+    public void createShopOrderPay(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.CREATE_SHOP_ORDER_PAY, params, tag, callback);
+    }
 
     //提现
     public void applyOutCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {

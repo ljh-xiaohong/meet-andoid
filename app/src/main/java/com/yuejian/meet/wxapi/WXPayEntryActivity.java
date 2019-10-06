@@ -13,6 +13,7 @@ import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelpay.PayResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -40,6 +41,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private TextView payResultTip;
 
+    private PayResp base;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +66,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+        if (resp instanceof PayResp) {
+            base = (PayResp) resp;
+        }
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
                 Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
                 BusCallEntity busCallEntity = new BusCallEntity();
                 busCallEntity.setCallType(BusEnum.payment_success);
+                busCallEntity.setData(base == null ? "" : base.extData);
                 Bus.getDefault().post(busCallEntity);
 //                2019.05.20屏蔽支付成功后跳转页面
 //                if (ExclusiveAppletActivity.appletPal){

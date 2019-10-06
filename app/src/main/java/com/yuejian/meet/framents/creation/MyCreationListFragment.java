@@ -26,9 +26,12 @@ import com.yuejian.meet.bean.CreationEntity;
 import com.yuejian.meet.bean.ShopEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.widgets.RecommendView;
+import com.yuejian.meet.widgets.springview.DefaultFooter;
+import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +62,8 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
         springView = view.findViewById(R.id.fragment_poster_springview);
         recyclerView = view.findViewById(R.id.fragment_poster_recyclerview);
+        springView.setFooter(new DefaultFooter(mContext));
+        springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
         if (!getData()) return;
         adapter = new CreationAdapter(recyclerView, getContext(), type);
@@ -76,6 +81,8 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
     @BusReceiver
     public void refreshData(ShopEntity entity) {
+        if (checkIsLife())
+            return;
         onRefresh();
     }
 
@@ -94,6 +101,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         apiImp.getContentList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife())return;
                 JSONObject jo = JSON.parseObject(data);
                 if (null == jo) return;
                 if (!jo.getString("code").equals("0")) return;
@@ -108,6 +116,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife())return;
                 if (springView != null) {
                     springView.onFinishFreshAndLoad();
                 }
@@ -144,12 +153,14 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
     @Override
     public void onRefresh() {
+        if (checkIsLife())return;
         pageIndex = 1;
         getDataFromNet();
     }
 
     @Override
     public void onLoadmore() {
+        if (checkIsLife())return;
         ++pageIndex;
         getDataFromNet();
     }

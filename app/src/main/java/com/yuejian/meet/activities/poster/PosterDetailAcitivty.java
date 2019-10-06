@@ -25,7 +25,9 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.PosterDetailEntity;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
@@ -60,6 +62,8 @@ public class PosterDetailAcitivty extends BaseActivity {
     FlowLayout flowLayout;
     @Bind(R.id.activity_poster_cardview)
     CardView cardView;
+    @Bind(R.id.activity_poster_open_vip)
+    View openVip;
 
     private PosterDetailEntity posterInfo;
 
@@ -105,7 +109,7 @@ public class PosterDetailAcitivty extends BaseActivity {
     }
 
 
-    @OnClick({R.id.head_back, R.id.activity_poster_experience, R.id.head_share, R.id.head_check})
+    @OnClick({R.id.head_back, R.id.activity_poster_experience, R.id.head_share, R.id.head_check, R.id.activity_poster_open_vip})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -144,7 +148,24 @@ public class PosterDetailAcitivty extends BaseActivity {
                 if (posterInfo.isTemplateCollection()) return;
                 collect();
                 break;
+            //开通VIP
+            case R.id.activity_poster_open_vip:
+                openVip();
+                break;
         }
+    }
+
+    /**
+     * 开通VIP
+     */
+    private void openVip() {
+        String urlVip = "";
+//        urlVip = String.format(UrlConstant.ExplainURL.OPEN_VIP + "?customerId=%s&phone=true", AppConfig.CustomerId);
+        urlVip = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/vip/vip.html?customerId=%s&phone=true", AppConfig.CustomerId);
+        Intent intent = new Intent(this, WebActivity.class);
+        intent.putExtra(Constants.URL, urlVip);
+        intent.putExtra("No_Title", true);
+        startActivity(intent);
     }
 
     /**

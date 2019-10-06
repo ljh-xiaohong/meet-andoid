@@ -42,6 +42,7 @@ import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.Utils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +60,13 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
     public ApiImp apiImp = new ApiImp();
     public static String ACTIVITY_NAME = "";
     public PositionInfo position = new PositionInfo();
-
+    protected WeakReference<BaseActivity> reference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        reference = new WeakReference(this);
         AppManager.addActivity(this);
         if (Utils.isMIUI()) {
             Utils.MIUISetStatusBarLightMode(getWindow(), true);
@@ -159,6 +161,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
         ButterKnife.unbind(this);
         Bus.getDefault().unregister(this);
         AppManager.finishActivity(this);
+        reference = null;
     }
 
     public void initBackButton(boolean isShow) {
@@ -254,6 +257,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
     @SuppressLint("RestrictedApi")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (checkIsLife()) return;
         FragmentManager fm = getSupportFragmentManager();
         if (fm != null && fm.getFragments() != null && fm.getFragments().size() > 0) {
             for (Fragment frag : fm.getFragments()) {
@@ -307,6 +311,15 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
                 if (null != callback) callback.onFailed(errCode, errMsg, id);
             }
         });
+    }
+
+    /**
+     * 检测是否还在栈内
+     *
+     * @return true：不在栈内，false：还在栈内
+     */
+    protected boolean checkIsLife() {
+        return reference == null || reference.get() == null || reference.get().isFinishing();
     }
 
 }

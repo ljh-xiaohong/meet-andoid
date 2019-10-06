@@ -58,8 +58,6 @@ public class VideoActivity extends BaseActivity {
 
     private Intent intent;
 
-    private WeakReference<VideoActivity> reference;
-
     private static final int INPUT_STATE = 154;
 
     private VideoAndContentEntiy info;
@@ -169,6 +167,19 @@ public class VideoActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    /**
+     * @param context
+     * @param contentId  内容ID
+     * @param customerId 用户ID
+     */
+    public static void startActivityForResult(Activity context, String contentId, String customerId, int position,boolean SCREEN_MATCH) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("VideoActivity.contentId", contentId);
+        intent.putExtra("VideoActivity.customerId", customerId);
+        intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
+        context.startActivity(intent);
+    }
+
     private boolean getData() {
         contentId = getIntent().getStringExtra("VideoActivity.contentId");
         customerId = getIntent().getStringExtra("VideoActivity.customerId");
@@ -185,7 +196,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
@@ -322,7 +333,7 @@ public class VideoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (reference.get() == null || reference.get().isFinishing()) return;
+        if (checkIsLife()) return;
         switch (requestCode) {
             //评论
             case INPUT_STATE:
@@ -402,7 +413,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.praiseContent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
                 if (praise == null) return;
                 switch (praise.getCode()) {
@@ -454,7 +465,7 @@ public class VideoActivity extends BaseActivity {
         Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,
@@ -484,7 +495,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -522,7 +533,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -550,7 +561,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
@@ -574,7 +585,7 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();

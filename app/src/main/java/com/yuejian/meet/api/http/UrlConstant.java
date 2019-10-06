@@ -318,6 +318,22 @@ public class UrlConstant {
     public static String POST_FAMILY_SAMESURNAME_CICYGROPLIST = apiUrl() + "api/familyChatGroup/sameSurnameCityGroupList";
 
     public static String POST_IN_CASH = apiUrl() + "api/inCash/doInCash";
+
+    /**
+     * 购买海报模板api
+     */
+    public static String BUY_POSTER_TEMPLATE = apiUrl() + "api/userPay/buyPosterTemplate";
+
+    /**
+     * 升级VIP API
+     */
+    public static String UPGRADE_VIP=apiUrl()+"api/userPay/upgradeVip";
+
+    /**
+     * 创建商品支付订单
+     */
+    public static String CREATE_SHOP_ORDER_PAY=apiUrl()+"api/shopOrder/createShopOrderPay";
+
     //开通VIP
     public static String POST_IN_CASH_VIP = apiUrl() + "api/inCash/doInCashVip";
     //获取VIP详情列表
@@ -859,6 +875,11 @@ public class UrlConstant {
         public static final String FAXIAN = getWebUrl() + "faxian/game_worship.html";
         public static final String FAXIAN_SCHOOL = getWebUrl() + "faxian/school.html";
         public static final String FIND_XIUXING = getWebUrl() + "faxian/xiuxing.html";
+
+        /**
+         * 开通VIP
+         */
+        public static final String OPEN_VIP = getWebUrl() + "personal_center/shop/pages/vip/vip.html";
 
         /**
          * 商品详情
