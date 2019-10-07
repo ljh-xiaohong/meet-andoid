@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -71,7 +73,9 @@ import com.qu.preview.callback.OnTextureIdCallBack;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.common.SDCardConstants;
+import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.dialogs.TipsDialog;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.aliyun.CircleProgressBar;
 import com.yuejian.meet.widgets.aliyun.CountDownTextView;
 
@@ -83,7 +87,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VideoLoadActivity extends AppCompatActivity implements ScaleGestureDetector.OnScaleGestureListener, View.OnClickListener {
+public class VideoLoadActivity extends FragmentActivity implements ScaleGestureDetector.OnScaleGestureListener, View.OnClickListener {
 
     private String TAG = VideoLoadActivity.this.getClass().toString();
 
@@ -169,6 +173,8 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
     private AsyncTask<Void, Void, Void> initAssetPath;
     private AsyncTask<Void, Void, Void> copyAssetsTask;
 
+    private LoadingDialogFragment mLoadingDialog;
+
     private String videoPath = "";
 
 
@@ -230,6 +236,8 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
     //5.设置好开始时的参数
     //6.初始化控件
 
+    private String pathComplete;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,6 +254,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
             return;
         }
         init();
+        if (mLoadingDialog == null) mLoadingDialog = LoadingDialogFragment.newInstance("正在制作中...");
 
     }
 
@@ -383,13 +392,17 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 
             @Override
             public void startLoading() {
+
                 startRecord();
             }
 
             @Override
             public void stopLoading(long playTime) {
+                if (mLoadingDialog != null && !mLoadingDialog.isShowing) {
+                    mLoadingDialog.show(getFragmentManager(), "show");
+                }
                 stopRecord();
-                Toast.makeText(VideoLoadActivity.this, "完成录制", Toast.LENGTH_LONG).show();
+//                Toast.makeText(VideoLoadActivity.this, "完成录制", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -750,8 +763,8 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
         mOutputInfo = new MediaInfo();
         mOutputInfo.setFps(35);
         //分辨率 16/9
-        mOutputInfo.setVideoWidth(width);
-        mOutputInfo.setVideoHeight(height);
+        mOutputInfo.setVideoWidth(ScreenUtils.getWidth(this));
+        mOutputInfo.setVideoHeight(ScreenUtils.getWidth(this) / 9 * 16);
         mOutputInfo.setVideoCodec(VideoCodecs.H264_SOFT_FFMPEG);
         mOutputInfo.setCrf(0);
 
@@ -766,7 +779,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
                 .build();
         mAlivcSvideoEditParam = new AlivcSvideoEditParam.Build()
                 .setRatio(AlivcSvideoEditParam.RATIO_MODE_9_16)
-                .setResolutionMode(AlivcSvideoEditParam.RESOLUTION_540P)
+                .setResolutionMode(AlivcSvideoEditParam.RESOLUTION_720P)
                 .setHasTailAnimation(false)
                 .setEntrance("svideo")
                 .setCropMode(VideoDisplayMode.FILL)
@@ -778,6 +791,43 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
                 .build();
         mAlivcSvideoEditParam.setCropAction(CropKey.ACTION_TRANSCODE);
     }
+
+    private void startCrop(String path) {
+        AliyunIImport mImport = AliyunImportCreator.getImportInstance(VideoLoadActivity.this);
+        mImport.setVideoParam(mVideoParam);
+        mImport.addMediaClip(new AliyunVideoClip.Builder()
+                .source(path)
+                .startTime(0)
+                .endTime(clipManager.getDuration())
+                .displayMode(AliyunDisplayMode.DEFAULT)
+                .build());
+
+//                        String projectJsonPath = mImport.generateProjectConfigure();
+//                        Intent intent = new Intent();
+//                        ActionInfo action = AliyunSvideoActionConfig.getInstance().getAction();
+//                        //获取录制完成的配置页面
+//                        String tagClassName = action.getTagClassName(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME);
+//
+//                        intent.setClassName(VideoLoadActivity.this, tagClassName);
+//                        if (tagClassName.equals(ActionInfo.getDefaultTargetConfig(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME))) {
+////                            intent.putExtra("isReplaceMusic", isUseMusic);
+//                        }
+//                        intent.putExtra("video_param", mVideoParam);
+//                        intent.putExtra("project_json_path", projectJsonPath);
+////                        intent.putExtra(INTENT_PARAM_KEY_ENTRANCE, mRecordEntrance);
+////                        intent.putExtra(INTENT_PARAM_KEY_HAS_MUSIC, videoRecordView.isHasMusic());
+//                        startActivity(intent);
+//                        mImport.release();
+        String projectJsonPath = mImport.generateProjectConfigure();
+        com.aliyun.svideo.base.MediaInfo mediaInfo = new com.aliyun.svideo.base.MediaInfo();
+        mediaInfo.filePath = clipManager.getVideoPathList().get(0);
+        mediaInfo.duration = clipManager.getDuration();
+        mAlivcSvideoEditParam.setMediaInfo(mediaInfo);
+        VideoCropActivity.startCropForResult(VideoLoadActivity.this, mAlivcSvideoEditParam, projectJsonPath);
+        mImport.release();
+        finish();
+    }
+
 
     /**
      * 初始化mRecorder的部分参数
@@ -796,15 +846,15 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
             public void onComplete(boolean b, long l) {
                 //录制完成时回调
                 Log.e(TAG, "onComplete");
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (clipManager.getDuration() - minRecordTime < 0) {
-                            clipManager.deletePart();
-                            Toast.makeText(VideoLoadActivity.this, "录制视频，不可少于2秒", Toast.LENGTH_LONG).show();
-                        } else {
-                            mRecorder.finishRecording();
-                        }
+                ThreadUtils.runOnUiThread(() -> {
+                    if (mLoadingDialog != null && mLoadingDialog.isShowing)
+                        mLoadingDialog.dismiss();
+                    setVisibility(View.VISIBLE, v_backBtn, v_nextBtn);
+                    if (clipManager.getDuration() - minRecordTime < 0) {
+                        clipManager.deletePart();
+                        Toast.makeText(VideoLoadActivity.this, "录制视频，不可少于2秒", Toast.LENGTH_LONG).show();
+                    } else {
+                        mRecorder.finishRecording();
                     }
                 });
 
@@ -813,46 +863,15 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 
             @Override
             public void onFinish(final String s) {
-
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AliyunIImport mImport = AliyunImportCreator.getImportInstance(VideoLoadActivity.this);
-                        mImport.setVideoParam(mVideoParam);
-                        mImport.addMediaClip(new AliyunVideoClip.Builder()
-                                .source(s)
-                                .startTime(0)
-                                .endTime(clipManager.getDuration())
-                                .displayMode(AliyunDisplayMode.DEFAULT)
-                                .build());
-
-//                        String projectJsonPath = mImport.generateProjectConfigure();
-//                        Intent intent = new Intent();
-//                        ActionInfo action = AliyunSvideoActionConfig.getInstance().getAction();
-//                        //获取录制完成的配置页面
-//                        String tagClassName = action.getTagClassName(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME);
-//
-//                        intent.setClassName(VideoLoadActivity.this, tagClassName);
-//                        if (tagClassName.equals(ActionInfo.getDefaultTargetConfig(ActionInfo.SVideoAction.RECORD_TARGET_CLASSNAME))) {
-////                            intent.putExtra("isReplaceMusic", isUseMusic);
-//                        }
-//                        intent.putExtra("video_param", mVideoParam);
-//                        intent.putExtra("project_json_path", projectJsonPath);
-////                        intent.putExtra(INTENT_PARAM_KEY_ENTRANCE, mRecordEntrance);
-////                        intent.putExtra(INTENT_PARAM_KEY_HAS_MUSIC, videoRecordView.isHasMusic());
-//                        startActivity(intent);
-//                        mImport.release();
-                        String projectJsonPath = mImport.generateProjectConfigure();
-                        com.aliyun.svideo.base.MediaInfo mediaInfo = new com.aliyun.svideo.base.MediaInfo();
-                        mediaInfo.filePath = clipManager.getVideoPathList().get(0);
-                        mediaInfo.duration = clipManager.getDuration();
-                        mAlivcSvideoEditParam.setMediaInfo(mediaInfo);
-                        VideoCropActivity.startCropForResult(VideoLoadActivity.this, mAlivcSvideoEditParam, projectJsonPath);
-                        mImport.release();
-                        finish();
-                    }
+                ThreadUtils.runOnUiThread(() -> {
+                    pathComplete = s;
+                    if (mLoadingDialog != null && mLoadingDialog.isShowing)
+                        mLoadingDialog.dismiss();
+                    ViewInject.shortToast(VideoLoadActivity.this, "完成录制");
+                    Log.e(TAG, "onFinish");
                 });
-                Log.e(TAG, "onFinish");
+
+
             }
 
             @Override
@@ -868,7 +887,13 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 
             @Override
             public void onError(int i) {
-                Log.e(TAG, "onError");
+                ThreadUtils.runOnUiThread(() -> {
+                    if (mLoadingDialog != null && mLoadingDialog.isShowing)
+                        mLoadingDialog.dismiss();
+                    ViewInject.shortToast(VideoLoadActivity.this, "录制失败");
+                    Log.e(TAG, "onError");
+                });
+
             }
 
             @Override
@@ -1034,7 +1059,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 
             mIsBackground = false;
             zdy_loadBtn.setClickable(false);
-            setVisibility(View.VISIBLE, v_backBtn, v_nextBtn);
+
         }
     }
 
@@ -1093,7 +1118,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 
     }
 
-    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn})
+    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn, R.id.tv_next_btn})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -1122,9 +1147,12 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
 //                showMusic();
                 break;
 
-//            case R.id.tv_next_btn:
-//                cancelPath();
-//                break;
+            case R.id.tv_next_btn:
+                if (!TextUtils.isEmpty(pathComplete) && !mLoadingDialog.isShowing) {
+                    startCrop(pathComplete);
+                }
+
+                break;
         }
     }
 
@@ -1141,6 +1169,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
         }
 
     }
+
 
 //    private void showMusic() {
 //        if (null == musicChooser) {
@@ -1192,7 +1221,7 @@ public class VideoLoadActivity extends AppCompatActivity implements ScaleGesture
         videoPath = "";
         //设置控件的状态
 //        setLoadingStatus(View.VISIBLE);
-        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn);
+        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_lvjingBtn);
         setVisibility(View.GONE, v_nextBtn);
         zdy_loadBtn.setBaseStatus();
         zdy_loadBtn.setClickable(true);
