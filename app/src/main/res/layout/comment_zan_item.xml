@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/zan_img_lay"

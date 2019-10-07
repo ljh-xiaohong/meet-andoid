@@ -467,6 +467,12 @@ public class ApiImp {
         mHttpRequst.postRequst(UrlConstant.CREATE_SHOP_ORDER_PAY, params, tag, callback);
     }
 
+    //充值贡献值API
+    public void inContribution(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
+        mHttpRequst.postRequst(UrlConstant.INCONTRIBUTION, params, tag, callback);
+    }
+
+
     //提现
     public void applyOutCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
         mHttpRequst.postRequst(UrlConstant.POST_APPLY_OUT_CASH, params, tag, callback);
@@ -1889,13 +1895,6 @@ public class ApiImp {
      */
     public void getRecommendFamilyCricleDo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.RECOMMEND_FIND, paramMap, paramObject, callback);
-    }
-
-    /**
-     * 个人中心 - 获取用户基本信息API（测试通过）
-     */
-    public void findCustomerBaseInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
-        this.mHttpRequst.postRequst(UrlConstant.FIND_CUSTOMER_BASE_INFO, paramMap, paramObject, callback);
     }
 
     //我的创作 列表

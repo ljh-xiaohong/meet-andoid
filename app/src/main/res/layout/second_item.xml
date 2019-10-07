@@ -14,7 +14,7 @@
      <ImageView
          android:id="@+id/select"
          android:layout_width="wrap_content"
-         android:src="@mipmap/icon_zan_sel"
+         android:src="@mipmap/icon_message_select"
          android:layout_marginRight="12dp"
          android:layout_centerVertical="true"
          android:layout_alignParentRight="true"

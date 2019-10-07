@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.aliyun.svideo.editor.util.Common;
 import com.netease.nim.uikit.app.AppConfig;
+import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -29,6 +30,7 @@ import com.yuejian.meet.framents.family.ProjectFragment;
 import com.yuejian.meet.framents.family.VideoFragment;
 import com.yuejian.meet.utils.ClearEditText;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.widgets.SearchTitleView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -70,8 +72,8 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     private TagAdapter<HotSeacher> mAdapter1;
     private List<HotSeacher> hotData = new ArrayList<>();
     private List<HotSeacher> historyData = new ArrayList<>();
-    private List<HotSeacher> mDatas = new ArrayList<>();
     private int positions=0;
+    private boolean isFirst=true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,20 +105,25 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         HotSeacher hotSeacher = new HotSeacher();
         hotSeacher.setKeyword("华夏宗亲大会");
         hotData.add(hotSeacher);
-        hotData.add(hotSeacher);
-        hotData.add(hotSeacher);
-        hotData.add(hotSeacher);
-        historyData.add(hotSeacher);
-        historyData.add(hotSeacher);
-        historyData.add(hotSeacher);
-        mDatas.add(hotSeacher);
-        mDatas.add(hotSeacher);
-        hotSeacher.setCompany(true);
-        mDatas.add(hotSeacher);
+        HotSeacher hotSeacher1 = new HotSeacher();
+        hotSeacher1.setKeyword("宗亲大会");
+        hotData.add(hotSeacher1);
+        HotSeacher hotSeacher2 = new HotSeacher();
+        hotSeacher2.setKeyword("姓氏大全");
+        hotData.add(hotSeacher2);
+        HotSeacher hotSeacher3 = new HotSeacher();
+        hotSeacher3.setKeyword("# 姓氏文化知多少");
+        hotData.add(hotSeacher3);
+        HotSeacher hotSeacher4 = new HotSeacher();
+        hotSeacher4.setKeyword("# 秀秀我的宗亲祠堂");
+        hotData.add(hotSeacher4);
+        historyData.addAll(DadanPreference.getInstance(this).getDataList("historyData", HotSeacher.class));
+
         clearHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 historyData.clear();
+                DadanPreference.getInstance(SearchActivity.this).setDataList("historyData", historyData);
                 if (mAdapter1 != null) {
                     mAdapter1.notifyDataChanged();
                 }
@@ -125,7 +132,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         hotFlowlayout.setAdapter(mAdapter = new TagAdapter<HotSeacher>(hotData) {
                     @Override
                     public View getView(FlowLayout parent, int position, HotSeacher s) {
-                        View view = LayoutInflater.from(SearchActivity.this).inflate(com.yuejian.meet.R.layout.hotflowlayout_tv,
+                        View view = LayoutInflater.from(SearchActivity.this).inflate(R.layout.hotflowlayout_tv,
                                 hotFlowlayout, false);
                         TextView tv = view.findViewById(com.yuejian.meet.R.id.tv);
                         tv.setText(s.getKeyword());
@@ -193,7 +200,9 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         cencel.setOnClickListener(v -> finish());
         etSearchAll.setOnEditorActionListener(this);
     }
-    private void searching(HotSeacher hotSeacher) {
+    private void searching(HotSeacher keyword) {
+        isFirst=false;
+        mCurrentSearch=keyword;
         hideView();
         if (CommonUtil.isNull(etSearchAll.getText().toString())){
             return;
@@ -209,8 +218,23 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         }else{
             mProjectFragment.update(etSearchAll.getText().toString());
         }
-    }
 
+        for (int i = 0; i < historyData.size(); i++) {
+            if (historyData.get(i).getKeyword().equals(keyword.getKeyword())) {
+                historyData.remove(i);
+            }
+        }
+        if (!CommonUtil.isNull(keyword.getKeyword())) {
+            HotSeacher hotSeacher = new HotSeacher();
+            hotSeacher.setCompany(keyword.isCompany());
+            hotSeacher.setKeyword(keyword.getKeyword());
+            historyData.add(0, hotSeacher);
+            DadanPreference.getInstance(this).setDataList("historyData", historyData);
+            if (mAdapter1 != null) {
+                mAdapter1.notifyDataChanged();
+            }
+        }
+    }
     /**
      * 切换页面
      *
@@ -219,6 +243,9 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     private void setCurrentItem(int position) {
         vpFamilyCircleContent.setCurrentItem(position);
         familyCircleTitleView.setSelectedTitle(position);
+        if (!isFirst){
+            searching(mCurrentSearch);
+        }
         if (position == 1) {
             //打开手势滑动
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -236,7 +263,7 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
         tagLay.setVisibility(View.VISIBLE);
         searchList.setVisibility(View.GONE);
     }
-
+    private  HotSeacher mCurrentSearch;
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {

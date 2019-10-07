@@ -142,8 +142,8 @@ public class SplashActivity extends Activity {
             PreferencesUtil.write(getBaseContext(), Constants.HAVE_START_UP, true);
             Intent intent = new Intent();
             if (StringUtil.isEmpty(AppConfig.CustomerId)) {
-//                intent.setClass(getBaseContext(), LoginActivity.class);
-                intent.setClass(getBaseContext(), MainActivity.class);
+                intent.setClass(getBaseContext(), LoginActivity.class);
+//                intent.setClass(getBaseContext(), MainActivity.class);
 //                intent.putExtra("mine_login", false);
             } else {
                 ImUtils.loginIm();//登录im

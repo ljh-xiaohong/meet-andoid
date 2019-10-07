@@ -81,4 +81,15 @@ public class SecretaryTitleView extends LinearLayout {
     public interface OnTitleViewClickListener {
         void onTitleViewClick(int position);
     }
+    private float mTranslationX;
+    public void scroll(int position, float offset)
+    {
+        /**
+         * <pre>
+         *  0-1:position=0 ;1-0:postion=0;
+         * </pre>
+         */
+        mTranslationX = getWidth() / 2 * (position + offset);
+        invalidate();
+    }
 }

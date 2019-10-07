@@ -7,23 +7,47 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.adapters.NewFriendAdapter;
+import com.yuejian.meet.adapters.FriendListAdapter;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
+import com.yuejian.meet.bean.NewFriendBean;
+import com.yuejian.meet.bean.ResultBean;
+import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
+import com.yuejian.meet.widgets.letterList.LetterComparator;
+import com.yuejian.meet.widgets.letterList.LetterSideBarView;
+import com.yuejian.meet.widgets.letterList.PinnedHeaderDecoration;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :
  */
-public class FansFragment extends Fragment {
+public class FansFragment extends Fragment implements FriendListAdapter.OnFollowListItemClickListener {
 
     @Bind(R.id.list)
     RecyclerView fansList;
-    private NewFriendAdapter mFansAdapter;
+    @Bind(R.id.ll_family_follow_list_empty)
+    LinearLayout llFamilyFollowListEmpty;
+    @Bind(R.id.main_side_bar)
+    LetterSideBarView mainSideBar;
+    private FriendListAdapter mFansAdapter;
 
     public FansFragment() {
     }
@@ -51,7 +75,47 @@ public class FansFragment extends Fragment {
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
             //加载数据
+            initData();
         }
+    }
+
+    public ApiImp apiImp = new ApiImp();
+    List<NewFriendBean.DataBean> mList = new ArrayList<>();
+
+    private void initData() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        if (getArguments().getInt("type") == 0) {
+            params.put("type", 0);
+        } else if (getArguments().getInt("type") == 1) {
+            params.put("type", 1);
+        } else {
+            params.put("type", 2);
+        }
+        apiImp.getRelation(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                mList.clear();
+                NewFriendBean bean = new Gson().fromJson(data, NewFriendBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                Collections.sort(bean.getData());
+                mList.addAll(bean.getData());
+                if (mList.size() > 0) {
+                    llFamilyFollowListEmpty.setVisibility(View.GONE);
+                } else {
+                    llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
+                }
+                mFansAdapter.refresh(mList);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
     }
 
     private View view;// 需要返回的布局
@@ -63,14 +127,90 @@ public class FansFragment extends Fragment {
             isInit = true;
             setParam();
         }
-         ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         initView();
         return view;
     }
-
+    private LinearLayoutManager llm;
     private void initView() {
-        mFansAdapter = new NewFriendAdapter(getActivity());
+        boolean isNew;
+        if (getArguments().getInt("type") == 0) {
+            isNew = true;
+        } else {
+            isNew = false;
+        }
+        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp, 0);
         fansList.setAdapter(mFansAdapter);
-        fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
+            @Override
+            public void onClick(int position) {
+                //关注
+                getAttention(position);
+            }
+        });
+        llm= new LinearLayoutManager(getActivity());
+        fansList.setLayoutManager(llm);
+        final PinnedHeaderDecoration decoration = new PinnedHeaderDecoration();
+        decoration.registerTypePinnedHeader(1, new PinnedHeaderDecoration.PinnedHeaderCreator() {
+            @Override
+            public boolean create(RecyclerView parent, int adapterPosition) {
+                return true;
+            }
+        });
+        fansList.addItemDecoration(decoration);
+        fansList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();//可见范围内的第一项的位置
+                    for (int i=0;i<mainSideBar.getIndexItems().length;i++){
+                        if (mainSideBar.getIndexItems()[i].equals(FirstLetterUtil.getFirstLetter(mList.get(firstVisibleItemPosition).getName()))){
+                            mainSideBar.setCurrentIndex(i);
+                        }
+                    }
+            }
+        });
+        mainSideBar.setVisibility(View.VISIBLE);
+        mainSideBar.setOnSelectIndexItemListener(new LetterSideBarView.OnSelectIndexItemListener() {
+            @Override
+            public void onSelectIndexItem(String letter) {
+                for (int i=0; i<mList.size(); i++) {
+                    if (FirstLetterUtil.getFirstLetter(mList.get(i).getName()).equals(letter)) {
+                        ((LinearLayoutManager) fansList.getLayoutManager()).scrollToPositionWithOffset(i, 0);
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
+    private void getAttention(int position) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        map.put("opCustomerId", mList.get(position).getCustomerId());
+        map.put("type", "1");
+        apiImp.bindRelation(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
+                ViewInject.shortToast(getApplication(), loginBean.getMessage());
+                initData();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onListItemClick(int type, int id) {
+
     }
 }

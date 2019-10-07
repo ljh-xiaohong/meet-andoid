@@ -24,6 +24,10 @@ import butterknife.ButterKnife;
  */
 public class MessageTitleView extends LinearLayout {
 
+    @Bind(R.id.iv_family_circle_title_left_btn_point)
+    View ivFamilyCircleTitleLeftBtnPoint;
+    @Bind(R.id.tv_title_one_point)
+    View tvTitleOnePoint;
     private Context mContext;
     @Bind(R.id.iv_family_circle_title_left_btn)
     ImageView leftBtn;
@@ -39,7 +43,12 @@ public class MessageTitleView extends LinearLayout {
     View mUnderLineTwo;
 
     OnTitleViewClickListener mOnTitleViewClickListener;
-
+    public interface OnTitleViewClickListener {
+        void onTitleViewClick(int position);
+    }
+    public void setOnTitleViewClickListener(OnTitleViewClickListener onTitleViewClickListener) {
+        mOnTitleViewClickListener = onTitleViewClickListener;
+    }
     public MessageTitleView(Context context) {
         this(context, null);
     }
@@ -61,9 +70,6 @@ public class MessageTitleView extends LinearLayout {
         mTitleTwo.setOnClickListener(v -> mOnTitleViewClickListener.onTitleViewClick(1));
     }
 
-    public void setOnTitleViewClickListener(OnTitleViewClickListener onTitleViewClickListener) {
-        mOnTitleViewClickListener = onTitleViewClickListener;
-    }
 
     public void setSelectedTitle(int position) {
         boolean isOne = false;
@@ -84,7 +90,18 @@ public class MessageTitleView extends LinearLayout {
         mUnderLineOne.setVisibility(isOne ? VISIBLE : INVISIBLE);
         mUnderLineTwo.setVisibility(isTwo ? VISIBLE : INVISIBLE);
     }
-
+    public void setPoint(boolean a,boolean b){
+        if (a){
+            ivFamilyCircleTitleLeftBtnPoint.setVisibility(VISIBLE);
+        }else {
+            ivFamilyCircleTitleLeftBtnPoint.setVisibility(GONE);
+        }
+        if (b){
+            tvTitleOnePoint.setVisibility(VISIBLE);
+        }else {
+            tvTitleOnePoint.setVisibility(GONE);
+        }
+    }
     public void setImageBtnIcon(@DrawableRes int leftIconRes, @DrawableRes int rightIconRes, String rightTitle) {
         if (leftIconRes == -1) {
             leftBtn.setVisibility(INVISIBLE);
@@ -112,7 +129,4 @@ public class MessageTitleView extends LinearLayout {
         rightBtn.setOnClickListener(rightListener);
     }
 
-    public interface OnTitleViewClickListener {
-        void onTitleViewClick(int position);
-    }
 }

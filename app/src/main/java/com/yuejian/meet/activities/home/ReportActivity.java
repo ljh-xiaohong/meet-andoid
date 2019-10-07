@@ -105,17 +105,16 @@ public class ReportActivity extends BaseActivity {
     }
 
     private void commit() {
-        if (dialog != null)
-            dialog.show(getFragmentManager(), "");
-
-        if (!CommonUtil.isNull(reportEdit.getText().toString())) {
+        if (CommonUtil.isNull(reportEdit.getText().toString())) {
             ViewInject.shortToast(ReportActivity.this, R.string.Please_enter_report);
             return;
         }
-        if (!CommonUtil.isNull(phone.getText().toString())) {
+        if (CommonUtil.isNull(phone.getText().toString())) {
             ViewInject.shortToast(ReportActivity.this, R.string.reg_hint_phone);
             return;
         }
+        if (dialog != null)
+            dialog.show(getFragmentManager(), "");
         // customerId：用户id，reportDes:举报内容，mobile：手机号，reportCustomerId:被举报人id，crType：被举报内容信息类型：1动态2文章3视频，crId:被举报内容信息id
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -146,6 +145,4 @@ public class ReportActivity extends BaseActivity {
             }
         });
     }
-
-
 }

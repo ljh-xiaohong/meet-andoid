@@ -27,10 +27,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.message.MyMessageCommentDialogActivity;
 import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -202,6 +204,12 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         initData();
         tvSend.setOnClickListener(v -> send());
         cencel.setOnClickListener(v -> finish());
+        if (!CommonUtil.isNull(getIntent().getStringExtra("userName"))){
+            content.setHint("回复" + getIntent().getStringExtra("userName"));
+            count.setVisibility(View.GONE);
+//            commentList.setVisibility(View.GONE);
+            cencel.setVisibility(View.GONE);
+        }
     }
 
     private void send() {
@@ -213,15 +221,20 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                content.setText("");
-                content.setHint("留下你的评论吧~");
-                emojicons.setVisibility(View.GONE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(content.getWindowToken(), 0); //强制隐藏键盘
-                hasClick = false;
-                mcommentData.clear();
-                initData();
-                Toast.makeText(MyDialogActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                if (!CommonUtil.isNull(getIntent().getStringExtra("userName"))) {
+                    content.setText("");
+                    content.setHint("留下你的评论吧~");
+                    emojicons.setVisibility(View.GONE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(content.getWindowToken(), 0); //强制隐藏键盘
+                    hasClick = false;
+                    mcommentData.clear();
+                    initData();
+                    Toast.makeText(MyDialogActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(MyDialogActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override

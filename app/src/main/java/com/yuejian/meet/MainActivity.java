@@ -13,17 +13,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.gson.Gson;
 import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.api.DataCallback;
@@ -49,25 +48,22 @@ import com.yuejian.meet.activities.home.InviteJoinGroupActivity;
 import com.yuejian.meet.activities.mine.BangDingWeChatActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
-import com.yuejian.meet.activities.search.MainSearchActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.app.MyApplication;
-import com.yuejian.meet.bean.ActionUnreadMsgEntity;
+import com.yuejian.meet.bean.GetMessageBean;
 import com.yuejian.meet.bean.mine2Entity;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.framents.business.BusinessFragment;
+import com.yuejian.meet.framents.business.NewBusinessFragment;
 import com.yuejian.meet.framents.creation.CreationFragment;
-import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
 import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.find.FindFragment;
-import com.yuejian.meet.framents.message.MessageFragment;
-import com.yuejian.meet.framents.message.NewMessageActivity;
 import com.yuejian.meet.framents.message.NewMessageFragment;
-import com.yuejian.meet.framents.mine.MineFragment;
+import com.yuejian.meet.framents.mine.NewMineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
@@ -122,6 +118,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     RelativeLayout rlayoutMine;
     @Bind(R.id.lay)
     LinearLayout lay;
+    @Bind(R.id.tv_title_one_point)
+    View tvTitleOnePoint;
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
     private FragmentManager mFragmentManager;
@@ -130,8 +128,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private NewMessageFragment messageFragment = new NewMessageFragment();
     private CreationFragment creationFragment = new CreationFragment();
     private FindFragment findWebFragment = new FindFragment();
-    private MessageFragment businessFragment = new MessageFragment();
-    private MineFragment mineFragment = new MineFragment();
+    private NewBusinessFragment businessFragment = new NewBusinessFragment();
+    private NewMineFragment mineFragment = new NewMineFragment();
     //    private CultureFragment cultureFragment = new CultureFragment();
     private FamilyCircleRecommendFragment familyFragment;
     //    private FamilyFragment familyFragment = new FamilyFragment();
@@ -145,7 +143,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         super.onCreate(savedInstanceState);
         Utils.setlangage(this);
         getPosition(null);
-//        goToGuidePage();
         AppConfig.isAppOpen = true;
         AppConfig.isGeLiGuide = false;
         ACTIVITY_NAME = "首页";
@@ -165,7 +162,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
     private void goToGuidePage() {
         if (AppConfig.userEntity != null) {
-            //1.5.0版本新老用户登录都能看到引导页面，往后的版本只有新用户才能看到
             try {
                 String rewordIds = PreferencesUtil.get(MyApplication.context, Constants.HAVE_SHOW_UP_GUIDE, "");
                 if (!rewordIds.contains(AppConfig.CustomerId)) {
@@ -173,7 +169,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     if (compare == 0 || (compare == 1 && getIntent().getBooleanExtra("finish_register", false))) {
                         Intent intent = new Intent(this, SplashNewActivity.class);
                         startActivity(intent);
-//                        finish();
                     }
                 }
             } catch (ClassCastException e) {
@@ -220,67 +215,41 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             setSelectBut(R.id.rlayout_mine);
         }
     }
+    public void readPoint(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        apiImp.getMessage(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                GetMessageBean loginBean=new Gson().fromJson(data, GetMessageBean.class);
+                if (loginBean.getData().isReadFlag()){
+                    tvTitleOnePoint.setVisibility(View.VISIBLE);
+                }else {
+                    tvTitleOnePoint.setVisibility(View.GONE);
+                }
+            }
 
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
     @Override
     protected void onResume() {
         super.onResume();
         if (!ImUtils.isLoginIm) {
             ImUtils.loginIm();
         }
-//        getCouponUnRead();
     }
 
     //处理回调
     @BusReceiver
     public void onStringEvent(String event) {
-//        if (event.contains(AppConfig.Toasshow)) {
-//            if (user != null) {
-//                ViewInject.shortToast(this, Utils.s2tOrT2s(event.replace(AppConfig.Toasshow, "")));
-//            }
-//        } else if (event.equals(AppConfig.userKick)) {
-//            user = null;
-//            Dialog dialog = new Dialog(this);
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle(R.string.hint);
-//            builder.setMessage(R.string.main_no_longer_showing_hint_name);
-//            builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    intent = new Intent(mContext, LoginActivity.class);
-//                    intent.putExtra("mine_login", true);
-//                    startActivity(intent);
-//                    dialog.dismiss();
-//                }
-//            });
-//            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//            dialog = builder.show();
-//            dialog.show();
-//            if (currentFragment instanceof MessageFragment)
-//                setSelectBut(R.id.rlayout_one_to_one);
-//        } else if (event.equals(AppConfig.user_freeze)) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle(R.string.hint);
-//            builder.setMessage("您帐号被冻结");
-//            builder.setPositiveButton(R.string.confirm, null);
-//            builder.show();
-//        } else if ("patch_download_success".equals(event)) {
-//            Utils.showNoTitleDialog(this, Utils.s2tOrT2s("升级补丁版本,马上安装"), Utils.s2tOrT2s("安装"), "", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    System.exit(0);
-//                }
-//            }, null);
-//        } else if ("bai_jia_xing_badge_bling".equals(event) || "ACTION_UNREAD".equals(event)) {
-//            loadRedDot();
-//        } else if ("bai_jia_xing_badge_dark".equals(event)) {
-//            baiJiaXingBadge.setVisibility(View.GONE);
-//        }
     }
 
 
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
-
         familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
@@ -291,6 +260,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
 
     public void changeFragment(BaseFragment targetFragment) {
+        readPoint();
         this.changeFragment(R.id.main_content, targetFragment);
     }
 
@@ -327,20 +297,16 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      * 选择的下标
      */
     public void setSelectBut(int vId) {
-        if (vId == R.id.rlayout_creation || vId == R.id.rlayout_msg) {
-
-        } else {
-            rbtn_home.setSelected(false);
-            rbtn_message.setSelected(false);
-            rbtn_creation.setSelected(false);
-            rbtn_business.setSelected(false);
-            rbtn_me.setSelected(false);
-        }
         switch (vId) {
             case R.id.address_list:
                 startActivity(new Intent(this, AddressListActivity.class));
                 break;
             case R.id.rlayout_one_to_one:///
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_home.setSelected(true);
                 changeFragment(familyFragment);
                 break;
@@ -350,6 +316,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
 //                maia_layout_title_bar.setVisibility(View.GONE);
 //                address_list.setVisibility(View.VISIBLE);
                 rbtn_message.setSelected(true);
@@ -375,9 +346,16 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_business.setSelected(true);
                 changeFragment(businessFragment);
-
+                if (!currentFragment.isVisible()) {
+                    businessFragment.update();
+                }
 //                address_list.setVisibility(View.GONE);
 //                try {
 //                    JChineseConvertor jChineseConvertor = JChineseConvertor.getInstance();
@@ -396,10 +374,18 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     startActivity(intent);
                     return;
                 }
+                rbtn_home.setSelected(false);
+                rbtn_message.setSelected(false);
+                rbtn_creation.setSelected(false);
+                rbtn_business.setSelected(false);
+                rbtn_me.setSelected(false);
                 rbtn_me.setSelected(true);
                 changeFragment(mineFragment);
+                if (!currentFragment.isVisible()) {
+                    mineFragment.update();
+                }
                 backPressListeners = new ArrayList<>();
-                backPressListeners.add(mineFragment);
+//                backPressListeners.add(mineFragment);
                 setBackPressListener(backPressListeners);
                 View mineBagde = findViewById(R.id.img_mine);
                 if (mineBagde.getVisibility() == View.VISIBLE) {
@@ -572,6 +558,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         long nowTap = System.currentTimeMillis();
         if (nowTap - firstTap <= 2000) {
             moveTaskToBack(true);
+            System.exit(0);
         } else {
             Toast.makeText(mContext, "再按一次返回键退出约见百家姓", Toast.LENGTH_SHORT).show();
             firstTap = nowTap;
@@ -648,6 +635,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         } else if (event.getCallType() == BusEnum.GROUP_UNREAD_COUNT) {
         } else if (event.getCallType() == BusEnum.Bangding_Family) {
             startActivity(new Intent(this, SelectFamilyCityActivity.class));
+        }else if (event.getCallType() == BusEnum.NOT_POINT) {
+            tvTitleOnePoint.setVisibility(View.GONE);
         }
     }
 

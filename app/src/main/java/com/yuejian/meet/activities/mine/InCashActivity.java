@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
+import com.google.gson.JsonObject;
 import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.api.NetApi;
@@ -34,11 +35,15 @@ import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.activities.web.WebWxPayActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
+import com.yuejian.meet.bean.PayBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -158,7 +163,7 @@ public class InCashActivity extends BaseActivity {
         alipayWayLy.setSelected(true);
         wxPayWayLy.setSelected(false);
         unionPayWayLy.setSelected(false);
-        sourceType = 1;
+        sourceType = 2;
         handler.sendEmptyMessage(2);
     }
 
@@ -183,13 +188,13 @@ public class InCashActivity extends BaseActivity {
                 alipayWayLy.setSelected(true);
                 wxPayWayLy.setSelected(false);
                 unionPayWayLy.setSelected(false);
-                sourceType = 1;
+                sourceType = 2;
                 break;
             case R.id.wxpay_way_layout:
                 alipayWayLy.setSelected(false);
                 wxPayWayLy.setSelected(true);
                 unionPayWayLy.setSelected(false);
-                sourceType = 2;
+                sourceType = 3;
                 break;
             case R.id.unionpay_way_layout:
                 alipayWayLy.setSelected(false);
@@ -226,60 +231,58 @@ public class InCashActivity extends BaseActivity {
 
     //sourceType 1:支付宝，2.微信，3.银联方式
     private void doInCash(final int sourceType, final int cny) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("customer_id", user.customer_id);
-        if (sourceType > 2) {
-            Toast.makeText(this, R.string.casht_text6, Toast.LENGTH_SHORT).show();
-            return;
-        } else if (sourceType < 1) {
-            Toast.makeText(this, R.string.please_select_recharge_mode, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        params.put("source_type", String.valueOf(sourceType));
-        params.put("cny", String.valueOf(cny));
-        if (isUpVip.equals("1")) {
-            if (StringUtil.isEmpty(AppConfig.family_id)) {
-                params.put("area_name", AppConfig.AreaName);
-            } else {
-                params.put("family_id", AppConfig.family_id);
-            }
-        }
-        if (sourceType == 2) {
+        if (sourceType == 3) {
             if (!Utils.isWeixinAvilible(getApplicationContext())) {
                 Toast.makeText(this, R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
             }
+        }else if (sourceType == 2){
+            if (!Utils.isAliPayInstalled(getApplicationContext())) {
+                Toast.makeText(this, R.string.casht_text9, Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
-
-        apiImp.doInCash(params, this, new DataIdCallback<String>() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("oid",1);
+        params.put("payType", sourceType);
+        apiImp.createShopOrderPay(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (sourceType == 1) {
-                    final String orderInfo = data;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            PayTask task = new PayTask(InCashActivity.this);
-                            Map<String, String> result = task.payV2(orderInfo, true);
-                            Message msg = new Message();
-                            msg.what = 1;
-                            msg.obj = result;
-                            handler.sendMessage(msg);
-                        }
-                    }).start();
-                } else if (sourceType == 2) {
-                    Log.d("wxPay", data);
-                    final WxPayOrderInfo orderInfo = JSON.parseObject(data, WxPayOrderInfo.class);
-                    PayReq request = new PayReq();
-                    request.appId = APP_ID;
-                    request.partnerId = PARTNER_ID;
-                    request.prepayId = orderInfo.prepay_id;
-                    request.packageValue = "Sign=WXPay";
-                    request.nonceStr = orderInfo.nonceStr;
-                    request.timeStamp = orderInfo.timeStamp;
-                    request.sign = orderInfo.paySign;
-                    iwxapi.sendReq(request);
+                if (sourceType == 2) {
+                    try {
+                        JSONObject oo = new JSONObject(data);
+                        final String orderInfo =oo.getString("data");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                PayTask task = new PayTask(InCashActivity.this);
+                                Map<String, String> result = task.payV2(orderInfo, true);
+                                Message msg = new Message();
+                                msg.what = 1;
+                                msg.obj = result;
+                                handler.sendMessage(msg);
+                            }
+                        }).start();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (sourceType == 3) {
+                    try {
+                        JSONObject  oo = new JSONObject(data);
+                        final String data1 =oo.getString("data");
+                        final WxPayOrderInfo orderInfo = JSON.parseObject(data1, WxPayOrderInfo.class);
+                        PayReq request = new PayReq();
+                        request.appId = APP_ID;
+                        request.partnerId = PARTNER_ID;
+                        request.prepayId = orderInfo.prepay_id;
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = orderInfo.nonceStr;
+                        request.timeStamp = orderInfo.timeStamp;
+                        request.sign = orderInfo.paySign;
+                        iwxapi.sendReq(request);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -287,6 +290,66 @@ public class InCashActivity extends BaseActivity {
             public void onFailed(String errCode, String errMsg, int id) {
             }
         });
+//        params.put("customer_id", user.customer_id);
+//        if (sourceType > 2) {
+//            Toast.makeText(this, R.string.casht_text6, Toast.LENGTH_SHORT).show();
+//            return;
+//        } else if (sourceType < 1) {
+//            Toast.makeText(this, R.string.please_select_recharge_mode, Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        params.put("source_type", String.valueOf(sourceType));
+//        params.put("cny", String.valueOf(cny));
+//        if (isUpVip.equals("1")) {
+//            if (StringUtil.isEmpty(AppConfig.family_id)) {
+//                params.put("area_name", AppConfig.AreaName);
+//            } else {
+//                params.put("family_id", AppConfig.family_id);
+//            }
+//        }
+//        if (sourceType == 2) {
+//            if (!Utils.isWeixinAvilible(getApplicationContext())) {
+//                Toast.makeText(this, R.string.casht_text7, Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//        }
+//
+//        apiImp.doInCash(params, this, new DataIdCallback<String>() {
+//            @Override
+//            public void onSuccess(String data, int id) {
+//                if (sourceType == 1) {
+//                    final String orderInfo = data;
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            PayTask task = new PayTask(InCashActivity.this);
+//                            Map<String, String> result = task.payV2(orderInfo, true);
+//                            Message msg = new Message();
+//                            msg.what = 1;
+//                            msg.obj = result;
+//                            handler.sendMessage(msg);
+//                        }
+//                    }).start();
+//                } else if (sourceType == 2) {
+//                    Log.d("wxPay", data);
+//                    final WxPayOrderInfo orderInfo = JSON.parseObject(data, WxPayOrderInfo.class);
+//                    PayReq request = new PayReq();
+//                    request.appId = APP_ID;
+//                    request.partnerId = PARTNER_ID;
+//                    request.prepayId = orderInfo.prepay_id;
+//                    request.packageValue = "Sign=WXPay";
+//                    request.nonceStr = orderInfo.nonceStr;
+//                    request.timeStamp = orderInfo.timeStamp;
+//                    request.sign = orderInfo.paySign;
+//                    iwxapi.sendReq(request);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(String errCode, String errMsg, int id) {
+//            }
+//        });
     }
 
     private void doInCashH5Alipay(int cny) {

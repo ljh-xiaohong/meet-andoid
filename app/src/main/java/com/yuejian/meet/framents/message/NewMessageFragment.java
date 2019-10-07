@@ -1,31 +1,32 @@
 package com.yuejian.meet.framents.message;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import com.google.gson.Gson;
+import com.mcxiaoke.bus.Bus;
+import com.netease.nim.uikit.app.AppConfig;
+import com.netease.nim.uikit.app.entity.BusCallEntity;
+import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.ContactActivity;
 import com.yuejian.meet.activities.message.MessageSettingActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.GetMessageBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.widgets.MessageTitleView;
-
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -44,16 +45,12 @@ import butterknife.ButterKnife;
 
 public class NewMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, MessageTitleView.OnTitleViewClickListener {
 
-        @Bind(R.id.family_circle_title_view)
+    @Bind(R.id.family_circle_title_view)
     MessageTitleView mFamilyCircleTitleView;
-        @Bind(R.id.vp_family_circle_content)
-        ViewPager mContentPager;
-//    @Bind(R.id.drawer_layout)
-//    DrawerLayout mDrawerLayout;
-//    @Bind(R.id.main_content)
-//    FrameLayout mainContent;
+    @Bind(R.id.vp_family_circle_content)
+    ViewPager mContentPager;
     private NotificationMessageFragment mNotificationMessageFragment;
-    private HundredSecretariesFragment mCommentZanFragment;
+    private HundredSecretariesFragment mHundredSecretariesFragment;
     private View view;// 需要返回的布局
 
     @Override
@@ -69,12 +66,11 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     }
 
     // 布局管理器
-    private FragmentManager fragManager;
 
     private void initView() {
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(mNotificationMessageFragment = new NotificationMessageFragment());
-        mFragmentList.add(mCommentZanFragment = new HundredSecretariesFragment());
+        mFragmentList.add(mHundredSecretariesFragment = new HundredSecretariesFragment());
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getFragmentManager(), mFragmentList);
         mContentPager.setAdapter(adapter);
         mContentPager.setOffscreenPageLimit(1);
@@ -83,10 +79,24 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         mFamilyCircleTitleView.setOnTitleViewClickListener(this);
         mFamilyCircleTitleView.setImageBtnClick(view -> startActivity(new Intent(getActivity(), ContactActivity.class)),
                 view -> initPopwindow(view));
-//        fragManager = getFragmentManager();
-//        clickMenu(R.id.tv_title_one);
-    }
+        readPoint();
 
+    }
+    public void readPoint(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        apiImp.getMessage(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                GetMessageBean loginBean=new Gson().fromJson(data, GetMessageBean.class);
+                mFamilyCircleTitleView.setPoint(loginBean.getData().isFirendFlag(),loginBean.getData().isReadFlag());
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
 
 
     private View popupView;
@@ -99,22 +109,44 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         //设置动画
         window.setAnimationStyle(R.style.popup_window_anim);
         // 设置背景颜色
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //设置可以获取焦点
         window.setFocusable(true);
         //设置可以触摸弹出框以外的区域
         window.setOutsideTouchable(true);
         // 更新popupwindow的状态
         window.update();
-        int width = window.getWidth();
-        int[] xy = new int[2];
-        view.getLocationInWindow(xy);
-        window.showAtLocation(view, Gravity.NO_GRAVITY,
-                xy[0] + (width - view.getWidth()) / 2, xy[1] + 70);
+        window.showAsDropDown(view);
         TextView push = popupView.findViewById(R.id.push);
         TextView read = popupView.findViewById(R.id.read);
-        push.setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageSettingActivity.class)));
-        read.setOnClickListener(v -> window.dismiss());
+        push.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MessageSettingActivity.class));
+            window.dismiss();});
+        read.setOnClickListener(v ->{
+            readAll();
+        });
+    }
+    public void readAll(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", AppConfig.CustomerId);
+        apiImp.doSettingRead(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                GetMessageBean loginBean=new Gson().fromJson(data, GetMessageBean.class);
+                Toast.makeText(getActivity(),loginBean.getMessage(),Toast.LENGTH_LONG).show();
+                if (loginBean.getCode()==0) {
+                    mFamilyCircleTitleView.setPoint(false, false);
+                    BusCallEntity entity = new BusCallEntity();
+                    entity.setCallType(BusEnum.NOT_POINT);
+                    Bus.getDefault().post(entity);
+                    window.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
     }
 
     @Override
@@ -139,13 +171,11 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     private void setCurrentItem(int position) {
         mContentPager.setCurrentItem(position);
         mFamilyCircleTitleView.setSelectedTitle(position);
-//        if (position == 1) {
-//            //打开手势滑动
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//        } else {
-//            //禁止手势滑动
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//        }
+        if (position==0){
+            mNotificationMessageFragment.update();
+        }else {
+            mHundredSecretariesFragment.update();
+        }
     }
 
     @Override

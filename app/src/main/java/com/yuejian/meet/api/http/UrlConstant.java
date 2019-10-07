@@ -265,7 +265,7 @@ public class UrlConstant {
     public static String POST_ACTION_PRAISE = apiUrl() + "api/action/praise";
 
     public static String POST_GET_RELATION_LIST = apiUrl() + "api/customerRelation/getRelationList";
-
+    //关注用户
     public static String POST_BIND_RELATION = apiUrl() + "api/customerRelation/bindRelation";
     //获取单条动态信息
     public static String POST_ACTION_GETACTION_ONE = apiUrl() + "api/action/getAction";
@@ -318,6 +318,11 @@ public class UrlConstant {
     public static String POST_FAMILY_SAMESURNAME_CICYGROPLIST = apiUrl() + "api/familyChatGroup/sameSurnameCityGroupList";
 
     public static String POST_IN_CASH = apiUrl() + "api/inCash/doInCash";
+    public static String PCREATESHOPORDERPAY = apiUrl() + "api/shopOrder/createShopOrderPay";
+    //充值贡献值API
+    public static String INCONTRIBUTION = apiUrl() + "api/userPay/inContribution";
+    //升级VIP API
+    public static String UPGRADEVIP = apiUrl() + "api/userPay/upgradeVip";
 
     /**
      * 购买海报模板api
@@ -1156,6 +1161,42 @@ public class UrlConstant {
     public static String REPLYCOMENT = apiUrl() + "api/contentComment/replyContentComment";
     //获取评论列表
     public static String GET_CONTENT_COMMENTS = apiUrl() + "api/contentComment/getContentComments";
+
+
+
+
+
+
+    //获取消息通知列表
+    public static String GET_GETMESSAGELIST = apiUrl() + "api/msg/getMessageList";
+    //新朋友
+    public static String GET_GETATTENTIONANDFRIEND = apiUrl() + "api/customerRelation/getAttentionAndFriend";
+    //获取用户收到的评论和赞列表
+    public static String GET_GETCOMMENTPRAISELIST = apiUrl() + "api/contentComment/getCommentPraiseList";
+    //获取用户收到的评论和赞列表
+    public static String GET_GETCOMMENTANDPRAISE = apiUrl() + "api/contentComment/getCommentAndPraise";
+    //获取用户服务信息
+    public static String GET_GETUSRSERVICEINFO = apiUrl() + "api/msg/getUsrServiceInfo";
+    //设置用户服务信息
+    public static String GET_MEESSAGESETTING = apiUrl() + "api/msg/meessageSetting";
+    //获取某省的所有市
+    public static String GET_ACQUIRECITY = apiUrl() + "api/provinceCityArea/acquireCity";
+    //通讯录
+    public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
+    //推送用户列表
+    public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
+    //获取精准推送商品列表API
+    public static String GET_GETTHREEPROJECT = apiUrl() + "api/msg/getThreeProject";
+    //获取消息通知详细
+    public static String GET_GETMESSAGEDETAIL = apiUrl() + "api/msg/getMessageDetail";
+    //删除内容下评论
+    public static String GET_GETDELCONTENTCOMMENT = apiUrl() + "api/contentComment/delContentComment";
+    //消息删除
+    public static String GET_GETDELMESSAGE = apiUrl() + "api/msg/delMessage";
+    //获取新消息通知标识API
+    public static String GET_GETMESSAGE = apiUrl() + "api/msg/getMessage";
+    //设置通知消息全部为已读API
+    public static String GET_DOSETTINGREAD = apiUrl() + "api/msg/doSettingRead";
 
 
 }

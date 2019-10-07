@@ -889,7 +889,6 @@ public class ArticleActivity extends BaseActivity {
                     mNextPageIndex = 1;
                     discussData = true;
                     getDiscuss();
-
                 }
 
 
@@ -901,7 +900,6 @@ public class ArticleActivity extends BaseActivity {
                     mNextPageIndex = 1;
                     discussData = true;
                     getDiscuss();
-
                 }
                 break;
 

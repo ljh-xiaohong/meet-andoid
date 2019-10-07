@@ -28,7 +28,16 @@ public class ChooseIndustryBean {
 
         private boolean isSelect;
         private String job;
+        private int pId;
         private List<JobsBean> jobs;
+
+        public int getpId() {
+            return pId;
+        }
+
+        public void setpId(int pId) {
+            this.pId = pId;
+        }
 
         public boolean isIsSelect() {
             return isSelect;
@@ -62,6 +71,15 @@ public class ChooseIndustryBean {
 
             private boolean isSelect;
             private String job;
+            private int cId;
+
+            public int getcId() {
+                return cId;
+            }
+
+            public void setcId(int cId) {
+                this.cId = cId;
+            }
 
             public boolean isIsSelect() {
                 return isSelect;

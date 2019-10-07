@@ -1,79 +1,87 @@
 package com.yuejian.meet.activities.message;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.CityAdapter;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.CityBean;
+import com.yuejian.meet.utils.ViewInject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class CityACtivity extends FragmentActivity {
+public class CityACtivity extends BaseActivity {
 
 
     @Bind(R.id.back)
     ImageView back;
-    @Bind(R.id.title)
-    TextView title;
-    @Bind(R.id.positioning_city)
-    TextView positioningCity;
-    @Bind(R.id.shenzhen)
-    TextView shenzhen;
-    @Bind(R.id.beijing)
-    TextView beijing;
-    @Bind(R.id.shanghai)
-    TextView shanghai;
-    @Bind(R.id.guangzhou)
-    TextView guangzhou;
     @Bind(R.id.list)
     RecyclerView list;
-    List<String> data=new ArrayList<>();
+    List<String> datas = new ArrayList<>();
+    CityAdapter cityAdapter;
+    @Bind(R.id.select_lay)
+    LinearLayout selectLay;
+    @Bind(R.id.tips)
+    TextView tips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
         ButterKnife.bind(this);
         initView();
+        getCity();
+    }
+
+    private void getCity() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("province", getIntent().getStringExtra("province"));
+        apiImp.acquireCity(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                CityBean bean = new Gson().fromJson(data, CityBean.class);
+                for (int i = 0; i < bean.getData().size(); i++) {
+                    datas.add(bean.getData().get(i).getCity());
+                    cityAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(CityACtivity.this, errMsg);
+            }
+        });
     }
 
     private void initView() {
-        CityAdapter cityAdapter = new CityAdapter(this,data);
+        selectLay.setVisibility(View.GONE);
+        tips.setText("选择城市");
+        cityAdapter = new CityAdapter(this, datas);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(cityAdapter);
         cityAdapter.setClick(new CityAdapter.OnClick() {
             @Override
             public void click(int position) {
-
+                Intent intent = new Intent();
+                intent.putExtra("city", datas.get(position));
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
-    }
-
-    @OnClick({R.id.back, R.id.positioning_city, R.id.shenzhen, R.id.beijing, R.id.shanghai, R.id.guangzhou})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.positioning_city:
-                break;
-            case R.id.shenzhen:
-                break;
-            case R.id.beijing:
-                break;
-            case R.id.shanghai:
-                break;
-            case R.id.guangzhou:
-                break;
-        }
     }
 }

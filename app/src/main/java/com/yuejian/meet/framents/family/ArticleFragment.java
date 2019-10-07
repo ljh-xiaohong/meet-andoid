@@ -19,9 +19,11 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.adapters.ArticleListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.VideoAndArticleBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
@@ -68,7 +70,6 @@ public class ArticleFragment extends BaseFragment
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mFollowListAdapter = new ArticleListAdapter(getActivity(), this, apiImp, getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
         mRecyclerView.setAdapter(mFollowListAdapter);
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
@@ -80,8 +81,8 @@ public class ArticleFragment extends BaseFragment
 
 
     //加载数据
-    List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
-    FamilyFollowEntity followEntitie;
+    List<VideoAndArticleBean.DataBean> followEntities =new ArrayList<>();
+    VideoAndArticleBean followEntitie;
     private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -92,7 +93,7 @@ public class ArticleFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                followEntitie=new Gson().fromJson(data,VideoAndArticleBean.class);
                 if (followEntitie.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
                     return;
@@ -133,28 +134,20 @@ public class ArticleFragment extends BaseFragment
         if (CommonUtil.isNull(title)) return;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("0",title);
+        loadDataFromNet("2",title);
     }
 
     @Override
     public void onLoadmore() {
         if (CommonUtil.isNull(title)) return;
         ++mNextPageIndex;
-        loadDataFromNet("0",title);
+        loadDataFromNet("2",title);
     }
 
 
     @Override
     public void onListItemClick(int type, int id) {
-        //类型：1-随笔，2-文章，3-相册，4-视频
-        Intent intent = null;
-        if (type == 4) {
-            intent = new Intent(getActivity(), VideoDetailsActivity.class);
-        } else {
-            intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-        }
-        intent.putExtra("id", id);
-        startActivity(intent);
+            ArticleActivity.startActivity(mContext, id + "", AppConfig.CustomerId);
     }
 
     @Override
@@ -176,6 +169,6 @@ public class ArticleFragment extends BaseFragment
         title=titles;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("1",titles);
+        loadDataFromNet("2",titles);
     }
 }

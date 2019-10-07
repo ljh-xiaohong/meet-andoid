@@ -8,6 +8,7 @@ public class CreationEntity implements Serializable {
     /**
      * previewUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201909072205405403593.jpg
      * labelId : 1,2
+     * id : 29
      * contentTitle : 八月秋
      * photoAndVideoUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201909101022232223377349.png
      * fabulousNum : 0
@@ -19,6 +20,7 @@ public class CreationEntity implements Serializable {
     private String previewUrl;
     private String labelId;
     private String contentTitle;
+    private String coverSizeType;
     private String photoAndVideoUrl;
     private int fabulousNum;
     private int contentId;
@@ -26,6 +28,14 @@ public class CreationEntity implements Serializable {
     private int draftsId;
     private String content;
     private boolean isPraise;
+
+    public String getCoverSizeType() {
+        return coverSizeType;
+    }
+
+    public void setCoverSizeType(String coverSizeType) {
+        this.coverSizeType = coverSizeType;
+    }
 
     public boolean isPraise() {
         return isPraise;

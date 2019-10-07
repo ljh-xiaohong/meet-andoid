@@ -13,6 +13,15 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@mipmap/icon_nav_addressbook" />
+    <View
+        android:id="@+id/iv_family_circle_title_left_btn_point"
+        android:layout_width="6dp"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/iv_family_circle_title_left_btn"
+        android:background="@drawable/red_point"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-5dp"
+        android:layout_height="6dp"/>
 
 <RelativeLayout
     android:layout_width="wrap_content"
@@ -26,7 +35,14 @@
             android:text="通知消息"
             android:textColor="#333333"
             android:textSize="16sp"/>
-
+    <View
+        android:id="@+id/tv_title_one_point"
+        android:layout_width="6dp"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/tv_title_one"
+        android:background="@drawable/red_point"
+        android:layout_marginLeft="-5dp"
+        android:layout_height="6dp"/>
         <TextView
             android:id="@+id/tv_title_two"
             android:layout_width="wrap_content"

@@ -33,7 +33,6 @@ import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +51,8 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     private int pageItemCount = 10;
 
     private int type = -1;
+
+    private List<CreationEntity> creationEntities;
 
     private CreationAdapter adapter;
 
@@ -72,7 +73,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
         if (!getData()) return;
-        adapter = new CreationAdapter(recyclerView, getContext(), type);
+        adapter = new CreationAdapter(recyclerView, getContext(), type,true);
         setListener();
         getDataFromNet();
     }

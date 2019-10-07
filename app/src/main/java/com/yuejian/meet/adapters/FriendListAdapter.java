@@ -13,9 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.bean.FamilyFollowEntity;
+import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
+import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +28,13 @@ import java.util.List;
  */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FamilyCircleFollowListViewHolder> {
 
-    private List<FamilyFollowEntity.DataBean> mFollowEntities;
+    private List<NewFriendBean.DataBean> mFollowEntities;
     private Context mContext;
     private Activity mActivity;
     private OnFollowListItemClickListener mListItemClickListener;
     private ApiImp apiImp;
-    private boolean isCheckeds;
+    private int tyep;
     private onClickListener mOnClickListener;
-
     public void setOnClickListener(onClickListener onClickListener) {
         this.mOnClickListener = onClickListener;
     }
@@ -42,11 +42,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
     public interface onClickListener {
         void onClick(int position);
     }
-    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, Activity activity) {
+    public FriendListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, int tyep) {
         mContext = context;
-        mActivity =activity;
         mListItemClickListener = listItemClickListener;
         this.apiImp = apiImp;
+        this.tyep = tyep;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
 
     @Override
     public void onBindViewHolder(FamilyCircleFollowListViewHolder holder, int position) {
-        FamilyFollowEntity.DataBean entity = mFollowEntities.get(position);
+        NewFriendBean.DataBean entity = mFollowEntities.get(position);
         String headUrl = entity.getPhoto();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.shop_img);
@@ -68,8 +68,47 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
             holder.name_type.setVisibility(View.GONE);
         }
         holder.name.setText(entity.getName());
-//        if ()
-        holder.attention.setText("关注");
+        if (tyep==0){
+            holder.tv_index.setVisibility(View.VISIBLE);
+            String anotherFirstLetter = "";
+            String firstLetter = FirstLetterUtil.getFirstLetter(entity.getName()); // 获取拼音首字母并转成大写
+            if (position>0) {
+                anotherFirstLetter = FirstLetterUtil.getFirstLetter(mFollowEntities.get(position - 1).getName());
+            }
+            if (position == 0 || !anotherFirstLetter.equals(firstLetter)) {
+                holder.tv_index.setVisibility(View.VISIBLE);
+                holder.tv_index.setText(firstLetter);
+            } else {
+                holder.tv_index.setVisibility(View.GONE);
+            }
+        }else {
+            holder.tv_index.setVisibility(View.GONE);
+        }
+        if (tyep==1){
+            if (entity.getRelationType()==1){
+                holder.attention.setText("关注");
+                holder.attention.setVisibility(View.VISIBLE);
+                holder.attention.setBackgroundResource(R.drawable.black11);
+            }else if (entity.getRelationType()==2){
+                holder.attention.setText("已关注");
+                holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setVisibility(View.VISIBLE);
+            }else if (entity.getRelationType()==3){
+                holder.attention.setText("已拉黑");
+                holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setVisibility(View.VISIBLE);
+            }
+        }else {
+            if (entity.getRelationType()==1){
+                holder.attention.setText("关注");
+                holder.attention.setVisibility(View.VISIBLE);
+                holder.attention.setBackgroundResource(R.drawable.black11);
+            }else {
+                holder.attention.setVisibility(View.GONE);
+            }
+        }
+
+        holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
     }
 
     @Override
@@ -78,7 +117,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         return mFollowEntities.size();
     }
 
-    public void refresh(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void refresh(List<NewFriendBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
@@ -86,7 +125,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         notifyDataSetChanged();
     }
 
-    public void Loadmore(List<FamilyFollowEntity.DataBean> followEntities) {
+    public void Loadmore(List<NewFriendBean.DataBean> followEntities) {
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
@@ -101,7 +140,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
 
         CircleImageView shop_img;
         ImageView name_type;
-        TextView name,attention;
+        TextView name,attention,tv_index;
 
 
 
@@ -111,6 +150,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
             name = (TextView) itemView.findViewById(R.id.name);
             name_type = (ImageView) itemView.findViewById(R.id.name_type);
             attention = (TextView) itemView.findViewById(R.id.attention);
+            tv_index = (TextView) itemView.findViewById(R.id.tv_index);
         }
     }
 }

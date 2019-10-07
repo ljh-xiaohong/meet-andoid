@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:paddingLeft="12dp"
+    android:background="@drawable/line_bottom"
     android:layout_height="wrap_content">
 
         <TextView
@@ -28,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:layout_height="30dp">
     <com.yuejian.meet.widgets.CircleImageView
         android:id="@+id/iv_icon"

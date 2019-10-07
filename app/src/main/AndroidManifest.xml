@@ -113,6 +113,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogTheme" />
         <activity
+            android:name=".activities.message.MyMessageCommentDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogTheme" />
+        <activity
             android:name=".activities.mine.InputActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogTheme"
@@ -159,31 +163,30 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="opozhgnt" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+
+                <!--<data android:scheme="opozhgnt" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activities.SplashActivity"
@@ -964,6 +967,14 @@
         <activity android:name=".activities.FamilyTree.AddressBooNotekActivity" />
         <activity android:name=".activities.FamilyTree.AddRelationActivity" />
         <activity android:name=".activities.FamilyTree.AddNewFriendActivity" />
+        <activity android:name=".activities.message.CustomerServiceDetails" />
+        <activity android:name=".activities.message.NewFriendActivity" />
+        <activity android:name=".activities.message.CommentZanActivity" />
+        <activity android:name=".activities.message.ContactActivity" />
+        <activity android:name=".activities.message.CityACtivity" />
+        <activity android:name=".activities.message.MessageSettingActivity" />
+        <activity android:name=".activities.message.ProvinceActivity" />
+        <activity android:name=".activities.message.NewChooseIndustryActivity" />
         <activity
             android:name=".activities.FamilyTree.AddressListActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />

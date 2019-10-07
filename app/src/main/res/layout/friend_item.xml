@@ -2,12 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:layout_height="64dp">
-
+    android:background="@drawable/line_bottom"
+    android:layout_height="wrap_content">
+     <TextView
+         android:id="@+id/tv_index"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:paddingLeft="12dp"
+         android:paddingTop="7dp"
+         android:visibility="gone"
+         android:paddingBottom="7dp"
+         android:text="A"
+         android:textSize="12sp"
+         android:background="#F2F5F7"/>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:paddingTop="7dp"
+         android:paddingBottom="7dp"
+         android:layout_below="@+id/tv_index"
+         android:layout_height="wrap_content">
      <com.yuejian.meet.widgets.CircleImageView
          android:id="@+id/shop_img"
+         android:layout_marginLeft="12dp"
          android:layout_centerVertical="true"
          android:layout_width="40dp"
          android:layout_height="40dp" />
@@ -36,10 +52,12 @@
          android:layout_width="56dp"
          android:text="关注"
          android:textSize="13sp"
+         android:layout_marginRight="12dp"
          android:layout_centerVertical="true"
          android:layout_alignParentRight="true"
          android:gravity="center"
          android:textColor="#FFFFFF"
          android:background="@drawable/black18"
          android:layout_height="22dp" />
+     </RelativeLayout>
 </RelativeLayout>

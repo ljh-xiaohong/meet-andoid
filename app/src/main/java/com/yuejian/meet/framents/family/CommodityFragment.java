@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +26,14 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
+import com.yuejian.meet.adapters.CommodityListAdapter;
 import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.bean.CommodityBean;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SingleLineItemDecoration;
+import com.yuejian.meet.ui.SpacesItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -50,7 +55,7 @@ import butterknife.OnClick;
  * @desc : 搜索 商品
  */
 public class CommodityFragment extends BaseFragment
-        implements SpringView.OnFreshListener, FamilyCircleFollowListAdapter.OnFollowListItemClickListener {
+        implements SpringView.OnFreshListener, CommodityListAdapter.OnFollowListItemClickListener {
 
     @Bind(R.id.rv_family_circle_follow_list)
     RecyclerView mRecyclerView;
@@ -58,46 +63,25 @@ public class CommodityFragment extends BaseFragment
     SpringView mSpringView;
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout mEmptyList;
-    @Bind(R.id.search_all)
-    ImageView searchAll;
-    @Bind(R.id.sweep_code)
-    LinearLayout sweepCode;
-    @Bind(R.id.et_search_all)
-    TextView etSearchAll;
-    @Bind(R.id.btn_release)
-    RelativeLayout btnRelease;
-
-    private FamilyCircleFollowListAdapter mFollowListAdapter;
-
     private int mNextPageIndex = 1;
     private int pageCount = 20;
+    private CommodityListAdapter mFollowListAdapter;
     private boolean firstLoad = true;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        return inflater.inflate(R.layout.fragment_family_circle_follow, container, false);
+        return inflater.inflate(R.layout.fragment_friend, container, false);
     }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mFollowListAdapter = new FamilyCircleFollowListAdapter(getActivity(), this, apiImp, getActivity());
+        mFollowListAdapter = new CommodityListAdapter(getActivity(), this, apiImp, getActivity());
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mFollowListAdapter);
-        mFollowListAdapter.setOnClickListener(new FamilyCircleFollowListAdapter.onClickListener() {
-            @Override
-            public void onClick(int position, boolean me) {
-//                initPopwindow(position);
-            }
-
-            @Override
-            public void onComment(int position) {
-
-            }
-        });
-        mRecyclerView.addItemDecoration(new SingleLineItemDecoration(20));
-
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
@@ -106,8 +90,8 @@ public class CommodityFragment extends BaseFragment
 
 
     //加载数据
-    List<FamilyFollowEntity.DataBean> followEntities =new ArrayList<>();
-    FamilyFollowEntity followEntitie;
+    List<CommodityBean.DataBean> followEntities =new ArrayList<>();
+    CommodityBean followEntitie;
     private void loadDataFromNet(String type,String title) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
@@ -118,7 +102,7 @@ public class CommodityFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                followEntitie=new Gson().fromJson(data,FamilyFollowEntity.class);
+                followEntitie=new Gson().fromJson(data,CommodityBean.class);
                 if (followEntitie.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
                     return;
@@ -159,14 +143,14 @@ public class CommodityFragment extends BaseFragment
         if (CommonUtil.isNull(title)) return;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("0",title);
+        loadDataFromNet("6",title);
     }
 
     @Override
     public void onLoadmore() {
         if (CommonUtil.isNull(title)) return;
         ++mNextPageIndex;
-        loadDataFromNet("0",title);
+        loadDataFromNet("6",title);
     }
     @Override
     public void onListItemClick(int type, int id) {
@@ -195,21 +179,6 @@ public class CommodityFragment extends BaseFragment
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.search_all, R.id.sweep_code, R.id.et_search_all, R.id.btn_release})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_release:
-                getActivity().startActivityForResult(new Intent(getActivity(), ReleaseActivity.class),1);
-                break;
-            case R.id.search_all:
-            case R.id.et_search_all:
-                getActivity().startActivity(new Intent(getActivity(), SearchActivity.class));
-                break;
-            case R.id.sweep_code:
-                getActivity().startActivity(new Intent(getActivity(), ScannerActivity.class));
-                break;
-        }
-    }
 
 
     String title="";
@@ -217,6 +186,6 @@ public class CommodityFragment extends BaseFragment
         title=titles;
         followEntities.clear();
         mNextPageIndex = 1;
-        loadDataFromNet("0",titles);
+        loadDataFromNet("6",titles);
     }
 }

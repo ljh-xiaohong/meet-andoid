@@ -87,6 +87,7 @@ public class LoginActivity extends BaseActivity {
         ACTIVITY_NAME = "登录页面";
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //        setContentView(R.layout.activity_login);
         setContentView(R.layout.activity_start);
         initView();

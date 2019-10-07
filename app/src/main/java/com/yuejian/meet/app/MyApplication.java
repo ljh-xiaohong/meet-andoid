@@ -215,28 +215,17 @@ public class MyApplication extends TinkerApplication {
         }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);
         AppConfig.userEntity=entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
+        if (!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
-//        AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
-
-//        String userData = DadanPreference.getInstance(this).getString("CustomerId");
-//        if (StringUtils.isNotEmpty(userData)) {
-//            AppConfig.newUerEntity = CommonUtil.getBeanFromSp(this,"userData","userBean");
-//            AppConfig.CustomerId = userData;
-////            AppConfig.UserSex = AppConfig.userEntity.getSex();
-////            AppConfig.Token = AppConfig.userEntity.getToken();
-////            ////获取保存位置
-////            AppConfig.city = PreferencesUtil.get(this, PreferencesUtil.CITY, "");
-////            AppConfig.district = PreferencesUtil.get(this, PreferencesUtil.DISTRICT, "");
-////            AppConfig.slatitude = PreferencesUtil.get(this, PreferencesUtil.LATITUDE, "0");
-////            AppConfig.slongitude = PreferencesUtil.get(this, PreferencesUtil.LONGITUDE, "0");
-////            AppConfig.province = PreferencesUtil.get(this, PreferencesUtil.PROVINCE, "");
-////            AppConfig.moneySun = Double.parseDouble(PreferencesIm.get(this, PreferencesIm.moneySum, "0.0"));
-//        }
-//        AppConfig.isGiftDownload = PreferencesIm.readBoolean(this, PreferencesIm.giftDownload);
+        if (!CommonUtil.isNull(entity.photo)) {
+            AppConfig.photo = entity.photo;
+        }
+        if (!CommonUtil.isNull(entity.surname)) {
+            AppConfig.surname=entity.surname;
+        }
     }
 
     /**

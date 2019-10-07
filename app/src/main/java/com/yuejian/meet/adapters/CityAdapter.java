@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 
 import com.yuejian.meet.R;
+import com.yuejian.meet.bean.ProvinceBean;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(list.get(position));
+        holder.name.setOnClickListener(v -> onClick.click(position));
     }
 
     @Override

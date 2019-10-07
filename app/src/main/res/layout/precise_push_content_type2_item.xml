@@ -6,9 +6,10 @@
     android:paddingBottom="20dp"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.yuejian.meet.activities.custom.view.RoundAngleImageView
         android:id="@+id/msg_img"
         android:layout_width="110dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
         android:layout_height="110dp" />
 
@@ -27,6 +28,11 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="8dp"
         android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:src="@mipmap/icon_home_vip"
+            android:layout_height="wrap_content" />
     <TextView
         android:layout_width="wrap_content"
         android:textColor="#FFF54D4D"
@@ -51,7 +57,7 @@
         android:text="￥"
         android:layout_height="wrap_content" />
     <TextView
-        android:id="@+id/old_money"
+        android:id="@+id/original_money"
         android:layout_width="wrap_content"
         android:textColor="#FFB4B4B4"
         android:includeFontPadding="false"

@@ -157,19 +157,26 @@
                     android:text="消息"
                     android:textColor="@color/bottom_bar_color" />
             </LinearLayout>
-
+            <View
+                android:id="@+id/tv_title_one_point"
+                android:layout_width="6dp"
+                android:visibility="gone"
+                android:background="@drawable/red_point"
+                android:layout_marginLeft="-4.0dip"
+                android:layout_toRightOf="@+id/rbtn_msg"
+                android:layout_marginTop="5.0dip"
+                android:layout_height="6dp"/>
             <TextView
                 android:id="@+id/img_msg_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="14.0dip"
-                android:layout_marginLeft="-4.0dip"
-                android:layout_marginTop="2.0dip"
+                android:visibility="gone"
                 android:layout_toRightOf="@+id/rbtn_msg"
                 android:background="@drawable/shape_tips_back"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="10.0sp"
-                android:visibility="gone" />
+                 />
         </RelativeLayout>
 
         <RelativeLayout

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.framents.message.FansFragment;
 import com.yuejian.meet.widgets.AddressBookTitleView;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ContactActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, AddressBookTitleView.OnTitleViewClickListener {
+public class ContactActivity extends BaseActivity implements ViewPager.OnPageChangeListener, AddressBookTitleView.OnTitleViewClickListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.vp_contact)
@@ -31,8 +32,8 @@ public class ContactActivity extends AppCompatActivity implements ViewPager.OnPa
     @Bind(R.id.back)
     ImageView back;
     private FansFragment mFriendFragment;
-    private FansFragment mHundredSecretariesFragment;
-    private FansFragment mNotificationMessageFragment;
+    private FansFragment attentionFragment;
+    private FansFragment mutualPowderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,25 @@ public class ContactActivity extends AppCompatActivity implements ViewPager.OnPa
     private void initView() {
         title.setText("通讯录");
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(mFriendFragment = new FansFragment());
-        mFragmentList.add(mHundredSecretariesFragment = new FansFragment());
-        mFragmentList.add(mNotificationMessageFragment = new FansFragment());
+
+        mFriendFragment = new FansFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type",0);
+        mFriendFragment.setArguments(bundle);
+        mFragmentList.add(mFriendFragment);
+
+        attentionFragment = new FansFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("type",1);
+        attentionFragment.setArguments(bundle1);
+        mFragmentList.add(attentionFragment);
+
+        mutualPowderFragment = new FansFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt("type",2);
+        mutualPowderFragment.setArguments(bundle2);
+        mFragmentList.add(mutualPowderFragment);
+
         setCurrentItem(0);
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), mFragmentList);
         vpContact.setAdapter(adapter);
