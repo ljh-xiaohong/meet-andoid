@@ -1199,6 +1199,7 @@ public class UrlConstant {
     public static String GET_DOSETTINGREAD = apiUrl() + "api/msg/doSettingRead";
 
 
+
 }
 
 
