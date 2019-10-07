@@ -38,6 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 系统消息
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :

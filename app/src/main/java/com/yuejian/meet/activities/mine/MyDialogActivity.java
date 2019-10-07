@@ -1,6 +1,7 @@
 package com.yuejian.meet.activities.mine;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -11,14 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +32,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.message.MyMessageCommentDialogActivity;
 import com.yuejian.meet.adapters.CommentListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.CircleImageView;
@@ -130,7 +137,6 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,9 +173,13 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         commentList.setAdapter(commentAdapter);
         commentAdapter.setChange(new CommentListAdapter.OnChange() {
             @Override
-            public void click(int postion) {
-                replyCommentId = mcommentData.get(postion).getId() + "";
-                content.setHint("回复" + mcommentData.get(postion).getName());
+            public void click(View view,int postion,boolean isClick) {
+                if (isClick){
+                    replyCommentId = mcommentData.get(postion).getId() + "";
+                    content.setHint("回复" + mcommentData.get(postion).getName());
+                }else {
+                    initPopwindow(view,postion);
+                }
             }
         });
         dismiss.setOnClickListener(v -> finish());
@@ -212,7 +222,67 @@ public class MyDialogActivity extends FragmentActivity implements EmojiconGridFr
         }
     }
 
+
+    private View popupView;
+    private PopupWindow windows;
+    //复制删除弹窗
+    private void initPopwindow(View view, int postion) {
+        final LayoutInflater inflater = LayoutInflater.from(this);
+        popupView = inflater.inflate(R.layout.copy_and_delect_popupwindow, null);
+        TextView copy=popupView.findViewById(R.id.copy);
+        TextView delect=popupView.findViewById(R.id.delect);
+        windows = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置可以获取焦点
+        windows.setFocusable(true);
+        //设置可以触摸弹出框以外的区域
+        windows.setOutsideTouchable(true);
+        // 更新popupwindow的状态
+        windows.update();
+        popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int measuredHeight = popupView.getMeasuredHeight();
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        windows.showAtLocation(view, Gravity.NO_GRAVITY, location[0]/2, location[1] - measuredHeight);
+        if (mcommentData.get(postion).getCustomerId()==Integer.parseInt(AppConfig.CustomerId)){
+            delect.setVisibility(View.VISIBLE);
+        }else {
+            delect.setVisibility(View.GONE);
+        }
+        copy.setOnClickListener(v -> {
+            ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setText(mcommentData.get(postion).getComment());
+            Toast.makeText(this,"已复制",Toast.LENGTH_LONG).show();
+        });
+        delect.setOnClickListener(v -> delectComment(mcommentData.get(postion).getId()+"",postion));
+    }
+    //删除评论
+    private void delectComment(String id,int position) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("id",id);
+        api.getDelContentComment(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                MessageCommentBean bean = new Gson().fromJson(data, MessageCommentBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(MyDialogActivity.this, bean.getMessage());
+                    return;
+                }
+                mcommentData.remove(position);
+                commentAdapter.refreshData(mcommentData);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(MyDialogActivity.this, errMsg);
+            }
+        });
+    }
     private void send() {
+        if (CommonUtil.isNull(content.getText().toString())){
+            Toast.makeText(MyDialogActivity.this, "请填写内容", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
         params.put("crId", crId);

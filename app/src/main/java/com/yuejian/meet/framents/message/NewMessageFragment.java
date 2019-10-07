@@ -148,14 +148,16 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
             }
         });
     }
-
+    private boolean isClick=false;
     @Override
     public void onTitleViewClick(int position) {
         switch (position) {
             case 0:
+                isClick=true;
                 setCurrentItem(0);
                 break;
             case 1:
+                isClick=true;
                 setCurrentItem(1);
                 break;
             default:
@@ -168,6 +170,7 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
      *
      * @param position 分类角标
      */
+
     private void setCurrentItem(int position) {
         mContentPager.setCurrentItem(position);
         mFamilyCircleTitleView.setSelectedTitle(position);
@@ -193,10 +196,16 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     public void onPageSelected(int position) {
         switch (position) {
             case 0:
-                setCurrentItem(0);
+                if (!isClick) {
+                    setCurrentItem(0);
+                }
+                isClick=false;
                 break;
             case 1:
-                setCurrentItem(1);
+                if (!isClick) {
+                    setCurrentItem(1);
+                }
+                isClick=false;
                 break;
             default:
                 break;

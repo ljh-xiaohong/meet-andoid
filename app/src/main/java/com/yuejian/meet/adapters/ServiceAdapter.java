@@ -7,16 +7,21 @@ package com.yuejian.meet.adapters;
  */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
+import com.yuejian.meet.bean.ServiceBean;
+import com.yuejian.meet.utils.GlideUtils;
 import com.yuejian.meet.widgets.CircleImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHolder> {
@@ -34,12 +39,13 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
 
-    private ArrayList<String> mDatas = new ArrayList<>();
+    private List<ServiceBean.DataBean> mDatas = new ArrayList<>();
 
     private View mHeaderView;
-    public ServiceAdapter(Context context) {
+    public ServiceAdapter(Context context,List<ServiceBean.DataBean> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        mDatas=list;
     }
 
     @Override
@@ -52,6 +58,29 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
+        ServiceBean.DataBean bean= mDatas.get(position);
+        if (!TextUtils.isEmpty(bean.getPhoto())) {
+            Glide.with(context).load(bean.getPhoto()).into(holder.iv_icon);
+        }else {
+            GlideUtils.displayNative(holder.iv_icon,R.mipmap.loading_unpic);
+        }
+        if (!TextUtils.isEmpty(bean.getUserName())) {
+            holder.name.setText(bean.getUserName());
+        }else {
+            holder.name.setText("");
+        }
+        if (bean.getIncomeFlag()==0){
+            holder.attention.setText("服务");
+            holder.attention.setVisibility(View.VISIBLE);
+            holder.attention.setBackgroundResource(R.drawable.black11);
+            holder.attention.setEnabled(true);
+        }else {
+            holder.attention.setText("已服务");
+            holder.attention.setBackgroundResource(R.drawable.gray11);
+            holder.attention.setVisibility(View.VISIBLE);
+            holder.attention.setEnabled(false);
+        }
+        holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
     }
 
     public void setHeaderView(View headerView) {
@@ -63,10 +92,6 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         return mHeaderView;
     }
 
-    public void addDatas(ArrayList<String> datas) {
-        mDatas.addAll(datas);
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -82,8 +107,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-//        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
-        return 18;
+        return mHeaderView == null ? mDatas.size() : mDatas.size() + 1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

@@ -12,11 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 
-import com.netease.nim.uikit.common.fragment.TabFragment;
 import com.yuejian.meet.R;
-import com.yuejian.meet.adapters.PrecisePushAdapter;
-import com.yuejian.meet.adapters.PrecisePushContentAdapter;
-import com.yuejian.meet.adapters.ServiceAdapter;
 import com.yuejian.meet.widgets.SecretaryTitleView;
 
 import java.util.ArrayList;
@@ -25,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 精准推送
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :

@@ -16,6 +16,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.VideoAndArticleBean;
+import com.yuejian.meet.utils.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             holder.zan_check_num.setCompoundDrawables(drawableLeft, null, null, null);
             holder.zan_check_num.setCompoundDrawablePadding(5);
         }
-        holder.zan_check_num.setText(entity.getFabulousNum()+"");
+        holder.zan_check_num.setText(CommonUtil.changeNum(entity.getFabulousNum()+""));
     }
 
     @Override

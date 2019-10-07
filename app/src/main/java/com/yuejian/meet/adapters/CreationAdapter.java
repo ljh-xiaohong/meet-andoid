@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.CreationEntity;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.RecommendView;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 }
                 rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.video_vertical_img);
-                rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), CommonUtil.changeNum(entity.getFabulousNum()+""));
                 rv.video_vertical_tag.setText(entity.getLabelName());
                 rv.video_vertical_content.setText(entity.getContentTitle());
 
@@ -96,7 +97,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 }
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
                 Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.article_img);
-                rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), CommonUtil.changeNum(entity.getFabulousNum()+""));
                 rv.article_content.setText(entity.getContentTitle());
                 rv.article_tag.setText(entity.getLabelName());
                 break;

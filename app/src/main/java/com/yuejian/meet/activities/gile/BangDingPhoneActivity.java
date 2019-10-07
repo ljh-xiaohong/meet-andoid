@@ -368,6 +368,7 @@ public class BangDingPhoneActivity extends BaseActivity {
         }
         DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
         DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
+        DadanPreference.getInstance(this).setString("surname",entity.getSurname());
     }
 
     ///获取验证码

@@ -1754,6 +1754,16 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETRELATION, paramMap, paramObject, paramDataIdCallback);
     }
     /**
+     * 获取百家秘书服务用户列表API
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getBaiJiaService(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETBAIJIASERVICE, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
      * 推送用户列表
      *
      * @param paramMap
@@ -1962,6 +1972,12 @@ public class ApiImp {
      */
     public void bindRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POST_BIND_RELATION, paramMap, paramObject, callback);
+    }
+    /**
+     * 传承人服务用户API
+     */
+    public void updateService(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POST_UPDATESERVICE, paramMap, paramObject, callback);
     }
 
 

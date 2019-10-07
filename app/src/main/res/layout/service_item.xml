@@ -27,7 +27,7 @@
         android:id="@+id/attention"
         android:layout_width="56dp"
         android:layout_height="22dp"
-        android:text="关注"
+        android:text="服务"
         android:layout_marginRight="12dp"
         android:background="@drawable/bule11"
         android:textColor="#FFFFFF"
