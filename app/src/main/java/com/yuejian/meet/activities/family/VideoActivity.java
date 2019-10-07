@@ -7,10 +7,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
+import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
@@ -29,6 +33,7 @@ import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
@@ -46,15 +51,18 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
-public class VideoActivity extends BaseActivity {
+public class VideoActivity extends AppCompatActivity {
 
     private String contentId = null;
     private String customerId = null;
     private boolean full_screen;
 
     MoreDialog moreDialog;
+
+    private Context mContext;
 
     private Intent intent;
 
@@ -71,11 +79,20 @@ public class VideoActivity extends BaseActivity {
 
     private static final int REQUEST_CODE = 200;
 
+    WeakReference<VideoActivity> reference;
+
+    private ApiImp apiImp = new ApiImp();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video);
-
+        ButterKnife.bind(this);
         if (!getData()) return;
         reference = new WeakReference<>(this);
         getDataFromNet();
@@ -170,6 +187,7 @@ public class VideoActivity extends BaseActivity {
 
     /**
      * 主要用于删除不感兴趣，及删除视频
+     *
      * @param context
      * @param contentId
      * @param customerId
@@ -488,6 +506,12 @@ public class VideoActivity extends BaseActivity {
         player.onVideoPause();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     /**
      * 关注
      */
@@ -620,5 +644,14 @@ public class VideoActivity extends BaseActivity {
             public void onFailed(String errCode, String errMsg, int id) {
             }
         });
+    }
+
+    /**
+     * 检测是否还在栈内
+     *
+     * @return true：不在栈内，false：还在栈内
+     */
+    protected boolean checkIsLife() {
+        return reference == null || reference.get() == null || reference.get().isFinishing();
     }
 }

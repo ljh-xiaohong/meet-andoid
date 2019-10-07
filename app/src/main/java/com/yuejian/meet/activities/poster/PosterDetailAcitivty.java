@@ -238,7 +238,7 @@ public class PosterDetailAcitivty extends BaseActivity {
                     });
                     poster_title.setText(posterInfo.getPostersTitle());
                     poster_discount_price.setText(posterInfo.getDiscountPrice() + "");
-                    poster_price.setText(String.format("%s银锭", posterInfo.getPostersPrice() + ""));
+                    poster_price.setText(String.format("%s贡献值", posterInfo.getPostersPrice() + ""));
                     poster_content.setText(posterInfo.getPostersDes());
                     check.setImageResource(posterInfo.isTemplateCollection() ? R.mipmap.icon_nav_collect_sel : R.mipmap.icon_nav_collect_nor);
                     if (posterInfo.getContentLabelList() != null && posterInfo.getContentLabelList().size() > 0) {

@@ -1,6 +1,8 @@
 package com.yuejian.meet.activities.web;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -70,6 +72,7 @@ import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.Utils;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
 import com.yuejian.meet.widgets.PaymentBottomDialog;
 
@@ -571,11 +574,16 @@ public class WebActivity extends BaseActivity {
                     case "1":
                         //支付宝
                         new Thread(() -> {
-                            if (reference == null || reference.get() == null || reference.get().isFinishing())
+                            if (checkIsLife())
                                 return;
                             PayTask task = new PayTask(WebActivity.this);
                             Map<String, String> result = task.payV2(jo.getString("data"), true);
                             runOnUiThread(() -> {
+                                if (checkIsLife()) return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
+                                    return;
+                                }
                                 PayResult payResult = new PayResult(result);
                                 String resultStatus = payResult.getResultStatus();
                                 if (TextUtils.equals(resultStatus, "9000")) {
@@ -587,6 +595,10 @@ public class WebActivity extends BaseActivity {
 
                     case "2":
                         //微信
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
                         final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = Constants.WX_APP_ID;
@@ -634,8 +646,11 @@ public class WebActivity extends BaseActivity {
                             PayTask task = new PayTask(WebActivity.this);
                             Map<String, String> result = task.payV2(jo.getString("data"), true);
                             runOnUiThread(() -> {
-                                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                                if (checkIsLife()) return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
                                     return;
+                                }
                                 PayResult payResult = new PayResult(result);
                                 String resultStatus = payResult.getResultStatus();
                                 if (TextUtils.equals(resultStatus, "9000")) {
@@ -647,6 +662,10 @@ public class WebActivity extends BaseActivity {
 
                     case "2":
                         //微信
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
                         final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = Constants.WX_APP_ID;
@@ -695,8 +714,12 @@ public class WebActivity extends BaseActivity {
                             PayTask task = new PayTask(WebActivity.this);
                             Map<String, String> result = task.payV2(jo.getString("data"), true);
                             runOnUiThread(() -> {
-                                if (reference == null || reference.get() == null || reference.get().isFinishing())
+                                if (checkIsLife())
                                     return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
+                                    return;
+                                }
                                 PayResult payResult = new PayResult(result);
                                 String resultStatus = payResult.getResultStatus();
                                 if (TextUtils.equals(resultStatus, "9000")) {
@@ -719,6 +742,11 @@ public class WebActivity extends BaseActivity {
 
                     case "2":
                         //微信
+
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
                         final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = Constants.WX_APP_ID;
@@ -1031,4 +1059,13 @@ public class WebActivity extends BaseActivity {
         setResult(38);
         super.finish();
     }
+
+    public static boolean isAliPayInstalled(Context context) {
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName != null;
+    }
+
+
 }
