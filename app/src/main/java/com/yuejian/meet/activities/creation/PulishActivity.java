@@ -128,9 +128,9 @@ public class PulishActivity extends BaseActivity {
         getDataFromNet();
         initListener();
         mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...");
-        aliyunIThumbnailFetcher = AliyunThumbnailFetcherFactory.createThumbnailFetcher();
+
         initData();
-        initVideo();
+//        initVideo();
     }
 
     private void initData() {
@@ -138,6 +138,7 @@ public class PulishActivity extends BaseActivity {
     }
 
     private void initVideo() {
+        aliyunIThumbnailFetcher = AliyunThumbnailFetcherFactory.createThumbnailFetcher();
         MediaScannerConnection.scanFile(getApplicationContext(), new String[]{mOutputPath}, new String[]{"video/mp4"}, null);
         aliyunIThumbnailFetcher.addVideoSource(mOutputPath, 0, Integer.MAX_VALUE, 0);
         aliyunIThumbnailFetcher.requestThumbnailImage(new long[]{0}, new AliyunIThumbnailFetcher.OnThumbnailCompletion() {
@@ -292,7 +293,7 @@ public class PulishActivity extends BaseActivity {
             @Override
             public void onSuccess(String data, int id) {
 
-
+                if (checkIsLife()) return;
                 if (data != null) {
                     JSONObject jo = (JSONObject) JSON.parse(data);
                     String code = jo.getString("code");
@@ -337,17 +338,20 @@ public class PulishActivity extends BaseActivity {
         new FeedsApiImpl().upLoadImageFileToOSS(mOutputPath, ossVideoUrl, mContext, new DataCallback<FeedsResourceBean>() {
             @Override
             public void onSuccess(FeedsResourceBean data) {
+                if (checkIsLife()) return;
                 //再上传图片
                 String ossImageUrl = OssUtils.getTimeNmaeJpg();
                 new FeedsApiImpl().upLoadImageFileToOSS(thumPic, ossImageUrl, mContext, new DataCallback<FeedsResourceBean>() {
                     @Override
                     public void onSuccess(FeedsResourceBean data) {
+                        if (checkIsLife()) return;
                         //上传自身服务
                         uploadData(OssUtils.getOssUploadingUrl(ossImageUrl), OssUtils.getOssUploadingUrl(ossVideoUrl));
                     }
 
                     @Override
                     public void onFailed(String errCode, String errMsg) {
+                        if (checkIsLife()) return;
                         ViewInject.shortToast(mContext, errMsg);
                         if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                             mLoadingDialog.dismiss();
@@ -358,6 +362,7 @@ public class PulishActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg) {
+                if (checkIsLife()) return;
                 ViewInject.shortToast(mContext, errMsg);
                 if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                     mLoadingDialog.dismiss();
@@ -387,6 +392,7 @@ public class PulishActivity extends BaseActivity {
         apiImp.publishedArticlesNew(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 if (mLoadingDialog != null) {
                     mLoadingDialog.dismiss();
                 }
@@ -408,6 +414,7 @@ public class PulishActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife()) return;
                 if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                     mLoadingDialog.dismiss();
                 }

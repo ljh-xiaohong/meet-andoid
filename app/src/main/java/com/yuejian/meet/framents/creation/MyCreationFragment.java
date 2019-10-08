@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.yuejian.meet.R;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.widgets.TabLayoutHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MyCreationFragment extends BaseFragment {
 
     List<String> titles;
     List<Fragment> fragments;
+    TabLayoutHelper mTabLayoutHelper;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -49,6 +51,8 @@ public class MyCreationFragment extends BaseFragment {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(titles.size());
+        mTabLayoutHelper=new TabLayoutHelper(tabLayout,viewPager);
+        mTabLayoutHelper.setAutoAdjustTabModeEnabled(true);
     }
 
 

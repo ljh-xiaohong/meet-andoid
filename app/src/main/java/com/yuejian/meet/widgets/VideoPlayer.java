@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
+import com.yuejian.meet.utils.CommonUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import org.w3c.dom.Text;
@@ -109,7 +110,7 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void setLike(boolean isLike, String count) {
-        getLikeButton().setText(count);
+        getLikeButton().setText(CommonUtil.changeNum(count));
         getLikeButton().setCompoundDrawablesWithIntrinsicBounds(null,
                 getResources().getDrawable(isLike ? R.mipmap.icon_video_zan_sel : R.mipmap.icon_video_zan_nor),
                 null,

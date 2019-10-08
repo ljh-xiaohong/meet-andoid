@@ -289,7 +289,8 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
                         title_one.setText(labEntity.getLabel().getTitle());
                         title_two.setText(labEntity.getLabel().getTitle());
                         content.setText(labEntity.getLabel().getDes());
-                        follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+//                        follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+                        follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus()?"#4DFFFFFF":"#FFFFFFFF"));
                         follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
                     }
 
@@ -331,7 +332,8 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null || !jo.getString("code").equals("0")) return;
                 labEntity.getLabel().setIsFocus(!isFollows);
-                follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+//                follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
+                follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus()?"#4DFFFFFF":"#FFFFFFFF"));
                 follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
 
             }

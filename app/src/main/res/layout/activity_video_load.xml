@@ -27,10 +27,10 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_return"
             style="@style/video_btn_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:layout_marginRight="14dp"
             android:drawableTop="@mipmap/icon_video_fanzhuan"
@@ -39,10 +39,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_countdown"
             style="@style/video_btn_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:drawableTop="@mipmap/icon_video_jishi"
             android:text="倒计时"
@@ -52,10 +52,10 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_activity_video_load_speed"
             style="@style/video_btn_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:drawableTop="@mipmap/icon_video_animate"
             android:text="快慢速"
@@ -97,7 +97,7 @@
             android:layout_marginTop="7dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" ></com.yuejian.meet.widgets.aliyun.CircleProgressBar>
+            app:layout_constraintTop_toTopOf="parent"></com.yuejian.meet.widgets.aliyun.CircleProgressBar>
 
         <!--<TextView-->
         <!--android:id="@+id/tv_huishan_btn"-->
@@ -118,10 +118,10 @@
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_music_btn"
             style="@style/video_btn_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
@@ -134,9 +134,9 @@
 
         <TextView
             android:id="@+id/tv_upload_btn"
+            style="@style/video_btn_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/video_btn_two"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
@@ -148,10 +148,10 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_paster_btn"
             style="@style/video_btn_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:drawableTop="@mipmap/icon_video_tiezhi"
             android:text="贴纸"
             android:visibility="gone"
@@ -161,10 +161,10 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_lvjing_btn"
             style="@style/video_btn_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/icon_video_lvjing"
@@ -183,6 +183,63 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="80sp" />
+
+    <com.aliyun.demo.recorder.view.StringScrollPicker
+        android:id="@+id/alivc_video_picker_view"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|bottom"
+        app:spv_end_color="#C3C5C6"
+        app:spv_is_circulation="false"
+        app:spv_max_text_size="14sp"
+        app:spv_min_text_size="14sp"
+        app:spv_orientation="horizontal"
+        app:spv_start_color="@color/aliyun_white" />
+
+
+    <RadioGroup
+        android:visibility="gone"
+        android:id="@+id/rg_video_fast_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="150dp"
+        android:checkedButton="@+id/rb_video_nor"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_video_low"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="慢"
+            android:textColor="@color/color_fast_low" />
+
+        <RadioButton
+            android:id="@+id/rb_video_nor"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="1px"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="标准"
+            android:textColor="@color/color_fast_low" />
+
+        <RadioButton
+            android:id="@+id/rb_video_fast"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="1px"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="快"
+            android:textColor="@color/color_fast_low" />
+
+    </RadioGroup>
 
 
 </FrameLayout>

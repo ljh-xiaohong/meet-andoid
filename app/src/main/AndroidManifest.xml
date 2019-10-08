@@ -89,7 +89,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.home.CreationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activities.mine.GifActivity"
             android:screenOrientation="portrait" />

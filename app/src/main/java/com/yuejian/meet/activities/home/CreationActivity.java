@@ -1,8 +1,11 @@
 package com.yuejian.meet.activities.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -13,6 +16,7 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.creation.ArticleEditActivity;
 import com.yuejian.meet.activities.creation.VideoLoadActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
+import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.framents.creation.MyCreationFragment;
 import com.yuejian.meet.framents.creation.PosterFragment;
 import com.yuejian.meet.framents.family.VideoTemplate;
@@ -24,8 +28,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreationActivity extends BaseActivity implements ViewPager.OnPageChangeListener, CreationTitleView.OnTitleViewClickListener {
-
+public class CreationActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, CreationTitleView.OnTitleViewClickListener, View.OnClickListener {
+    protected int activityCloseEnterAnimation;
+    protected int activityCloseExitAnimation;
     @Bind(R.id.family_circle_title_view)
     CreationTitleView familyCircleTitleView;
     @Bind(R.id.vp_family_circle_content)
@@ -41,14 +46,18 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
     @Bind(R.id.back)
     LinearLayout back;
 
+    Context mContext;
+
+
     private PosterFragment recommendFragment;
-//    private VideoTemplate followFragment;
+    //    private VideoTemplate followFragment;
     private MyCreationFragment cityFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_activity);
+        mContext = this;
         ButterKnife.bind(this);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
 //        mFragmentList.add(followFragment = new VideoTemplate());
@@ -61,13 +70,36 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
         familyCircleTitleView.setOnTitleViewClickListener(this);
         back.setOnClickListener(v -> finish());
         setCurrentItem(0);
+        startAndEndAnim();
+    }
 
+    @Override
+    public void finish() {
+        super.finish();
+        //finish时调用退出动画
+        overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
+    private void startAndEndAnim() {
+        TypedArray activityStyle = getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
+        int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
+        activityStyle.recycle();
+        activityStyle = getTheme().obtainStyledAttributes(windowAnimationStyleResId, new int[]{android.R.attr.activityCloseEnterAnimation, android.R.attr.activityCloseExitAnimation});
+        activityCloseEnterAnimation = activityStyle.getResourceId(0, 0);
+        activityCloseExitAnimation = activityStyle.getResourceId(1, 0);
+        activityStyle.recycle();
+        this.overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);
     }
 
     @OnClick({R.id.article, R.id.take})
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.article:
                 startActivity(new Intent(mContext, ArticleEditActivity.class));
@@ -75,7 +107,7 @@ public class CreationActivity extends BaseActivity implements ViewPager.OnPageCh
 
             case R.id.take:
 //                startActivity(new Intent(mContext, VideoLoadActivity.class));
-                VideoLoadActivity.startRecord(mContext,"");
+                VideoLoadActivity.startRecord(mContext, "");
                 break;
         }
     }
