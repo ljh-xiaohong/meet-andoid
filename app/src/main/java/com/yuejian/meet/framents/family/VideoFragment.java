@@ -75,6 +75,8 @@ public class VideoFragment extends BaseFragment
     VideoAndArticleBean mVideoAndArticleBean;
 
     private void loadDataFromNet(String type, String title) {
+        if (dialog != null&&!dialog.isShowing)
+            dialog.show(getActivity().getFragmentManager(), "");
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("title", title);
@@ -84,6 +86,8 @@ public class VideoFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 mVideoAndArticleBean = new Gson().fromJson(data, VideoAndArticleBean.class);
                 if (mVideoAndArticleBean.getCode() != 0) {
                     ViewInject.shortToast(getActivity(), mVideoAndArticleBean.getMessage());
@@ -123,6 +127,8 @@ public class VideoFragment extends BaseFragment
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
                 }

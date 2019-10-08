@@ -1,6 +1,8 @@
 package com.yuejian.meet.activities.web;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -36,6 +39,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
+import com.netease.nim.uikit.app.entity.BusCallEntity;
+import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 import com.netease.nim.uikit.common.util.string.StringUtil;
 import com.netease.nim.uikit.session.constant.Extras;
@@ -67,10 +72,9 @@ import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.Utils;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
 import com.yuejian.meet.widgets.PaymentBottomDialog;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -118,6 +122,14 @@ public class WebActivity extends BaseActivity {
     private IWXAPI mIwxapi;
     private static final int VIDEOS_REQUEST = 315;
     private boolean isTitle = false;
+
+    public static final String PAY_FOR_POSTER = "PAY_FOR_POSTER";
+
+    public static final String PAY_FOR_VIP = "PAY_FOR_VIP";
+
+    public static final String PAY_FOR_ORDER = "PAY_FOR_ORDER";
+
+    public String LoadingUrl = "";
 
 
     @Override
@@ -224,7 +236,7 @@ public class WebActivity extends BaseActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+            Log.e("ansen", "拦截url:" + url);
             if (Utils.isNetLink()) {
                 findViewById(R.id.no_network_layout).setVisibility(View.GONE);
 
@@ -292,6 +304,7 @@ public class WebActivity extends BaseActivity {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
         if (uri.getScheme().equals("yuejian")) {
+
             if (uri.getAuthority().equals("webapp")) { //封面人物的支付接口
                 HashMap<String, Object> params = new HashMap<>();
                 Set<String> queryNames = uri.getQueryParameterNames();
@@ -304,6 +317,7 @@ public class WebActivity extends BaseActivity {
                 apiImp.doRankedDo(params, this, new DataIdCallback<String>() {
                     @Override
                     public void onSuccess(String data, int id) {
+                        if (checkIsLife()) return;
                         Long payId = JSON.parseObject(data).getLong("id");
                         showPaymentDialog(payId);
                     }
@@ -327,6 +341,16 @@ public class WebActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 return true;
+            } else if (uri.getAuthority().equals("poster_money")) {
+                //海报购买
+                LoadingUrl = url;
+                buyPosterTemplate(url);
+            } else if (uri.getAuthority().equals("createShopOrderPay")) {
+                //商品购买
+                createShopOrderPay(url);
+            } else if (uri.getAuthority().equals("upgradeVip")) {
+                //VIP购买
+                upgradeVip(url);
             } else if (uri.getAuthority().equals("toBack")) {
                 finish();
                 return true;
@@ -530,6 +554,221 @@ public class WebActivity extends BaseActivity {
         dialog.show();
     }
 
+
+    /**
+     * 购买商城订单
+     */
+    private void createShopOrderPay(final String url) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("oid", Utils.getValueByName(url, "oid"));
+        params.put("payType", Utils.getValueByName(url, "payType"));
+        params.put("outCashPassword", "");
+        apiImp.createShopOrderPay(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
+                if (data == null) return;
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null || !jo.getString("code").equals("0")) return;
+                switch (Utils.getValueByName(url, "payType")) {
+                    case "1":
+                        //支付宝
+                        new Thread(() -> {
+                            if (checkIsLife())
+                                return;
+                            PayTask task = new PayTask(WebActivity.this);
+                            Map<String, String> result = task.payV2(jo.getString("data"), true);
+                            runOnUiThread(() -> {
+                                if (checkIsLife()) return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
+                                    return;
+                                }
+                                PayResult payResult = new PayResult(result);
+                                String resultStatus = payResult.getResultStatus();
+                                if (TextUtils.equals(resultStatus, "9000")) {
+                                    webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html");
+                                }
+                            });
+                        }).start();
+                        break;
+
+                    case "2":
+                        //微信
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
+                        final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
+                        PayReq request = new PayReq();
+                        request.appId = Constants.WX_APP_ID;
+                        request.partnerId = Constants.WX_PARTNER_ID;
+                        request.prepayId = orderInfo.prepay_id;
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = orderInfo.nonceStr;
+                        request.timeStamp = orderInfo.timeStamp;
+                        request.sign = orderInfo.paySign;
+                        request.extData = PAY_FOR_ORDER;
+                        mIwxapi.sendReq(request);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 购买VIP
+     *
+     * @param url
+     */
+    private void upgradeVip(final String url) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        params.put("payType", Utils.getValueByName(url, "payType"));
+        params.put("outCashPassword", Utils.getValueByName(url, "outCashPassword"));
+        apiImp.upgradeVip(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
+                if (data == null) return;
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null || !jo.getString("code").equals("0")) return;
+                switch (Utils.getValueByName(url, "payType")) {
+                    case "1":
+                        //支付宝
+                        new Thread(() -> {
+                            PayTask task = new PayTask(WebActivity.this);
+                            Map<String, String> result = task.payV2(jo.getString("data"), true);
+                            runOnUiThread(() -> {
+                                if (checkIsLife()) return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
+                                    return;
+                                }
+                                PayResult payResult = new PayResult(result);
+                                String resultStatus = payResult.getResultStatus();
+                                if (TextUtils.equals(resultStatus, "9000")) {
+                                    webView.loadUrl("javascript:reloadHome()");
+                                }
+                            });
+                        }).start();
+                        break;
+
+                    case "2":
+                        //微信
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
+                        final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
+                        PayReq request = new PayReq();
+                        request.appId = Constants.WX_APP_ID;
+                        request.partnerId = Constants.WX_PARTNER_ID;
+                        request.prepayId = orderInfo.prepay_id;
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = orderInfo.nonceStr;
+                        request.timeStamp = orderInfo.timeStamp;
+                        request.sign = orderInfo.paySign;
+                        request.extData = PAY_FOR_VIP;
+                        mIwxapi.sendReq(request);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+    }
+
+    /**
+     * 购买海报
+     */
+    private void buyPosterTemplate(final String url) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);//用户id
+        params.put("postersId", Utils.getValueByName(url, "postersId"));//用户海报模板制作记录id
+        params.put("payType", Utils.getValueByName(url, "payType"));//充值方式（1支付宝2微信3ApplePay4贡献值）
+        params.put("outCashPassword", "");//支付密码
+        apiImp.buyPosterTemplate(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
+
+                if (data == null) return;
+                JSONObject jo = JSON.parseObject(data);
+                if (jo == null || !jo.getString("code").equals("0")) return;
+
+
+                switch (Utils.getValueByName(url, "payType")) {
+                    case "1":
+                        //支付宝
+                        new Thread(() -> {
+                            PayTask task = new PayTask(WebActivity.this);
+                            Map<String, String> result = task.payV2(jo.getString("data"), true);
+                            runOnUiThread(() -> {
+                                if (checkIsLife())
+                                    return;
+                                if (!isAliPayInstalled(mContext)) {
+                                    ViewInject.shortToast(mContext, "请先安装支付宝，再进行支付");
+                                    return;
+                                }
+                                PayResult payResult = new PayResult(result);
+                                String resultStatus = payResult.getResultStatus();
+                                if (TextUtils.equals(resultStatus, "9000")) {
+                                    try {
+                                        final String shareUrl = Utils.getValueByName(url, "previewUrl");
+                                        final String title = URLDecoder.decode(Utils.getValueByName(url, "postersTitle"), "UTF-8");
+                                        Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
+                                            @Override
+                                            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                                Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                                            }
+                                        });
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }).start();
+                        break;
+
+                    case "2":
+                        //微信
+
+                        if (!mIwxapi.isWXAppInstalled()) {
+                            ViewInject.shortToast(mContext, "请先安装微信，再进行支付");
+                            return;
+                        }
+                        final WxPayOrderInfo orderInfo = JSON.parseObject(jo.getString("data"), WxPayOrderInfo.class);
+                        PayReq request = new PayReq();
+                        request.appId = Constants.WX_APP_ID;
+                        request.partnerId = Constants.WX_PARTNER_ID;
+                        request.prepayId = orderInfo.prepay_id;
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = orderInfo.nonceStr;
+                        request.timeStamp = orderInfo.timeStamp;
+                        request.sign = orderInfo.paySign;
+                        request.extData = PAY_FOR_POSTER;
+                        mIwxapi.sendReq(request);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+    }
+
     private void doInCash(Long payId, int i) {
         Map<String, Object> params = new HashMap<>();
         params.clear();
@@ -538,6 +777,7 @@ public class WebActivity extends BaseActivity {
         apiImp.doPayRankDo(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 if (i == 1) {  //支付宝支付
                     final String orderInfo = data;
                     new Thread(() -> {
@@ -713,6 +953,7 @@ public class WebActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (checkIsLife()) return;
         if (Activity.RESULT_OK == resultCode) {
             if (FCR == requestCode) {
                 String filePath = "";
@@ -760,12 +1001,56 @@ public class WebActivity extends BaseActivity {
     }
 
     @BusReceiver
-    public void onStringEvent(String event) {
-        if ("wx_share_success".equals(event)) {
-            if (webView != null) {
-                webView.loadUrl("javascript:shareBack(" + shareCustomerId + ")");
-                isShareSuccess = true;
+    public void onAfterPayEvent(BusCallEntity event) {
+        if (checkIsLife()) return;
+        if (event == null || TextUtils.isEmpty(event.getData())) return;
+        if (event.getCallType() == BusEnum.payment_success) {
+            switch (event.getData()) {
+                //购买海报成功
+                case PAY_FOR_POSTER:
+                    if (webView != null) {
+                        try {
+                            webView.loadUrl("javascript:onload()");
+                            final String shareUrl = Utils.getValueByName(LoadingUrl, "previewUrl");
+                            final String title = URLDecoder.decode(Utils.getValueByName(LoadingUrl, "postersTitle"), "UTF-8");
+                            Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                    Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                                }
+                            });
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                //购买VIP成功
+                case PAY_FOR_VIP:
+                    if (webView != null) {
+                        webView.loadUrl("javascript:reloadHome()");
+                    }
+                    break;
+                //购买商品成功
+                case PAY_FOR_ORDER:
+                    if (webView != null) {
+                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html");
+                    }
+                    break;
             }
+        }
+    }
+
+    @BusReceiver
+    public void onStringEvent(String event) {
+        if (checkIsLife()) return;
+
+        switch (event) {
+            case "wx_share_success":
+                if (webView != null) {
+                    webView.loadUrl("javascript:shareBack(" + shareCustomerId + ")");
+                    isShareSuccess = true;
+                }
+                break;
         }
     }
 
@@ -774,4 +1059,13 @@ public class WebActivity extends BaseActivity {
         setResult(38);
         super.finish();
     }
+
+    public static boolean isAliPayInstalled(Context context) {
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName != null;
+    }
+
+
 }

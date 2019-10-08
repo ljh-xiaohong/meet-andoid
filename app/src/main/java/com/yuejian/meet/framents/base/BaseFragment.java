@@ -1,6 +1,7 @@
 package com.yuejian.meet.framents.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,11 +18,14 @@ import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.umeng.analytics.MobclickAgent;
+import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.PositionInfo;
+import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -36,10 +40,11 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected boolean mIsFirstVisible = true;
     protected boolean mIsFirstInvisible = true;
     public UserEntity user;
-
+    public LoadingDialogFragment dialog;
     public ApiImp apiImp = new ApiImp();
     public static final String PAGE_ITEM_COUNT = String.valueOf(10);
     protected boolean isInitView = false;
+    protected WeakReference<BaseFragment> reference;
 
     protected abstract View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle);
 
@@ -50,6 +55,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     protected void initWidget(View parentView) {
 
+    }
+
+    protected boolean checkIsLife() {
+        return reference == null || reference.get() == null;
     }
 
 
@@ -90,6 +99,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        reference = new WeakReference(this);
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
                         | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -107,6 +117,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initData();
         Bus.getDefault().register(this);
         MobclickAgent.openActivityDurationTrack(false);
+        dialog = LoadingDialogFragment.newInstance(getString(R.string.is_requesting));
         return fragmentRootView;
 
     }
@@ -120,6 +131,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initListener();
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (checkIsLife()) return;
     }
 
     protected void initListener() {
@@ -219,6 +236,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         OkHttpUtils.getInstance().cancelTag(this);
         Bus.getDefault().unregister(this);
         isInitView = false;
+        reference = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        reference = null;
     }
 
     public void onSelectSure(Map<String, String> params) {
@@ -237,6 +261,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     @BusReceiver
     public void onSomeEvent(BusCallEntity event) {
+        if (checkIsLife())
+            return;
         if (event.getCallType() == BusEnum.LOGIN_UPDATE || event.getCallType() == BusEnum.LOGOUT) {
             user = AppConfig.userEntity;
         } else if (event.getCallType() == BusEnum.Language) {

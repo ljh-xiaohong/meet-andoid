@@ -325,6 +325,22 @@ public class UrlConstant {
     public static String INCONTRIBUTION = apiUrl() + "api/userPay/inContribution";
     //升级VIP API
     public static String UPGRADEVIP = apiUrl() + "api/userPay/upgradeVip";
+
+    /**
+     * 购买海报模板api
+     */
+    public static String BUY_POSTER_TEMPLATE = apiUrl() + "api/userPay/buyPosterTemplate";
+
+    /**
+     * 升级VIP API
+     */
+    public static String UPGRADE_VIP = apiUrl() + "api/userPay/upgradeVip";
+
+    /**
+     * 创建商品支付订单
+     */
+    public static String CREATE_SHOP_ORDER_PAY = apiUrl() + "api/shopOrder/createShopOrderPay";
+
     //开通VIP
     public static String POST_IN_CASH_VIP = apiUrl() + "api/inCash/doInCashVip";
     //获取VIP详情列表
@@ -868,6 +884,11 @@ public class UrlConstant {
         public static final String FIND_XIUXING = getWebUrl() + "faxian/xiuxing.html";
 
         /**
+         * 开通VIP
+         */
+        public static final String OPEN_VIP = getWebUrl() + "personal_center/shop/pages/vip/vip.html";
+
+        /**
          * 商品详情
          */
         public static final String SHOP_DETAIL = getWebUrl() + "personal_center/shop/item.html";
@@ -1089,6 +1110,9 @@ public class UrlConstant {
     // 首页推荐 RSV 1.0
     public static String RECOMMEND_FIND = apiUrl() + "api/homePage/findRecommend";
 
+    //个人中心 - 获取用户基本信息API（测试通过）
+    public static String FIND_CUSTOMER_BASE_INFO = apiUrl() + "api/customer/findCustomerBaseInfo";
+
     public static String MY_CREAT_CONTENT_LIST = apiUrl() + "api/contentRelease/getContentList";
 
     //获取海报模板基础资源详情API
@@ -1163,6 +1187,8 @@ public class UrlConstant {
     public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
     //获取百家秘书服务用户列表API
     public static String GET_GETBAIJIASERVICE = apiUrl() + "api/msg/getBaiJiaService";
+    //百家秘书运营数据图
+    public static String GET_GETBAIJIASOURCE = apiUrl() + "api/customerRelation/getBaiJiaSource";
     //推送用户列表
     public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
     //获取精准推送商品列表API
@@ -1177,6 +1203,7 @@ public class UrlConstant {
     public static String GET_GETMESSAGE = apiUrl() + "api/msg/getMessage";
     //设置通知消息全部为已读API
     public static String GET_DOSETTINGREAD = apiUrl() + "api/msg/doSettingRead";
+
 
 
 }

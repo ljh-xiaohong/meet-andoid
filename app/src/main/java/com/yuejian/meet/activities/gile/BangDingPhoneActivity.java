@@ -312,7 +312,7 @@ public class BangDingPhoneActivity extends BaseActivity {
                 }
                 if (dialog != null)
                     dialog.dismiss();
-                if (loginBean.getCode()==0){
+                if (loginBean.getCode()==0||loginBean.getCode()==19996){
                     intent = new Intent(getApplication(), UserNameSelectActivity.class);
                     intent.putExtra("mobile", txt_content.getText().toString());
                     intent.putExtra("areaCode", code);
@@ -322,17 +322,7 @@ public class BangDingPhoneActivity extends BaseActivity {
                     intent.putExtra("phone_version", phoneVersion);
                     intent.putExtra("phone_model", phoneModel);
                     startActivity(intent);
-                }else if (loginBean.getCode()==19996){
-                    intent = new Intent(getApplication(), UserNameSelectActivity.class);
-                    intent.putExtra("mobile", txt_content.getText().toString());
-                    intent.putExtra("areaCode", code);
-                    intent.putExtra("customer_id", AppConfig.CustomerId);
-                    intent.putExtra("phone_imei", phoneImei);///手机设备唯一deviceid
-                    intent.putExtra("phone_type", "1");//设备类型:0为IOS,1为android
-                    intent.putExtra("phone_version", phoneVersion);
-                    intent.putExtra("phone_model", phoneModel);
-                    startActivity(intent);
-                }else if (loginBean.getCode()==19998){
+               }else if (loginBean.getCode()==19998){
                     DadanPreference.getInstance(BangDingPhoneActivity.this).setBoolean("isLogin",true);
                     intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);

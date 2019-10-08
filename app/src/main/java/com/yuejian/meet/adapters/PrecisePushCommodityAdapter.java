@@ -7,6 +7,7 @@ package com.yuejian.meet.adapters;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,10 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.PushCommodityBean;
 import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -61,6 +65,13 @@ public class PrecisePushCommodityAdapter extends RecyclerView.Adapter<PrecisePus
         holder.original_money.setText(dataBean.getGPriceVip()+"");
         holder.money.setText(dataBean.getPrice()+"");
         holder.title.setText(dataBean.getGName()+"");
+        holder.itemView.setOnClickListener(v -> {
+            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, dataBean.getGId());
+            Intent intent = new Intent(context, WebActivity.class);
+            intent.putExtra(Constants.URL, urlShop);
+            intent.putExtra("No_Title", true);
+            context.startActivity(intent);
+        });
     }
 
 

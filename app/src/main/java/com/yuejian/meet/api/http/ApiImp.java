@@ -452,18 +452,26 @@ public class ApiImp {
     public void doInCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
         mHttpRequst.postRequst(UrlConstant.POST_IN_CASH, params, tag, callback);
     }
-    //充值
-    public void createShopOrderPay(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
-        mHttpRequst.postRequst(UrlConstant.PCREATESHOPORDERPAY, params, tag, callback);
+    //购买海报模板api
+    public void buyPosterTemplate(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.BUY_POSTER_TEMPLATE, params, tag, callback);
     }
+
+    //购买VIP api
+    public void upgradeVip(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.UPGRADE_VIP, params, tag, callback);
+    }
+
+    //购买商品 api
+    public void createShopOrderPay(Map<String, Object> params, Object tag, DataIdCallback<String> callback){
+        mHttpRequst.postRequst(UrlConstant.CREATE_SHOP_ORDER_PAY, params, tag, callback);
+    }
+
     //充值贡献值API
     public void inContribution(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
         mHttpRequst.postRequst(UrlConstant.INCONTRIBUTION, params, tag, callback);
     }
-    //升级VIP API
-    public void upgradeVip(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
-        mHttpRequst.postRequst(UrlConstant.UPGRADEVIP, params, tag, callback);
-    }
+
 
     //提现
     public void applyOutCash(Map<String, Object> params, Object tag, DataIdCallback<String> callback) {
@@ -1764,6 +1772,16 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETBAIJIASERVICE, paramMap, paramObject, paramDataIdCallback);
     }
     /**
+     * 百家秘书运营数据图
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getBaiJiaSource(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETBAIJIASOURCE, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
      * 推送用户列表
      *
      * @param paramMap
@@ -2151,21 +2169,30 @@ public class ApiImp {
     public void getContentComments(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_CONTENT_COMMENTS, paramMap, paramObject, callback);
     }
-    //删除内容下评论
-    public void getDelContentComment(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETDELCONTENTCOMMENT, paramMap, paramObject, callback);
-    }
-    //消息删除
-    public void getDelMessage(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETDELMESSAGE, paramMap, paramObject, callback);
-    }
+
     //获取新消息通知标识API
     public void getMessage(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGE, paramMap, paramObject, callback);
     }
+
     //设置通知消息全部为已读API
     public void doSettingRead(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_DOSETTINGREAD, paramMap, paramObject, callback);
     }
 
+    //消息删除
+    public void getDelMessage(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETDELMESSAGE, paramMap, paramObject, callback);
+    }
+
+    //删除内容下评论
+    public void getDelContentComment(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETDELCONTENTCOMMENT, paramMap, paramObject, callback);
+    }
+    /**
+     * 个人中心 - 获取用户基本信息API（测试通过）
+     */
+    public void findCustomerBaseInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback){
+        this.mHttpRequst.postRequst(UrlConstant.FIND_CUSTOMER_BASE_INFO, paramMap, paramObject, callback);
+    }
 }

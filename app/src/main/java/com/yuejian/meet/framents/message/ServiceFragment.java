@@ -81,7 +81,7 @@ public class ServiceFragment extends Fragment{
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId","500162");
+        params.put("customerId",AppConfig.CustomerId);
         apiImp.getBaiJiaService(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

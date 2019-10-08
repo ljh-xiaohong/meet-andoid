@@ -6,6 +6,7 @@ package com.yuejian.meet.adapters;
  * @desc :
  */
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.PushUseBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -63,6 +67,21 @@ public class PrecisePushAdapter extends RecyclerView.Adapter<PrecisePushAdapter.
         holder.name.setText(dataBean.getUserName());
         holder.content.setText(dataBean.getLastLoginCity()+"");
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
+        holder.iv_icon.setOnClickListener(v -> {
+            String urlVip = "";
+            if (dataBean.getVipType().equals("0")) {
+                //非VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            } else {
+                //VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+            }
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, dataBean.getCustomerId());
+            Intent intent = new Intent(context, WebActivity.class);
+            intent.putExtra(Constants.URL, urlVip);
+            intent.putExtra("No_Title", true);
+            context.startActivity(intent);
+        });
     }
 
     @Override

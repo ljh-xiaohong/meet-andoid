@@ -2,6 +2,7 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.ProjectBean;
 import com.yuejian.meet.bean.VideoAndArticleBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.widgets.CircleImageView;
 
 import java.util.ArrayList;
@@ -61,6 +65,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         ProjectBean.DataBean entity = mFollowEntities.get(position);
         if (!TextUtils.isEmpty(entity.getPhoto())) {
             Glide.with(mContext).load(entity.getPhoto()).into(holder.iv_icon);
+        }else {
+            Glide.with(mContext).load(R.mipmap.user_account_pictures).into(holder.iv_icon);
         }
         if (!TextUtils.isEmpty(entity.getCoverUrl())) {
             Glide.with(mContext).load(entity.getCoverUrl()).into(holder.msg_img);
@@ -73,6 +79,13 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         }
         holder.name.setText(entity.getUserName());
         holder.content.setText(entity.getContent());
+        holder.itemView.setOnClickListener(v -> {
+            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, entity.getId());
+            Intent intent = new Intent(mContext, WebActivity.class);
+            intent.putExtra(Constants.URL, urlShop);
+            intent.putExtra("No_Title", true);
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

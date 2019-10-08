@@ -496,11 +496,9 @@ public class PhoneLoginActivity extends BaseActivity {
         } else {
             params.put("weixin", "");
         }
-
         params.put("loginType", loginType);
         params.put("longitude", crLongitude);
         params.put("latitude", crLatitude);
-
         apiImp.login(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

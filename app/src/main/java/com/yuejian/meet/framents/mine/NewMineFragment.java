@@ -35,8 +35,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-import com.umeng.qq.tencent.QQShare;
-import com.umeng.qq.tencent.Tencent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.mine.LoginActivity;
@@ -49,13 +47,9 @@ import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -203,6 +197,21 @@ public class NewMineFragment extends BaseFragment {
                 doInCashVip(customerId,payType,outCashPassword);
                 return true;//表示我已经处理过了
             }else if (url.contains("yuejian://toBackLoad")){
+                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
+                dialog.show();
+                DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
+                    @Override
+                    public void onTitleViewClick() {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().finish();
+                        DadanPreference.getInstance(getActivity()).setBoolean("isLogin",false);
+                        DadanPreference.getInstance(getActivity()).setString("CustomerId","");
+                        DadanPreference.getInstance(getActivity()).setString("photo","");
+                        DadanPreference.getInstance(getActivity()).setString("surname","");
+                    }
+                });
+                return true;//表示我已经处理过了
+            }else if (url.contains("yuejian://articleVideo")){
                 Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
                 dialog.show();
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {

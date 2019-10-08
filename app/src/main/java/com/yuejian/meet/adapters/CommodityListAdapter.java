@@ -2,6 +2,7 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.adapter.ReleasePicAdapter;
 import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommodityBean;
@@ -28,6 +30,7 @@ import com.yuejian.meet.bean.DynamicPrivatePicBean;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.bean.ZanBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.FolderTextView;
 import com.yuejian.meet.utils.ScreenUtils;
@@ -98,6 +101,13 @@ public class CommodityListAdapter extends RecyclerView.Adapter<CommodityListAdap
             holder.vip_lay.setVisibility(View.GONE);
         }
         holder.original_money.setText(entity.getGPriceOriginal()+"");
+        holder.itemView.setOnClickListener(v -> {
+            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, entity.getGId());
+            Intent intent = new Intent(mContext, WebActivity.class);
+            intent.putExtra(Constants.URL, urlShop);
+            intent.putExtra("No_Title", true);
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

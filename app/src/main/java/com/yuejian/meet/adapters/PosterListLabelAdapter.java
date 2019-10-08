@@ -34,7 +34,7 @@ public class PosterListLabelAdapter extends BaseAdapter<PosterListLabelAdapter.V
 
 
     @Override
-    void Loadmore(List<PosterModelEntity> postersModelLists) {
+    public void Loadmore(List<PosterModelEntity> postersModelLists) {
         if (data == null) {
             data = new ArrayList<>();
         }

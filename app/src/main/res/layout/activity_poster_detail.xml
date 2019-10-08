@@ -93,7 +93,7 @@
                         android:layout_marginRight="@dimen/dp_5"
                         android:gravity="center|bottom"
                         android:paddingBottom="@dimen/dp_3"
-                        android:text="银锭"
+                        android:text="贡献值"
                         android:textColor="#BE3232"
                         android:textSize="@dimen/sp_10" />
 

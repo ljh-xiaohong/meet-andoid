@@ -66,8 +66,17 @@ public class ServiceBean {
         private int incomeFlag;
         private String photo;
         private int id;
+        private String vipType;
         private String userName;
         private int opCustomerId;
+
+        public String getVipType() {
+            return vipType;
+        }
+
+        public void setVipType(String vipType) {
+            this.vipType = vipType;
+        }
 
         public int getIncomeFlag() {
             return incomeFlag;

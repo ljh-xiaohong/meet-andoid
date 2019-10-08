@@ -18,13 +18,15 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.PosterModelEntity;
 import com.yuejian.meet.bean.TypeEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.widgets.springview.DefaultFooter;
+import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PosterListFragment extends BaseFragment {
+public class PosterListFragment extends BaseFragment implements SpringView.OnFreshListener {
 
     private TypeEntity type;
 
@@ -34,15 +36,12 @@ public class PosterListFragment extends BaseFragment {
 
     private boolean isLabel = false;
 
-    private int pageIndex = 0;
+    private int pageIndex = 1;
 
     private int pageItemCount = 10;
 
 
     private PosterListLabelAdapter posterListLabelAdapter;
-
-
-    private List<PosterModelEntity> posterModelEntities;
 
 
     @Override
@@ -62,6 +61,9 @@ public class PosterListFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         springView = view.findViewById(R.id.fragment_poster_springview);
+        springView.setHeader(new DefaultHeader(mContext));
+        springView.setFooter(new DefaultFooter(mContext));
+        springView.setListener(this);
         recyclerView = view.findViewById(R.id.fragment_poster_recyclerview);
         type = (TypeEntity) getArguments().getSerializable("label");
         isLabel = getArguments().getBoolean("isLabel", isLabel);
@@ -77,7 +79,7 @@ public class PosterListFragment extends BaseFragment {
         posterListLabelAdapter.setOnItemClickListener(new PosterListLabelAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PosterModelEntity item = posterModelEntities.get(position);
+                PosterModelEntity item = posterListLabelAdapter.getData().get(position);
 
                 PosterDetailAcitivty.startActivity(getActivity(), item.getId(), AppConfig.CustomerId);
 
@@ -99,23 +101,23 @@ public class PosterListFragment extends BaseFragment {
 
     private void getDataFromNet() {
         if (isLabel) {
-            PosterModel(1, 10);
+            PosterModel();
         } else {
-            RecommendPoster(1, 10);
+            RecommendPoster();
         }
     }
 
     /**
      * 推荐列表
      */
-    private void RecommendPoster(int pageIndex, int pageItemCount) {
+    private void RecommendPoster() {
         Map<String, Object> params = new HashMap<>();
         params.put("pageIndex", pageIndex);
         params.put("pageItemCount", pageItemCount);
         apiImp.getAppPostersModelDo(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-
+                if (checkIsLife()) return;
                 if (data != null) {
 
                     JSONObject jo = (JSONObject) JSON.parse(data);
@@ -124,9 +126,12 @@ public class PosterListFragment extends BaseFragment {
                     String code = jo.getString("code");
                     if (code == null || !code.equalsIgnoreCase("0")) return;
 
-                    posterModelEntities = JSON.parseArray(jo.getString("data"), PosterModelEntity.class);
+                    if (pageIndex <= 1) {
+                        posterListLabelAdapter.refresh(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
+                    } else {
+                        posterListLabelAdapter.Loadmore(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
+                    }
 
-                    posterListLabelAdapter.refresh(posterModelEntities);
 
                 }
 
@@ -139,6 +144,26 @@ public class PosterListFragment extends BaseFragment {
         });
 
 
+    }
+
+    @Override
+    public void onRefresh() {
+        pageIndex = 1;
+        if (isLabel) {
+            PosterModel();
+        } else {
+            RecommendPoster();
+        }
+    }
+
+    @Override
+    public void onLoadmore() {
+        ++pageIndex;
+        if (isLabel) {
+            PosterModel();
+        } else {
+            RecommendPoster();
+        }
     }
 
 //    /**
@@ -218,7 +243,7 @@ public class PosterListFragment extends BaseFragment {
     /**
      * 海报列表
      */
-    private void PosterModel(int pageIndex, int pageItemCount) {
+    private void PosterModel() {
         Map<String, Object> params = new HashMap<>();
         params.put("id", type.getId());
         params.put("pageIndex", pageIndex);
@@ -226,6 +251,7 @@ public class PosterListFragment extends BaseFragment {
         apiImp.getAppPostersModelLabel(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 if (data == null) return;
                 JSONObject jo = (JSONObject) JSON.parse(data);
                 if (jo == null) return;
@@ -233,9 +259,13 @@ public class PosterListFragment extends BaseFragment {
                 if (code == null || !code.equalsIgnoreCase("0")) return;
 
 
-                posterModelEntities = JSON.parseArray(jo.getString("data"), PosterModelEntity.class);
 
-                posterListLabelAdapter.refresh(posterModelEntities);
+                if (pageIndex <= 1) {
+                    posterListLabelAdapter.refresh(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
+                } else {
+                    posterListLabelAdapter.Loadmore(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
+                }
+
             }
 
             @Override

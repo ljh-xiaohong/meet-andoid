@@ -76,6 +76,8 @@ public class ArticleActivity extends BaseActivity {
     private VideoAndContentEntiy info;
     private CommentListAdapter commentAdapter;
 
+    private boolean discussData = false;
+
     Intent intent;
 
     @Bind(R.id.activity_article_back)
@@ -156,7 +158,6 @@ public class ArticleActivity extends BaseActivity {
     @Bind(R.id.activity_article_showMore)
     TextView showMoe;
 
-    private WeakReference<ArticleActivity> reference;
 
     private MoreDialog moreDialog;
 
@@ -182,7 +183,6 @@ public class ArticleActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         if (!getData()) return;
-        reference = new WeakReference(this);
         initDiscussAdapter();
         getDataFromNet();
         scrollView.setonScrollChanged((v, l, t, oldl, oldt) -> {
@@ -197,7 +197,6 @@ public class ArticleActivity extends BaseActivity {
         });
 
 
-        back.setOnClickListener(v -> finish());
     }
 
     /**
@@ -210,6 +209,22 @@ public class ArticleActivity extends BaseActivity {
         intent.putExtra("ArticleActivity.contentId", contentId);
         intent.putExtra("ArticleActivity.customerId", customerId);
         context.startActivity(intent);
+    }
+
+    /**
+     * 主要用于删除不感兴趣，及删除视频
+     *
+     * @param context
+     * @param contentId
+     * @param customerId
+     * @param position
+     */
+    public static void startActivityForResult(Activity context, String contentId, String customerId, int position, int requestCode) {
+        Intent intent = new Intent(context, ArticleActivity.class);
+        intent.putExtra("ArticleActivity.contentId", contentId);
+        intent.putExtra("ArticleActivity.customerId", customerId);
+        intent.putExtra("ArticleActivity.position", position);
+        context.startActivityForResult(intent, requestCode);
     }
 
     private boolean getData() {
@@ -230,7 +245,7 @@ public class ArticleActivity extends BaseActivity {
         follow.setText(checkData(detail.getRelationType()).equals("0") ? "关注" : "已关注");
         follow.setBackgroundResource(checkData(detail.getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
         title.setText(checkData(detail.getContentTitle()));
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime()))));
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime())*1000)));
         discuss.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         discuss_b.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         read.setText(String.format("阅读 %s", checkData(detail.getViewNum())));
@@ -459,8 +474,7 @@ public class ArticleActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
@@ -483,7 +497,7 @@ public class ArticleActivity extends BaseActivity {
         moreData = new ArrayList<>();
         //初始化内容
         if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
-            moreData.add("编辑");
+//            moreData.add("编辑");
             moreData.add("删除");
         } else {
             moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
@@ -561,8 +575,7 @@ public class ArticleActivity extends BaseActivity {
         apiImp.praiseContent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
                 if (praise == null) return;
                 switch (praise.getCode()) {
@@ -620,8 +633,7 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String data, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -632,8 +644,7 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 moreDialog.dismiss();
             }
         });
@@ -650,10 +661,19 @@ public class ArticleActivity extends BaseActivity {
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-
+                int position = getIntent().getIntExtra("ArticleActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
@@ -673,12 +693,19 @@ public class ArticleActivity extends BaseActivity {
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-                finish();
+                int position = getIntent().getIntExtra("ArticleActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
@@ -699,8 +726,7 @@ public class ArticleActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -733,8 +759,7 @@ public class ArticleActivity extends BaseActivity {
         Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                if (reference == null || reference.get() == null || reference.get().isFinishing())
-                    return;
+                if (checkIsLife()) return;
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,
@@ -817,11 +842,11 @@ public class ArticleActivity extends BaseActivity {
                 switch (showMoe.getText().toString()) {
 
                     case "展开":
-                        mNextPageIndex = 1;
+
                         break;
 
                     case "收起":
-
+                        mNextPageIndex = 1;
                         break;
 
                 }
@@ -844,7 +869,7 @@ public class ArticleActivity extends BaseActivity {
 //                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
                     urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
                 }
-                urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
+                urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
 
                 intent = new Intent(this, WebActivity.class);
                 intent.putExtra(Constants.URL, urlVip);
@@ -856,7 +881,7 @@ public class ArticleActivity extends BaseActivity {
                     return;
                 String urlShop = "";
 //                urlShop = String.format(UrlConstant.ExplainURL.SHOP_DETAIL + "?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
-                urlShop = String.format( "http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
+                urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
                 intent = new Intent(this, WebActivity.class);
                 intent.putExtra(Constants.URL, urlShop);
                 intent.putExtra("No_Title", true);
@@ -874,6 +899,7 @@ public class ArticleActivity extends BaseActivity {
         apiImp.getContentComments(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 CommentBean commentBean = JSON.parseObject(data, CommentBean.class);
 
 
@@ -900,18 +926,24 @@ public class ArticleActivity extends BaseActivity {
                 } else {
                     commentAdapter.loadMoreData(commentBean.getData());
                 }
-                int count = Integer.valueOf(info.getContentDetail().getCommentNum());
+                if (discussData) {
+                    int count = Integer.valueOf(info.getContentDetail().getCommentNum());
 
-                info.getContentDetail().setCommentNum(++count + "");
+                    info.getContentDetail().setCommentNum(++count + "");
 
-                discuss.setText(String.format("共%s条评论", count));
-                ;
-                discuss_b.setText(String.format("共%s条评论", count));
+                    discuss.setText(String.format("共%s条评论", count));
+
+                    discuss_b.setText(String.format("共%s条评论", count));
+
+                    discussData = false;
+                }
+
                 mNextPageIndex++;
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife()) return;
                 ViewInject.shortToast(mContext, errMsg);
             }
         });
@@ -926,6 +958,7 @@ public class ArticleActivity extends BaseActivity {
             case DISCUSS:
                 if (resultCode == RESULT_OK) {
                     mNextPageIndex = 1;
+                    discussData = true;
                     getDiscuss();
                 }
 
@@ -936,6 +969,7 @@ public class ArticleActivity extends BaseActivity {
             case DISCUSS_DISCUSS:
                 if (resultCode == RESULT_OK) {
                     mNextPageIndex = 1;
+                    discussData = true;
                     getDiscuss();
                 }
                 break;

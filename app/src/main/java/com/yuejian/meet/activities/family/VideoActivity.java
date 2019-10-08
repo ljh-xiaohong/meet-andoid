@@ -7,10 +7,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
+import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.yuejian.meet.R;
@@ -29,6 +33,7 @@ import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
@@ -46,9 +51,10 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
-public class VideoActivity extends BaseActivity {
+public class VideoActivity extends AppCompatActivity {
 
     private String contentId = null;
     private String customerId = null;
@@ -56,9 +62,9 @@ public class VideoActivity extends BaseActivity {
 
     MoreDialog moreDialog;
 
-    private Intent intent;
+    private Context mContext;
 
-    private WeakReference<VideoActivity> reference;
+    private Intent intent;
 
     private static final int INPUT_STATE = 154;
 
@@ -73,11 +79,20 @@ public class VideoActivity extends BaseActivity {
 
     private static final int REQUEST_CODE = 200;
 
+    WeakReference<VideoActivity> reference;
+
+    private ApiImp apiImp = new ApiImp();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video);
-
+        ButterKnife.bind(this);
         if (!getData()) return;
         reference = new WeakReference<>(this);
         getDataFromNet();
@@ -89,7 +104,7 @@ public class VideoActivity extends BaseActivity {
         moreData = new ArrayList<>();
         //初始化内容
         if (info.getContentDetail().getCustomerId().equals(AppConfig.CustomerId)) {
-            moreData.add("编辑");
+//            moreData.add("编辑");
             moreData.add("删除");
         } else {
             moreData.add(info.getContentDetail().isCollection() ? "已收藏" : "收藏");
@@ -158,8 +173,9 @@ public class VideoActivity extends BaseActivity {
 
     /**
      * @param context
-     * @param contentId  内容ID
-     * @param customerId 用户ID
+     * @param contentId    内容ID
+     * @param customerId   用户ID
+     * @param SCREEN_MATCH 是否全屏
      */
     public static void startActivity(Context context, String contentId, String customerId, boolean SCREEN_MATCH) {
         Intent intent = new Intent(context, VideoActivity.class);
@@ -167,6 +183,24 @@ public class VideoActivity extends BaseActivity {
         intent.putExtra("VideoActivity.customerId", customerId);
         intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
         context.startActivity(intent);
+    }
+
+    /**
+     * 主要用于删除不感兴趣，及删除视频
+     *
+     * @param context
+     * @param contentId
+     * @param customerId
+     * @param position
+     * @param SCREEN_MATCH
+     */
+    public static void startActivityForResult(Activity context, String contentId, String customerId, int position, int requestCode, boolean SCREEN_MATCH) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("VideoActivity.contentId", contentId);
+        intent.putExtra("VideoActivity.customerId", customerId);
+        intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
+        intent.putExtra("VideoActivity.position", position);
+        context.startActivityForResult(intent, requestCode);
     }
 
     private boolean getData() {
@@ -185,7 +219,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.getContentDetails(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 parseJSON(data);
                 if (info == null) return;
                 initData();
@@ -322,7 +356,7 @@ public class VideoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (reference.get() == null || reference.get().isFinishing()) return;
+        if (checkIsLife()) return;
         switch (requestCode) {
             //评论
             case INPUT_STATE:
@@ -402,7 +436,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.praiseContent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 PraiseEntity praise = JSON.parseObject(data, PraiseEntity.class);
                 if (praise == null) return;
                 switch (praise.getCode()) {
@@ -454,7 +488,7 @@ public class VideoActivity extends BaseActivity {
         Glide.with(mContext).load(info.getContentDetail().getPhotoAndVideoUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 Utils.umengShareByList(
                         (Activity) mContext,
                         bitmap,
@@ -472,6 +506,12 @@ public class VideoActivity extends BaseActivity {
         player.onVideoPause();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     /**
      * 关注
      */
@@ -484,7 +524,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.bindRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -522,7 +562,7 @@ public class VideoActivity extends BaseActivity {
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && jo.getInteger("code") != 0) return;
                 ViewInject.CollectionToast(mContext, "已收藏");
@@ -550,14 +590,24 @@ public class VideoActivity extends BaseActivity {
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
+                int position = getIntent().getIntExtra("VideoActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (checkIsLife()) return;
             }
         });
     }
@@ -574,16 +624,34 @@ public class VideoActivity extends BaseActivity {
 
             @Override
             public void onSuccess(String data, int id) {
-                if (reference.get() == null || reference.get().isFinishing()) return;
+                if (checkIsLife()) return;
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 moreDialog.dismiss();
-                finish();
+                int position = getIntent().getIntExtra("VideoActivity.position", -1);
+                if (position == -1) {
+                    finish();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("position", position);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
             }
         });
+    }
+
+    /**
+     * 检测是否还在栈内
+     *
+     * @return true：不在栈内，false：还在栈内
+     */
+    protected boolean checkIsLife() {
+        return reference == null || reference.get() == null || reference.get().isFinishing();
     }
 }

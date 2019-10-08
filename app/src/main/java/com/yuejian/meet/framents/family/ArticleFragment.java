@@ -84,6 +84,8 @@ public class ArticleFragment extends BaseFragment
     List<VideoAndArticleBean.DataBean> followEntities =new ArrayList<>();
     VideoAndArticleBean followEntitie;
     private void loadDataFromNet(String type,String title) {
+        if (dialog != null&&!dialog.isShowing)
+            dialog.show(getActivity().getFragmentManager(), "");
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("title", title);
@@ -93,6 +95,8 @@ public class ArticleFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 followEntitie=new Gson().fromJson(data,VideoAndArticleBean.class);
                 if (followEntitie.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());
@@ -122,6 +126,8 @@ public class ArticleFragment extends BaseFragment
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
                 }

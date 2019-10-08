@@ -28,16 +28,15 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
 
     @Override
     public void refresh(List<CreationEntity> creationEntities) {
-        if (data == null) {
+            if (data == null) {
             data = new ArrayList<>();
         }
-        if (type == 1 || type == 2) {
+        if (hasDraftBox&&(type == 1 || type == 2)) {
             CreationEntity entity = new CreationEntity();
             entity.setDraftsId(type);
             if (creationEntities == null) creationEntities = new ArrayList<>();
             creationEntities.add(0, entity);
         }
-
         data = creationEntities;
         notifyDataSetChanged();
     }

@@ -163,6 +163,7 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
         videoViewHeight = Utils.dp2px(getApplicationContext(), 200);
         mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...");
         getDataFromNet();
+        checkShop();
         setListener();
     }
 
@@ -316,6 +317,32 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
 
             }
         });
+    }
+
+    /**
+     * 是否有店铺
+     */
+    private void checkShop() {
+        Map<String, Object> param = new HashMap<>();
+        param.put("customerId", AppConfig.CustomerId);
+        apiImp.findCustomerBaseInfo(param, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
+                if (data == null) return;
+                if (JSON.parseObject(data) == null || !JSON.parseObject(data).getString("code").equals("0"))
+                    return;
+                JSONObject jo = JSON.parseObject(JSON.parseObject(data).getString("data"));
+                if (!jo.getString("vipType").equals("1")) return;
+                if (jo.containsKey("shopId")) select_shop.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+
     }
 
     /**
@@ -714,7 +741,7 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                 if (jo == null) return;
                 if (jo.getString("code").equals("0")) {
                     ViewInject.shortToast(getApplicationContext(), R.string.release_success);
-                    Bus.getDefault().getDefault().post(new ShopEntity() );
+                    Bus.getDefault().getDefault().post(new ShopEntity());
                     finish();
                 } else {
                     ViewInject.shortToast(getApplicationContext(), jo.getString("message"));

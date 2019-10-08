@@ -6,6 +6,7 @@ package com.yuejian.meet.adapters;
  * @desc :
  */
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,8 +16,11 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.ServiceBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.GlideUtils;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -62,7 +66,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
         if (!TextUtils.isEmpty(bean.getPhoto())) {
             Glide.with(context).load(bean.getPhoto()).into(holder.iv_icon);
         }else {
-            GlideUtils.displayNative(holder.iv_icon,R.mipmap.loading_unpic);
+            Glide.with(context).load(R.mipmap.user_account_pictures).into(holder.iv_icon);
         }
         if (!TextUtils.isEmpty(bean.getUserName())) {
             holder.name.setText(bean.getUserName());
@@ -81,6 +85,21 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.MyViewHo
             holder.attention.setEnabled(false);
         }
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
+        holder.iv_icon.setOnClickListener(v -> {
+            String urlVip = "";
+            if (bean.getVipType().equals("0")) {
+                //非VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            } else {
+                //VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+            }
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, bean.getOpCustomerId());
+            Intent intent = new Intent(context, WebActivity.class);
+            intent.putExtra(Constants.URL, urlVip);
+            intent.putExtra("No_Title", true);
+            context.startActivity(intent);
+        });
     }
 
     public void setHeaderView(View headerView) {
