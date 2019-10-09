@@ -21,7 +21,6 @@ import com.yuejian.meet.activities.creation.DraftActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.web.WebActivity;
-import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.CreationAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
@@ -175,41 +174,39 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     }
 
     private void setListener() {
-        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                switch (type) {
-                    //海报
-                    case 3:
-                        Intent intent = new Intent(mContext, WebActivity.class);
-                        String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, adapter.getData().get(position).getContentId());
-                        intent.putExtra("url", hxmUrl);
-                        intent.putExtra("No_Title", true);
-                        startActivity(intent);
-                        break;
+        adapter.setOnItemClickListener((view, position) -> {
+            switch (type) {
+                //海报
+                case 3:
+                    Intent intent = new Intent(mContext, WebActivity.class);
+                    String hxmUrl = String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/personalPoset.html?customerId=%s&id=%s", AppConfig.CustomerId, adapter.getData().get(position).getContentId());
+                    intent.putExtra("url", hxmUrl);
+                    intent.putExtra("No_Title", true);
+                    startActivity(intent);
+                    break;
 
-                    //视频
-                    case 2:
+                //视频
+                case 2:
 //                        if (position == 0) {
 //                            DraftActivity.startActivity(mContext, type);
 //                            return;
 //                        }
-                        VideoActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, false);
+                    VideoActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, false);
 
-                        break;
+                    break;
 
-                    //文章
-                    case 1:
+                //文章
+                case 1:
 //                        if (position == 0) {
 //                            DraftActivity.startActivity(mContext, type);
 //                            return;
 //                        }
 
-                        ArticleActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT);
-                        break;
+                    ArticleActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT);
+                    break;
 
-                }
             }
+
         });
     }
 

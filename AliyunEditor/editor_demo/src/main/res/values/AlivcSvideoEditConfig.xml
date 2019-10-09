@@ -65,13 +65,13 @@
         <!--滤镜是否显示-->
         <item>1</item>
         <!--音乐是否显示-->
-        <item>1</item>
+        <item>0</item>
         <!--动图是否显示-->
-        <item>1</item>
+        <item>0</item>
         <!--字幕是否显示-->
         <item>1</item>
         <!--MV是否显示-->
-        <item>1</item>
+        <item>0</item>
         <!--音效是否显示-->
         <item>1</item>
         <!--特效是否显示-->

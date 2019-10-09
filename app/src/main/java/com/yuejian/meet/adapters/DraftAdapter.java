@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -98,6 +99,9 @@ public class DraftAdapter extends BaseAdapter<DraftAdapter.ViewHolder,DraftEntit
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(view -> {
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
                 if (listener != null) listener.onItemClick(view, getAdapterPosition());
             });
         }

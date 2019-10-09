@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -151,6 +152,9 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
         public ActivityLab(View itemView) {
             super(itemView);
             itemView.setOnClickListener(view -> {
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
                 if (listener != null) listener.onItemClick(view, getAdapterPosition());
             });
         }

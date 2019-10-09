@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aliyun.svideo.editor.editor.EditorActivity;
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -230,6 +232,9 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
             super(itemView);
             if (listener != null) {
                 itemView.setOnClickListener(view -> {
+                    if (FastClickUtil.isFastClickActivity(EditorActivity.class.getSimpleName())) {
+                        return;
+                    }
                     listener.onItemClick(view, this.getAdapterPosition());
                 });
             }
