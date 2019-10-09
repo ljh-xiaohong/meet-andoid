@@ -162,7 +162,9 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();//可见范围内的第一项的位置
+                int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();
+                if (firstVisibleItemPosition==-1) return;
+                  //可见范围内的第一项的位置
                     for (int i=0;i<mainSideBar.getIndexItems().length;i++){
                         if (mainSideBar.getIndexItems()[i].equals(FirstLetterUtil.getFirstLetter(mList.get(firstVisibleItemPosition).getName()))){
                             mainSideBar.setCurrentIndex(i);

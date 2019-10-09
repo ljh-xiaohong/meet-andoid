@@ -151,7 +151,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         if (this.mFollowEntities == null) {
             this.mFollowEntities = new ArrayList<>();
         }
-            notifyDataSetChanged();
+         notifyDataSetChanged();
     }
 
     public interface OnFollowListItemClickListener {

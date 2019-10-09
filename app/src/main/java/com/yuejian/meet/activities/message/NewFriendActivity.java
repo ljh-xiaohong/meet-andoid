@@ -53,6 +53,7 @@ public class NewFriendActivity extends BaseActivity implements FriendListAdapter
         apiImp.getAttentionAndFriend(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                mList.clear();
                 NewFriendBean bean=new Gson().fromJson(data,NewFriendBean.class);
                 if (bean.getCode()!=0) {
                     ViewInject.shortToast(NewFriendActivity.this,bean.getMessage());

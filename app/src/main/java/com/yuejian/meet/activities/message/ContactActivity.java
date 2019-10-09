@@ -1,5 +1,6 @@
 package com.yuejian.meet.activities.message;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -71,7 +72,14 @@ public class ContactActivity extends BaseActivity implements ViewPager.OnPageCha
         vpContact.setOffscreenPageLimit(2);
         vpContact.addOnPageChangeListener(this);
         addressBookTitleView.setOnTitleViewClickListener(this);
-        back.setOnClickListener(v -> finish());
+        back.setOnClickListener(v -> onBackPressed());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent();
+        setResult(2, i);
+        super.onBackPressed();
     }
 
     /**
