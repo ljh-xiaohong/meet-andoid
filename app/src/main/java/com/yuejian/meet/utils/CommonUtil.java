@@ -660,10 +660,10 @@ public class CommonUtil {
             }else if ((b3.compareTo(b1) == 0 && b3.compareTo(b1) == 1)
                     || b3.compareTo(b2) == -1) {
                 formatedNum = b3.divide(b1).toString();
-                unit = "w";
+                unit = "w+";
             } else if (b3.compareTo(b2) == 0 || b3.compareTo(b2) == 1) {
                 formatedNum = b3.divide(b2).toString();
-                unit = "亿";
+                unit = "亿+";
             }
             if (!"".equals(formatedNum)) {
                 int i = formatedNum.indexOf(".");

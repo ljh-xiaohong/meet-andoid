@@ -20,11 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.CircleImageView;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -70,6 +72,8 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
 
     @Bind(R.id.tv_send)
     TextView tvSend;
+    @Bind(R.id.head_img)
+    CircleImageView head;
 
     private WeakReference<InputActivity> reference;
 
@@ -119,6 +123,10 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         getWindow().setAttributes(layoutParams);
+
+        if (!TextUtils.isEmpty(AppConfig.photo)) {
+            Glide.with(this).load(AppConfig.photo).into(head);
+        }
 
         content.setOnClickListener(v -> {
             emojicons.setVisibility(View.GONE);

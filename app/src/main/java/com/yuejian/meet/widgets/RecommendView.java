@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yuejian.meet.R;
+import com.yuejian.meet.utils.CommonUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -148,7 +149,7 @@ public class RecommendView extends LinearLayout {
                 null,
                 null,
                 null);
-        article_like.setText(count);
+        article_like.setText(CommonUtil.changeNum(count));
     }
 
     public void setVideoVerticalLike(boolean like, String count) {
@@ -157,7 +158,7 @@ public class RecommendView extends LinearLayout {
                 null,
                 null,
                 null);
-        video_vertical_like.setText(count);
+        video_vertical_like.setText(CommonUtil.changeNum(count));
     }
 
     public void setVideoHorizontalLike(boolean like, String count) {
@@ -166,7 +167,7 @@ public class RecommendView extends LinearLayout {
                 null,
                 null,
                 null);
-        video_horizontal_like.setText(count);
+        video_horizontal_like.setText(CommonUtil.changeNum(count));
     }
 
     /**

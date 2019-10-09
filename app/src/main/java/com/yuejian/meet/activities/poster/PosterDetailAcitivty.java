@@ -179,6 +179,7 @@ public class PosterDetailAcitivty extends BaseActivity {
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if(checkIsLife())return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo != null && jo.getString("code").equals("0")) {
                     posterInfo.setTemplateCollection(true);
@@ -188,6 +189,7 @@ public class PosterDetailAcitivty extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if(checkIsLife())return;
                 ViewInject.shortToast(mContext, errMsg);
             }
         });
@@ -219,6 +221,7 @@ public class PosterDetailAcitivty extends BaseActivity {
         apiImp.findPostersModelById(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if(checkIsLife())return;
                 if (data == null || data.length() < 0 || data.equalsIgnoreCase("null")) return;
 
                 JSONObject jo = JSONObject.parseObject(data);
@@ -232,6 +235,7 @@ public class PosterDetailAcitivty extends BaseActivity {
                     Glide.with(mContext).load(posterInfo.getPreviewUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                            if(checkIsLife())return;
                             share_icon = bitmap;
                             poster_img.setImageBitmap(bitmap);
                         }

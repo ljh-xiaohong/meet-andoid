@@ -51,6 +51,7 @@ import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.MoreDialog;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ScreenUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
@@ -241,11 +242,11 @@ public class ArticleActivity extends BaseActivity {
         name.setText(checkData(detail.getUserName()));
         vip.setVisibility(checkData(detail.getUserVipType()).equals("0") ? View.INVISIBLE : View.VISIBLE);
         like_img.setImageResource(checkData(detail.getIsPraise()).equals("0") ? R.mipmap.icon_home_zan_nor : R.mipmap.icon_home_zan_sel);
-        like_count.setText(detail.getFabulousNum());
+        like_count.setText(CommonUtil.changeNum(detail.getFabulousNum()));
         follow.setText(checkData(detail.getRelationType()).equals("0") ? "关注" : "已关注");
         follow.setBackgroundResource(checkData(detail.getRelationType()).equals("0") ? R.drawable.shape_article_follow : R.drawable.shape_article_follow_w);
         title.setText(checkData(detail.getContentTitle()));
-        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime())*1000)));
+        date.setText(new SimpleDateFormat("yyyy.MM.dd").format(new Date(Long.valueOf(detail.getCreateTime()) * 1000)));
         discuss.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         discuss_b.setText(String.format("共%s条评论", checkData(detail.getCommentNum())));
         read.setText(String.format("阅读 %s", checkData(detail.getViewNum())));
@@ -275,8 +276,8 @@ public class ArticleActivity extends BaseActivity {
             Glide.with(mContext).load(checkData(shopList.getGPhoto())).into(shop_img);
             shop_name.setText(checkData(shopList.getShopName()));
             shop_disct.setText(checkData(shopList.getGDes()));
-            shop_discount.setText(checkData(shopList.getGPriceVip()));
-            shop_price.setText(checkData(shopList.getGPriceOriginal()));
+            shop_discount.setText(checkData("￥" + shopList.getGPriceVip()));
+            shop_price.setText(checkData("￥" + shopList.getGPriceOriginal()));
         }
 
         contentEntities = JSON.parseArray(checkData(detail.getCrContent()), ArticleContentEntity.class);
@@ -591,7 +592,7 @@ public class ArticleActivity extends BaseActivity {
                         }
                         info.getContentDetail().setFabulousNum(count + "");
                         like_img.setImageResource(info.getContentDetail().getIsPraise().equals("1") ? R.mipmap.icon_home_zan_sel : R.mipmap.icon_home_zan_nor);
-                        like_count.setText(count + "");
+                        like_count.setText(CommonUtil.changeNum(count + ""));
                         break;
 
                     //拉黑

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +39,7 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
@@ -49,6 +49,7 @@ import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URLDecoder;
@@ -89,19 +90,34 @@ public class NewMineFragment extends BaseFragment {
     }
     public void update(){
         if (wxWebview==null) return;
+        setws();
         initView();
     }
     private void initView() {
         initWxPayApi();
 
         wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
-//        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId=500220");
+//        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/daiyan.html?userPosterType=false&id=118&customerId=723495");
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=500102&gId=6");
+        wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
         if(Build.VERSION.SDK_INT>=23){
             String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,Manifest.permission.WRITE_APN_SETTINGS};
             ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);
+        }
+    }
+
+
+    @SuppressWarnings("unused")
+    public class JSInterface extends Object {
+        @JavascriptInterface
+        public void updateOAuth() {
+        }
+
+        //微信分享
+        @JavascriptInterface
+        public void share(String url, String description) {
         }
     }
     public void reloadHome() {
@@ -164,10 +180,7 @@ public class NewMineFragment extends BaseFragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.e("ansen", "拦截url:" + url);
-            if (url.equals("http://www.google.com/")) {
-                Toast.makeText(getActivity(), "国内不能访问google,拦截该url", Toast.LENGTH_LONG).show();
-                return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://createShopOrderPay")){//商品付款
+            if (url.contains("yuejian://createShopOrderPay")){//商品付款
                //yuejian://createShopOrderPay?oid=28&payType=3
                 String[] s=url.split("&");
                 String oid=s[0].split("=")[1];
@@ -212,7 +225,7 @@ public class NewMineFragment extends BaseFragment {
                 isVIP=true;
                 doInCashVip(customerId,payType,outCashPassword);
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://toBackLoad")){
+            }else if (url.contains("yuejian://toBackLoad")){//退出
                 Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
                 dialog.show();
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
@@ -227,22 +240,7 @@ public class NewMineFragment extends BaseFragment {
                     }
                 });
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://articleVideo")){
-                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
-                dialog.show();
-                DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
-                    @Override
-                    public void onTitleViewClick() {
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().finish();
-                        DadanPreference.getInstance(getActivity()).setBoolean("isLogin",false);
-                        DadanPreference.getInstance(getActivity()).setString("CustomerId","");
-                        DadanPreference.getInstance(getActivity()).setString("photo","");
-                        DadanPreference.getInstance(getActivity()).setString("surname","");
-                    }
-                });
-                return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://sharaTui")){
+            }else if (url.contains("yuejian://sharaTui")){//分享
                 //'yuejian://sharaTui?url=http://app2.yuejianchina.com/yuejian-app/shara_register.html'+'&type='+type+'&referralMobile='+referralMobile+'&name='+name
                 String[] s=url.split("&");
                 String shareUrl=s[0].split("url=")[1];
@@ -268,6 +266,16 @@ public class NewMineFragment extends BaseFragment {
                 }else {
                     Utils.umengShareByList(getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
                 }
+                return true;//表示我已经处理过了
+            }else if (url.contains("yuejian://tel")){
+                String[] s=url.split("=");
+                CommonUtil.call(getActivity(),s[1]);
+                return true;//表示我已经处理过了
+            }else if (!url.contains("user.html")) {
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra(Constants.URL, url+"&phone=true");
+                intent.putExtra("No_Title", true);
+                startActivity(intent);
                 return true;//表示我已经处理过了
             }
             return super.shouldOverrideUrlLoading(view, url);

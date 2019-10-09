@@ -35,6 +35,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.SelectGoodsActivity;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
@@ -82,6 +83,7 @@ public class NewBusinessFragment extends BaseFragment {
     }
     public void update(){
         if (wxWebview==null) return;
+        setws();
         initView();
 
     }
@@ -189,10 +191,7 @@ public class NewBusinessFragment extends BaseFragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.e("ansen", "拦截url:" + url);
-            if (url.equals("http://www.google.com/")) {
-                Toast.makeText(getActivity(), "国内不能访问google,拦截该url", Toast.LENGTH_LONG).show();
-                return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://createShopOrderPay")){
+          if (url.contains("yuejian://createShopOrderPay")){
                //yuejian://createShopOrderPay?oid=28&payType=3
                String[] s=url.split("&");
                String oid=s[0].split("=")[1];
@@ -241,11 +240,17 @@ public class NewBusinessFragment extends BaseFragment {
                     Toast.makeText(getActivity(), R.string.casht_text11, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://tel")){
+            }else if (url.contains("yuejian://tel")){//打电话
                     String[] s=url.split("=");
                     CommonUtil.call(getActivity(),s[1]);
                 return true;//表示我已经处理过了
-            }
+            }else  if (!url.contains("index.html")&&!url.contains("clan.html")&&!url.contains("familyTab.html")&&!url.contains("familyTradition.html")) {
+              Intent intent = new Intent(getActivity(), WebActivity.class);
+              intent.putExtra(Constants.URL, url+"&phone=true");
+              intent.putExtra("No_Title", true);
+              startActivity(intent);
+              return true;//表示我已经处理过了
+          }
             return super.shouldOverrideUrlLoading(view, url);
         }
 

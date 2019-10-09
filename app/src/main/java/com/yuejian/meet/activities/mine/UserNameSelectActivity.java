@@ -231,7 +231,7 @@ public class UserNameSelectActivity extends BaseActivity {
                     finish();
                 }else {
                     if(loginBean.getCode()==19985){
-                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                        Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "未找到您推荐人",
                                 "请确认推荐人手机号","确定");
                         dialog.show();
                         return;
@@ -279,7 +279,7 @@ public class UserNameSelectActivity extends BaseActivity {
                             finish();
                         }else {
                             if(loginBean.getCode()==19985){
-                                Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "", "未找到您推荐人\n" +
+                                Dialog dialog = DialogUtils.createOneBtnDialog(UserNameSelectActivity.this, "未找到您推荐人",
                                         "请确认推荐人手机号","确定");
                                 dialog.show();
                                 return;

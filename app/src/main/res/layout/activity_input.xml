@@ -24,6 +24,7 @@
             android:orientation="horizontal">
 
             <com.yuejian.meet.widgets.CircleImageView
+                android:id="@+id/head_img"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 android:layout_marginLeft="12dp"

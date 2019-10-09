@@ -3,16 +3,20 @@ package com.yuejian.meet.activities.creation;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +27,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,8 @@ import com.aliyun.demo.recorder.util.Common;
 import com.aliyun.demo.recorder.util.FixedToastUtils;
 import com.aliyun.demo.recorder.util.OrientationDetector;
 import com.aliyun.demo.recorder.util.SharedPreferenceUtils;
+import com.aliyun.demo.recorder.view.BaseScrollPickerView;
+import com.aliyun.demo.recorder.view.StringScrollPicker;
 import com.aliyun.demo.recorder.view.dialog.DialogVisibleListener;
 import com.aliyun.demo.recorder.view.dialog.FilterEffectChooser;
 import com.aliyun.demo.recorder.view.dialog.GIfEffectChooser;
@@ -49,6 +56,7 @@ import com.aliyun.recorder.supply.RecordCallback;
 import com.aliyun.svideo.base.ActionInfo;
 import com.aliyun.svideo.base.AlivcSvideoEditParam;
 import com.aliyun.svideo.base.AliyunSvideoActionConfig;
+import com.aliyun.svideo.base.UIConfigManager;
 import com.aliyun.svideo.base.widget.ProgressDialog;
 import com.aliyun.svideo.base.widget.beauty.enums.BeautyLevel;
 import com.aliyun.svideo.base.widget.beauty.listener.OnBeautyFaceItemSeletedListener;
@@ -81,7 +89,9 @@ import com.yuejian.meet.widgets.aliyun.CountDownTextView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -99,6 +109,9 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     private AliyunIClipManager clipManager;
     private OrientationDetector orientationDetector;
     private TipsDialog mTipsDialog;
+
+    //速度
+    private float rate = 1.0f;
 
     @Bind(R.id.sv_view_video_load)
     SurfaceView mRecorderSurfaceView;
@@ -137,6 +150,12 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     //显示倒数时的view
     @Bind(R.id.tv_activity_video_load_countdown_text)
     CountDownTextView tv_countTimeShow;
+
+    @Bind(R.id.alivc_video_picker_view)
+    StringScrollPicker mPicker;
+
+    @Bind(R.id.rg_video_fast_low)
+    RadioGroup rg_speed;
 
     /**
      * 滤镜及美颜dialog
@@ -237,6 +256,11 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     //6.初始化控件
 
     private String pathComplete;
+
+    /**
+     * 原比例
+     */
+    private static final int RATIO_ORIGINAL = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -404,6 +428,43 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
                 stopRecord();
 //                Toast.makeText(VideoLoadActivity.this, "完成录制", Toast.LENGTH_LONG).show();
             }
+        });
+
+        mPicker.setOnSelectedListener(new BaseScrollPickerView.OnSelectedListener() {
+            @Override
+            public void onSelected(BaseScrollPickerView baseScrollPickerView, int position) {
+
+                switch (position) {
+                    case 0:
+                        maxRecordTime = 15 * 1000;
+                        break;
+                    case 1:
+                        maxRecordTime = 60 * 1000;
+                        break;
+                }
+            }
+        });
+        rg_speed.setOnCheckedChangeListener((radioGroup, viewId) -> {
+
+            switch (viewId) {
+                case R.id.rb_video_low:
+                    //慢
+                    rate = 0.75f;
+                    break;
+
+                case R.id.rb_video_nor:
+                    //标准
+                    rate = 1f;
+                    break;
+
+                case R.id.rb_video_fast:
+                    //快
+                    rate = 1.5f;
+                    break;
+
+            }
+            mRecorder.setRate(rate);
+
         });
     }
 
@@ -739,6 +800,13 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
      * 初始化引用的总和方法，请注意初始化的顺序；
      */
     private void init() {
+        List<String> strings = new ArrayList<>(2);
+        strings.add("拍15s");
+        strings.add("拍60s");
+        mPicker.setData(strings);
+        //向上的三角形对应的图片
+        mPicker.setCenterItemBackground(UIConfigManager.getDrawableResources(this, R.attr.triangleImage, R.drawable.back_tip));
+        mPicker.setSelectedPosition(0);
 //        initViews();
         initListener();
         initMediaInfo();
@@ -761,24 +829,26 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
      */
     private void initMediaInfo() {
         mOutputInfo = new MediaInfo();
-        mOutputInfo.setFps(35);
+        //帧率（越高越流畅 建议25-30）
+        mOutputInfo.setFps(30);
         //分辨率 16/9
         mOutputInfo.setVideoWidth(ScreenUtils.getWidth(this));
         mOutputInfo.setVideoHeight(ScreenUtils.getWidth(this) / 9 * 16);
         mOutputInfo.setVideoCodec(VideoCodecs.H264_SOFT_FFMPEG);
-        mOutputInfo.setCrf(0);
+//        mOutputInfo.setCrf(0);
 
         mVideoParam = new AliyunVideoParam.Builder()
                 .gop(30)
                 .bitrate(0)
-                .crf(0)
+//                .crf(0)
                 .frameRate(30)
                 .outputWidth(ScreenUtils.getWidth(this))
                 .outputHeight(ScreenUtils.getWidth(this) / 9 * 16)
                 .videoQuality(VideoQuality.SSD)
                 .build();
+
         mAlivcSvideoEditParam = new AlivcSvideoEditParam.Build()
-                .setRatio(AlivcSvideoEditParam.RATIO_MODE_9_16)
+                .setRatio(RATIO_ORIGINAL)
                 .setResolutionMode(AlivcSvideoEditParam.RESOLUTION_720P)
                 .setHasTailAnimation(false)
                 .setEntrance("svideo")
@@ -837,7 +907,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
         mRecorder = AliyunRecorderCreator.getRecorderInstance(this);
         mRecorder.setMediaInfo(mOutputInfo);
         mRecorder.setVideoQuality(VideoQuality.SSD);
-        mRecorder.setVideoBitrate(25);
+        mRecorder.setVideoBitrate(0);
         mRecorder.setFocusMode(CameraParam.FOCUS_MODE_CONTINUE);
         mRecorder.setFaceTrackInternalMaxFaceCount(2);
         mRecorder.setMute(false);
@@ -1043,7 +1113,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
             videoPath = SDCardConstants.OUTPUT_PATH_DIR + File.separator + System.currentTimeMillis() + "-record.mp4";
             mRecorder.setOutputPath(videoPath);
             mRecorder.startRecording();
-            setVisibility(View.GONE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn);
+            setVisibility(View.GONE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn,mPicker,rg_speed);
             mIsBackground = true;
 
         }
@@ -1084,7 +1154,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
                 init();
             } else {
                 // 弹出对话框告诉用户需要权限的原因, 并引导用户去应用权限管理中手动打开权限按钮
-//                showPermissionDialog();
+                showPermissionDialog();
             }
         }
     }
@@ -1118,7 +1188,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
 
     }
 
-    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn, R.id.tv_next_btn})
+    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn, R.id.tv_next_btn, R.id.tv_activity_video_load_speed})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -1153,7 +1223,14 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
                 }
 
                 break;
+            case R.id.tv_activity_video_load_speed:
+                showSpeed();
+                break;
         }
+    }
+
+    private void showSpeed() {
+        rg_speed.setVisibility(rg_speed.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
     }
 
     //返回键的判断
@@ -1225,6 +1302,40 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
         setVisibility(View.GONE, v_nextBtn);
         zdy_loadBtn.setBaseStatus();
         zdy_loadBtn.setClickable(true);
+    }
+
+    //系统授权设置的弹框
+    AlertDialog openAppDetDialog = null;
+
+    private void showPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(com.aliyun.demo.R.string.app_name) + "需要访问 \"相册\"、\"摄像头\" 和 \"外部存储器\",否则会影响绝大部分功能使用, 请到 \"应用信息 -> 权限\" 中设置！");
+        builder.setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                startActivity(intent);
+            }
+        });
+        builder.setCancelable(false);
+        builder.setNegativeButton("暂不设置", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //finish();
+            }
+        });
+        if (null == openAppDetDialog) {
+            openAppDetDialog = builder.create();
+        }
+        if (null != openAppDetDialog && !openAppDetDialog.isShowing()) {
+            openAppDetDialog.show();
+        }
     }
 
 

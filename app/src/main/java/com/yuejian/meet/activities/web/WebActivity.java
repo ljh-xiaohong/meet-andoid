@@ -1,6 +1,8 @@
 package com.yuejian.meet.activities.web;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +14,10 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -62,12 +67,16 @@ import com.yuejian.meet.activities.find.SurnameWikiActivity;
 import com.yuejian.meet.activities.home.ActionInfoActivity;
 import com.yuejian.meet.activities.mine.BuyAllVipPermissionActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.mine.SelectGoodsActivity;
 import com.yuejian.meet.activities.mine.VerifyBusinessActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.find.RechargeMeritsActivity;
 import com.yuejian.meet.utils.AppUitls;
+import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
+import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.StringUtils;
@@ -75,6 +84,8 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
 import com.yuejian.meet.widgets.PaymentBottomDialog;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -299,7 +310,7 @@ public class WebActivity extends BaseActivity {
     };
 
     private String shareCustomerId = "";
-
+    private boolean isVIP=false;
     private boolean blockUrl(String url) {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
@@ -345,17 +356,28 @@ public class WebActivity extends BaseActivity {
                 //海报购买
                 LoadingUrl = url;
                 buyPosterTemplate(url);
+                return true;
             } else if (uri.getAuthority().equals("createShopOrderPay")) {
                 //商品购买
                 createShopOrderPay(url);
+                return true;
             } else if (uri.getAuthority().equals("upgradeVip")) {
                 //VIP购买
                 upgradeVip(url);
-            } else if (uri.getAuthority().equals("toBack")) {
-                finish();
                 return true;
-            } else if (uri.getAuthority().equals("user_info")) {
-
+            } else if (uri.getAuthority().equals("toBack")) {
+                onBackPressed();
+                return true;
+            } else if (uri.getAuthority().contains("userPay_inContribution")){//充值贡献值
+                String[] s=url.split("&");
+                String customerId=s[0].split("=")[1];
+                String silverIngot=s[1].split("=")[1];
+                String amount=s[2].split("=")[1];
+                String payType=s[3].split("=")[1];
+                isVIP=false;
+                doInCash(customerId,silverIngot,amount,payType);
+                return true;//表示我已经处理过了
+            }else if (uri.getAuthority().equals("user_info")) {
                 AppUitls.goToPersonHome(this, getIntent().getStringExtra("customer_id"));
                 return true;
             } else if (uri.getAuthority().equals("articleVideo")) {
@@ -378,32 +400,82 @@ public class WebActivity extends BaseActivity {
 
                 return true;
             } else if (uri.getAuthority().equals("continueWebapp")) {
-
-                //TODO
-
-
-//                HashMap<String, String> params = new HashMap<>();
-//                Set<String> queryNames = uri.getQueryParameterNames();
-//                for (String queryName : queryNames) {
-//                    String value = uri.getQueryParameter(queryName);
-//                    params.put(queryName, value);
-//                }
-//                //申请成为封面人物
-//                params.put("customer_id", user.customer_id);
-//                apiImp.doRankedDoAgain(params, this, new DataIdCallback<String>() {
-//                    @Override
-//                    public void onSuccess(String data, int id) {
-//                        Long payId = JSON.parseObject(data).getLong("id");
-//                        showPaymentDialog(payId);
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String errCode, String errMsg, int id) {
-//                    }
-//                });
-
+                return true;
+            }else if (uri.getAuthority().contains("gaodeMap")){
+                //yuejian://createShopOrderPay?oid=28&payType=3
+                if (CommonUtil.isInstalled(this,"com.autonavi.minimap")){
+                    String[] s=url.split("&");
+                    String end=s[1].split("=")[1];
+                    String dlat=end.split(",")[0];
+                    String dlon=end.split(",")[1];
+                    Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("amapuri://route/plan/?sid=&slat=&slon=&sname=&did=&dlat="
+                            + dlat+"&dlon=" +dlon+ "&dname=&dev=0&t=0&sourceApplication="+ this.getPackageName()));
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(this, R.string.casht_text10, Toast.LENGTH_SHORT).show();
+                }
+                return true;//表示我已经处理过了
+            }else if (uri.getAuthority().contains("baiduMap")){
+                //yuejian://createShopOrderPay?oid=28&payType=3
+                if (CommonUtil.isInstalled(this,"com.baidu.BaiduMap")){
+                    String[] s=url.split("&");
+                    String str=s[0].split("=")[1];
+                    String end=s[1].split("=")[1];
+                    Intent intent = new Intent();
+                    intent.setData(Uri.parse("baidumap://map/direction?destination=name=|latlng:"
+                            + end +"&coord_type=gcj02"+ "&src=" + this.getPackageName()));
+                    startActivity(intent); // 启动调用
+                }else {
+                    Toast.makeText(this, R.string.casht_text11, Toast.LENGTH_SHORT).show();
+                }
+                return true;//表示我已经处理过了
+            }else if (uri.getAuthority().contains("tel")){
+                String[] s=url.split("=");
+                CommonUtil.call(this,s[1]);
+                return true;//表示我已经处理过了
+            }else if (uri.getAuthority().contains("sharaTui")){//分享
+                //'yuejian://sharaTui?url=http://app2.yuejianchina.com/yuejian-app/shara_register.html'+'&type='+type+'&referralMobile='+referralMobile+'&name='+name
+                String[] s=url.split("&");
+                String shareUrl=s[0].split("url=")[1];
+                String type=s[1].split("=")[1];
+                String name=s[2].split("=")[1];
+                name= URLDecoder.decode(name);
+                if (type.equals("1")){
+                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN_CIRCLE, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
+                }else if (type.equals("2")){
+                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
+                }else if (type.equals("3")){
+//                    Utils.umengShareForPhatForm(SHARE_MEDIA.QQ, getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, name+"邀请您注册《百家姓氏》" + "\n"+ shareUrl);
+                    sendIntent.setType("text/plain");
+                    sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
+                    startActivityForResult(sendIntent, 100);
+                }else if (type.equals("4")){
+                    ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                    cmb.setText(shareUrl);
+                    Toast.makeText(this,"已复制",Toast.LENGTH_LONG).show();
+                }else {
+                    Utils.umengShareByList(this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
+                }
+                return true;//表示我已经处理过了
+            }else if (uri.getAuthority().contains("toBackLoad")) {//退出
+                Dialog dialog = DialogUtils.createTwoBtnDialog(WebActivity.this, "提示", "是否退出登录", "取消", "确定");
+                dialog.show();
+                DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
+                    @Override
+                    public void onTitleViewClick() {
+                        DadanPreference.getInstance(WebActivity.this).setBoolean("isLogin", false);
+                        DadanPreference.getInstance(WebActivity.this).setString("CustomerId", "");
+                        DadanPreference.getInstance(WebActivity.this).setString("photo", "");
+                        DadanPreference.getInstance(WebActivity.this).setString("surname", "");
+                        startActivity(new Intent(WebActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                return true;//表示我已经处理过了
             }
-            return true;
         }
         if (url.contains("/pay/aliPayResult?") && isApplyFamilyMaster) {
             startActivity(new Intent(getApplication(), SelectGoodsActivity.class));
@@ -530,7 +602,7 @@ public class WebActivity extends BaseActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        } else if (url.contains("faxian/game_zhuangzhong.html")) {
+        }else if (url.contains("faxian/game_zhuangzhong.html")) {
             isShareSuccess = false;
         } else if (url.contains("payment/chongzhi.html")) {
             Intent intent = new Intent(this, InCashActivity.class);
@@ -539,7 +611,6 @@ public class WebActivity extends BaseActivity {
         } else if (url.contains("duihuangongde.html")) {
             // 点灯和放生 都 拦截 duihuangongde.html  跳转到充值功德页面
             // TODO: 2018/11/21   徐
-
             Intent intent = new Intent(this, RechargeMeritsActivity.class);
             startActivity(intent);
             return true;
@@ -768,7 +839,110 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+    //充值贡献值API payType 1:支付宝，2.微信，3.3ApplePay
+    private void doInCash(String customerId, String silverIngot, String amount, String payType) {
+        if (payType.equals("2")) {
+            if (!Utils.isWeixinAvilible(this)) {
+                Toast.makeText(this, R.string.casht_text7, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }else if (payType.equals("1")){
+            if (!Utils.isAliPayInstalled(this)) {
+                Toast.makeText(this, R.string.casht_text9, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId",customerId);
+        params.put("silverIngot", silverIngot);
+        params.put("amount", amount);
+        params.put("payType", payType);
+        apiImp.inContribution(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (payType.equals("1")) {
+                    try {
+                        org.json.JSONObject oo = new org.json.JSONObject(data);
+                        final String orderInfo =oo.getString("data");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                PayTask task = new PayTask(WebActivity.this);
+                                Map<String, String> result = task.payV2(orderInfo, true);
+                                Message msg = new Message();
+                                msg.what = 1;
+                                msg.obj = result;
+                                handler.sendMessage(msg);
+                            }
+                        }).start();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (payType.equals("2")) {
+                    try {
+                        org.json.JSONObject oo = new org.json.JSONObject(data);
+                        if (oo==null) return;
+                        final String data1 =oo.getString("data");
+                        final WxPayOrderInfo orderInfo = JSON.parseObject(data1, WxPayOrderInfo.class);
+                        PayReq request = new PayReq();
+                        request.appId = Constants.WX_APP_ID;
+                        request.partnerId = Constants.WX_PARTNER_ID;
+                        request.prepayId = orderInfo.prepay_id;
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = orderInfo.nonceStr;
+                        request.timeStamp = orderInfo.timeStamp;
+                        request.sign = orderInfo.paySign;
+                        mIwxapi.sendReq(request);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 1) {
+                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                String resultStatus = payResult.getResultStatus();
+                if (TextUtils.equals(resultStatus, "9000")) {
+                    Toast.makeText(WebActivity.this, R.string.payment_success, Toast.LENGTH_SHORT).show();
+                    if (isVIP){
+                        reloadHome();
+                    }
+//                    if (!CommonUtil.isNull(backType))
+//                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                }
+            }
+            return false;
+        }
+    });
+    public void reloadHome() {
+        try {
+            webView.post(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void run() {
+                    // 注意调用的JS方法名要对应上
+                    // 调用javascript的callJS()方法
+                    webView.evaluateJavascript("javascript:reloadHome()", new com.tencent.smtt.sdk.ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            //此处为 js 返回的结果
+                            Log.e("value", value);
+                        }
+                    });
+                }
+            });
+        }catch (Exception e){
+
+        }
+    }
     private void doInCash(Long payId, int i) {
         Map<String, Object> params = new HashMap<>();
         params.clear();
@@ -984,7 +1158,9 @@ public class WebActivity extends BaseActivity {
         } else if (requestCode == 10103) {
             webView.loadUrl("javascript:shareBack(" + shareCustomerId + ")");
             isShareSuccess = true;
-        } else {
+        }else if (requestCode == 100){
+
+        }else {
             if (mUMA != null) {
                 mUMA.onReceiveValue(null);
                 mUMA = null;

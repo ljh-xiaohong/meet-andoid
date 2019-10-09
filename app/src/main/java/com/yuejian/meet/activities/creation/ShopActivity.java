@@ -66,7 +66,7 @@ public class ShopActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.activity_shop_confirm, R.id.activity_shop_back})
+    @OnClick({R.id.activity_shop_confirm, R.id.activity_shop_back, R.id.activity_shop_search})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -85,7 +85,7 @@ public class ShopActivity extends BaseActivity {
                 finish();
                 break;
 
-            case R.id.activity_shop_RecyclerView:
+            case R.id.activity_shop_search:
                 break;
         }
 
@@ -104,6 +104,7 @@ public class ShopActivity extends BaseActivity {
         apiImp.getVipShopGoodsList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && !jo.getString("code").equals("0")) return;
                 goods = JSON.parseArray(jo.getString("data"), ShopEntity.class);
