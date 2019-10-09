@@ -280,7 +280,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         new ApiImp().findContentByLabel(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(checkIsLife())return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && !jo.getString("code").equals("0")) return;
                 labEntity = JSON.parseObject(jo.getString("data"), ActivityLabEntity.class);
@@ -320,14 +320,14 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
     @Override
     public void onRefresh() {
-        if(checkIsLife())return;
+        if (checkIsLife()) return;
         pageIndex = 1;
         loadDataFromNet();
     }
 
     @Override
     public void onLoadmore() {
-        if(checkIsLife())return;
+        if (checkIsLife()) return;
         loadDataFromNet();
     }
 
@@ -340,13 +340,17 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         new ApiImp().addContentLabelCustomer(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(checkIsLife())return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSON.parseObject(data);
-                if (jo == null || !jo.getString("code").equals("0")) return;
-                labEntity.getLabel().setIsFocus(!isFollows);
+                if (jo == null || !jo.getString("code").equals("0")) {
+                    ViewInject.shortToast(ActivityLabActivity.this, jo.getString("message"));
+                } else {
+                    labEntity.getLabel().setIsFocus(!isFollows);
 //                follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
-                follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus() ? "#4DFFFFFF" : "#FFFFFFFF"));
-                follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
+                    follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus() ? "#4DFFFFFF" : "#FFFFFFFF"));
+                    follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
+                }
+
 
             }
 
