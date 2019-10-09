@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.bean.PosterModelEntity;
 import com.yuejian.meet.bean.RecommendPosterEntity;
@@ -42,12 +43,12 @@ public class PosterListAdapter extends BaseAdapter<PosterListAdapter.ViewHolder,
         rv.poster_content.setText(RecommendEntity.getPostersTitle());
 //        rv.poster_tag.setText(RecommendEntity.getPostersTitle());
 
-        rv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClick(view, position);
-            }
-        });
+//        rv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onItemClick(view, position);
+//            }
+//        });
 
     }
 
@@ -80,6 +81,12 @@ public class PosterListAdapter extends BaseAdapter<PosterListAdapter.ViewHolder,
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(view -> {
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
+                if(listener!=null)listener.onItemClick(view,getAdapterPosition());
+            });
 
         }
     }

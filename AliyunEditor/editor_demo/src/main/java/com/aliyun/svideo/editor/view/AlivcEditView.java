@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,7 +53,9 @@ import com.aliyun.editor.TimeEffectType;
 import com.aliyun.querrorcode.AliyunEditorErrorCode;
 import com.aliyun.querrorcode.AliyunErrorCode;
 import com.aliyun.qupai.editor.AliyunICanvasController;
+import com.aliyun.qupai.editor.AliyunIComposeCallBack;
 import com.aliyun.qupai.editor.AliyunIEditor;
+import com.aliyun.qupai.editor.AliyunIVodCompose;
 import com.aliyun.qupai.editor.AliyunPasterController;
 import com.aliyun.qupai.editor.AliyunPasterManager;
 import com.aliyun.qupai.editor.OnAnimationFilterRestored;
@@ -60,6 +63,7 @@ import com.aliyun.qupai.editor.OnPasterRestored;
 import com.aliyun.qupai.editor.impl.AliyunEditorFactory;
 import com.aliyun.svideo.base.ActionInfo;
 import com.aliyun.svideo.base.AliyunSvideoActionConfig;
+import com.aliyun.svideo.base.Constants;
 import com.aliyun.svideo.base.UIConfigManager;
 import com.aliyun.svideo.editor.R;
 import com.aliyun.svideo.editor.editor.AbstractPasterUISimpleImpl;
@@ -89,6 +93,7 @@ import com.aliyun.svideo.editor.msg.body.FilterTabClick;
 import com.aliyun.svideo.editor.msg.body.LongClickAnimationFilter;
 import com.aliyun.svideo.editor.msg.body.LongClickUpAnimationFilter;
 import com.aliyun.svideo.editor.msg.body.SelectColorFilter;
+import com.aliyun.svideo.editor.publish.ComposeFactory;
 import com.aliyun.svideo.editor.publish.PublishActivity;
 import com.aliyun.svideo.editor.util.AlivcSnapshot;
 import com.aliyun.svideo.editor.util.Common;
@@ -101,6 +106,7 @@ import com.aliyun.svideo.editor.widget.CustomLoadingDialog;
 import com.aliyun.svideo.sdk.external.struct.AliyunIClipConstructor;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunClip;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoParam;
+import com.aliyun.svideo.sdk.external.struct.common.CropKey;
 import com.aliyun.svideo.sdk.external.struct.common.VideoDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectBase;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectBean;
@@ -117,6 +123,7 @@ import com.aliyun.svideo.sdk.external.struct.effect.TransitionTranslate;
 import com.aliyun.svideo.sdk.external.struct.encoder.VideoCodecs;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunIThumbnailFetcher;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunThumbnailFetcherFactory;
+import com.aliyun.video.common.utils.DateTimeUtils;
 import com.aliyun.video.common.utils.DensityUtils;
 import com.aliyun.video.common.utils.FastClickUtil;
 import com.duanqu.transcode.NativeParser;
@@ -139,13 +146,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
+import static com.aliyun.video.common.utils.ThreadUtils.runOnUiThread;
 
 /**
  * @author zsy_18 data:2018/8/24
  */
 public class AlivcEditView extends RelativeLayout
-    implements View.OnClickListener, OnEffectChangeListener, OnTabChangeListener,
-    OnAnimationFilterRestored {
+        implements View.OnClickListener, OnEffectChangeListener, OnTabChangeListener,
+        OnAnimationFilterRestored {
     private static final String TAG = AlivcEditView.class.getName();
     private static final String KEY_PARAM_VIDEO_PARAM = "videoParam";
     /**
@@ -313,6 +321,10 @@ public class AlivcEditView extends RelativeLayout
      * 是否替换原视频中音乐
      */
     private boolean isReplaceMusic;
+    /**
+     * progress 提示
+     */
+    private TextView tips;
 
     public AlivcEditView(Context context) {
         this(context, null);
@@ -332,7 +344,7 @@ public class AlivcEditView extends RelativeLayout
         Dispatcher.getInstance().register(this);
 
         Point point = new Point();
-        WindowManager windowManager = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getSize(point);
         mScreenWidth = point.x;
         LayoutInflater.from(getContext()).inflate(R.layout.aliyun_svideo_activity_editor, this, true);
@@ -346,15 +358,16 @@ public class AlivcEditView extends RelativeLayout
 
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
-        resCopy = (FrameLayout)findViewById(R.id.copy_res_tip);
-        mTransCodeTip = (FrameLayout)findViewById(R.id.transcode_tip);
-        mTransCodeProgress = (ProgressBar)findViewById(R.id.transcode_progress);
-        mBarLinear = (LinearLayout)findViewById(R.id.bar_linear);
+        tips = findViewById(R.id.progress_tips);
+        resCopy = (FrameLayout) findViewById(R.id.copy_res_tip);
+        mTransCodeTip = (FrameLayout) findViewById(R.id.transcode_tip);
+        mTransCodeProgress = (ProgressBar) findViewById(R.id.transcode_progress);
+        mBarLinear = (LinearLayout) findViewById(R.id.bar_linear);
         mBarLinear.bringToFront();
-        mActionBar = (RelativeLayout)findViewById(R.id.action_bar);
+        mActionBar = (RelativeLayout) findViewById(R.id.action_bar);
         mActionBar.setBackgroundDrawable(null);
-        mIvLeft = (ImageView)findViewById(R.id.iv_left);
-        mIvRight = (ImageView)findViewById(R.id.iv_right);
+        mIvLeft = (ImageView) findViewById(R.id.iv_left);
+        mIvRight = (ImageView) findViewById(R.id.iv_right);
         mIvLeft.setImageResource(R.mipmap.aliyun_svideo_back);
         //uiConfig中的属性
         UIConfigManager.setImageResourceConfig(mIvRight, R.attr.finishImage, R.mipmap.aliyun_svideo_complete_red);
@@ -363,16 +376,16 @@ public class AlivcEditView extends RelativeLayout
         mIvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Activity)getContext()).finish();
+                ((Activity) getContext()).finish();
             }
         });
-        mTvCurrTime = (TextView)findViewById(R.id.tv_curr_duration);
+        mTvCurrTime = (TextView) findViewById(R.id.tv_curr_duration);
 
-        mGlSurfaceContainer = (FrameLayout)findViewById(R.id.glsurface_view);
-        mSurfaceView = (SurfaceView)findViewById(R.id.play_view);
+        mGlSurfaceContainer = (FrameLayout) findViewById(R.id.glsurface_view);
+        mSurfaceView = (SurfaceView) findViewById(R.id.play_view);
         mBottomLinear = findViewById(R.id.edit_bottom_tab);
         setBottomTabResource();
-        mPasterContainer = (FrameLayout)findViewById(R.id.pasterView);
+        mPasterContainer = (FrameLayout) findViewById(R.id.pasterView);
 
         mPlayImage = findViewById(R.id.play_button);
         mPlayImage.setOnClickListener(this);
@@ -401,17 +414,17 @@ public class AlivcEditView extends RelativeLayout
      */
     private void setBottomTabResource() {
         TextView[] textViews = {
-            findViewById(R.id.tab_filter),
-            findViewById(R.id.tab_effect_audio_mix),
-            findViewById(R.id.tab_effect_overlay),
-            findViewById(R.id.tab_effect_caption),
-            findViewById(R.id.tab_effect_mv),
-            findViewById(R.id.tab_effect_sound),
-            findViewById(R.id.tab_effect_filter),
-            findViewById(R.id.tab_effect_time),
-            findViewById(R.id.tab_effect_transition),
-            findViewById(R.id.tab_paint),
-            findViewById(R.id.tab_cover)
+                findViewById(R.id.tab_filter),
+                findViewById(R.id.tab_effect_audio_mix),
+                findViewById(R.id.tab_effect_overlay),
+                findViewById(R.id.tab_effect_caption),
+                findViewById(R.id.tab_effect_mv),
+                findViewById(R.id.tab_effect_sound),
+                findViewById(R.id.tab_effect_filter),
+                findViewById(R.id.tab_effect_time),
+                findViewById(R.id.tab_effect_transition),
+                findViewById(R.id.tab_paint),
+                findViewById(R.id.tab_cover)
         };
         int length = textViews.length;
         int[] index = new int[length];
@@ -420,30 +433,30 @@ public class AlivcEditView extends RelativeLayout
             index[i] = 1;
         }
         int[] attrs = {
-            R.attr.filterImage,
-            R.attr.musicImage,
-            R.attr.pasterImage,
-            R.attr.captionImage,
-            R.attr.mvImage,
-            R.attr.sound,//音效
-            R.attr.effectImage,
-            R.attr.timeImage,
-            R.attr.translationImage,
-            R.attr.paintImage,
-            R.attr.coverImage
+                R.attr.filterImage,
+                R.attr.musicImage,
+                R.attr.pasterImage,
+                R.attr.captionImage,
+                R.attr.mvImage,
+                R.attr.sound,//音效
+                R.attr.effectImage,
+                R.attr.timeImage,
+                R.attr.translationImage,
+                R.attr.paintImage,
+                R.attr.coverImage
         };
         int[] defaultResourceIds = {
-            R.mipmap.aliyun_svideo_filter,
-            R.mipmap.aliyun_svideo_music,
-            R.mipmap.aliyun_svideo_overlay,
-            R.mipmap.aliyun_svideo_caption,
-            R.mipmap.aliyun_svideo_mv,
-            R.mipmap.aliyun_svideo_sound,//音效, 暂用mv icon
-            R.mipmap.alivc_svideo_effect,
-            R.mipmap.aliyun_svideo_time,
-            R.mipmap.aliyun_svideo_transition,
-            R.mipmap.aliyun_svideo_paint,
-            R.mipmap.aliyun_svideo_cover
+                R.mipmap.aliyun_svideo_filter,
+                R.mipmap.aliyun_svideo_music,
+                R.mipmap.aliyun_svideo_overlay,
+                R.mipmap.aliyun_svideo_caption,
+                R.mipmap.aliyun_svideo_mv,
+                R.mipmap.aliyun_svideo_sound,//音效, 暂用mv icon
+                R.mipmap.alivc_svideo_effect,
+                R.mipmap.aliyun_svideo_time,
+                R.mipmap.aliyun_svideo_transition,
+                R.mipmap.aliyun_svideo_paint,
+                R.mipmap.aliyun_svideo_cover
 
         };
         UIConfigManager.setImageResourceConfig(textViews, index, attrs, defaultResourceIds);
@@ -467,36 +480,36 @@ public class AlivcEditView extends RelativeLayout
         if (mVideoParam == null) {
             return;
         }
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)mGlSurfaceContainer.getLayoutParams();
-        FrameLayout.LayoutParams surfaceLayout = (FrameLayout.LayoutParams)mSurfaceView.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mGlSurfaceContainer.getLayoutParams();
+        FrameLayout.LayoutParams surfaceLayout = (FrameLayout.LayoutParams) mSurfaceView.getLayoutParams();
         int outputWidth = mVideoParam.getOutputWidth();
         int outputHeight = mVideoParam.getOutputHeight();
 
         float percent;
         if (outputWidth >= outputHeight) {
-            percent = (float)outputWidth / outputHeight;
+            percent = (float) outputWidth / outputHeight;
         } else {
-            percent = (float)outputHeight / outputWidth;
+            percent = (float) outputHeight / outputWidth;
         }
         /*
           指定surfaceView的宽高比是有必要的，这样可以避免某些非标分辨率下造成显示比例不对的问题
          */
         surfaceLayout.width = mScreenWidth;
-        surfaceLayout.height = Math.round((float)outputHeight * mScreenWidth / outputWidth);
+        surfaceLayout.height = Math.round((float) outputHeight * mScreenWidth / outputWidth);
         mPasterContainerPoint = new Point(surfaceLayout.width, surfaceLayout.height);
         ViewGroup.MarginLayoutParams marginParams = null;
         if (layoutParams instanceof MarginLayoutParams) {
-            marginParams = (ViewGroup.MarginLayoutParams)surfaceLayout;
+            marginParams = (ViewGroup.MarginLayoutParams) surfaceLayout;
         } else {
             marginParams = new MarginLayoutParams(surfaceLayout);
         }
         if (percent < 1.5) {
             marginParams.setMargins(0,
-                                    getContext().getResources().getDimensionPixelSize(R.dimen.alivc_svideo_title_height), 0, 0);
+                    getContext().getResources().getDimensionPixelSize(R.dimen.alivc_svideo_title_height), 0, 0);
         } else {
             if (outputWidth > outputHeight) {
                 marginParams.setMargins(0,
-                                        getContext().getResources().getDimensionPixelSize(R.dimen.alivc_svideo_title_height) * 2, 0, 0);
+                        getContext().getResources().getDimensionPixelSize(R.dimen.alivc_svideo_title_height) * 2, 0, 0);
             }
         }
         mGlSurfaceContainer.setLayoutParams(layoutParams);
@@ -517,23 +530,23 @@ public class AlivcEditView extends RelativeLayout
             public void onShowAnimationEnd() {
                 UIEditorPage index = UIEditorPage.get(mTabGroup.getCheckedIndex());
                 switch (index) {
-                case PAINT:
-                    //2018/8/30 添加涂鸦画布
-                    if (mCanvasController == null) {
-                        int width = mPasterContainer.getLayoutParams().width;
-                        int height = mPasterContainer.getLayoutParams().height;
-                        mCanvasController = mAliyunIEditor.obtainCanvasController(getContext(),
-                                            width, height);
-                        mCanvasController.setCurrentSize(dip2px(getContext(), 5));
-                    }
+                    case PAINT:
+                        //2018/8/30 添加涂鸦画布
+                        if (mCanvasController == null) {
+                            int width = mPasterContainer.getLayoutParams().width;
+                            int height = mPasterContainer.getLayoutParams().height;
+                            mCanvasController = mAliyunIEditor.obtainCanvasController(getContext(),
+                                    width, height);
+                            mCanvasController.setCurrentSize(dip2px(getContext(), 5));
+                        }
 
-                    mCanvasController.removeCanvas();
-                    View canvasView = mCanvasController.getCanvas();
-                    mPasterContainer.removeView(canvasView);
-                    mPasterContainer.addView(canvasView, mPasterContainer.getWidth(), mPasterContainer.getHeight());
-                    break;
-                default:
-                    break;
+                        mCanvasController.removeCanvas();
+                        View canvasView = mCanvasController.getCanvas();
+                        mPasterContainer.removeView(canvasView);
+                        mPasterContainer.addView(canvasView, mPasterContainer.getWidth(), mPasterContainer.getHeight());
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -585,7 +598,7 @@ public class AlivcEditView extends RelativeLayout
         {
             //该代码块中的操作必须在AliyunIEditor.init之前调用，否则会出现动图、动效滤镜的UI恢复回调不执行，开发者将无法恢复动图、动效滤镜UI
             mPasterManager = mAliyunIEditor.createPasterManager();
-            FrameLayout.LayoutParams surfaceLayout = (FrameLayout.LayoutParams)mSurfaceView.getLayoutParams();
+            FrameLayout.LayoutParams surfaceLayout = (FrameLayout.LayoutParams) mSurfaceView.getLayoutParams();
             /*
               指定显示区域大小后必须调用mPasterManager.setDisplaySize，否则将无法添加和恢复一些需要提前获知区域大小的资源，如字幕，动图等
               如果开发者的布局使用了wrapContent或者matchParent之类的布局，务必获取到view的真实宽高之后在调用
@@ -594,7 +607,7 @@ public class AlivcEditView extends RelativeLayout
                 mPasterManager.setDisplaySize(surfaceLayout.width, surfaceLayout.height);
             } catch (Exception e) {
                 showToast = FixedToastUtils.show(getContext(), e.getMessage());
-                ((Activity)getContext()).finish();
+                ((Activity) getContext()).finish();
                 return;
             }
             mPasterManager.setOnPasterRestoreListener(mOnPasterRestoreListener);
@@ -611,7 +624,7 @@ public class AlivcEditView extends RelativeLayout
         mAliyunIEditor.setFillBackgroundColor(Color.BLACK);
         if (ret != AliyunErrorCode.OK) {
             showToast = FixedToastUtils.show(getContext(),
-                                             getResources().getString(R.string.aliyun_svideo_editor_init_failed));
+                    getResources().getString(R.string.aliyun_svideo_editor_init_failed));
             return;
         }
         mEditorService.addTabEffect(UIEditorPage.MV, mAliyunIEditor.getMVLastApplyId());
@@ -677,14 +690,15 @@ public class AlivcEditView extends RelativeLayout
                 }
                 if (hasCaptureCover && !mSnapshop.isSnapshotting()) {
                     //如果已经选择了封面，则直接跳到下一个页面
-                    jumpToNextActivity();
+//                    jumpToNextActivity();
+                    jump();
                 } else {
                     //如果没有选择封面，则选择原视频的缩略图作为封面
                     final AliyunIThumbnailFetcher fetcher = AliyunThumbnailFetcherFactory.createThumbnailFetcher();
                     fetcher.fromConfigJson(mUri.getPath());
                     fetcher.setParameters(mAliyunIEditor.getVideoWidth(), mAliyunIEditor.getVideoHeight(),
-                                          AliyunIThumbnailFetcher.CropMode.Mediate, VideoDisplayMode.FILL, 1);
-                    fetcher.requestThumbnailImage(new long[] {0}, new AliyunIThumbnailFetcher.OnThumbnailCompletion() {
+                            AliyunIThumbnailFetcher.CropMode.Mediate, VideoDisplayMode.FILL, 1);
+                    fetcher.requestThumbnailImage(new long[]{0}, new AliyunIThumbnailFetcher.OnThumbnailCompletion() {
 
                         @Override
                         public void onThumbnailReady(Bitmap bitmap, long l) {
@@ -704,8 +718,8 @@ public class AlivcEditView extends RelativeLayout
                                     }
                                 }
                             }
-                            jumpToNextActivity();
-
+//                            jumpToNextActivity();
+                            jump();
                             fetcher.release();
                         }
 
@@ -772,10 +786,10 @@ public class AlivcEditView extends RelativeLayout
                         posY = 0f + (float)mWatermarkBitmapHeight / 1.5f / mSurfaceView.getHeight() / 2;
                     }
                     *//**
-                     * 水印例子 水印的大小为 ：水印图片的宽高和显示区域的宽高比，注意保持图片的比例，不然显示不完全
-                     * 水印的位置为 ：以水印图片中心点为基准，显示区域宽高的比例为偏移量，0,0为左上角，1,1为右下角
-                     *
-                     *//*
+         * 水印例子 水印的大小为 ：水印图片的宽高和显示区域的宽高比，注意保持图片的比例，不然显示不完全
+         * 水印的位置为 ：以水印图片中心点为基准，显示区域宽高的比例为偏移量，0,0为左上角，1,1为右下角
+         *
+         *//*
                     if (hasWaterMark) {
                         mAliyunIEditor.applyWaterMark(
                             StorageUtils.getCacheDirectory(getContext()) + "/AliyunEditorDemo/tail/logo.png",
@@ -853,10 +867,10 @@ public class AlivcEditView extends RelativeLayout
 
         //设置缩略条配置文件
         ThumbLineConfig thumbLineConfig = new ThumbLineConfig.Builder()
-        .thumbnailFetcher(mThumbnailFetcher)
-        .screenWidth(mScreenWidth)
-        .thumbPoint(thumbnailPoint)
-        .thumbnailCount(10).build();
+                .thumbnailFetcher(mThumbnailFetcher)
+                .screenWidth(mScreenWidth)
+                .thumbPoint(thumbnailPoint)
+                .thumbnailCount(10).build();
 
         if (mThumbLineBar == null) {
             mThumbLineBar = findViewById(R.id.simplethumblinebar);
@@ -925,14 +939,14 @@ public class AlivcEditView extends RelativeLayout
             //Overlay相关View
             mThumbLineOverlayView = new ThumbLineOverlay.ThumbLineOverlayView() {
                 View rootView = LayoutInflater.from(getContext()).inflate(
-                                    R.layout.aliyun_svideo_layout_timeline_overlay, null);
+                        R.layout.aliyun_svideo_layout_timeline_overlay, null);
                 View headView = rootView.findViewById(R.id.head_view);
                 View tailView = rootView.findViewById(R.id.tail_view);
                 View middleView = rootView.findViewById(R.id.middle_view);
 
                 @Override
                 public ViewGroup getContainer() {
-                    return (ViewGroup)rootView;
+                    return (ViewGroup) rootView;
                 }
 
                 @Override
@@ -1007,9 +1021,9 @@ public class AlivcEditView extends RelativeLayout
                     if (mThumbLineBar != null && mThumbLineBar.getChildCount() != 0) {
                         //这里做合成（时间和转场特效会清空paster特效）恢复 针对缩略图的覆盖效果
                         mThumbLineBar.removeOverlayByPages(
-                            UIEditorPage.CAPTION,
-                            UIEditorPage.FONT,
-                            UIEditorPage.OVERLAY
+                                UIEditorPage.CAPTION,
+                                UIEditorPage.FONT,
+                                UIEditorPage.OVERLAY
                         );
                     }
 
@@ -1070,145 +1084,145 @@ public class AlivcEditView extends RelativeLayout
 
         Log.d(TAG, "effect path " + effectInfo.getPath());
         switch (type) {
-        case AUDIO_MIX:
-            if (!effectInfo.isAudioMixBar) {
-                //重制mv和混音的音效
-                mAliyunIEditor.resetEffect(EffectType.EFFECT_TYPE_MIX);
-                mAliyunIEditor.resetEffect(EffectType.EFFECT_TYPE_MV_AUDIO);
-                if (lastMusicBean != null) {
-                    mAliyunIEditor.removeMusic(lastMusicBean);
-                }
-                lastMusicBean = new EffectBean();
-                lastMusicBean.setId(effectInfo.id);
-                lastMusicBean.setPath(effectInfo.getPath());
-
-                if (lastMusicBean.getPath() != null) {
-                    //切换音乐seek到0清音乐缓存，避免响一声
-                    lastMusicBean.setStartTime(effectInfo.startTime * 1000);//单位是us所以要x1000
-                    //lastMusicBean.setDuration(effectInfo.endTime == 0 ? Integer.MAX_VALUE
-                    //                          : (effectInfo.endTime - effectInfo.startTime) * 1000);//单位是us所以要x1000
-                    lastMusicBean.setDuration(Integer.MAX_VALUE);//设置为最大时长
-                    lastMusicBean.setStreamStartTime(effectInfo.streamStartTime * 1000);
-                    lastMusicBean.setStreamDuration(
-                        (effectInfo.streamEndTime - effectInfo.streamStartTime) * 1000);//单位是us所以要x1000
-                    effectInfo.mixId = mAliyunIEditor.applyMusic(lastMusicBean);
-                    lastMusicBean.setWeight(effectInfo.musicWeight);
-                } else {
-                    //恢复mv声音
-                    if (mLastMVEffect != null) {
-                        applyMVEffect(mLastMVEffect);
+            case AUDIO_MIX:
+                if (!effectInfo.isAudioMixBar) {
+                    //重制mv和混音的音效
+                    mAliyunIEditor.resetEffect(EffectType.EFFECT_TYPE_MIX);
+                    mAliyunIEditor.resetEffect(EffectType.EFFECT_TYPE_MV_AUDIO);
+                    if (lastMusicBean != null) {
+                        mAliyunIEditor.removeMusic(lastMusicBean);
                     }
+                    lastMusicBean = new EffectBean();
+                    lastMusicBean.setId(effectInfo.id);
+                    lastMusicBean.setPath(effectInfo.getPath());
+
+                    if (lastMusicBean.getPath() != null) {
+                        //切换音乐seek到0清音乐缓存，避免响一声
+                        lastMusicBean.setStartTime(effectInfo.startTime * 1000);//单位是us所以要x1000
+                        //lastMusicBean.setDuration(effectInfo.endTime == 0 ? Integer.MAX_VALUE
+                        //                          : (effectInfo.endTime - effectInfo.startTime) * 1000);//单位是us所以要x1000
+                        lastMusicBean.setDuration(Integer.MAX_VALUE);//设置为最大时长
+                        lastMusicBean.setStreamStartTime(effectInfo.streamStartTime * 1000);
+                        lastMusicBean.setStreamDuration(
+                                (effectInfo.streamEndTime - effectInfo.streamStartTime) * 1000);//单位是us所以要x1000
+                        effectInfo.mixId = mAliyunIEditor.applyMusic(lastMusicBean);
+                        lastMusicBean.setWeight(effectInfo.musicWeight);
+                    } else {
+                        //恢复mv声音
+                        if (mLastMVEffect != null) {
+                            applyMVEffect(mLastMVEffect);
+                        }
+                    }
+                } else {
+                    effectInfo.mixId = mAliyunIEditor.getMusicLastApplyId();
                 }
-            } else {
-                effectInfo.mixId = mAliyunIEditor.getMusicLastApplyId();
-            }
-            if (isReplaceMusic) {
-                mAliyunIEditor.applyMusicMixWeight(effectInfo.mixId, 100);
-            } else {
-                mAliyunIEditor.applyMusicMixWeight(effectInfo.mixId, effectInfo.musicWeight);
-            }
-            mAliyunIEditor.seek(0);
-            // 确定重新开始播放
-            playingResume();
-            break;
-        case FILTER_EFFECT:
-            if (effect.getPath().contains("Vertigo")) {
-                EffectFilter filter = new EffectFilter(effect.getPath());
-                mAliyunIEditor.addAnimationFilter(filter);
-            } else {
-                mAliyunIEditor.applyFilter(effect);
-            }
-            break;
+                if (isReplaceMusic) {
+                    mAliyunIEditor.applyMusicMixWeight(effectInfo.mixId, 100);
+                } else {
+                    mAliyunIEditor.applyMusicMixWeight(effectInfo.mixId, effectInfo.musicWeight);
+                }
+                mAliyunIEditor.seek(0);
+                // 确定重新开始播放
+                playingResume();
+                break;
+            case FILTER_EFFECT:
+                if (effect.getPath().contains("Vertigo")) {
+                    EffectFilter filter = new EffectFilter(effect.getPath());
+                    mAliyunIEditor.addAnimationFilter(filter);
+                } else {
+                    mAliyunIEditor.applyFilter(effect);
+                }
+                break;
 
-        case SOUND:
-            // 音效
-            break;
-        case MV:
-            //保存最后一次应用的MV，用于音乐选择无的时候恢复MV的声音
-            mLastMVEffect = effectInfo;
-            applyMVEffect(effectInfo);
+            case SOUND:
+                // 音效
+                break;
+            case MV:
+                //保存最后一次应用的MV，用于音乐选择无的时候恢复MV的声音
+                mLastMVEffect = effectInfo;
+                applyMVEffect(effectInfo);
 
-            break;
-        case CAPTION:
-            mAliyunPasterController = mPasterManager.addPaster(effectInfo.getPath());
+                break;
+            case CAPTION:
+                mAliyunPasterController = mPasterManager.addPaster(effectInfo.getPath());
 
-            if (mAliyunPasterController != null) {
-                //获取字幕中的字体
-                EffectBase effectBase = mAliyunPasterController.getEffect();
-                if (effectBase instanceof EffectCaption) {
-                    ((EffectCaption)effectBase).font = effectInfo.fontPath + "/font.ttf";
-                    mAliyunPasterController.setEffect(effectBase);
+                if (mAliyunPasterController != null) {
+                    //获取字幕中的字体
+                    EffectBase effectBase = mAliyunPasterController.getEffect();
+                    if (effectBase instanceof EffectCaption) {
+                        ((EffectCaption) effectBase).font = effectInfo.fontPath + "/font.ttf";
+                        mAliyunPasterController.setEffect(effectBase);
+                    }
+
+                    mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
+                    PasterUICaptionImpl cui = addCaption(mAliyunPasterController);
+                    if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
+                        //如果有正在编辑的paster，之前的remove
+                        mCurrentEditEffect.removePaster();
+                    }
+                    playingPause();
+                    mCurrentEditEffect = cui;
+                    mCurrentEditEffect.showTimeEdit();
+                } else {
+                    showToast = FixedToastUtils.show(getContext(), "添加字幕失败");
+                }
+                break;
+            case OVERLAY:
+                mAliyunPasterController = mPasterManager.addPaster(effectInfo.getPath());
+                if (mAliyunPasterController != null) {
+                    //add success
+                    mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
+                    PasterUIGifImpl gifui = addPaster(mAliyunPasterController);
+
+                    if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
+                        //如果有正在编辑的paster，之前的remove
+                        mCurrentEditEffect.removePaster();
+                    }
+                    playingPause();
+                    mCurrentEditEffect = gifui;
+                    mCurrentEditEffect.showTimeEdit();
+                } else {
+                    //add failed
+                    showToast = FixedToastUtils.show(getContext(), "添加动图失败");
                 }
 
-                mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
-                PasterUICaptionImpl cui = addCaption(mAliyunPasterController);
-                if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
-                    //如果有正在编辑的paster，之前的remove
-                    mCurrentEditEffect.removePaster();
+                break;
+            case FONT:
+                mAliyunPasterController = mPasterManager.addSubtitle(null, effectInfo.fontPath + "/font.ttf");
+                if (mAliyunPasterController != null) {
+                    mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
+                    PasterUITextImpl textui = addSubtitle(mAliyunPasterController, false);
+                    if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
+                        //如果有正在编辑的paster，之前的remove
+                        mCurrentEditEffect.removePaster();
+                    }
+                    playingPause();
+                    mCurrentEditEffect = textui;
+                    mCurrentEditEffect.showTimeEdit();
+                    textui.showTextEdit(mUseInvert);
+                } else {
+                    showToast = FixedToastUtils.show(getContext(), "添加文字失败");
                 }
-                playingPause();
-                mCurrentEditEffect = cui;
-                mCurrentEditEffect.showTimeEdit();
-            } else {
-                showToast = FixedToastUtils.show(getContext(), "添加字幕失败");
-            }
-            break;
-        case OVERLAY:
-            mAliyunPasterController = mPasterManager.addPaster(effectInfo.getPath());
-            if (mAliyunPasterController != null) {
-                //add success
-                mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
-                PasterUIGifImpl gifui = addPaster(mAliyunPasterController);
+                //                mCurrentEditEffect.setImageView((ImageView) findViewById(R.id.test_image));
 
-                if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
-                    //如果有正在编辑的paster，之前的remove
-                    mCurrentEditEffect.removePaster();
+                break;
+            case TIME:
+                if (effectInfo.startTime < 0) {
+                    effectInfo.startTime = mAliyunIEditor.getCurrentStreamPosition();
                 }
-                playingPause();
-                mCurrentEditEffect = gifui;
-                mCurrentEditEffect.showTimeEdit();
-            } else {
-                //add failed
-                showToast = FixedToastUtils.show(getContext(), "添加动图失败");
-            }
-
-            break;
-        case FONT:
-            mAliyunPasterController = mPasterManager.addSubtitle(null, effectInfo.fontPath + "/font.ttf");
-            if (mAliyunPasterController != null) {
-                mAliyunPasterController.setPasterStartTime(mAliyunIEditor.getCurrentStreamPosition());
-                PasterUITextImpl textui = addSubtitle(mAliyunPasterController, false);
-                if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
-                    //如果有正在编辑的paster，之前的remove
-                    mCurrentEditEffect.removePaster();
+                if (mIsTranscoding) {
+                    showToast = FixedToastUtils.show(getContext(),
+                            getResources().getString(R.string.alivc_svideo_tip_transcode_no_operate));
+                    return;
                 }
-                playingPause();
-                mCurrentEditEffect = textui;
-                mCurrentEditEffect.showTimeEdit();
-                textui.showTextEdit(mUseInvert);
-            } else {
-                showToast = FixedToastUtils.show(getContext(), "添加文字失败");
-            }
-            //                mCurrentEditEffect.setImageView((ImageView) findViewById(R.id.test_image));
+                applyTimeEffect(effectInfo);
+                break;
+            case TRANSITION:
+                setTransition(effectInfo);
 
-            break;
-        case TIME:
-            if (effectInfo.startTime < 0) {
-                effectInfo.startTime = mAliyunIEditor.getCurrentStreamPosition();
-            }
-            if (mIsTranscoding) {
-                showToast = FixedToastUtils.show(getContext(),
-                                                 getResources().getString(R.string.alivc_svideo_tip_transcode_no_operate));
-                return;
-            }
-            applyTimeEffect(effectInfo);
-            break;
-        case TRANSITION:
-            setTransition(effectInfo);
-
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
     }
 
@@ -1229,7 +1243,7 @@ public class AlivcEditView extends RelativeLayout
         String path = null;
         if (effectInfo.list != null) {
             path = Common.getMVPath(effectInfo.list, mVideoParam.getOutputWidth(),
-                                    mVideoParam.getOutputHeight());
+                    mVideoParam.getOutputHeight());
         }
         effect.setPath(path);
         int id;
@@ -1286,7 +1300,7 @@ public class AlivcEditView extends RelativeLayout
             if (effectInfo.isMoment) {
 
                 mTimeEffectOverlay = mThumbLineBar.addOverlay(effectInfo.startTime, 1000 * 1000, mThumbLineOverlayView,
-                                     0, false, UIEditorPage.TIME);
+                        0, false, UIEditorPage.TIME);
                 //mAliyunIEditor.stop();
                 //playingPause();
                 mAliyunIEditor.stop();
@@ -1294,7 +1308,7 @@ public class AlivcEditView extends RelativeLayout
                 playingResume();
             } else {
                 mTimeEffectOverlay = mThumbLineBar.addOverlay(0, 1000000000L, mThumbLineOverlayView, 0, false,
-                                     UIEditorPage.TIME);
+                        UIEditorPage.TIME);
                 //playingPause();
                 mAliyunIEditor.stop();
                 mAliyunIEditor.rate(effectInfo.timeParam, 0, 1000000000L, false);
@@ -1305,13 +1319,13 @@ public class AlivcEditView extends RelativeLayout
 
             mUseInvert = true;
             mTimeEffectOverlay = mThumbLineBar.addOverlay(0, 1000000000L, mThumbLineOverlayView, 0, false,
-                                 UIEditorPage.TIME);
+                    UIEditorPage.TIME);
             //mAliyunIEditor.stop();
             //playingPause();
             checkAndTranscode(TimeEffectType.TIME_EFFECT_TYPE_INVERT, 0, 0, 0, false);
         } else if (effectInfo.timeEffectType.equals(TimeEffectType.TIME_EFFECT_TYPE_REPEAT)) {
             mTimeEffectOverlay = mThumbLineBar.addOverlay(effectInfo.startTime, 1000 * 1000, mThumbLineOverlayView, 0,
-                                 false, UIEditorPage.TIME);
+                    false, UIEditorPage.TIME);
             //mAliyunIEditor.stop();
             //playingPause();
             checkAndTranscode(TimeEffectType.TIME_EFFECT_TYPE_REPEAT, 3, effectInfo.startTime / 1000, 1000, false);
@@ -1398,6 +1412,7 @@ public class AlivcEditView extends RelativeLayout
 
     /**
      * 是否存在录制有音乐
+     *
      * @param isHashRecordMusic boolean
      */
     public void setHasRecordMusic(boolean isHashRecordMusic) {
@@ -1406,6 +1421,7 @@ public class AlivcEditView extends RelativeLayout
 
     /**
      * 获取存在录制有音乐
+     *
      * @return boolean
      */
     public boolean isHasRecordMusic() {
@@ -1440,28 +1456,29 @@ public class AlivcEditView extends RelativeLayout
                 return;
             }
             switch (msg.what) {
-            case REVERT_TRANSITION:
-                alivcEditView.playingResume();
-                alivcEditView.stopTransitionAnimation();
-                alivcEditView.clickCancel();
-                break;
-            case ADD_TRANSITION:
-                EffectInfo effectInfo = (EffectInfo)msg.getData().getSerializable("effectInfo");
-                alivcEditView.addTransitionSuccess(effectInfo);
-                break;
+                case REVERT_TRANSITION:
+                    alivcEditView.playingResume();
+                    alivcEditView.stopTransitionAnimation();
+                    alivcEditView.clickCancel();
+                    break;
+                case ADD_TRANSITION:
+                    EffectInfo effectInfo = (EffectInfo) msg.getData().getSerializable("effectInfo");
+                    alivcEditView.addTransitionSuccess(effectInfo);
+                    break;
 
-            case SAVE_COVER:
-                //循环查询截取封面工作是否结束，结束跳转到下个页面
-                if (alivcEditView.mSnapshop.isSnapshotting()) {
-                    sendEmptyMessageDelayed(SAVE_COVER, 500);
-                } else {
-                    removeMessages(SAVE_COVER);
-                    alivcEditView.mTransitionAnimation.dismiss();
-                    alivcEditView.jumpToNextActivity();
-                }
-                break;
-            default:
-                break;
+                case SAVE_COVER:
+                    //循环查询截取封面工作是否结束，结束跳转到下个页面
+                    if (alivcEditView.mSnapshop.isSnapshotting()) {
+                        sendEmptyMessageDelayed(SAVE_COVER, 500);
+                    } else {
+                        removeMessages(SAVE_COVER);
+                        alivcEditView.mTransitionAnimation.dismiss();
+//                        alivcEditView.jumpToNextActivity();
+                        alivcEditView.jump();
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -1483,8 +1500,8 @@ public class AlivcEditView extends RelativeLayout
         mWaitForReady = true;
         stopTransitionAnimation();
         Log.d(TAG, "onTransitionPreview: index = " + effectInfo.clipIndex
-              + " ,clipStartTime = " + clipStartTime
-              + " ,duration = " + mAliyunIEditor.getDuration());
+                + " ,clipStartTime = " + clipStartTime
+                + " ,duration = " + mAliyunIEditor.getDuration());
     }
 
     @Nullable
@@ -1492,48 +1509,48 @@ public class AlivcEditView extends RelativeLayout
         TransitionBase transition = null;
         long overlapDuration = 1000 * 1000;//转场时长
         switch (effectInfo.transitionType) {
-        case TransitionChooserView.EFFECT_NONE:
-            break;
-        case TransitionChooserView.EFFECT_RIGHT:
-            transition = new TransitionTranslate();
-            transition.setOverlapDuration(overlapDuration);
-            ((TransitionTranslate)transition).setDirection(TransitionBase.DIRECTION_RIGHT);
-            break;
-        case TransitionChooserView.EFFECT_CIRCLE:
-            transition = new TransitionCircle();
-            transition.setOverlapDuration(overlapDuration);
-            break;
-        case TransitionChooserView.EFFECT_FADE:
-            transition = new TransitionFade();
-            transition.setOverlapDuration(overlapDuration);
-            break;
-        case TransitionChooserView.EFFECT_FIVE_STAR:
-            transition = new TransitionFiveStar();
-            transition.setOverlapDuration(overlapDuration);
-            break;
-        case TransitionChooserView.EFFECT_SHUTTER:
-            transition = new TransitionShutter();
-            transition.setOverlapDuration(overlapDuration);
-            ((TransitionShutter)transition).setLineWidth(0.1f);
-            ((TransitionShutter)transition).setOrientation(TransitionBase.ORIENTATION_HORIZONTAL);
-            break;
-        case TransitionChooserView.EFFECT_UP:
-            transition = new TransitionTranslate();
-            transition.setOverlapDuration(overlapDuration);
-            ((TransitionTranslate)transition).setDirection(TransitionBase.DIRECTION_UP);
-            break;
-        case TransitionChooserView.EFFECT_DOWN:
-            transition = new TransitionTranslate();
-            transition.setOverlapDuration(overlapDuration);
-            ((TransitionTranslate)transition).setDirection(TransitionBase.DIRECTION_DOWN);
-            break;
-        case TransitionChooserView.EFFECT_LEFT:
-            transition = new TransitionTranslate();
-            transition.setOverlapDuration(overlapDuration);
-            ((TransitionTranslate)transition).setDirection(TransitionBase.DIRECTION_LEFT);
-            break;
-        default:
-            break;
+            case TransitionChooserView.EFFECT_NONE:
+                break;
+            case TransitionChooserView.EFFECT_RIGHT:
+                transition = new TransitionTranslate();
+                transition.setOverlapDuration(overlapDuration);
+                ((TransitionTranslate) transition).setDirection(TransitionBase.DIRECTION_RIGHT);
+                break;
+            case TransitionChooserView.EFFECT_CIRCLE:
+                transition = new TransitionCircle();
+                transition.setOverlapDuration(overlapDuration);
+                break;
+            case TransitionChooserView.EFFECT_FADE:
+                transition = new TransitionFade();
+                transition.setOverlapDuration(overlapDuration);
+                break;
+            case TransitionChooserView.EFFECT_FIVE_STAR:
+                transition = new TransitionFiveStar();
+                transition.setOverlapDuration(overlapDuration);
+                break;
+            case TransitionChooserView.EFFECT_SHUTTER:
+                transition = new TransitionShutter();
+                transition.setOverlapDuration(overlapDuration);
+                ((TransitionShutter) transition).setLineWidth(0.1f);
+                ((TransitionShutter) transition).setOrientation(TransitionBase.ORIENTATION_HORIZONTAL);
+                break;
+            case TransitionChooserView.EFFECT_UP:
+                transition = new TransitionTranslate();
+                transition.setOverlapDuration(overlapDuration);
+                ((TransitionTranslate) transition).setDirection(TransitionBase.DIRECTION_UP);
+                break;
+            case TransitionChooserView.EFFECT_DOWN:
+                transition = new TransitionTranslate();
+                transition.setOverlapDuration(overlapDuration);
+                ((TransitionTranslate) transition).setDirection(TransitionBase.DIRECTION_DOWN);
+                break;
+            case TransitionChooserView.EFFECT_LEFT:
+                transition = new TransitionTranslate();
+                transition.setOverlapDuration(overlapDuration);
+                ((TransitionTranslate) transition).setDirection(TransitionBase.DIRECTION_LEFT);
+                break;
+            default:
+                break;
         }
         return transition;
     }
@@ -1577,17 +1594,17 @@ public class AlivcEditView extends RelativeLayout
                     int rotate = 0;
                     try {
                         rotate = Integer.parseInt(
-                                     mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION));
+                                mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION));
                         if (rotate == 90 || rotate == 270) {
                             height = Integer.parseInt(
-                                         mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                                    mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                             width = Integer.parseInt(
-                                        mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                                    mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                         } else {
                             width = Integer.parseInt(
-                                        mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                                    mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                             height = Integer.parseInt(
-                                         mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                                    mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
                         }
                     } catch (Exception e) {
                         width = mVideoParam.getOutputWidth();
@@ -1673,7 +1690,7 @@ public class AlivcEditView extends RelativeLayout
                 mTransCodeTip.setVisibility(View.GONE);
                 mAliyunIEditor.stop();
                 if (o instanceof AtomicInteger) {
-                    if (((AtomicInteger)o).get() == 0 || ((AtomicInteger)o).get() == 2) {
+                    if (((AtomicInteger) o).get() == 0 || ((AtomicInteger) o).get() == 2) {
                         if (type == TimeEffectType.TIME_EFFECT_TYPE_INVERT) {
                             mAliyunIEditor.invert();
                         } else if (type == TimeEffectType.TIME_EFFECT_TYPE_REPEAT) {
@@ -1696,7 +1713,7 @@ public class AlivcEditView extends RelativeLayout
                     bottomView.setClickable(true);
                 }
             }
-        } .execute(AsyncTask.THREAD_POOL_EXECUTOR);
+        }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -1704,56 +1721,56 @@ public class AlivcEditView extends RelativeLayout
         Log.d(TAG, "onTabChange: ");
         UIEditorPage page = UIEditorPage.get(mTabGroup.getCheckedIndex());
         switch (page) {
-        case AUDIO_MIX:
-            playingPause();
-            break;
-        case SOUND:
-            //音效。
-            break;
-        case FONT:
-        case CAPTION:
-        case OVERLAY:
-            //case穿透统一处理paster的保存，用于撤销
-            mPasterEffecCachetList.clear();
-            for (int i = 0; i < mPasterContainer.getChildCount(); i++) {
-                View childAt = mPasterContainer.getChildAt(i);
-                Object tag = childAt.getTag();
-                if (tag == null || !(tag instanceof AbstractPasterUISimpleImpl)) {
-                    //如果子pasterView的tag异常
-                    continue;
+            case AUDIO_MIX:
+                playingPause();
+                break;
+            case SOUND:
+                //音效。
+                break;
+            case FONT:
+            case CAPTION:
+            case OVERLAY:
+                //case穿透统一处理paster的保存，用于撤销
+                mPasterEffecCachetList.clear();
+                for (int i = 0; i < mPasterContainer.getChildCount(); i++) {
+                    View childAt = mPasterContainer.getChildAt(i);
+                    Object tag = childAt.getTag();
+                    if (tag == null || !(tag instanceof AbstractPasterUISimpleImpl)) {
+                        //如果子pasterView的tag异常
+                        continue;
+                    }
+                    AbstractPasterUISimpleImpl uiSimple = (AbstractPasterUISimpleImpl) tag;
+                    if (!isPasterTypeHold(page, uiSimple.getEditorPage())) {
+                        //如果paster类型与所打开的编辑页面不一致
+                        continue;
+                    }
+                    EffectBase effect = uiSimple.getController().getEffect();
+                    if (effect instanceof EffectCaption) {
+                        EffectCaption src = (EffectCaption) effect;
+                        EffectCaption copy = new EffectCaption("");
+                        src.copy(copy);
+                        mPasterEffecCachetList.add(copy);
+                    } else if (effect instanceof EffectText) {
+                        EffectText src = (EffectText) effect;
+                        EffectText copy = new EffectText("");
+                        src.copy(copy);
+                        mPasterEffecCachetList.add(copy);
+                    } else if (effect instanceof EffectPaster) {
+                        EffectPaster src = (EffectPaster) effect;
+                        EffectPaster copy = new EffectPaster("");
+                        src.copy(copy);
+                        mPasterEffecCachetList.add(copy);
+                    }
                 }
-                AbstractPasterUISimpleImpl uiSimple = (AbstractPasterUISimpleImpl)tag;
-                if (!isPasterTypeHold(page, uiSimple.getEditorPage())) {
-                    //如果paster类型与所打开的编辑页面不一致
-                    continue;
-                }
-                EffectBase effect = uiSimple.getController().getEffect();
-                if (effect instanceof EffectCaption) {
-                    EffectCaption src = (EffectCaption)effect;
-                    EffectCaption copy = new EffectCaption("");
-                    src.copy(copy);
-                    mPasterEffecCachetList.add(copy);
-                } else if (effect instanceof EffectText) {
-                    EffectText src = (EffectText)effect;
-                    EffectText copy = new EffectText("");
-                    src.copy(copy);
-                    mPasterEffecCachetList.add(copy);
-                } else if (effect instanceof EffectPaster) {
-                    EffectPaster src = (EffectPaster)effect;
-                    EffectPaster copy = new EffectPaster("");
-                    src.copy(copy);
-                    mPasterEffecCachetList.add(copy);
-                }
-            }
-            break;
-        case COVER:
-            //暂停播放并隐藏播放按钮。
-            playingPause();
-            mPlayImage.setVisibility(GONE);
-            break;
+                break;
+            case COVER:
+                //暂停播放并隐藏播放按钮。
+                playingPause();
+                mPlayImage.setVisibility(GONE);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -1768,7 +1785,7 @@ public class AlivcEditView extends RelativeLayout
         //当pageOne为动图时，page2也是动图返回true
         //当pageOne是字幕或者字体，page2也是字幕或者字体时返回true
         return pageOne == UIEditorPage.OVERLAY && page2 == UIEditorPage.OVERLAY
-               || pageOne != UIEditorPage.OVERLAY && page2 != UIEditorPage.OVERLAY;
+                || pageOne != UIEditorPage.OVERLAY && page2 != UIEditorPage.OVERLAY;
     }
 
     private List<EffectBase> mPasterEffecCachetList = new ArrayList<>();
@@ -1777,7 +1794,7 @@ public class AlivcEditView extends RelativeLayout
         int count = mPasterContainer.getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             View pv = mPasterContainer.getChildAt(i);
-            AbstractPasterUISimpleImpl uic = (AbstractPasterUISimpleImpl)pv.getTag();
+            AbstractPasterUISimpleImpl uic = (AbstractPasterUISimpleImpl) pv.getTag();
             if (uic != null && !uic.isPasterExists()) {
                 Log.e(TAG, "removePaster");
                 uic.removePaster();
@@ -1824,8 +1841,8 @@ public class AlivcEditView extends RelativeLayout
 
     private PasterUIGifImpl addPaster(AliyunPasterController controller) {
         Log.d(TAG, "add GIF");
-        AliyunPasterWithImageView pasterView = (AliyunPasterWithImageView)View.inflate(getContext(),
-                                               R.layout.aliyun_svideo_qupai_paster_gif, null);
+        AliyunPasterWithImageView pasterView = (AliyunPasterWithImageView) View.inflate(getContext(),
+                R.layout.aliyun_svideo_qupai_paster_gif, null);
 
         mPasterContainer.addView(pasterView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -1839,8 +1856,8 @@ public class AlivcEditView extends RelativeLayout
      * @return
      */
     private PasterUICaptionImpl addCaption(AliyunPasterController controller) {
-        AliyunPasterWithImageView captionView = (AliyunPasterWithImageView)View.inflate(getContext(),
-                                                R.layout.aliyun_svideo_qupai_paster_caption, null);
+        AliyunPasterWithImageView captionView = (AliyunPasterWithImageView) View.inflate(getContext(),
+                R.layout.aliyun_svideo_qupai_paster_caption, null);
         mPasterContainer.addView(captionView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         Log.d(TAG, "add 字幕");
         return new PasterUICaptionImpl(captionView, controller, mThumbLineBar, mAliyunIEditor);
@@ -1855,8 +1872,8 @@ public class AlivcEditView extends RelativeLayout
      */
     private PasterUITextImpl addSubtitle(AliyunPasterController controller, boolean restore) {
         Log.d(TAG, "add 文字");
-        AliyunPasterWithTextView captionView = (AliyunPasterWithTextView)View.inflate(getContext(),
-                                               R.layout.aliyun_svideo_qupai_paster_text, null);
+        AliyunPasterWithTextView captionView = (AliyunPasterWithTextView) View.inflate(getContext(),
+                R.layout.aliyun_svideo_qupai_paster_text, null);
         mPasterContainer.addView(captionView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         return new PasterUITextImpl(captionView, controller, mThumbLineBar, mAliyunIEditor, restore);
@@ -1894,19 +1911,19 @@ public class AlivcEditView extends RelativeLayout
             mCurrentEditEffect.editTimeCompleted();
         }
         switch (page) {
-        case COVER:
-            //改变标示，具体截图代码在mEditorCallback.onTextureRender中实现
-            isTakeFrameSelected = true;
-            hasCaptureCover = true;
+            case COVER:
+                //改变标示，具体截图代码在mEditorCallback.onTextureRender中实现
+                isTakeFrameSelected = true;
+                hasCaptureCover = true;
 
-            break;
-        case PAINT:
-            mCanvasController.confirm();
-            mCanvasController.applyPaintCanvas();
-            mPasterContainer.removeView(mCanvasController.getCanvas());
-            break;
-        default:
-            break;
+                break;
+            case PAINT:
+                mCanvasController.confirm();
+                mCanvasController.applyPaintCanvas();
+                mPasterContainer.removeView(mCanvasController.getCanvas());
+                break;
+            default:
+                break;
         }
         mViewOperate.hideBottomView();
     }
@@ -1922,90 +1939,90 @@ public class AlivcEditView extends RelativeLayout
             mCurrentEditEffect.removePaster();
         }
         switch (page) {
-        case COVER:
-            isTakeFrameSelected = false;
-            mPlayImage.setVisibility(VISIBLE);
-            break;
-        case AUDIO_MIX:
-            playingResume();
-            break;
-        case PAINT:
-            //清除当前操作
-            mCanvasController.cancel();
-            mCanvasController.applyPaintCanvas();
-            mPasterContainer.removeView(mCanvasController.getCanvas());
-            break;
-        case SOUND:
+            case COVER:
+                isTakeFrameSelected = false;
+                mPlayImage.setVisibility(VISIBLE);
+                break;
+            case AUDIO_MIX:
+                playingResume();
+                break;
+            case PAINT:
+                //清除当前操作
+                mCanvasController.cancel();
+                mCanvasController.applyPaintCanvas();
+                mPasterContainer.removeView(mCanvasController.getCanvas());
+                break;
+            case SOUND:
 
-            break;
-        case FONT:
-        case OVERLAY:
-        case CAPTION:
-            //这里做paster的撤销恢复处理
-            if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
-                mCurrentEditEffect.removePaster();
-            }
-
-            //先remove所有指定类型的paster
-            for (int i = 0; i < mPasterContainer.getChildCount(); i++) {
-                View childAt = mPasterContainer.getChildAt(i);
-                Object tag = childAt.getTag();
-                if (tag == null || !(tag instanceof AbstractPasterUISimpleImpl)) {
-                    continue;
-                }
-                AbstractPasterUISimpleImpl uiSimple = (AbstractPasterUISimpleImpl)tag;
-
-                if (isPasterTypeHold(uiSimple.getEditorPage(), page)) {
-                    // 1.Controller remove
-                    // 2.pasterContainer remove
-                    // 3.ThumbLBar remove
-                    uiSimple.removePaster();
-                    //涉及到集合遍历删除元素的问题（角标前移）
-                    i--;
+                break;
+            case FONT:
+            case OVERLAY:
+            case CAPTION:
+                //这里做paster的撤销恢复处理
+                if (mCurrentEditEffect != null && !mCurrentEditEffect.isEditCompleted()) {
+                    mCurrentEditEffect.removePaster();
                 }
 
-            }
+                //先remove所有指定类型的paster
+                for (int i = 0; i < mPasterContainer.getChildCount(); i++) {
+                    View childAt = mPasterContainer.getChildAt(i);
+                    Object tag = childAt.getTag();
+                    if (tag == null || !(tag instanceof AbstractPasterUISimpleImpl)) {
+                        continue;
+                    }
+                    AbstractPasterUISimpleImpl uiSimple = (AbstractPasterUISimpleImpl) tag;
 
-            //恢复缓存的指定类型paster
-            for (EffectBase effectBase : mPasterEffecCachetList) {
-                AliyunPasterController pasterController;
+                    if (isPasterTypeHold(uiSimple.getEditorPage(), page)) {
+                        // 1.Controller remove
+                        // 2.pasterContainer remove
+                        // 3.ThumbLBar remove
+                        uiSimple.removePaster();
+                        //涉及到集合遍历删除元素的问题（角标前移）
+                        i--;
+                    }
 
-                //获取对应的controller、（判断文件存在，避免用户删除了对应的资源后恢复时crash）
-                if (effectBase instanceof EffectCaption && new File(effectBase.getPath()).exists()) {
-                    EffectCaption effect = (EffectCaption)effectBase;
-                    pasterController = mPasterManager.addPasterWithStartTime(effect.getPath(), effect.start,
-                                       effect.end - effect.start);
-                } else if (effectBase instanceof EffectText) {
-                    EffectText effect = (EffectText)effectBase;
-                    pasterController = mPasterManager.addSubtitleWithStartTime(effect.text, effect.font,
-                                       effect.start, effect.end - effect.start);
-                } else if (effectBase instanceof EffectPaster && new File(effectBase.getPath()).exists()) {
-                    EffectPaster effect = (EffectPaster)effectBase;
-                    pasterController = mPasterManager.addPasterWithStartTime(effect.getPath(), effect.start,
-                                       effect.end - effect.start);
-                } else {
-                    continue;
                 }
-                pasterController.setEffect(effectBase);
-                //锁定参数（避免被设置effectBase参数被冲掉）
-                pasterController.setRevert(true);
-                if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_GIF) {
-                    mCurrentEditEffect = addPaster(pasterController);
-                } else if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_TEXT) {
-                    mCurrentEditEffect = addSubtitle(pasterController, true);
-                } else if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_CAPTION) {
-                    mCurrentEditEffect = addCaption(pasterController);
-                }
-                mCurrentEditEffect.showTimeEdit();
-                mCurrentEditEffect.editTimeStart();
-                mCurrentEditEffect.moveToCenter();
-                mCurrentEditEffect.editTimeCompleted();
-                pasterController.setRevert(false);
-            }
 
-            break;
-        default:
-            break;
+                //恢复缓存的指定类型paster
+                for (EffectBase effectBase : mPasterEffecCachetList) {
+                    AliyunPasterController pasterController;
+
+                    //获取对应的controller、（判断文件存在，避免用户删除了对应的资源后恢复时crash）
+                    if (effectBase instanceof EffectCaption && new File(effectBase.getPath()).exists()) {
+                        EffectCaption effect = (EffectCaption) effectBase;
+                        pasterController = mPasterManager.addPasterWithStartTime(effect.getPath(), effect.start,
+                                effect.end - effect.start);
+                    } else if (effectBase instanceof EffectText) {
+                        EffectText effect = (EffectText) effectBase;
+                        pasterController = mPasterManager.addSubtitleWithStartTime(effect.text, effect.font,
+                                effect.start, effect.end - effect.start);
+                    } else if (effectBase instanceof EffectPaster && new File(effectBase.getPath()).exists()) {
+                        EffectPaster effect = (EffectPaster) effectBase;
+                        pasterController = mPasterManager.addPasterWithStartTime(effect.getPath(), effect.start,
+                                effect.end - effect.start);
+                    } else {
+                        continue;
+                    }
+                    pasterController.setEffect(effectBase);
+                    //锁定参数（避免被设置effectBase参数被冲掉）
+                    pasterController.setRevert(true);
+                    if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_GIF) {
+                        mCurrentEditEffect = addPaster(pasterController);
+                    } else if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_TEXT) {
+                        mCurrentEditEffect = addSubtitle(pasterController, true);
+                    } else if (pasterController.getPasterType() == EffectPaster.PASTER_TYPE_CAPTION) {
+                        mCurrentEditEffect = addCaption(pasterController);
+                    }
+                    mCurrentEditEffect.showTimeEdit();
+                    mCurrentEditEffect.editTimeStart();
+                    mCurrentEditEffect.moveToCenter();
+                    mCurrentEditEffect.editTimeCompleted();
+                    pasterController.setRevert(false);
+                }
+
+                break;
+            default:
+                break;
         }
 
         mViewOperate.hideBottomView();
@@ -2050,8 +2067,8 @@ public class AlivcEditView extends RelativeLayout
      * @param scaleSize 缩小比率
      */
     public void setPasterDisplayScale(float scaleSize) {
-        mPasterManager.setDisplaySize((int)(mPasterContainerPoint.x * scaleSize),
-                                      (int)(mPasterContainerPoint.y * scaleSize));
+        mPasterManager.setDisplaySize((int) (mPasterContainerPoint.x * scaleSize),
+                (int) (mPasterContainerPoint.y * scaleSize));
     }
 
     private class MyOnGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -2089,7 +2106,7 @@ public class AlivcEditView extends RelativeLayout
                     int count = mPasterContainer.getChildCount();
                     for (int i = count - 1; i >= 0; i--) {
                         View pv = mPasterContainer.getChildAt(i);
-                        AbstractPasterUISimpleImpl uic = (AbstractPasterUISimpleImpl)pv.getTag();
+                        AbstractPasterUISimpleImpl uic = (AbstractPasterUISimpleImpl) pv.getTag();
 
                         if (uic != null && bottomView.isHostPaster(uic)) {
                             if (uic.isVisibleInTime(mAliyunIEditor.getCurrentStreamPosition())
@@ -2107,7 +2124,7 @@ public class AlivcEditView extends RelativeLayout
                                 break;
                             } else {
                                 if (mCurrentEditEffect != uic && uic.isVisibleInTime(
-                                            mAliyunIEditor.getCurrentStreamPosition())) {
+                                        mAliyunIEditor.getCurrentStreamPosition())) {
                                     uic.editTimeCompleted();
                                 }
                             }
@@ -2208,10 +2225,10 @@ public class AlivcEditView extends RelativeLayout
             if (mCurrentEditEffect != null) {
                 Log.d(TAG, "mCurrentEditEffect != null");
                 shouldDrag = !mCurrentEditEffect.isEditCompleted()
-                             && mCurrentEditEffect.contentContains(e.getX(), e.getY())
-                             && mCurrentEditEffect.isVisibleInTime(mAliyunIEditor.getCurrentStreamPosition()
+                        && mCurrentEditEffect.contentContains(e.getX(), e.getY())
+                        && mCurrentEditEffect.isVisibleInTime(mAliyunIEditor.getCurrentStreamPosition()
 
-                                                                  );
+                );
             } else {
                 shouldDrag = false;
 
@@ -2228,10 +2245,10 @@ public class AlivcEditView extends RelativeLayout
 
     private String convertDuration2Text(long duration) {
         mDurationText.delete(0, mDurationText.length());
-        float relSec = (float)duration / (1000 * 1000);// us -> s
-        int min = (int)((relSec % 3600) / 60);
+        float relSec = (float) duration / (1000 * 1000);// us -> s
+        int min = (int) ((relSec % 3600) / 60);
         int sec = 0;
-        sec = (int)(relSec % 60);
+        sec = (int) (relSec % 60);
         if (min >= 10) {
             mDurationText.append(min);
         } else {
@@ -2284,7 +2301,7 @@ public class AlivcEditView extends RelativeLayout
      * 设置转场的预览监听
      */
     private TransitionChooserView.OnPreviewListener mOnTransitionPreviewListener = new TransitionChooserView
-    .OnPreviewListener() {
+            .OnPreviewListener() {
         @Override
         public void onPreview(int clipIndex, long leadTime, boolean isStop) {
             //提前一秒
@@ -2294,8 +2311,8 @@ public class AlivcEditView extends RelativeLayout
             mAliyunIEditor.seek(advanceTime);
             playingResume();
             Log.d(TAG, "onTransitionPreview: index = " + clipIndex
-                  + " ,clipStartTime = " + clipStartTime
-                  + " ,duration = " + mAliyunIEditor.getDuration());
+                    + " ,clipStartTime = " + clipStartTime
+                    + " ,duration = " + mAliyunIEditor.getDuration());
         }
     };
 
@@ -2359,18 +2376,18 @@ public class AlivcEditView extends RelativeLayout
         //切换到特效的tab需要暂停播放，切换到滤镜的tab需要恢复播放
         if (mAliyunIEditor != null) {
             switch (ft.getPosition()) {
-            case FilterTabClick.POSITION_ANIMATION_FILTER:
-                if (mAliyunIEditor.isPlaying()) {
-                    playingPause();
-                }
-                break;
-            case FilterTabClick.POSITION_COLOR_FILTER:
-                if (!mAliyunIEditor.isPlaying()) {
-                    playingResume();
-                }
-                break;
-            default:
-                break;
+                case FilterTabClick.POSITION_ANIMATION_FILTER:
+                    if (mAliyunIEditor.isPlaying()) {
+                        playingPause();
+                    }
+                    break;
+                case FilterTabClick.POSITION_COLOR_FILTER:
+                    if (!mAliyunIEditor.isPlaying()) {
+                        playingResume();
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -2392,7 +2409,7 @@ public class AlivcEditView extends RelativeLayout
                 mAliyunIEditor.removeAudioEffect(allClips.get(i).getId(), oldInfo.audioEffectType);
                 if (effectInfo != null && effectInfo.id != -1) {
                     mAliyunIEditor.audioEffect(allClips.get(i).getId(), effectInfo.audioEffectType,
-                                               effectInfo.soundWeight);
+                            effectInfo.soundWeight);
                 }
             }
         } else {
@@ -2434,64 +2451,64 @@ public class AlivcEditView extends RelativeLayout
                 @Override
                 public void run() {
                     switch (errorCode) {
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_WRONG_STATE:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_PROCESS_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_NO_FREE_DISK_SPACE:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_CREATE_DECODE_GOP_TASK_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_AUDIO_STREAM_DECODER_INIT_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_VIDEO_STREAM_DECODER_INIT_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_WRONG_STATE:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_PROCESS_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_NO_FREE_DISK_SPACE:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_CREATE_DECODE_GOP_TASK_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_AUDIO_STREAM_DECODER_INIT_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_VIDEO_STREAM_DECODER_INIT_FAILED:
 
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_QUEUE_FULL_WARNING:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_SPS_PPS_NULL:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_H264_PARAM_SET_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_HEVC_PARAM_SET_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_QUEUE_EMPTY_WARNING:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_DECODER_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_STATE:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_INPUT:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_NO_BUFFER_AVAILABLE:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_QUEUE_FULL_WARNING:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_SPS_PPS_NULL:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_H264_PARAM_SET_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_HEVC_PARAM_SET_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_QUEUE_EMPTY_WARNING:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_CREATE_DECODER_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_STATE:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_INPUT:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_NO_BUFFER_AVAILABLE:
 
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_DECODE_SPS:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_QUEUE_EMPTY_WARNING:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_QUEUE_FULL_WARNING:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_CREATE_DECODER_FAILED:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_STATE:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_INPUT:
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_NO_BUFFER_AVAILABLE:
-                        showToast = FixedToastUtils.show(getContext(), "错误码是" + errorCode);
-                        ((Activity)getContext()).finish();
-                        break;
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_CACHE_DATA_SIZE_OVERFLOW:
-                        showToast = FixedToastUtils.show(getContext(), "错误码是" + errorCode);
-                        mThumbLineBar.restart();
-                        mAliyunIEditor.play();
-                        break;
-                    case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_AUDIO:
-                        showToast = FixedToastUtils.show(getContext(),
-                                                         getResources().getString(R.string.not_supported_audio));
-                        ((Activity)getContext()).finish();
-                        break;
-                    case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_VIDEO:
-                        showToast = FixedToastUtils.show(getContext(),
-                                                         getResources().getString(R.string.not_supported_video));
-                        ((Activity)getContext()).finish();
-                        break;
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_STREAM_NOT_EXISTS:
-                    case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_PIXEL_FORMAT:
-                        showToast = FixedToastUtils.show(getContext(),
-                                                         getResources().getString(R.string.not_supported_pixel_format));
-                        ((Activity)getContext()).finish();
-                        break;
-                    case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_INTERRUPT:
-                        showToast = FixedToastUtils.show(getContext(),
-                                                         getResources().getString(R.string.decoder_error_interrupt));
-                        ((Activity)getContext()).finish();
-                        break;
-                    default:
-                        showToast = FixedToastUtils.show(getContext(),
-                                                         getResources().getString(R.string.play_video_error));
-                        ((Activity)getContext()).finish();
-                        break;
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_DECODE_SPS:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_QUEUE_EMPTY_WARNING:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_QUEUE_FULL_WARNING:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_CREATE_DECODER_FAILED:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_STATE:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_INPUT:
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_AUDIO_DECODER_ERROR_NO_BUFFER_AVAILABLE:
+                            showToast = FixedToastUtils.show(getContext(), "错误码是" + errorCode);
+                            ((Activity) getContext()).finish();
+                            break;
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_CACHE_DATA_SIZE_OVERFLOW:
+                            showToast = FixedToastUtils.show(getContext(), "错误码是" + errorCode);
+                            mThumbLineBar.restart();
+                            mAliyunIEditor.play();
+                            break;
+                        case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_AUDIO:
+                            showToast = FixedToastUtils.show(getContext(),
+                                    getResources().getString(R.string.not_supported_audio));
+                            ((Activity) getContext()).finish();
+                            break;
+                        case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_VIDEO:
+                            showToast = FixedToastUtils.show(getContext(),
+                                    getResources().getString(R.string.not_supported_video));
+                            ((Activity) getContext()).finish();
+                            break;
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_MEDIA_POOL_STREAM_NOT_EXISTS:
+                        case AliyunErrorCode.ERROR_MEDIA_NOT_SUPPORTED_PIXEL_FORMAT:
+                            showToast = FixedToastUtils.show(getContext(),
+                                    getResources().getString(R.string.not_supported_pixel_format));
+                            ((Activity) getContext()).finish();
+                            break;
+                        case AliyunEditorErrorCode.ALIVC_FRAMEWORK_VIDEO_DECODER_ERROR_INTERRUPT:
+                            showToast = FixedToastUtils.show(getContext(),
+                                    getResources().getString(R.string.decoder_error_interrupt));
+                            ((Activity) getContext()).finish();
+                            break;
+                        default:
+                            showToast = FixedToastUtils.show(getContext(),
+                                    getResources().getString(R.string.play_video_error));
+                            ((Activity) getContext()).finish();
+                            break;
                     }
                 }
             });
@@ -2557,24 +2574,24 @@ public class AlivcEditView extends RelativeLayout
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-        case KEYCODE_VOLUME_DOWN:
-            mVolume -= 5;
-            if (mVolume < 0) {
-                mVolume = 0;
-            }
-            Log.d("xxffdd", "volume down, current volume = " + mVolume);
-            mAliyunIEditor.setVolume(mVolume);
-            return true;
-        case KEYCODE_VOLUME_UP:
-            mVolume += 5;
-            if (mVolume > 100) {
-                mVolume = 100;
-            }
-            Log.d("xxffdd", "volume up, current volume = " + mVolume);
-            mAliyunIEditor.setVolume(mVolume);
-            return true;
-        default:
-            return super.onKeyDown(keyCode, event);
+            case KEYCODE_VOLUME_DOWN:
+                mVolume -= 5;
+                if (mVolume < 0) {
+                    mVolume = 0;
+                }
+                Log.d("xxffdd", "volume down, current volume = " + mVolume);
+                mAliyunIEditor.setVolume(mVolume);
+                return true;
+            case KEYCODE_VOLUME_UP:
+                mVolume += 5;
+                if (mVolume > 100) {
+                    mVolume = 100;
+                }
+                Log.d("xxffdd", "volume up, current volume = " + mVolume);
+                mAliyunIEditor.setVolume(mVolume);
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
         }
     }
 
@@ -2595,7 +2612,7 @@ public class AlivcEditView extends RelativeLayout
         //当删除使用的MV的时候，会发生崩溃，所以在次判断一下mv是否被删除
         if (mLastMVEffect != null) {
             String path = Common.getMVPath(mLastMVEffect.list, mVideoParam.getOutputWidth(),
-                                           mVideoParam.getOutputHeight());
+                    mVideoParam.getOutputHeight());
 
             if (!TextUtils.isEmpty(path) && !new File(path).exists()) {
                 applyMVEffect(new EffectInfo());
@@ -2697,7 +2714,7 @@ public class AlivcEditView extends RelativeLayout
         if (mIsTranscoding) {
             //转码过程中无法操作
             showToast = FixedToastUtils.show(getContext(),
-                                             getResources().getString(R.string.alivc_svideo_tip_transcode_no_operate));
+                    getResources().getString(R.string.alivc_svideo_tip_transcode_no_operate));
             return true;
         }
         if (mViewOperate != null) {
@@ -2770,13 +2787,13 @@ public class AlivcEditView extends RelativeLayout
         // 通过页面跳转的配置，获取需要跳转到的activity
         Intent intent = new Intent(getContext(), PublishActivity.class);
         String className = AliyunSvideoActionConfig.getInstance().getAction().getTagClassName(
-                               ActionInfo.SVideoAction.PUBLISH_TARGET_CLASSNAME);
+                ActionInfo.SVideoAction.PUBLISH_TARGET_CLASSNAME);
         intent.setClassName(getContext(), className);
         intent.putExtra(PublishActivity.KEY_PARAM_THUMBNAIL, PATH_THUMBNAIL);
         intent.putExtra(PublishActivity.KEY_PARAM_CONFIG, mUri.getPath());
         //传入视频比列
         intent.putExtra(PublishActivity.KEY_PARAM_VIDEO_RATIO,
-                        ((float)mPasterContainerPoint.x) / mPasterContainerPoint.y);
+                ((float) mPasterContainerPoint.x) / mPasterContainerPoint.y);
         intent.putExtra(PublishActivity.KEY_PARAM_VIDEO_WIDTH, mAliyunIEditor.getVideoWidth());
         intent.putExtra(PublishActivity.KEY_PARAM_VIDEO_HEIGHT, mAliyunIEditor.getVideoHeight());
         intent.putExtra(KEY_PARAM_VIDEO_PARAM, mVideoParam);
@@ -2785,5 +2802,74 @@ public class AlivcEditView extends RelativeLayout
             mIvRight.setEnabled(true);
         }
     }
+
+    /////////////////////////////// 合成视屏 ///////////////////////////////////
+
+    private AliyunIVodCompose mCompose;
+    String mOutputPath = "";
+
+    private void jump() {
+        resCopy.setVisibility(VISIBLE);
+        tips.setText("合成中...");
+        mCompose = ComposeFactory.INSTANCE.getAliyunVodCompose();
+        mCompose.init(getContext());
+        //开始合成
+
+        String time = DateTimeUtils.getDateTimeFromMillisecond(System.currentTimeMillis());
+        mOutputPath = Constants.SDCardConstants.OUTPUT_PATH_DIR + time + Constants.SDCardConstants.COMPOSE_SUFFIX;
+        int ret = mCompose.compose(mUri.getPath(), mOutputPath, mCallback);
+        if (ret != AliyunErrorCode.OK) {
+            Toast.makeText(getContext(), "合成失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    private final AliyunIComposeCallBack mCallback = new AliyunIComposeCallBack() {
+        @Override
+
+        public void onComposeError(int errorCode) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //合成失败
+                    if (resCopy != null) {
+                        resCopy.setVisibility(GONE);
+                    }
+
+                    Toast.makeText(getContext(), "合成失败", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public void onComposeProgress(final int progress) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //合成进度
+                }
+            });
+        }
+
+        @Override
+        public void onComposeCompleted() {
+            MediaScannerConnection.scanFile(getContext(),
+                    new String[]{mOutputPath}, new String[]{"video/mp4"}, null);
+            //合成成功
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent();
+                    intent.setClassName(getContext(), "com.yuejian.meet.activities.creation.PulishActivity");
+                    intent.putExtra(CropKey.RESULT_KEY_CROP_PATH, mOutputPath);
+                    getContext().startActivity(intent);
+                    ((Activity) getContext()).finish();
+                }
+            });
+
+        }
+    };
+
+
 }
 

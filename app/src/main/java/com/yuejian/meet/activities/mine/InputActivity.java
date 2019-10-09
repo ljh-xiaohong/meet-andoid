@@ -214,6 +214,7 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
     }
 
     private void send() {
+        tvSend.setClickable(false);
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
         params.put("crId", crId);
@@ -223,6 +224,7 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
             @Override
             public void onSuccess(String data, int id) {
                 if (reference.get() == null || reference.get().isFinishing()) return;
+                tvSend.setClickable(true);
                 content.setText("");
                 content.setHint("留下你的评论吧~");
                 emojicons.setVisibility(View.GONE);
@@ -236,6 +238,7 @@ public class InputActivity extends FragmentActivity implements EmojiconGridFragm
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
                 if (reference.get() == null || reference.get().isFinishing()) return;
+                tvSend.setClickable(true);
                 Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show();
             }
         });

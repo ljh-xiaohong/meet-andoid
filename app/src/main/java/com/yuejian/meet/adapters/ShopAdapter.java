@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aliyun.svideo.editor.editor.EditorActivity;
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.ShopEntity;
@@ -66,6 +68,9 @@ public class ShopAdapter extends BaseAdapter<ShopAdapter.ViewHolder, ShopEntity>
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(view -> {
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
                 if (listener != null) {
                     listener.onItemClick(itemView, getAdapterPosition());
                 }
