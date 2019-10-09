@@ -4,6 +4,7 @@
 
 package com.aliyun.svideo.base.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 
 import com.aliyun.svideo.base.R;
 
+@SuppressLint("AppCompatCustomView")
 public class RoundSquareView extends ImageView {
     private Paint paint;
     private int roundWidth = 5;

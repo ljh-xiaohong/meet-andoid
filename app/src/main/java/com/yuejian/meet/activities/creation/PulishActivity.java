@@ -102,6 +102,7 @@ public class PulishActivity extends BaseActivity {
     @Bind(R.id.activity_publish_protocol)
     View protocol;
 
+
     private LoadingDialogFragment mLoadingDialog;
 
     private ShopEntity good;
@@ -124,6 +125,7 @@ public class PulishActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
+        checkShop();
         setContentView(R.layout.activity_publish);
         getDataFromNet();
         initListener();
@@ -232,6 +234,32 @@ public class PulishActivity extends BaseActivity {
         mTagFlowLayout.setOnItemClickListener(view -> {
             if (initTag.isChecked()) initTag.setChecked(false);
         });
+    }
+
+    /**
+     * 是否有店铺
+     */
+    private void checkShop() {
+        Map<String, Object> param = new HashMap<>();
+        param.put("customerId", AppConfig.CustomerId);
+        apiImp.findCustomerBaseInfo(param, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                if (checkIsLife()) return;
+                if (data == null) return;
+                if (JSON.parseObject(data) == null || !JSON.parseObject(data).getString("code").equals("0"))
+                    return;
+                JSONObject jo = JSON.parseObject(JSON.parseObject(data).getString("data"));
+                if (!jo.getString("vipType").equals("1")) return;
+                if (jo.containsKey("shopId")) shopLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
+
     }
 
     /**

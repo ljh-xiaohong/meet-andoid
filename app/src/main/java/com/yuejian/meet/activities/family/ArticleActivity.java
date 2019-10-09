@@ -669,6 +669,7 @@ public class ArticleActivity extends BaseActivity {
 
                     case 19983:
                     case 19981:
+                    case -1:
                         ViewInject.shortToast(mContext, jo.getString("message"));
                         break;
                 }

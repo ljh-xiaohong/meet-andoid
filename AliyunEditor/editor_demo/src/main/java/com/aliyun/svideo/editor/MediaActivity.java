@@ -77,7 +77,7 @@ public class MediaActivity extends Activity implements View.OnClickListener {
     private int mCropPosition;
     private boolean mIsReachedMaxDuration = false;
 
-    private Button mBtnNextStep;
+    private TextView mBtnNextStep;
     private AlivcSvideoEditParam mSvideoParam;
 
     /**
@@ -200,7 +200,7 @@ public class MediaActivity extends Activity implements View.OnClickListener {
                 });
             }
         });
-        mBtnNextStep = (Button)findViewById(R.id.btn_next_step);
+        mBtnNextStep = (TextView)findViewById(R.id.btn_next_step);
         RecyclerView galleryView = (RecyclerView) findViewById(R.id.gallery_media);
         title = (TextView)findViewById(R.id.gallery_title);
         title.setText(R.string.gallery_all_media);

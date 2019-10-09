@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -28,7 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreationActivity extends FragmentActivity implements ViewPager.OnPageChangeListener, CreationTitleView.OnTitleViewClickListener, View.OnClickListener {
+public class CreationActivity extends BaseActivity implements ViewPager.OnPageChangeListener, CreationTitleView.OnTitleViewClickListener, View.OnClickListener {
     protected int activityCloseEnterAnimation;
     protected int activityCloseExitAnimation;
     @Bind(R.id.family_circle_title_view)
@@ -46,7 +47,7 @@ public class CreationActivity extends FragmentActivity implements ViewPager.OnPa
     @Bind(R.id.back)
     LinearLayout back;
 
-    Context mContext;
+//    Context mContext;
 
 
     private PosterFragment recommendFragment;
@@ -57,8 +58,8 @@ public class CreationActivity extends FragmentActivity implements ViewPager.OnPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_activity);
-        mContext = this;
-        ButterKnife.bind(this);
+//        mContext = this;
+//        ButterKnife.bind(this);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
 //        mFragmentList.add(followFragment = new VideoTemplate());
         mFragmentList.add(recommendFragment = new PosterFragment());

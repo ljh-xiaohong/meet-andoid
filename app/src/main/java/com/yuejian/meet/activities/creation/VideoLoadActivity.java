@@ -60,6 +60,7 @@ import com.aliyun.svideo.base.UIConfigManager;
 import com.aliyun.svideo.base.widget.ProgressDialog;
 import com.aliyun.svideo.base.widget.beauty.enums.BeautyLevel;
 import com.aliyun.svideo.base.widget.beauty.listener.OnBeautyFaceItemSeletedListener;
+import com.aliyun.svideo.editor.MediaActivity;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoClip;
 import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoParam;
@@ -1113,7 +1114,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
             videoPath = SDCardConstants.OUTPUT_PATH_DIR + File.separator + System.currentTimeMillis() + "-record.mp4";
             mRecorder.setOutputPath(videoPath);
             mRecorder.startRecording();
-            setVisibility(View.GONE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn,mPicker,rg_speed);
+            setVisibility(View.GONE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_musicBtn, v_PasterBtn, v_lvjingBtn, mPicker, rg_speed);
             mIsBackground = true;
 
         }
@@ -1188,7 +1189,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
 
     }
 
-    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn, R.id.tv_next_btn, R.id.tv_activity_video_load_speed})
+    @OnClick({R.id.tv_activity_video_load_return, R.id.tv_lvjing_btn, R.id.tv_paster_btn, R.id.tv_activity_video_load_countdown, R.id.iv_activity_video_load_back, R.id.tv_music_btn, R.id.tv_next_btn, R.id.tv_activity_video_load_speed, R.id.tv_upload_btn})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -1225,6 +1226,11 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
                 break;
             case R.id.tv_activity_video_load_speed:
                 showSpeed();
+                break;
+
+            case R.id.tv_upload_btn:
+                Intent intent = new Intent(this, MediaActivity.class);
+                startActivity(intent);
                 break;
         }
     }
