@@ -451,7 +451,7 @@
             android:name="JPUSH_APPKEY"
             android:value="f825e41b35c0dd3528eb89d8" />
 
-
+        <!--友盟 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -469,7 +469,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
-
+        <!--友盟 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

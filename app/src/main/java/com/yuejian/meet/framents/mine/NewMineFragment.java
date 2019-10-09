@@ -37,6 +37,8 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.family.ArticleActivity;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
@@ -185,6 +187,20 @@ public class NewMineFragment extends BaseFragment {
                 isVIP=false;
                 doInCash(customerId,silverIngot,amount,payType);
                 return true;//表示我已经处理过了
+            }else if (url.contains("yuejian://articleVideo")){ //视频文章跳转
+                String[] s=url.split("&");
+                String id=s[0].split("=")[1];
+                String type=s[1].split("=")[1];
+                String coverSizetype="";
+                if (s[2].split("=").length>1){
+                    coverSizetype=s[2].split("=")[1];
+                }
+                if (type.equals("2")){
+                    VideoActivity.startActivity(mContext, id+ "", AppConfig.CustomerId, Integer.parseInt(coverSizetype) == 0 ? true : false);
+                }else if (type.equals("1")){
+                    ArticleActivity.startActivity(mContext, id + "", AppConfig.CustomerId);
+                }
+                return true;//表示我已经处理过了
             }else if (url.contains("yuejian://upgradeVip")){ //vip升级
                 String[] s=url.split("&");
                 String customerId=s[0].split("=")[1];
@@ -249,6 +265,8 @@ public class NewMineFragment extends BaseFragment {
                     ClipboardManager cmb = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                     cmb.setText(shareUrl);
                     Toast.makeText(getActivity(),"已复制",Toast.LENGTH_LONG).show();
+                }else {
+                    Utils.umengShareByList(getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
                 }
                 return true;//表示我已经处理过了
             }
