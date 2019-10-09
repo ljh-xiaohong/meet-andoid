@@ -20,10 +20,10 @@
                 android:layout_height="wrap_content"
                 android:text="联系客服"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/black3"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
             <ImageView
                 android:id="@+id/cancel_img"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/dp_64"
-            android:textSize="27sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:layout_marginLeft="@dimen/dp_40"
             android:layout_marginRight="@dimen/dp_40"
@@ -57,10 +57,9 @@
         <LinearLayout
             android:id="@+id/btn_lay"
             android:layout_width="match_parent"
-            android:layout_height="147px"
+            android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/dp_60"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="50dp"
             android:background="@null"
             android:gravity="center"
             android:orientation="horizontal" >

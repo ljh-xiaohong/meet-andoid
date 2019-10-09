@@ -6,25 +6,33 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
-import com.netease.nim.uikit.common.fragment.TabFragment;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.adapters.PrecisePushAdapter;
-import com.yuejian.meet.adapters.PrecisePushContentAdapter;
-import com.yuejian.meet.adapters.ServiceAdapter;
+import com.yuejian.meet.api.DataIdCallback;
+import com.yuejian.meet.api.http.ApiImp;
+import com.yuejian.meet.bean.BaiJiaSourceBean;
+import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.SecretaryTitleView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 精准推送
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :
@@ -37,8 +45,10 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     SecretaryTitleView mSecretaryTitleView;
     @Bind(R.id.id_stickynavlayout_viewpager)
     ViewPager mViewPager;
+    @Bind(R.id.statistics_img)
+    ImageView statisticsImg;
     private FragmentPagerAdapter mAdapter;
-
+    public ApiImp apiImp = new ApiImp();
 
     //是否可见
     public boolean isVisible = false;
@@ -78,9 +88,34 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
         ButterKnife.bind(this, view);
         return view;
     }
+    //获取统计图
+    private void initImgData() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerId", AppConfig.CustomerId);
+        apiImp.getBaiJiaSource(params, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                BaiJiaSourceBean bean = new Gson().fromJson(data, BaiJiaSourceBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                    return;
+                }
+                if (!TextUtils.isEmpty(bean.getData().getImage())) {
+                    Glide.with(getActivity()).load(bean.getData().getImage()).into(statisticsImg);
+                }else {
+                    Glide.with(getActivity()).load(R.mipmap.default_pic).into(statisticsImg);
+                }
+            }
 
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+                ViewInject.shortToast(getActivity(), errMsg);
+            }
+        });
+    }
     private void initDatas()
     {
+        initImgData();
         mSecretaryTitleView.setOnTitleViewClickListener(this);
         mSecretaryTitleView.setSelectedTitle(0);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
@@ -101,7 +136,6 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
             }
 
         };
-
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);

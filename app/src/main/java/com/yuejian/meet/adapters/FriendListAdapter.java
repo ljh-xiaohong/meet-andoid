@@ -2,6 +2,7 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
@@ -61,6 +65,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         String headUrl = entity.getPhoto();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.shop_img);
+        }else {
+            Glide.with(mContext).load(R.mipmap.user_account_pictures).into(holder.shop_img);
         }
         if (!CommonUtil.isNull(entity.getVipType())&&Integer.parseInt(entity.getVipType())==1) {
             holder.name_type.setVisibility(View.VISIBLE);
@@ -109,6 +115,22 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         }
 
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
+
+        holder.shop_img.setOnClickListener(v -> {
+            String urlVip = "";
+            if (entity.getVipType().equals("0")) {
+                //非VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            } else {
+                //VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+            }
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, entity.getCustomerId());
+            Intent intent = new Intent(mContext, WebActivity.class);
+            intent.putExtra(Constants.URL, urlVip);
+            intent.putExtra("No_Title", true);
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

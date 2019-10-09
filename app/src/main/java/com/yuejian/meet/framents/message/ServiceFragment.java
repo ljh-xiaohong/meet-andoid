@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.message;
 
+import android.app.Service;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.bean.ResultBean;
+import com.yuejian.meet.bean.ServiceBean;
 import com.yuejian.meet.utils.ViewInject;
 
 import java.util.ArrayList;
@@ -75,17 +77,16 @@ public class ServiceFragment extends Fragment{
     }
 
     public ApiImp apiImp = new ApiImp();
-    List<NewFriendBean.DataBean> mList = new ArrayList<>();
+    List<ServiceBean.DataBean> mList = new ArrayList<>();
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId", AppConfig.CustomerId);
-        params.put("type", 2);
-        apiImp.getRelation(params, this, new DataIdCallback<String>() {
+        params.put("customerId",AppConfig.CustomerId);
+        apiImp.getBaiJiaService(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 mList.clear();
-                NewFriendBean bean = new Gson().fromJson(data, NewFriendBean.class);
+                ServiceBean bean = new Gson().fromJson(data, ServiceBean.class);
                 if (bean.getCode() != 0) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
@@ -121,35 +122,27 @@ public class ServiceFragment extends Fragment{
     }
 
     private void initView() {
-        mFansAdapter = new ServiceAdapter(getActivity());
+        mFansAdapter = new ServiceAdapter(getActivity(),mList);
         fansList.setAdapter(mFansAdapter);
         mFansAdapter.setOnClickListener(new ServiceAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
                 //关注
-                getAttention(position);
+                updateService(position);
             }
         });
         fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-    private void getAttention(int position) {
+    private void updateService(int position) {
         Map<String, Object> map = new HashMap<>();
-        map.put("customerId", AppConfig.CustomerId);
-        map.put("opCustomerId", mList.get(position).getCustomerId());
-        if (mList.get(position).getRelationType()==0){
-            map.put("type", "1");
-        }else {
-            map.put("type", "2");
-        }
-        apiImp.bindRelation(map, this, new DataIdCallback<String>() {
+        map.put("id", mList.get(position).getId());
+        apiImp.updateService(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
-                if (mList.get(position).getRelationType()==0){
-                    mList.get(position).setRelationType(1);
-                }else {
-                    mList.get(position).setRelationType(0);
+                if (mList.get(position).getIncomeFlag()==0){
+                    mList.get(position).setIncomeFlag(1);
                 }
                 mFansAdapter.notifyItemChanged(position);
             }

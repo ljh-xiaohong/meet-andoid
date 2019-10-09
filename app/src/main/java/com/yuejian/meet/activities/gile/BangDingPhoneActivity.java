@@ -312,7 +312,8 @@ public class BangDingPhoneActivity extends BaseActivity {
                 }
                 if (dialog != null)
                     dialog.dismiss();
-                if (loginBean.getCode()==0){
+                //注册成功或未完善资料
+                if (loginBean.getCode()==0||loginBean.getCode()==19996){
                     intent = new Intent(getApplication(), UserNameSelectActivity.class);
                     intent.putExtra("mobile", txt_content.getText().toString());
                     intent.putExtra("areaCode", code);
@@ -322,17 +323,8 @@ public class BangDingPhoneActivity extends BaseActivity {
                     intent.putExtra("phone_version", phoneVersion);
                     intent.putExtra("phone_model", phoneModel);
                     startActivity(intent);
-                }else if (loginBean.getCode()==19996){
-                    intent = new Intent(getApplication(), UserNameSelectActivity.class);
-                    intent.putExtra("mobile", txt_content.getText().toString());
-                    intent.putExtra("areaCode", code);
-                    intent.putExtra("customer_id", AppConfig.CustomerId);
-                    intent.putExtra("phone_imei", phoneImei);///手机设备唯一deviceid
-                    intent.putExtra("phone_type", "1");//设备类型:0为IOS,1为android
-                    intent.putExtra("phone_version", phoneVersion);
-                    intent.putExtra("phone_model", phoneModel);
-                    startActivity(intent);
-                }else if (loginBean.getCode()==19998){
+                    //登录成功
+               }else if (loginBean.getCode()==19998){
                     DadanPreference.getInstance(BangDingPhoneActivity.this).setBoolean("isLogin",true);
                     intent = new Intent(getApplication(), MainActivity.class);
                     startActivity(intent);
@@ -361,13 +353,14 @@ public class BangDingPhoneActivity extends BaseActivity {
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;
-        if (!CommonUtil.isNull(entity.getCustomer_id())||!entity.getCustomer_id().equals("0")){
+        if (!entity.getCustomer_id().equals("0")){
             AppConfig.CustomerId = entity.getCustomer_id();
         }else {
             AppConfig.CustomerId = entity.getCustomerId();
         }
         DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
         DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
+        DadanPreference.getInstance(this).setString("surname",entity.getSurname());
     }
 
     ///获取验证码

@@ -267,6 +267,8 @@ public class UrlConstant {
     public static String POST_GET_RELATION_LIST = apiUrl() + "api/customerRelation/getRelationList";
     //关注用户
     public static String POST_BIND_RELATION = apiUrl() + "api/customerRelation/bindRelation";
+    //传承人服务用户API
+    public static String POST_UPDATESERVICE = apiUrl() + "api/msg/updateService";
     //获取单条动态信息
     public static String POST_ACTION_GETACTION_ONE = apiUrl() + "api/action/getAction";
     //获取动态评论记录
@@ -1183,6 +1185,10 @@ public class UrlConstant {
     public static String GET_ACQUIRECITY = apiUrl() + "api/provinceCityArea/acquireCity";
     //通讯录
     public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
+    //获取百家秘书服务用户列表API
+    public static String GET_GETBAIJIASERVICE = apiUrl() + "api/msg/getBaiJiaService";
+    //百家秘书运营数据图
+    public static String GET_GETBAIJIASOURCE = apiUrl() + "api/customerRelation/getBaiJiaSource";
     //推送用户列表
     public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
     //获取精准推送商品列表API

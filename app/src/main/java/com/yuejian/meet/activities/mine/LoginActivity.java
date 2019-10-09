@@ -370,6 +370,7 @@ public class LoginActivity extends BaseActivity {
                 AppConfig.CustomerId = entity.getCustomerId();
             }
             DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
+            DadanPreference.getInstance(this).setString("surname",entity.getSurname());
         }catch (Exception e){
             if (AppConfig.newUerEntity.getData().getCustomer_id()!=0){
                 AppConfig.CustomerId = AppConfig.newUerEntity.getData().getCustomer_id()+"";

@@ -211,6 +211,7 @@ public class MyApplication extends TinkerApplication {
         if (CommonUtil.isNull(userData)) {
             AppConfig.CustomerId =DadanPreference.getInstance(this).getString("CustomerId");
             AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
+            AppConfig.surname=DadanPreference.getInstance(this).getString("surname");
             return;
         }
         UserEntity entity =new Gson().fromJson(userData,UserEntity.class);

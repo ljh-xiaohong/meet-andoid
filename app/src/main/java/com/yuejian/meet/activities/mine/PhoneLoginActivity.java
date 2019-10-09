@@ -496,11 +496,9 @@ public class PhoneLoginActivity extends BaseActivity {
         } else {
             params.put("weixin", "");
         }
-
         params.put("loginType", loginType);
         params.put("longitude", crLongitude);
         params.put("latitude", crLatitude);
-
         apiImp.login(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -572,6 +570,7 @@ public class PhoneLoginActivity extends BaseActivity {
         }
         DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
         DadanPreference.getInstance(this).setString("photo",entity.getPhoto());
+        DadanPreference.getInstance(this).setString("surname",entity.getSurname());
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
 //        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
 //        AppConfig.userEntity = userBean;

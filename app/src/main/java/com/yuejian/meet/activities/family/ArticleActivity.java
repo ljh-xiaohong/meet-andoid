@@ -1,6 +1,7 @@
 package com.yuejian.meet.activities.family;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,9 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -32,6 +36,7 @@ import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
+import com.yuejian.meet.activities.message.MessageSettingActivity;
 import com.yuejian.meet.activities.mine.InputActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -40,6 +45,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.ArticleContentEntity;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
@@ -303,7 +309,6 @@ public class ArticleActivity extends BaseActivity {
         commentAdapter.refreshData(discusses);
 
     }
-
     /**
      * 初始化 评论列表 adapter
      */
@@ -315,16 +320,82 @@ public class ArticleActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         commentAdapter = new CommentListAdapter(this, new ArrayList<>(), MyDialogActivity.StyleType.NORMAL);
-        commentAdapter.setChange(postion -> {
-            if (info.getCommentList() == null) return;
-            InputActivity.startActivityForResult(this, info.getContentDetail().getId(), commentAdapter.getData().get(postion).getId() + "", commentAdapter.getData().get(postion).getName(), DISCUSS_DISCUSS);
+        commentAdapter.setChange(new CommentListAdapter.OnChange() {
+            @Override
+            public void click(View view,int postion,boolean isClick) {
+                if (isClick){
+                if (info.getCommentList() == null) return;
+                InputActivity.startActivityForResult(ArticleActivity.this, info.getContentDetail().getId(), commentAdapter.getData().get(postion).getId() + "", commentAdapter.getData().get(postion).getName(), DISCUSS_DISCUSS);
+                }else {
+                    initPopwindow(view,postion);
+                }
+             }
         });
         recyclerView.setAdapter(commentAdapter);
     }
 
+    private View popupView;
+    private PopupWindow window;
+    //复制删除弹窗
+    private void initPopwindow(View view, int postion) {
+        final LayoutInflater inflater = LayoutInflater.from(this);
+        popupView = inflater.inflate(R.layout.copy_and_delect_popupwindow, null);
+        TextView copy=popupView.findViewById(R.id.copy);
+        TextView delect=popupView.findViewById(R.id.delect);
+        window = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置动画
+//        window.setAnimationStyle(R.style.popup_window_anim);
+        // 设置背景颜色
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //设置可以获取焦点
+        window.setFocusable(true);
+        //设置可以触摸弹出框以外的区域
+        window.setOutsideTouchable(true);
+        // 更新popupwindow的状态
+        window.update();
+        popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int measuredHeight = popupView.getMeasuredHeight();
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        window.showAtLocation(view, Gravity.NO_GRAVITY, location[0]/2, location[1] - measuredHeight);
+        if (info.getCommentList().get(postion).getCustomerId()==Integer.parseInt(AppConfig.CustomerId)){
+            delect.setVisibility(View.VISIBLE);
+        }else {
+            delect.setVisibility(View.GONE);
+        }
+        copy.setOnClickListener(v -> {
+            ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setText(info.getCommentList().get(postion).getComment());
+            Toast.makeText(this,"已复制",Toast.LENGTH_LONG).show();
+        });
+        delect.setOnClickListener(v -> delectComment(info.getCommentList().get(postion).getId()+"",postion));
+    }
+    //删除评论
+    private void delectComment(String id,int position) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("customerId", AppConfig.CustomerId);
+            params.put("id",id);
+            apiImp.getDelContentComment(params, this, new DataIdCallback<String>() {
+                @Override
+                public void onSuccess(String data, int id) {
+                    MessageCommentBean bean = new Gson().fromJson(data, MessageCommentBean.class);
+                    if (bean.getCode() != 0) {
+                        ViewInject.shortToast(ArticleActivity.this, bean.getMessage());
+                        return;
+                    }
+                    info.getCommentList().remove(position);
+                    commentAdapter.refreshData(info.getCommentList());
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+                    ViewInject.shortToast(ArticleActivity.this, errMsg);
+                }
+            });
+    }
+
     private String checkData(String data) {
         if (TextUtils.isEmpty(data)) data = "";
-
         return data;
 
     }

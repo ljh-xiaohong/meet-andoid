@@ -18,9 +18,11 @@ import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.umeng.analytics.MobclickAgent;
+import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.PositionInfo;
+import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.lang.ref.WeakReference;
@@ -38,7 +40,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected boolean mIsFirstVisible = true;
     protected boolean mIsFirstInvisible = true;
     public UserEntity user;
-
+    public LoadingDialogFragment dialog;
     public ApiImp apiImp = new ApiImp();
     public static final String PAGE_ITEM_COUNT = String.valueOf(10);
     protected boolean isInitView = false;
@@ -115,6 +117,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initData();
         Bus.getDefault().register(this);
         MobclickAgent.openActivityDurationTrack(false);
+        dialog = LoadingDialogFragment.newInstance(getString(R.string.is_requesting));
         return fragmentRootView;
 
     }

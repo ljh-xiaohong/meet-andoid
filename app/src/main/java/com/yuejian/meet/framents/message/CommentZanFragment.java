@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.MyMessageCommentDialogActivity;
 import com.yuejian.meet.adapters.CommtentZanAdapter;
@@ -76,8 +77,8 @@ public class CommentZanFragment extends Fragment {
 
     private void initData() {
         Map<String, Object> params = new HashMap<>();
-//        params.put("customerId", AppConfig.CustomerId);
-        params.put("customerId", "500102");
+        params.put("customerId", AppConfig.CustomerId);
+//        params.put("customerId", "500102");
         params.put("msgType",getArguments().getInt("type"));
         apiImp.getCommentAndPraise(params, this, new DataIdCallback<String>() {
             @Override

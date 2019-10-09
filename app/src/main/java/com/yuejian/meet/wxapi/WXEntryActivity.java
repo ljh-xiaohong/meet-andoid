@@ -12,6 +12,7 @@ import com.yuejian.meet.utils.ViewInject;
 
 
 public class WXEntryActivity extends WXCallbackActivity {
+
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_LAUNCH_WX_MINIPROGRAM) {

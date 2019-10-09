@@ -1682,6 +1682,137 @@ public class ApiImp {
     }
 
     /**
+     * 获取消息通知列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getMessageList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGELIST, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 新朋友
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getAttentionAndFriend(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETATTENTIONANDFRIEND, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取用户收到的评论和赞列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getCommentPraiseList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETCOMMENTPRAISELIST, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取用户收到的评论和赞列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getCommentAndPraise(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETCOMMENTANDPRAISE, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取用户服务信息
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getUsrServiceInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETUSRSERVICEINFO, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 设置用户服务信息
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void meessageSetting(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_MEESSAGESETTING, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取某省的所有市
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void acquireCity(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_ACQUIRECITY, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 通讯录
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETRELATION, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取百家秘书服务用户列表API
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getBaiJiaService(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETBAIJIASERVICE, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 百家秘书运营数据图
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getBaiJiaSource(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETBAIJIASOURCE, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 推送用户列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getPushList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETPUSHLIST, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取精准推送商品列表API（
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getThreeProject(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETTHREEPROJECT, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
+     * 获取消息通知详细
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getMessageDetail(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGEDETAIL, paramMap, paramObject, paramDataIdCallback);
+    }
+
+    /**
      * 我的访客(版本:3)
      *
      * @param paramMap
@@ -1859,6 +1990,12 @@ public class ApiImp {
      */
     public void bindRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.POST_BIND_RELATION, paramMap, paramObject, callback);
+    }
+    /**
+     * 传承人服务用户API
+     */
+    public void updateService(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.POST_UPDATESERVICE, paramMap, paramObject, callback);
     }
 
 
@@ -2052,128 +2189,6 @@ public class ApiImp {
     public void getDelContentComment(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETDELCONTENTCOMMENT, paramMap, paramObject, callback);
     }
-
-    /**
-     * 获取消息通知详细
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getMessageDetail(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGEDETAIL, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取精准推送商品列表API（
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getThreeProject(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETTHREEPROJECT, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 推送用户列表
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getPushList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETPUSHLIST, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 通讯录
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getRelation(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETRELATION, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取某省的所有市
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void acquireCity(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_ACQUIRECITY, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 设置用户服务信息
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void meessageSetting(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_MEESSAGESETTING, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取用户服务信息
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getUsrServiceInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETUSRSERVICEINFO, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取用户收到的评论和赞列表
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getCommentAndPraise(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETCOMMENTANDPRAISE, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取用户收到的评论和赞列表
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getCommentPraiseList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETCOMMENTPRAISELIST, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 新朋友
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getAttentionAndFriend(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETATTENTIONANDFRIEND, paramMap, paramObject, paramDataIdCallback);
-    }
-
-    /**
-     * 获取消息通知列表
-     *
-     * @param paramMap
-     * @param paramObject
-     * @param paramDataIdCallback
-     */
-    public void getMessageList(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
-        this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGELIST, paramMap, paramObject, paramDataIdCallback);
-    }
-
     /**
      * 个人中心 - 获取用户基本信息API（测试通过）
      */
@@ -2181,5 +2196,3 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.FIND_CUSTOMER_BASE_INFO, paramMap, paramObject, callback);
     }
 }
-
-

@@ -63,7 +63,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     //接口回调
     public interface OnChange {
-        public void click(int postion);
+        public void click(View view,int postion,boolean isClick);
     }
 
     public void setChange(OnChange onChange) {
@@ -114,7 +114,14 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             Glide.with(context).load(headUrl).into(holder.head_img);
         }
         holder.head_img.setOnClickListener(v -> Log.e("asdasd", "跳转个人主页"));
-        holder.content.setOnClickListener(v -> onChange.click(position));
+        holder.content.setOnClickListener(v -> onChange.click(v,position,true));
+        holder.content.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onChange.click(v,position,false);
+                return true;
+            }
+        });
     }
 
     @Override

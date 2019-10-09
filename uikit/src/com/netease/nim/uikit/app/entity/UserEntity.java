@@ -7,7 +7,7 @@ package com.netease.nim.uikit.app.entity;
 
 public class UserEntity {
     //用户编码
-    public String customer_id;
+    public String customer_id="0";
 
     public String customerId;
     //用户状态

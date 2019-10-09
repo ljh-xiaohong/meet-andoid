@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,6 +40,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -613,7 +615,30 @@ public class CommonUtil {
         }
         return encryptStr;
     }
+    /**
+     * MD5 32位小写加密
+     * @param encryptStr
+     * @return
+     */
 
+    /**
+     * 检测程序是否安装
+     *
+     * @param packageName
+     * @return
+     */
+    public static boolean isInstalled(Context context,String packageName) {
+        PackageManager manager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> installedPackages = manager.getInstalledPackages(0);
+        if (installedPackages != null) {
+            for (PackageInfo info : installedPackages) {
+                if (info.packageName.equals(packageName))
+                    return true;
+            }
+        }
+        return false;
+    }
 
     //数量转换
     public static String changeNum(String num) {

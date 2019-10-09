@@ -6,6 +6,7 @@ package com.yuejian.meet.adapters;
  * @desc :
  */
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,8 +17,11 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
 
@@ -66,6 +70,13 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
         holder.name.setText(dataBean.getUserName());
         holder.content.setText(dataBean.getContent()+"");
         holder.title.setText(dataBean.getTitle()+"");
+        holder.itemView.setOnClickListener(v -> {
+            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, dataBean.getId());
+            Intent intent = new Intent(context, WebActivity.class);
+            intent.putExtra(Constants.URL, urlShop);
+            intent.putExtra("No_Title", true);
+            context.startActivity(intent);
+        });
     }
 
     @Override

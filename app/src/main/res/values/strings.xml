@@ -1029,6 +1029,8 @@
     <string name="casht_text6">暂不支付银联方式支付</string>
     <string name="casht_text7">请先安装微信客户端</string>
     <string name="casht_text9">请先安装支付宝客户端</string>
+    <string name="casht_text10">请先安装高德地图客户端</string>
+    <string name="casht_text11">请先安装百度地图客户端</string>
     <string name="casht_text8">邀请排行榜</string>
     <string name="invite_sms_content">您贵姓？您了解自己本姓的起源与宗族文化么？
 缺人脉？想寻根问祖结交可靠同姓宗亲好友么？

@@ -87,6 +87,8 @@ public class FriendFragment extends BaseFragment
     }
 
     private void getAttention(int position) {
+        if (dialog != null&&!dialog.isShowing)
+            dialog.show(getActivity().getFragmentManager(), "");
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("opCustomerId", followEntities.get(position).getCustomerId());
@@ -101,6 +103,8 @@ public class FriendFragment extends BaseFragment
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 ResultBean loginBean=new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
 //                //未关注
@@ -114,11 +118,15 @@ public class FriendFragment extends BaseFragment
 //                    followEntities.get(position).setRelationType(1);
 //                }
 //                mFollowListAdapter.notifyItemChanged(position);
-                initData();
+                followEntities.clear();
+                mNextPageIndex = 1;
+                loadDataFromNet("0",title);
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
             }
         });
     }
@@ -127,6 +135,8 @@ public class FriendFragment extends BaseFragment
     List<NewFriendBean.DataBean> followEntities =new ArrayList<>();
     NewFriendBean followEntitie;
     private void loadDataFromNet(String type,String title) {
+        if (dialog != null&&!dialog.isShowing)
+            dialog.show(getActivity().getFragmentManager(), "");
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("title", title);
@@ -136,6 +146,8 @@ public class FriendFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                  followEntitie=new Gson().fromJson(data,NewFriendBean.class);
                  if (followEntitie.getCode()!=0) {
                      ViewInject.shortToast(getActivity(),followEntitie.getMessage());
@@ -165,6 +177,8 @@ public class FriendFragment extends BaseFragment
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+                if (dialog != null)
+                    dialog.dismiss();
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
                 }

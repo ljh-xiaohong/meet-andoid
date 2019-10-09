@@ -17,13 +17,11 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.CommentZanActivity;
 import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.adapters.CustomerServiceAdapter;
-import com.yuejian.meet.adapters.ProjectListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.MessageBean;
 import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -38,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 系统消息
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :
