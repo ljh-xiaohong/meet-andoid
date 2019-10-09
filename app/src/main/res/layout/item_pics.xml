@@ -13,7 +13,8 @@
         android:layout_height="20dp"
         android:layout_marginLeft="51dp"
         android:scaleType="center"
-            app:border_color="#ffffff"
+        android:src="@mipmap/user_account_pictures"
+        app:border_color="#ffffff"
         app:border_width="1dp" />
 
     <com.yuejian.meet.widgets.CircleImageView
@@ -22,6 +23,7 @@
         android:layout_height="20dp"
         android:layout_marginLeft="34dp"
         android:scaleType="center"
+        android:src="@mipmap/user_account_pictures"
         app:border_color="#ffffff"
         app:border_width="1dp" />
 
@@ -31,7 +33,8 @@
         android:layout_height="20dp"
         android:layout_marginLeft="17dp"
         android:scaleType="center"
-          app:border_color="#ffffff"
+        android:src="@mipmap/user_account_pictures"
+        app:border_color="#ffffff"
         app:border_width="1dp" />
 
     <com.yuejian.meet.widgets.CircleImageView
@@ -39,6 +42,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:scaleType="center"
+        android:src="@mipmap/user_account_pictures"
         app:border_color="#ffffff"
         app:border_width="1dp" />
 
@@ -48,7 +52,7 @@
         android:layout_height="20dp"
         android:layout_marginLeft="80dp"
         android:gravity="center"
-           android:textColor="#ffffff"
+        android:textColor="#ffffff"
         android:textSize="10sp" />
 
 
