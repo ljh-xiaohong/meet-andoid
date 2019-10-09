@@ -326,7 +326,7 @@ public class VideoActivity extends AppCompatActivity {
 //                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
             urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
         }
-        urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
+        urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
 
         intent = new Intent(this, WebActivity.class);
         intent.putExtra(Constants.URL, urlVip);
