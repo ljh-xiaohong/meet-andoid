@@ -73,6 +73,7 @@ import com.yuejian.meet.activities.mine.VerifyBusinessActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.find.RechargeMeritsActivity;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
@@ -471,7 +472,7 @@ public class WebActivity extends BaseActivity {
                         DadanPreference.getInstance(WebActivity.this).setString("photo", "");
                         DadanPreference.getInstance(WebActivity.this).setString("surname", "");
                         startActivity(new Intent(WebActivity.this, LoginActivity.class));
-                        finish();
+                        AppManager.finishAllActivity();
                     }
                 });
                 return true;//表示我已经处理过了
