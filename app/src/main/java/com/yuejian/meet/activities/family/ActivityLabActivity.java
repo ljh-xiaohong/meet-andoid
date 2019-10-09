@@ -34,6 +34,7 @@ import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,10 +89,13 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
     ActivityLabEntity labEntity;
 
+    WeakReference<ActivityLabActivity> reference;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_lab);
+        reference = new WeakReference<>(this);
         fullScreen(this);
         ButterKnife.bind(this);
         Bus.getDefault().register(this);
@@ -109,6 +113,11 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         initListener();
         onRefresh();
 
+    }
+
+
+    private boolean checkIsLife() {
+        return reference == null || reference.get() == null || reference.get().isFinishing();
     }
 
     private void fullScreen(Activity activity) {
@@ -191,6 +200,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         super.onDestroy();
         ButterKnife.unbind(this);
         Bus.getDefault().unregister(this);
+        reference = null;
     }
 
     @OnClick({R.id.activity_activity_back, R.id.activity_activity_back_, R.id.activity_activity_follow})
@@ -270,6 +280,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         new ApiImp().findContentByLabel(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                if(checkIsLife())return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null && !jo.getString("code").equals("0")) return;
                 labEntity = JSON.parseObject(jo.getString("data"), ActivityLabEntity.class);
@@ -290,7 +301,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
                         title_two.setText(labEntity.getLabel().getTitle());
                         content.setText(labEntity.getLabel().getDes());
 //                        follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
-                        follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus()?"#4DFFFFFF":"#FFFFFFFF"));
+                        follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus() ? "#4DFFFFFF" : "#FFFFFFFF"));
                         follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
                     }
 
@@ -309,13 +320,14 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
     @Override
     public void onRefresh() {
+        if(checkIsLife())return;
         pageIndex = 1;
         loadDataFromNet();
     }
 
     @Override
     public void onLoadmore() {
-
+        if(checkIsLife())return;
         loadDataFromNet();
     }
 
@@ -328,12 +340,12 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
         new ApiImp().addContentLabelCustomer(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-
+                if(checkIsLife())return;
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null || !jo.getString("code").equals("0")) return;
                 labEntity.getLabel().setIsFocus(!isFollows);
 //                follow.setBackgroundResource(labEntity.getLabel().isIsFocus() ? R.drawable.bg_activity_add_w : R.drawable.bg_activity_add);
-                follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus()?"#4DFFFFFF":"#FFFFFFFF"));
+                follow.setTextColor(Color.parseColor(labEntity.getLabel().isIsFocus() ? "#4DFFFFFF" : "#FFFFFFFF"));
                 follow.setText(labEntity.getLabel().isIsFocus() ? "已关注" : "加关注");
 
             }
