@@ -509,6 +509,10 @@ public class VideoActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (player != null) {
+            player.onVideoPause();
+        }
+
         ButterKnife.unbind(this);
     }
 
@@ -537,6 +541,7 @@ public class VideoActivity extends AppCompatActivity {
 
                     case 19983:
                     case 19981:
+                    case -1:
                         ViewInject.shortToast(mContext, jo.getString("message"));
                         break;
                 }

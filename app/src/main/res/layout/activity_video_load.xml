@@ -82,6 +82,73 @@
     </android.support.constraint.ConstraintLayout>
 
 
+    <com.yuejian.meet.widgets.aliyun.CountDownTextView
+        android:id="@+id/tv_activity_video_load_countdown_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="80sp" />
+
+    <com.aliyun.demo.recorder.view.StringScrollPicker
+        android:id="@+id/alivc_video_picker_view"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|bottom"
+        app:spv_end_color="#C3C5C6"
+        app:spv_is_circulation="false"
+        app:spv_max_text_size="14sp"
+        app:spv_min_text_size="14sp"
+        app:spv_orientation="horizontal"
+        app:spv_start_color="@color/aliyun_white" />
+
+
+    <RadioGroup
+        android:visibility="gone"
+        android:id="@+id/rg_video_fast_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="150dp"
+        android:checkedButton="@+id/rb_video_nor"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_video_low"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="慢"
+            android:textColor="@color/color_fast_low" />
+
+        <RadioButton
+            android:id="@+id/rb_video_nor"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="1px"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="标准"
+            android:textColor="@color/color_fast_low" />
+
+        <RadioButton
+            android:id="@+id/rb_video_fast"
+            android:layout_width="71dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="1px"
+            android:background="#FF000000"
+            android:button="@null"
+            android:gravity="center"
+            android:text="快"
+            android:textColor="@color/color_fast_low" />
+
+    </RadioGroup>
+
     <android.support.constraint.ConstraintLayout
 
         android:layout_width="match_parent"
@@ -173,73 +240,6 @@
             app:layout_constraintStart_toEndOf="@+id/zdy_circleProgressBar"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
-
-    <com.yuejian.meet.widgets.aliyun.CountDownTextView
-        android:id="@+id/tv_activity_video_load_countdown_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="80sp" />
-
-    <com.aliyun.demo.recorder.view.StringScrollPicker
-        android:id="@+id/alivc_video_picker_view"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center|bottom"
-        app:spv_end_color="#C3C5C6"
-        app:spv_is_circulation="false"
-        app:spv_max_text_size="14sp"
-        app:spv_min_text_size="14sp"
-        app:spv_orientation="horizontal"
-        app:spv_start_color="@color/aliyun_white" />
-
-
-    <RadioGroup
-        android:visibility="gone"
-        android:id="@+id/rg_video_fast_low"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="150dp"
-        android:checkedButton="@+id/rb_video_nor"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_video_low"
-            android:layout_width="71dp"
-            android:layout_height="36dp"
-            android:background="#FF000000"
-            android:button="@null"
-            android:gravity="center"
-            android:text="慢"
-            android:textColor="@color/color_fast_low" />
-
-        <RadioButton
-            android:id="@+id/rb_video_nor"
-            android:layout_width="71dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="1px"
-            android:background="#FF000000"
-            android:button="@null"
-            android:gravity="center"
-            android:text="标准"
-            android:textColor="@color/color_fast_low" />
-
-        <RadioButton
-            android:id="@+id/rb_video_fast"
-            android:layout_width="71dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="1px"
-            android:background="#FF000000"
-            android:button="@null"
-            android:gravity="center"
-            android:text="快"
-            android:textColor="@color/color_fast_low" />
-
-    </RadioGroup>
 
 
 </FrameLayout>

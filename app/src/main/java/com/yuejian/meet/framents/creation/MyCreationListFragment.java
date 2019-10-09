@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
@@ -73,7 +74,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
         if (!getData()) return;
-        adapter = new CreationAdapter(recyclerView, getContext(), type,false);
+        adapter = new CreationAdapter(recyclerView, getContext(), type, false);
         setListener();
         getDataFromNet();
     }
@@ -216,11 +217,13 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CANCEL_DELECT && requestCode == RESULT_OK) {
-            int position = -1;
-            position = data.getIntExtra("position", position);
-            if (position == -1) return;
-            adapter.getData().remove(position);
+        if (requestCode == CANCEL_DELECT && resultCode == RESULT_OK) {
+//            int position = -1;
+//            position = data.getIntExtra("position", position);
+//            if (position == -1) return;
+//            adapter.getData().remove(position);
+//            adapter.notifyDataSetChanged();
+            Bus.getDefault().getDefault().post(new ShopEntity());
         }
     }
 }

@@ -102,6 +102,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="12dp"
+                    android:visibility="gone"
                     android:paddingRight="12dp">
 
                     <TextView
