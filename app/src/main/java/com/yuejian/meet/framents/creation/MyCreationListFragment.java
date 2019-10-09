@@ -73,7 +73,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
         if (!getData()) return;
-        adapter = new CreationAdapter(recyclerView, getContext(), type,true);
+        adapter = new CreationAdapter(recyclerView, getContext(), type,false);
         setListener();
         getDataFromNet();
     }
@@ -151,6 +151,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                 entity.setPhotoAndVideoUrl(jo.getString("photoAndVideoUrl"));
                 entity.setFabulousNum(jo.getInteger("fabulousNum"));
                 entity.setContent(jo.getString("content"));
+                entity.setCoverSizeType(jo.getString("coverSizetype"));
 
             }
             creationEntities.add(entity);
@@ -188,20 +189,20 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
                     //视频
                     case 2:
-                        if (position == 0) {
-                            DraftActivity.startActivity(mContext, type);
-                            return;
-                        }
+//                        if (position == 0) {
+//                            DraftActivity.startActivity(mContext, type);
+//                            return;
+//                        }
                         VideoActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, false);
 
                         break;
 
                     //文章
                     case 1:
-                        if (position == 0) {
-                            DraftActivity.startActivity(mContext, type);
-                            return;
-                        }
+//                        if (position == 0) {
+//                            DraftActivity.startActivity(mContext, type);
+//                            return;
+//                        }
 
                         ArticleActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT);
                         break;

@@ -29,6 +29,8 @@ public class CreationEntity implements Serializable {
     private String content;
     private boolean isPraise;
 
+
+
     public String getCoverSizeType() {
         return coverSizeType;
     }
