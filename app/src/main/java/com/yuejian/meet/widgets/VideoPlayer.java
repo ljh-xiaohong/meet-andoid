@@ -20,6 +20,9 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     private View back;
 
+    public enum MODEL {
+        NORMAL, MEDITATION
+    }
 
     public VideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -45,6 +48,32 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         back.setOnClickListener(view -> {
             ((Activity) getContext()).finish();
         });
+    }
+
+    public void setModel(MODEL model) {
+        switch (model) {
+
+            case NORMAL:
+                setChildVisibility(VISIBLE, getNormalLayout());
+                break;
+
+            case MEDITATION:
+
+                setChildVisibility(GONE, getMoreButton(), getNormalLayout());
+                setChildVisibility(VISIBLE, getMeditation());
+
+                break;
+
+            default:
+                setChildVisibility(VISIBLE, getNormalLayout());
+                break;
+        }
+    }
+
+    private void setChildVisibility(int VISIBILITY, View... views) {
+        for (View view : views) {
+            view.setVisibility(VISIBILITY);
+        }
     }
 
 
@@ -75,10 +104,17 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     public TextView getShareButton() {
         return this.findViewById(R.id.video_share);
-
     }
 
-    public TextView getDiscussEdittext(){
+    public View getMeditation() {
+        return this.findViewById(R.id.video_layout_meditation);
+    }
+
+    public View getNormalLayout() {
+        return this.findViewById(R.id.video_layout_normal);
+    }
+
+    public TextView getDiscussEdittext() {
         return this.findViewById(R.id.video_discuss_edittext);
     }
 
@@ -95,7 +131,7 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void setTagItem(String[] tab, String[] id, View.OnClickListener listener) {
-        if ( tab != null && id != null && tab.length == id.length) {
+        if (tab != null && id != null && tab.length == id.length) {
             FlowLayout flowLayout = this.findViewById(R.id.video_tag_layout);
             for (int i = 0; i < tab.length; i++) {
                 TextView item = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.textview_video_tag, null);

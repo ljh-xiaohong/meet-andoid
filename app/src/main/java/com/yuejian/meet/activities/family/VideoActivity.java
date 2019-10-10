@@ -84,19 +84,33 @@ public class VideoActivity extends AppCompatActivity {
 
     private ApiImp apiImp = new ApiImp();
 
+    private VideoPlayer.MODEL model;
+
+    private String url;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        reference = new WeakReference<>(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
         if (!getData()) return;
-        reference = new WeakReference<>(this);
-        getDataFromNet();
+        if (model != null) {
+            //纯播放功能
+            player.setModel(model);
+            player.setLooping(true);
+            player.setUp(url, true, "");
+            player.startPlayLogic();
+        } else {
+            //视频详情；
+            getDataFromNet();
+        }
+
     }
 
     private void initDialog() {
@@ -187,6 +201,20 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     /**
+     * @param context
+     * @param url
+     * @param model
+     * @param SCREEN_MATCH
+     */
+    public static void startActivity(Context context, String url, VideoPlayer.MODEL model, boolean SCREEN_MATCH) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("VideoActivity.url", url);
+        intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
+        intent.putExtra("VideoActivity.model", model);
+        context.startActivity(intent);
+    }
+
+    /**
      * 主要用于删除不感兴趣，及删除视频
      *
      * @param context
@@ -208,7 +236,10 @@ public class VideoActivity extends AppCompatActivity {
         contentId = getIntent().getStringExtra("VideoActivity.contentId");
         customerId = getIntent().getStringExtra("VideoActivity.customerId");
         full_screen = getIntent().getBooleanExtra("VideoActivity.SCREEN_MATCH", full_screen);
+        model = (VideoPlayer.MODEL) getIntent().getSerializableExtra("VideoActivity.model");
+        url = getIntent().getStringExtra("VideoActivity.url");
         GSYVideoType.setShowType(full_screen ? GSYVideoType.SCREEN_MATCH_FULL : GSYVideoType.SCREEN_TYPE_DEFAULT);
+        if (model != null) return !TextUtils.isEmpty(url);
         return contentId != null && customerId != null;
     }
 

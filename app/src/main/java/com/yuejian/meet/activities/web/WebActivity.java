@@ -85,6 +85,7 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
 import com.yuejian.meet.widgets.PaymentBottomDialog;
+import com.yuejian.meet.widgets.VideoPlayer;
 
 import org.json.JSONException;
 
@@ -311,7 +312,8 @@ public class WebActivity extends BaseActivity {
     };
 
     private String shareCustomerId = "";
-    private boolean isVIP=false;
+    private boolean isVIP = false;
+
     private boolean blockUrl(String url) {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
@@ -369,16 +371,21 @@ public class WebActivity extends BaseActivity {
             } else if (uri.getAuthority().equals("toBack")) {
                 onBackPressed();
                 return true;
-            } else if (uri.getAuthority().contains("userPay_inContribution")){//充值贡献值
-                String[] s=url.split("&");
-                String customerId=s[0].split("=")[1];
-                String silverIngot=s[1].split("=")[1];
-                String amount=s[2].split("=")[1];
-                String payType=s[3].split("=")[1];
-                isVIP=false;
-                doInCash(customerId,silverIngot,amount,payType);
+            } else if (uri.getAuthority().equals("meditaVideo")) {
+                //冥想寻根
+                meditation(url);
+
+                return true;
+            } else if (uri.getAuthority().contains("userPay_inContribution")) {//充值贡献值
+                String[] s = url.split("&");
+                String customerId = s[0].split("=")[1];
+                String silverIngot = s[1].split("=")[1];
+                String amount = s[2].split("=")[1];
+                String payType = s[3].split("=")[1];
+                isVIP = false;
+                doInCash(customerId, silverIngot, amount, payType);
                 return true;//表示我已经处理过了
-            }else if (uri.getAuthority().equals("user_info")) {
+            } else if (uri.getAuthority().equals("user_info")) {
                 AppUitls.goToPersonHome(this, getIntent().getStringExtra("customer_id"));
                 return true;
             } else if (uri.getAuthority().equals("articleVideo")) {
@@ -402,66 +409,66 @@ public class WebActivity extends BaseActivity {
                 return true;
             } else if (uri.getAuthority().equals("continueWebapp")) {
                 return true;
-            }else if (uri.getAuthority().contains("gaodeMap")){
+            } else if (uri.getAuthority().contains("gaodeMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
-                if (CommonUtil.isInstalled(this,"com.autonavi.minimap")){
-                    String[] s=url.split("&");
-                    String end=s[1].split("=")[1];
-                    String dlat=end.split(",")[0];
-                    String dlon=end.split(",")[1];
+                if (CommonUtil.isInstalled(this, "com.autonavi.minimap")) {
+                    String[] s = url.split("&");
+                    String end = s[1].split("=")[1];
+                    String dlat = end.split(",")[0];
+                    String dlon = end.split(",")[1];
                     Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("amapuri://route/plan/?sid=&slat=&slon=&sname=&did=&dlat="
-                            + dlat+"&dlon=" +dlon+ "&dname=&dev=0&t=0&sourceApplication="+ this.getPackageName()));
+                            + dlat + "&dlon=" + dlon + "&dname=&dev=0&t=0&sourceApplication=" + this.getPackageName()));
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(this, R.string.casht_text10, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            }else if (uri.getAuthority().contains("baiduMap")){
+            } else if (uri.getAuthority().contains("baiduMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
-                if (CommonUtil.isInstalled(this,"com.baidu.BaiduMap")){
-                    String[] s=url.split("&");
-                    String str=s[0].split("=")[1];
-                    String end=s[1].split("=")[1];
+                if (CommonUtil.isInstalled(this, "com.baidu.BaiduMap")) {
+                    String[] s = url.split("&");
+                    String str = s[0].split("=")[1];
+                    String end = s[1].split("=")[1];
                     Intent intent = new Intent();
                     intent.setData(Uri.parse("baidumap://map/direction?destination=name=|latlng:"
-                            + end +"&coord_type=gcj02"+ "&src=" + this.getPackageName()));
+                            + end + "&coord_type=gcj02" + "&src=" + this.getPackageName()));
                     startActivity(intent); // 启动调用
-                }else {
+                } else {
                     Toast.makeText(this, R.string.casht_text11, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            }else if (uri.getAuthority().contains("tel")){
-                String[] s=url.split("=");
-                CommonUtil.call(this,s[1]);
+            } else if (uri.getAuthority().contains("tel")) {
+                String[] s = url.split("=");
+                CommonUtil.call(this, s[1]);
                 return true;//表示我已经处理过了
-            }else if (uri.getAuthority().contains("sharaTui")){//分享
+            } else if (uri.getAuthority().contains("sharaTui")) {//分享
                 //'yuejian://sharaTui?url=http://app2.yuejianchina.com/yuejian-app/shara_register.html'+'&type='+type+'&referralMobile='+referralMobile+'&name='+name
-                String[] s=url.split("&");
-                String shareUrl=s[0].split("url=")[1];
-                String type=s[1].split("=")[1];
-                String name=s[2].split("=")[1];
-                name= URLDecoder.decode(name);
-                if (type.equals("1")){
-                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN_CIRCLE, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
-                }else if (type.equals("2")){
-                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
-                }else if (type.equals("3")){
+                String[] s = url.split("&");
+                String shareUrl = s[0].split("url=")[1];
+                String type = s[1].split("=")[1];
+                String name = s[2].split("=")[1];
+                name = URLDecoder.decode(name);
+                if (type.equals("1")) {
+                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN_CIRCLE, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name + "邀请您注册《百家姓氏》", " ", shareUrl);
+                } else if (type.equals("2")) {
+                    Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name + "邀请您注册《百家姓氏》", " ", shareUrl);
+                } else if (type.equals("3")) {
 //                    Utils.umengShareForPhatForm(SHARE_MEDIA.QQ, getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, name+"邀请您注册《百家姓氏》" + "\n"+ shareUrl);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, name + "邀请您注册《百家姓氏》" + "\n" + shareUrl);
                     sendIntent.setType("text/plain");
                     sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");//QQ好友或QQ群
                     startActivityForResult(sendIntent, 100);
-                }else if (type.equals("4")){
-                    ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                } else if (type.equals("4")) {
+                    ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     cmb.setText(shareUrl);
-                    Toast.makeText(this,"已复制",Toast.LENGTH_LONG).show();
-                }else {
-                    Utils.umengShareByList(this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name+"邀请您注册《百家姓氏》", " ", shareUrl);
+                    Toast.makeText(this, "已复制", Toast.LENGTH_LONG).show();
+                } else {
+                    Utils.umengShareByList(this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name + "邀请您注册《百家姓氏》", " ", shareUrl);
                 }
                 return true;//表示我已经处理过了
-            }else if (uri.getAuthority().contains("toBackLoad")) {//退出
+            } else if (uri.getAuthority().contains("toBackLoad")) {//退出
                 Dialog dialog = DialogUtils.createTwoBtnDialog(WebActivity.this, "提示", "是否退出登录", "取消", "确定");
                 dialog.show();
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
@@ -603,7 +610,7 @@ public class WebActivity extends BaseActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }else if (url.contains("faxian/game_zhuangzhong.html")) {
+        } else if (url.contains("faxian/game_zhuangzhong.html")) {
             isShareSuccess = false;
         } else if (url.contains("payment/chongzhi.html")) {
             Intent intent = new Intent(this, InCashActivity.class);
@@ -626,6 +633,13 @@ public class WebActivity extends BaseActivity {
         dialog.show();
     }
 
+    /**
+     * 冥想寻根
+     */
+    private void meditation(final String url) {
+        ;
+        VideoActivity.startActivity(mContext, Utils.getValueByName(url, "url"), VideoPlayer.MODEL.MEDITATION, false);
+    }
 
     /**
      * 购买商城订单
@@ -840,6 +854,7 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+
     //充值贡献值API payType 1:支付宝，2.微信，3.3ApplePay
     private void doInCash(String customerId, String silverIngot, String amount, String payType) {
         if (payType.equals("2")) {
@@ -847,14 +862,14 @@ public class WebActivity extends BaseActivity {
                 Toast.makeText(this, R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else if (payType.equals("1")){
+        } else if (payType.equals("1")) {
             if (!Utils.isAliPayInstalled(this)) {
                 Toast.makeText(this, R.string.casht_text9, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId",customerId);
+        params.put("customerId", customerId);
         params.put("silverIngot", silverIngot);
         params.put("amount", amount);
         params.put("payType", payType);
@@ -864,7 +879,7 @@ public class WebActivity extends BaseActivity {
                 if (payType.equals("1")) {
                     try {
                         org.json.JSONObject oo = new org.json.JSONObject(data);
-                        final String orderInfo =oo.getString("data");
+                        final String orderInfo = oo.getString("data");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -882,8 +897,8 @@ public class WebActivity extends BaseActivity {
                 } else if (payType.equals("2")) {
                     try {
                         org.json.JSONObject oo = new org.json.JSONObject(data);
-                        if (oo==null) return;
-                        final String data1 =oo.getString("data");
+                        if (oo == null) return;
+                        final String data1 = oo.getString("data");
                         final WxPayOrderInfo orderInfo = JSON.parseObject(data1, WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = Constants.WX_APP_ID;
@@ -905,6 +920,7 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -913,7 +929,7 @@ public class WebActivity extends BaseActivity {
                 String resultStatus = payResult.getResultStatus();
                 if (TextUtils.equals(resultStatus, "9000")) {
                     Toast.makeText(WebActivity.this, R.string.payment_success, Toast.LENGTH_SHORT).show();
-                    if (isVIP){
+                    if (isVIP) {
                         reloadHome();
                     }
 //                    if (!CommonUtil.isNull(backType))
@@ -923,6 +939,7 @@ public class WebActivity extends BaseActivity {
             return false;
         }
     });
+
     public void reloadHome() {
         try {
             webView.post(new Runnable() {
@@ -940,10 +957,11 @@ public class WebActivity extends BaseActivity {
                     });
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     private void doInCash(Long payId, int i) {
         Map<String, Object> params = new HashMap<>();
         params.clear();
@@ -1159,9 +1177,9 @@ public class WebActivity extends BaseActivity {
         } else if (requestCode == 10103) {
             webView.loadUrl("javascript:shareBack(" + shareCustomerId + ")");
             isShareSuccess = true;
-        }else if (requestCode == 100){
+        } else if (requestCode == 100) {
 
-        }else {
+        } else {
             if (mUMA != null) {
                 mUMA.onReceiveValue(null);
                 mUMA = null;
