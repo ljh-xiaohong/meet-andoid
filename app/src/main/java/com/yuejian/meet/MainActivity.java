@@ -325,6 +325,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 //                address_list.setVisibility(View.VISIBLE);
                 rbtn_message.setSelected(true);
                 changeFragment(messageFragment);
+                messageFragment.update();
 //                startActivity(new Intent(this, NewMessageActivity.class));
                 break;
             case R.id.rlayout_creation:

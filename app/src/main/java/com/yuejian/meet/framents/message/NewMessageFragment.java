@@ -58,7 +58,12 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         return inflater.inflate(R.layout.fragment_new_message, container, false);
     }
 
-
+    public void update(){
+        if (mContentPager==null){
+            return;
+        }
+        initView();
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -77,10 +82,9 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         mContentPager.addOnPageChangeListener(this);
         setCurrentItem(0);
         mFamilyCircleTitleView.setOnTitleViewClickListener(this);
-        mFamilyCircleTitleView.setImageBtnClick(view -> startActivity(new Intent(getActivity(), ContactActivity.class)),
+        mFamilyCircleTitleView.setImageBtnClick(view -> startActivityForResult(new Intent(getActivity(), ContactActivity.class),1),
                 view -> initPopwindow(view));
         readPoint();
-
     }
     public void readPoint(){
         Map<String, Object> map = new HashMap<>();
@@ -215,5 +219,13 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==2){
+            readPoint();
+        }
     }
 }

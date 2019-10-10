@@ -380,7 +380,8 @@ public class LoginActivity extends BaseActivity {
             DadanPreference.getInstance(this).setString("photo",AppConfig.newUerEntity.getData().getPhoto());
         }
         DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
-
+        AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
+        AppConfig.surname=DadanPreference.getInstance(this).getString("surname");
     }
 
     @Override

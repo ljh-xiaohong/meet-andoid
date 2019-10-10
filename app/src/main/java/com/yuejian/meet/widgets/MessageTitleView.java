@@ -108,7 +108,6 @@ public class MessageTitleView extends LinearLayout {
         } else {
             leftBtn.setVisibility(VISIBLE);
             leftBtn.setImageDrawable(getResources().getDrawable(leftIconRes));
-
         }
         if (rightIconRes == -1) {
             rightBtn.setVisibility(INVISIBLE);
