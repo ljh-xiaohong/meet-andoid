@@ -63,7 +63,7 @@ public class PosterFragment extends BaseFragment {
             @Override
             public void onSuccess(String data, int id) {
 
-
+                if (checkIsLife()) return;
                 if (data != null) {
                     JSONObject jo = (JSONObject) JSON.parse(data);
                     String code = jo.getString("code");

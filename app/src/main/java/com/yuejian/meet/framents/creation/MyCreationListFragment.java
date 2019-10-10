@@ -46,6 +46,8 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
     private RecyclerView recyclerView;
 
+    private View nullView;
+
     private int pageIndex = 1;
 
     private int pageItemCount = 10;
@@ -69,6 +71,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
         springView = view.findViewById(R.id.fragment_poster_springview);
         recyclerView = view.findViewById(R.id.fragment_poster_recyclerview);
+        nullView = view.findViewById(R.id.fragment_poster_null);
         springView.setFooter(new DefaultFooter(mContext));
         springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
@@ -118,7 +121,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
                 } else {
                     adapter.Loadmore(parseJson(jo.getString("data")));
                 }
-
+               nullView.setVisibility(adapter.getData()==null||adapter.getData().size()<=0?View.VISIBLE:View.GONE);
             }
 
             @Override

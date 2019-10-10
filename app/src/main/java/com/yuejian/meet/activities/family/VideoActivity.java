@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -256,6 +257,7 @@ public class VideoActivity extends AppCompatActivity {
         player.getDiscussButton().setText(checkData(detail.getCommentNum()));
         player.getContenText().setText(checkData(detail.getContentTitle()));
         if (detail.getShopList() != null && detail.getShopList().getShopId().length() > 0) {
+            player.getGoodsButton().setVisibility(View.VISIBLE);
             player.getGoodsButton().setText(checkData(detail.getShopList().getShopName()));
         }
         if (detail.getLabelName() != null && detail.getLabelName().contains("#")) {
@@ -273,42 +275,50 @@ public class VideoActivity extends AppCompatActivity {
 
     private void initListener() {
         player.getLikeButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             like();
         });
         player.getShareButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             share();
         });
 
         player.getFollowText().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             AddFollow();
         });
         player.getDiscussButton().setOnClickListener(view -> {
 //            Intent intent = new Intent(mContext, MyDialogActivity.class);
 //            intent.putExtra("crId", contentId + "");
 //            startActivityForResult(intent, 1);
-
+            if (FastClickUtil.isFastClick()) return;
             MyDialogActivity.startActivityForResult(this, contentId, MyDialogActivity.StyleType.BLACK, REQUEST_CODE);
 
 
         });
         player.getDiscussEdittext().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             InputActivity.startActivityForResult(this, contentId, "", "", INPUT_STATE);
         });
 
         //更多
         player.getMoreButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
         });
 
         player.getNameText().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
 
         player.getHeadImagView().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
 
         player.getGoodsButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             goodDetail();
         });
     }
@@ -452,17 +462,14 @@ public class VideoActivity extends AppCompatActivity {
                         }
                         info.getContentDetail().setFabulousNum(count + "");
                         player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, count + "");
-
+                        ViewInject.shortToast(mContext, praise.getMessage());
                         break;
 
                     //拉黑
                     case 10205:
-
-                        break;
-
-                    //系统异常
+                        //系统异常
                     case 10001:
-
+                        ViewInject.shortToast(mContext, praise.getMessage());
                         break;
 
                     //其他
@@ -520,6 +527,7 @@ public class VideoActivity extends AppCompatActivity {
      * 关注
      */
     public void AddFollow() {
+        player.getFollowText().setClickable(false);
         Map<String, Object> params = new HashMap<>();
         params.put("opCustomerId", info.getContentDetail().getCustomerId());
         params.put("customerId", customerId);
@@ -529,6 +537,7 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String data, int id) {
                 if (checkIsLife()) return;
+                player.getFollowText().setClickable(true);
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -544,13 +553,17 @@ public class VideoActivity extends AppCompatActivity {
                     case -1:
                         ViewInject.shortToast(mContext, jo.getString("message"));
                         break;
+                    default:
+                        ViewInject.shortToast(mContext, jo.getString("message"));
+                        break;
                 }
 
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                player.getFollowText().setClickable(true);
             }
         });
     }

@@ -332,6 +332,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
     }
 
     public void AddFollow(boolean isFollows) {
+        follow.setClickable(false);
         Map<String, Object> params = new HashMap<>();
         params.put("clId", clId);
         params.put("customerId", customerId);
@@ -341,6 +342,7 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
             @Override
             public void onSuccess(String data, int id) {
                 if (checkIsLife()) return;
+                follow.setClickable(true);
                 JSONObject jo = JSON.parseObject(data);
                 if (jo == null || !jo.getString("code").equals("0")) {
                     ViewInject.shortToast(ActivityLabActivity.this, jo.getString("message"));
@@ -356,7 +358,8 @@ public class ActivityLabActivity extends AppCompatActivity implements SpringView
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                follow.setClickable(true);
             }
         });
     }
