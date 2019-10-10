@@ -316,6 +316,18 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     }
 
+
+    /**
+     * 拦截光亮度
+     * @param percent
+     */
+    @Override
+    protected void onBrightnessSlide(float percent) {
+
+    }
+
+
+
     /**
      * 亮度
      */

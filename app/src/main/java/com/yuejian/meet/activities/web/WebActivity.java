@@ -1255,7 +1255,7 @@ public class WebActivity extends BaseActivity {
         super.finish();
     }
 
-    public static boolean isAliPayInstalled(Context context) {
+    public boolean isAliPayInstalled(Context context) {
         Uri uri = Uri.parse("alipays://platformapi/startApp");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         ComponentName componentName = intent.resolveActivity(context.getPackageManager());

@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -88,6 +90,11 @@ public class VideoActivity extends AppCompatActivity {
 
     private String url;
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) return true;
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

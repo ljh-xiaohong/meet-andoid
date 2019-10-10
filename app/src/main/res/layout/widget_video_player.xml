@@ -342,12 +342,12 @@
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/video_layout_meditation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@mipmap/video_view_bg">
+        android:background="@mipmap/video_view_bg"
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -397,6 +397,7 @@
         android:layout_height="2dp"
         android:max="100"
         android:progressDrawable="@drawable/progressbar_bg" />
+
 
 
 </FrameLayout>
