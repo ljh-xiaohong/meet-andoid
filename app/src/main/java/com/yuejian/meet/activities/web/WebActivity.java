@@ -86,6 +86,7 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.WxPayOrderInfo;
 import com.yuejian.meet.widgets.PaymentBottomDialog;
+import com.yuejian.meet.widgets.VideoPlayer;
 
 import org.json.JSONException;
 

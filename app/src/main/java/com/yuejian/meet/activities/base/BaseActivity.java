@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
@@ -162,6 +163,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
         Bus.getDefault().unregister(this);
         AppManager.finishActivity(this);
         reference = null;
+        System.gc();
     }
 
     public void initBackButton(boolean isShow) {
@@ -293,6 +295,8 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
 
     @Override
     public void onClick(View v) {
+        if (FastClickUtil.isFastClick()) return;
+
     }
 
     public void getPosition(DataIdCallback<PositionInfo> callback) {

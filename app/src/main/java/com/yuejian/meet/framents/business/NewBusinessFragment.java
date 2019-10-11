@@ -33,6 +33,7 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.yuejian.meet.R;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.SelectGoodsActivity;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -44,6 +45,7 @@ import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
+import com.yuejian.meet.widgets.VideoPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,7 +92,6 @@ public class NewBusinessFragment extends BaseFragment {
     }
     private void initView() {
         wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
-        Log.e("url","http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
@@ -246,13 +247,16 @@ public class NewBusinessFragment extends BaseFragment {
                     String[] s=url.split("=");
                     CommonUtil.call(getActivity(),s[1]);
                 return true;//表示我已经处理过了
-            }else  if (!url.contains("index.html")&&!url.contains("clan.html")&&!url.contains("familyTab.html")&&!url.contains("familyTradition.html")) {
-              Intent intent = new Intent(getActivity(), WebActivity.class);
-              intent.putExtra(Constants.URL, url+"&phone=true");
-              intent.putExtra("No_Title", true);
-              startActivity(intent);
-              return true;//表示我已经处理过了
-          }
+            } else if (url.contains("yuejian://meditaVideo")) {
+                meditation(url);
+                return true;//表示我已经处理过了
+            } else if (!url.contains("index.html") && !url.contains("clan.html") && !url.contains("familyTab.html") && !url.contains("familyTradition.html")) {
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra(Constants.URL, url + "&phone=true");
+                intent.putExtra("No_Title", true);
+                startActivity(intent);
+                return true;//表示我已经处理过了
+            }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -385,6 +389,15 @@ public class NewBusinessFragment extends BaseFragment {
             }
         });
     }
+
+    /**
+     * 冥想寻根
+     */
+    private void meditation(final String url) {
+        ;
+        VideoActivity.startActivity(mContext, Utils.getValueByName(url, "url"), VideoPlayer.MODEL.MEDITATION, false);
+    }
+
     private String url;
     //WebChromeClient主要辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等
     private WebChromeClient webChromeClient = new WebChromeClient() {
@@ -431,9 +444,6 @@ public class NewBusinessFragment extends BaseFragment {
             }
             if (!CommonUtil.isNull(backType))
                 wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
-        }else if(event.getCallType() == BusEnum.toback){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+ DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
-            Log.e("asdasd","http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+ DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
         }
     }
 }

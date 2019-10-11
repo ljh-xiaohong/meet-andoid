@@ -947,7 +947,9 @@ public class Utils {
 
         new ShareAction(activity).withMedia(web)
                 .setCallback(shareListener)
-                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
+                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE
+//                        , SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE
+                )
                 .addButton("umeng_sharebutton_custom", "umeng_sharebutton_custom", "icon_wh_tousu", "icon_wh_tousu")
                 .setShareboardclickCallback(new ShareBoardlistener() {
 

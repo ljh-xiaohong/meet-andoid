@@ -1,6 +1,7 @@
 package com.yuejian.meet.activities.creation;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +22,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.common.utils.DensityUtil;
 import com.aliyun.svideo.editor.publish.CoverEditActivity;
+import com.aliyun.svideo.editor.util.ThreadUtil;
 import com.aliyun.svideo.sdk.external.struct.common.CropKey;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunIThumbnailFetcher;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunThumbnailFetcherFactory;
+import com.aliyun.video.common.utils.ThreadUtils;
 import com.bumptech.glide.Glide;
 import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.home.CreationActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
@@ -102,6 +107,9 @@ public class PulishActivity extends BaseActivity {
     @Bind(R.id.activity_publish_protocol)
     View protocol;
 
+    @Bind(R.id.activity_publish_back)
+    View back;
+
 
     private LoadingDialogFragment mLoadingDialog;
 
@@ -124,14 +132,13 @@ public class PulishActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
-        checkShop();
         setContentView(R.layout.activity_publish);
+        initData();
+        ;
         getDataFromNet();
         initListener();
-        mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...");
-
-        initData();
+        mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...", true);
+//        initData();
 //        initVideo();
     }
 
@@ -161,7 +168,7 @@ public class PulishActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.activity_publish_shop_select_layout, R.id.edit_label_init, R.id.activity_article_good_cancel, R.id.activity_publish_img_layout, R.id.activity_publish_publish_btn, R.id.activity_publish_privacy, R.id.activity_publish_protocol})
+    @OnClick({R.id.activity_publish_shop_select_layout, R.id.edit_label_init, R.id.activity_article_good_cancel, R.id.activity_publish_img_layout, R.id.activity_publish_publish_btn, R.id.activity_publish_privacy, R.id.activity_publish_protocol, R.id.activity_publish_back})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -197,6 +204,9 @@ public class PulishActivity extends BaseActivity {
                 intent = new Intent(this, WebActivity.class);
                 intent.putExtra(Constants.URL, UrlConstant.ExplainURL.USERGUIDE);
                 startActivity(intent);
+                break;
+            case R.id.activity_publish_back:
+                finish();
                 break;
         }
     }
@@ -322,6 +332,7 @@ public class PulishActivity extends BaseActivity {
             public void onSuccess(String data, int id) {
 
                 if (checkIsLife()) return;
+                checkShop();
                 if (data != null) {
                     JSONObject jo = (JSONObject) JSON.parse(data);
                     String code = jo.getString("code");
@@ -333,7 +344,6 @@ public class PulishActivity extends BaseActivity {
                                 CheckBox checkBox = (CheckBox) LayoutInflater.from(mContext).inflate(R.layout.radiobutton_label, null);
                                 checkBox.setText(label.getTitle());
                                 ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                ;
                                 lp.leftMargin = 10;
                                 lp.topMargin = DensityUtil.dip2px(10);
                                 checkBox.setLayoutParams(lp);
@@ -351,7 +361,8 @@ public class PulishActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                checkShop();
 
             }
         });
@@ -361,6 +372,7 @@ public class PulishActivity extends BaseActivity {
      * 阿里云接口（图片及视频）
      */
     private void uploadAliyun() {
+        publish.setClickable(false);
         String ossVideoUrl = OssUtils.getTimeNmaeVideo();
         //先上传视频
         new FeedsApiImpl().upLoadImageFileToOSS(mOutputPath, ossVideoUrl, mContext, new DataCallback<FeedsResourceBean>() {
@@ -373,6 +385,7 @@ public class PulishActivity extends BaseActivity {
                     @Override
                     public void onSuccess(FeedsResourceBean data) {
                         if (checkIsLife()) return;
+
                         //上传自身服务
                         uploadData(OssUtils.getOssUploadingUrl(ossImageUrl), OssUtils.getOssUploadingUrl(ossVideoUrl));
                     }
@@ -380,10 +393,14 @@ public class PulishActivity extends BaseActivity {
                     @Override
                     public void onFailed(String errCode, String errMsg) {
                         if (checkIsLife()) return;
-                        ViewInject.shortToast(mContext, errMsg);
-                        if (mLoadingDialog != null && mLoadingDialog.isShowing) {
-                            mLoadingDialog.dismiss();
-                        }
+                        ThreadUtils.runOnUiThread(() -> {
+                            publish.setClickable(true);
+                            ViewInject.shortToast(mContext, errMsg);
+                            if (mLoadingDialog != null && mLoadingDialog.isShowing) {
+                                mLoadingDialog.dismiss();
+                            }
+                        });
+
                     }
                 });
             }
@@ -391,10 +408,14 @@ public class PulishActivity extends BaseActivity {
             @Override
             public void onFailed(String errCode, String errMsg) {
                 if (checkIsLife()) return;
-                ViewInject.shortToast(mContext, errMsg);
-                if (mLoadingDialog != null && mLoadingDialog.isShowing) {
-                    mLoadingDialog.dismiss();
-                }
+                ThreadUtils.runOnUiThread(() -> {
+                    publish.setClickable(true);
+                    ViewInject.shortToast(mContext, errMsg);
+                    if (mLoadingDialog != null && mLoadingDialog.isShowing) {
+                        mLoadingDialog.dismiss();
+                    }
+                });
+
             }
         });
     }
@@ -421,6 +442,7 @@ public class PulishActivity extends BaseActivity {
             @Override
             public void onSuccess(String data, int id) {
                 if (checkIsLife()) return;
+                publish.setClickable(true);
                 if (mLoadingDialog != null) {
                     mLoadingDialog.dismiss();
                 }
@@ -429,6 +451,7 @@ public class PulishActivity extends BaseActivity {
                 if (jo.getString("code").equals("0")) {
                     ViewInject.shortToast(getApplicationContext(), R.string.release_success);
                     Bus.getDefault().getDefault().post(new ShopEntity());
+                    startActivity(new Intent(mContext, CreationActivity.class));
                     finish();
                 } else {
                     if (mLoadingDialog != null && mLoadingDialog.isShowing) {
@@ -443,6 +466,7 @@ public class PulishActivity extends BaseActivity {
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
                 if (checkIsLife()) return;
+                publish.setClickable(true);
                 if (mLoadingDialog != null && mLoadingDialog.isShowing) {
                     mLoadingDialog.dismiss();
                 }

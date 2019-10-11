@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:background="@drawable/shape_loading_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:alpha="0.9"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/dp_24" android:layout_marginTop="@dimen/dp_20" android:layout_marginRight="@dimen/dp_24" android:layout_marginBottom="@dimen/dp_20" android:layout_centerInParent="true">
-        <com.wang.avi.AVLoadingIndicatorView android:layout_gravity="center_horizontal" android:layout_width="32.0dip" android:layout_height="wrap_content" app:indicator="BallSpinFadeLoader" app:indicator_color="#ffb6b6b6" />
-        <TextView android:textSize="13.0sp" android:textColor="#ffb6b6b6" android:layout_gravity="center_horizontal" android:id="@+id/txt_loading_msg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/dp_10" />
-    </LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/txt_loading_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:alpha="0.9">
+
+
+    <RelativeLayout
+      android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_loading_bg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:orientation="vertical">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_width="32.0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:indicator="BallSpinFadeLoader"
+                app:indicator_color="#ffb6b6b6" />
+
+            <TextView
+                android:id="@+id/txt_loading_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="#ffb6b6b6"
+                android:textSize="13.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

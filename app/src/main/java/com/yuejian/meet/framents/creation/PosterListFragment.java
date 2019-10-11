@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.yuejian.meet.R.layout.fragment_poster_list;
+
 public class PosterListFragment extends BaseFragment implements SpringView.OnFreshListener {
 
     private TypeEntity type;
@@ -40,6 +42,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
 
     private int pageItemCount = 10;
 
+    private View nullView;
 
     private PosterListLabelAdapter posterListLabelAdapter;
 
@@ -48,7 +51,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
 
 
-        return inflater.inflate(R.layout.fragment_poster_list, null);
+        return inflater.inflate(fragment_poster_list, null);
     }
 
     @SuppressLint("ValidFragment")
@@ -65,6 +68,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
         springView.setFooter(new DefaultFooter(mContext));
         springView.setListener(this);
         recyclerView = view.findViewById(R.id.fragment_poster_recyclerview);
+        nullView = view.findViewById(R.id.fragment_poster_null);
         type = (TypeEntity) getArguments().getSerializable("label");
         isLabel = getArguments().getBoolean("isLabel", isLabel);
         setListener(isLabel);
@@ -131,7 +135,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
                     } else {
                         posterListLabelAdapter.Loadmore(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
                     }
-
+                    nullView.setVisibility(posterListLabelAdapter.getData() == null || posterListLabelAdapter.getData().size() <= 0 ? View.VISIBLE : View.GONE);
 
                 }
 
@@ -259,12 +263,13 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
                 if (code == null || !code.equalsIgnoreCase("0")) return;
 
 
-
                 if (pageIndex <= 1) {
                     posterListLabelAdapter.refresh(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
                 } else {
                     posterListLabelAdapter.Loadmore(JSON.parseArray(jo.getString("data"), PosterModelEntity.class));
                 }
+
+                nullView.setVisibility(posterListLabelAdapter.getData() == null || posterListLabelAdapter.getData().size() <= 0 ? View.VISIBLE : View.GONE);
 
             }
 

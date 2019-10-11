@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -83,19 +86,38 @@ public class VideoActivity extends AppCompatActivity {
 
     private ApiImp apiImp = new ApiImp();
 
+    private VideoPlayer.MODEL model;
+
+    private String url;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) return true;
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        reference = new WeakReference<>(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
         if (!getData()) return;
-        reference = new WeakReference<>(this);
-        getDataFromNet();
+        if (model != null) {
+            //纯播放功能
+            player.setModel(model);
+            player.setLooping(true);
+            player.setUp(url, true, "");
+            player.startPlayLogic();
+        } else {
+            //视频详情；
+            getDataFromNet();
+        }
+
     }
 
     private void initDialog() {
@@ -186,6 +208,20 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     /**
+     * @param context
+     * @param url
+     * @param model
+     * @param SCREEN_MATCH
+     */
+    public static void startActivity(Context context, String url, VideoPlayer.MODEL model, boolean SCREEN_MATCH) {
+        Intent intent = new Intent(context, VideoActivity.class);
+        intent.putExtra("VideoActivity.url", url);
+        intent.putExtra("VideoActivity.SCREEN_MATCH", SCREEN_MATCH);
+        intent.putExtra("VideoActivity.model", model);
+        context.startActivity(intent);
+    }
+
+    /**
      * 主要用于删除不感兴趣，及删除视频
      *
      * @param context
@@ -207,7 +243,10 @@ public class VideoActivity extends AppCompatActivity {
         contentId = getIntent().getStringExtra("VideoActivity.contentId");
         customerId = getIntent().getStringExtra("VideoActivity.customerId");
         full_screen = getIntent().getBooleanExtra("VideoActivity.SCREEN_MATCH", full_screen);
+        model = (VideoPlayer.MODEL) getIntent().getSerializableExtra("VideoActivity.model");
+        url = getIntent().getStringExtra("VideoActivity.url");
         GSYVideoType.setShowType(full_screen ? GSYVideoType.SCREEN_MATCH_FULL : GSYVideoType.SCREEN_TYPE_DEFAULT);
+        if (model != null) return !TextUtils.isEmpty(url);
         return contentId != null && customerId != null;
     }
 
@@ -256,6 +295,7 @@ public class VideoActivity extends AppCompatActivity {
         player.getDiscussButton().setText(checkData(detail.getCommentNum()));
         player.getContenText().setText(checkData(detail.getContentTitle()));
         if (detail.getShopList() != null && detail.getShopList().getShopId().length() > 0) {
+            player.getGoodsButton().setVisibility(View.VISIBLE);
             player.getGoodsButton().setText(checkData(detail.getShopList().getShopName()));
         }
         if (detail.getLabelName() != null && detail.getLabelName().contains("#")) {
@@ -273,42 +313,50 @@ public class VideoActivity extends AppCompatActivity {
 
     private void initListener() {
         player.getLikeButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             like();
         });
         player.getShareButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             share();
         });
 
         player.getFollowText().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             AddFollow();
         });
         player.getDiscussButton().setOnClickListener(view -> {
 //            Intent intent = new Intent(mContext, MyDialogActivity.class);
 //            intent.putExtra("crId", contentId + "");
 //            startActivityForResult(intent, 1);
-
+            if (FastClickUtil.isFastClick()) return;
             MyDialogActivity.startActivityForResult(this, contentId, MyDialogActivity.StyleType.BLACK, REQUEST_CODE);
 
 
         });
         player.getDiscussEdittext().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             InputActivity.startActivityForResult(this, contentId, "", "", INPUT_STATE);
         });
 
         //更多
         player.getMoreButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
         });
 
         player.getNameText().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
 
         player.getHeadImagView().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
 
         player.getGoodsButton().setOnClickListener(view -> {
+            if (FastClickUtil.isFastClick()) return;
             goodDetail();
         });
     }
@@ -452,17 +500,14 @@ public class VideoActivity extends AppCompatActivity {
                         }
                         info.getContentDetail().setFabulousNum(count + "");
                         player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, count + "");
-
+                        ViewInject.shortToast(mContext, praise.getMessage());
                         break;
 
                     //拉黑
                     case 10205:
-
-                        break;
-
-                    //系统异常
+                        //系统异常
                     case 10001:
-
+                        ViewInject.shortToast(mContext, praise.getMessage());
                         break;
 
                     //其他
@@ -520,6 +565,7 @@ public class VideoActivity extends AppCompatActivity {
      * 关注
      */
     public void AddFollow() {
+        player.getFollowText().setClickable(false);
         Map<String, Object> params = new HashMap<>();
         params.put("opCustomerId", info.getContentDetail().getCustomerId());
         params.put("customerId", customerId);
@@ -529,6 +575,7 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String data, int id) {
                 if (checkIsLife()) return;
+                player.getFollowText().setClickable(true);
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -544,13 +591,17 @@ public class VideoActivity extends AppCompatActivity {
                     case -1:
                         ViewInject.shortToast(mContext, jo.getString("message"));
                         break;
+                    default:
+                        ViewInject.shortToast(mContext, jo.getString("message"));
+                        break;
                 }
 
             }
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                player.getFollowText().setClickable(true);
             }
         });
     }

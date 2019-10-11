@@ -106,14 +106,14 @@
 
 
     <RadioGroup
-        android:visibility="gone"
         android:id="@+id/rg_video_fast_low"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="150dp"
         android:checkedButton="@+id/rb_video_nor"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RadioButton
             android:id="@+id/rb_video_low"
@@ -199,20 +199,52 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <!--<TextView-->
+        <!--android:id="@+id/tv_upload_btn"-->
+        <!--style="@style/video_btn_two"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:drawableTop="@mipmap/icon_video_music"-->
+        <!--android:text="上传"-->
+        <!--app:layout_constraintEnd_toStartOf="@+id/zdy_circleProgressBar"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+        <LinearLayout
             android:id="@+id/tv_upload_btn"
-            style="@style/video_btn_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:drawableTop="@mipmap/icon_video_music"
-            android:text="上传"
+            android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/zdy_circleProgressBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.yuejian.meet.widgets.CircleImageView
+                android:id="@+id/img_upload"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:src="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:shadowColor="#71757a"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="上传"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_paster_btn"

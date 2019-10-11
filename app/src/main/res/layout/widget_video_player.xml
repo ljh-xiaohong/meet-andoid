@@ -193,11 +193,12 @@
 
 
     <android.support.constraint.ConstraintLayout
-
+        android:id="@+id/video_layout_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@mipmap/video_view_bg">
+        android:background="@mipmap/video_view_bg"
+        android:visibility="visible">
 
         <com.yuejian.meet.widgets.CircleImageView
             android:id="@+id/circleImageView"
@@ -227,6 +228,7 @@
             android:layout_marginLeft="5dp"
             android:background="@drawable/shape_like"
             android:gravity="center"
+            android:text="关注"
             android:textColor="#ffffff"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
@@ -244,6 +246,7 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_13"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
@@ -268,7 +271,6 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/video_content">
-
 
 
         </com.zhy.view.flowlayout.FlowLayout>
@@ -339,6 +341,54 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/video_layout_meditation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@mipmap/video_view_bg"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/bg_bot_think">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/text2"
+                android:layout_gravity="center"
+                android:layout_marginBottom="13dp"
+                android:src="@mipmap/icon_family_think_m" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="45dp"
+                android:gravity="center"
+                android:text="以家为家，以乡为乡，以国为国，以天下为天下"
+                android:textColor="#FFD9BCAA"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="14dp"
+                android:gravity="center"
+                android:text="（请放松心情，打开音量，静静冥想）"
+                android:textColor="#FFA99183"
+                android:textSize="13sp" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
 
     <ProgressBar
         android:id="@+id/bottom_progressbar"
@@ -347,6 +397,7 @@
         android:layout_height="2dp"
         android:max="100"
         android:progressDrawable="@drawable/progressbar_bg" />
+
 
 
 </FrameLayout>

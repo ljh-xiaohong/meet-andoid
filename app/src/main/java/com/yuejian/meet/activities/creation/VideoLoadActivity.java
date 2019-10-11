@@ -6,18 +6,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -27,6 +28,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,9 +55,7 @@ import com.aliyun.recorder.AliyunRecorderCreator;
 import com.aliyun.recorder.supply.AliyunIClipManager;
 import com.aliyun.recorder.supply.AliyunIRecorder;
 import com.aliyun.recorder.supply.RecordCallback;
-import com.aliyun.svideo.base.ActionInfo;
 import com.aliyun.svideo.base.AlivcSvideoEditParam;
-import com.aliyun.svideo.base.AliyunSvideoActionConfig;
 import com.aliyun.svideo.base.UIConfigManager;
 import com.aliyun.svideo.base.widget.ProgressDialog;
 import com.aliyun.svideo.base.widget.beauty.enums.BeautyLevel;
@@ -67,7 +67,6 @@ import com.aliyun.svideo.sdk.external.struct.common.AliyunVideoParam;
 import com.aliyun.svideo.sdk.external.struct.common.CropKey;
 import com.aliyun.svideo.sdk.external.struct.common.VideoDisplayMode;
 import com.aliyun.svideo.sdk.external.struct.common.VideoQuality;
-import com.aliyun.svideo.sdk.external.struct.effect.EffectBean;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectFilter;
 import com.aliyun.svideo.sdk.external.struct.effect.EffectPaster;
 import com.aliyun.svideo.sdk.external.struct.encoder.VideoCodecs;
@@ -80,7 +79,6 @@ import com.aliyun.video.common.utils.ScreenUtils;
 import com.aliyun.video.common.utils.ThreadUtils;
 import com.qu.preview.callback.OnTextureIdCallBack;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.common.SDCardConstants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.dialogs.TipsDialog;
@@ -140,6 +138,9 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     //上传
     @Bind(R.id.tv_upload_btn)
     View v_uploadBtn;
+
+    @Bind(R.id.img_upload)
+    ImageView upload;
     //回删
 //    private View v_huishan;
     //下一步
@@ -192,6 +193,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
 
     private AsyncTask<Void, Void, Void> initAssetPath;
     private AsyncTask<Void, Void, Void> copyAssetsTask;
+    private AsyncTask<Void, Void, String> firstPictureTask;
 
     private LoadingDialogFragment mLoadingDialog;
 
@@ -266,6 +268,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -530,6 +533,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
 //        stopRecord();
         ButterKnife.unbind(this);
         mRecorder.destroy();
+        mRecorder = null;
     }
 
     /**
@@ -556,6 +560,8 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            Manifest.permission.WRITE_CONTACTS,
+//            Manifest.permission.READ_CONTACTS
     };
 
     /**
@@ -600,6 +606,64 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
                 activity.setAssetPath();
             }
             return null;
+        }
+    }
+
+    private void initFirstPic() {
+        firstPictureTask = new FirstPictureTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+    /**
+     * 获取图库第一张图片
+     */
+    private String uploadFirstImg() {
+        String picturePath = null;
+        Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[]{
+                        MediaStore.Images.Media.DATA,
+                        MediaStore.Images.Media._ID,
+                        MediaStore.Images.Media.TITLE,
+                        MediaStore.Images.Media.MIME_TYPE,
+                        MediaStore.Images.Media.DATE_ADDED,
+                }, null,
+                null,
+                MediaStore.Images.Media.DATE_ADDED + " DESC");
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+        picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return picturePath;
+    }
+
+    public static class FirstPictureTask extends AsyncTask<Void, Void, String> {
+
+        private final WeakReference<VideoLoadActivity> weakReference;
+
+        public FirstPictureTask(VideoLoadActivity activity) {
+            this.weakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            VideoLoadActivity activity = weakReference.get();
+            if (activity != null) {
+                return activity.uploadFirstImg();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String picturePath) {
+            super.onPostExecute(picturePath);
+            VideoLoadActivity activity = weakReference.get();
+            if (activity != null) {
+                if (activity.upload != null) {
+                    File file = new File(picturePath);
+                    if (file.exists())
+                        activity.upload.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                }
+
+            }
         }
     }
 
@@ -816,6 +880,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
         initOritationDetector();
         initAssetPath();
         copyAssets();
+        initFirstPic();
         setFaceTrackModePath();
 
         startOrStopPreview(true);
@@ -1288,6 +1353,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
             public void onConfirm(TipsDialog dialog) {
                 cancelPath();
                 dialog.dismiss();
+
 
             }
 

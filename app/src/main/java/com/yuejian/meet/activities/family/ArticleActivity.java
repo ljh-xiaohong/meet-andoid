@@ -719,6 +719,7 @@ public class ArticleActivity extends BaseActivity {
      * 关注
      */
     public void AddFollow() {
+        follow.setClickable(false);
         Map<String, Object> params = new HashMap<>();
         params.put("opCustomerId", info.getContentDetail().getCustomerId());
         params.put("customerId", customerId);
@@ -728,6 +729,7 @@ public class ArticleActivity extends BaseActivity {
             @Override
             public void onSuccess(String data, int id) {
                 if (checkIsLife()) return;
+                follow.setClickable(true);
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo == null) return;
                 switch (jo.getInteger("code")) {
@@ -749,7 +751,8 @@ public class ArticleActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                follow.setClickable(true);
             }
         });
     }

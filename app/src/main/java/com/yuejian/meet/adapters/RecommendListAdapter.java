@@ -232,7 +232,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
             super(itemView);
             if (listener != null) {
                 itemView.setOnClickListener(view -> {
-                    if (FastClickUtil.isFastClickActivity(EditorActivity.class.getSimpleName())) {
+                    if (FastClickUtil.isFastClick()) {
                         return;
                     }
                     listener.onItemClick(view, this.getAdapterPosition());
