@@ -99,11 +99,16 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 list.clear();
                 PushProjectBean bean = new Gson().fromJson(data, PushProjectBean.class);
-                if (bean.getCode() != 0) {
+                if (bean.getCode() != 0&&bean.getCode()!=19986) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
                 list.addAll(bean.getData());
+                if (list.size()>0){
+                    precisePushContentList.setVisibility(View.VISIBLE);
+                }else {
+                    precisePushContentList.setVisibility(View.GONE);
+                }
                 if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {
@@ -127,11 +132,16 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 listCommodity.clear();
                 PushCommodityBean bean = new Gson().fromJson(data, PushCommodityBean.class);
-                if (bean.getCode() != 0) {
+                if (bean.getCode() != 0&&bean.getCode()!=19986) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
                 listCommodity.addAll(bean.getData());
+                if (listCommodity.size()>0){
+                    precisePushCommodityList.setVisibility(View.VISIBLE);
+                }else {
+                    precisePushCommodityList.setVisibility(View.GONE);
+                }
                 if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {
@@ -155,11 +165,16 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 mList.clear();
                 PushUseBean bean = new Gson().fromJson(data, PushUseBean.class);
-                if (bean.getCode() != 0) {
+                if (bean.getCode() != 0&&bean.getCode()!=19986) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
                 mList.addAll(bean.getData());
+                if (mList.size()>0){
+                    precisePushList.setVisibility(View.VISIBLE);
+                }else {
+                    precisePushList.setVisibility(View.GONE);
+                }
                 if (list.size() > 0 || mList.size() > 0||listCommodity.size()>0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
                 } else {

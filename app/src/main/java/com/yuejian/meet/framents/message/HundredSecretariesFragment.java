@@ -141,7 +141,6 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
         setCurrentItem(0);
-        isUdate=true;
     }
 
     /**
@@ -192,13 +191,8 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     public void onPageScrollStateChanged(int state) {
 
     }
-    private boolean isUdate=true;
     public void update() {
-        if (isUdate) {
             initDatas();
-        }
-        isUdate=false;
-
     }
 
 }

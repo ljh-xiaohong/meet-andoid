@@ -443,7 +443,9 @@ public class NewBusinessFragment extends BaseFragment {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType))
-                wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId="+AppConfig.CustomerId);
+        }else if (event.getCallType() == BusEnum.toback){
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
         }
     }
 }
