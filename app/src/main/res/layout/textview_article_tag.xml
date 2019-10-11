@@ -4,9 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_article_textview"
     android:drawableLeft="@mipmap/icon_home_tab_article"
-    android:padding="7dp"
     android:textColor="#FF507DAF"
-
     android:textSize="15sp">
 
 </TextView>

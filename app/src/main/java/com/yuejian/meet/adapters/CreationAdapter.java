@@ -26,7 +26,8 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
 
     private int type;
     private boolean hasDraftBox;  //是否显示草稿箱
-    public CreationAdapter(RecyclerView recyclerView, Context context, int type,boolean hasDraftBox) {
+
+    public CreationAdapter(RecyclerView recyclerView, Context context, int type, boolean hasDraftBox) {
         super(recyclerView, context);
         this.type = type;
         this.hasDraftBox = hasDraftBox;
@@ -37,7 +38,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
         if (data == null) {
             data = new ArrayList<>();
         }
-        if (hasDraftBox&&(type == 1 || type == 2)) {
+        if (hasDraftBox && (type == 1 || type == 2)) {
             CreationEntity entity = new CreationEntity();
             entity.setDraftsId(type);
             if (creationEntities == null) creationEntities = new ArrayList<>();
@@ -75,14 +76,21 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 rv.setViewStatus(RecommendView.ViewType.POSTER, itemHeight);
                 Glide.with(context).load(entity.getPreviewUrl()).into(rv.poster_img);
                 rv.poster_content.setText(entity.getContentTitle());
-                TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.textview_tag, null);
-                textView.setText(entity.getLabelName());
-                rv.poster_tag.addView(textView);
+                if (rv.poster_tag.getChildCount() == 0) {
+                    TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.textview_tag, null);
+                    textView.setText(entity.getLabelName().replaceAll("#", ""));
+                    rv.poster_tag.addView(textView);
+                } else {
+                    TextView textView = (TextView) rv.poster_tag.getChildAt(0);
+                    if (textView == null) return;
+                    textView.setText(entity.getLabelName().replaceAll("#", ""));
+                }
+
                 break;
             //视频
             case 2:
                 //第一个默认草稿
-                if (position == 0&&hasDraftBox) {
+                if (position == 0 && hasDraftBox) {
                     rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
                     return;
                 }
@@ -125,7 +133,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
             //文章
             case 1:
                 //第一个默认草稿
-                if (position == 0&&hasDraftBox) {
+                if (position == 0 && hasDraftBox) {
                     rv.setViewStatus(RecommendView.ViewType.DRAFT, itemHeight);
                     return;
                 }
