@@ -80,7 +80,7 @@ public class ProjectFragment extends BaseFragment
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-        mSpringView.callFresh();
+//        mSpringView.callFresh();
     }
 
     //加载数据
