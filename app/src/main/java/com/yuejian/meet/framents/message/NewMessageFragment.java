@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,23 +153,20 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
             }
         });
     }
-    private boolean isClick=false;
+//    private boolean isClick=false;
     @Override
     public void onTitleViewClick(int position) {
         switch (position) {
             case 0:
-                isClick=true;
                 setCurrentItem(0);
                 break;
             case 1:
-                isClick=true;
                 setCurrentItem(1);
                 break;
             default:
                 break;
         }
     }
-
     /**
      * 切换页面
      *
@@ -176,13 +174,13 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
      */
 
     private void setCurrentItem(int position) {
-        mContentPager.setCurrentItem(position);
-        mFamilyCircleTitleView.setSelectedTitle(position);
-        if (position==0){
-            mNotificationMessageFragment.update();
-        }else {
-            mHundredSecretariesFragment.update();
-        }
+            if (position == 0) {
+                mNotificationMessageFragment.update();
+            } else {
+                mHundredSecretariesFragment.update();
+            }
+           mContentPager.setCurrentItem(position);
+           mFamilyCircleTitleView.setSelectedTitle(position);
     }
 
     @Override
@@ -200,16 +198,14 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     public void onPageSelected(int position) {
         switch (position) {
             case 0:
-                if (!isClick) {
+//                if (!isClick) {
                     setCurrentItem(0);
-                }
-                isClick=false;
+//                }
                 break;
             case 1:
-                if (!isClick) {
+//                if (!isClick) {
                     setCurrentItem(1);
-                }
-                isClick=false;
+//                }
                 break;
             default:
                 break;
@@ -224,7 +220,7 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==2){
+        if (resultCode==2){
             readPoint();
         }
     }

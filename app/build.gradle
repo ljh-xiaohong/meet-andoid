@@ -24,8 +24,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         renderscriptTargetApi 25
-        versionCode 23
-        versionName '4.0.1'
+        versionCode 24
+        versionName '5.0.00'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "BUILD_LOG", "${isLog()}"
@@ -79,9 +79,8 @@ android {
 
     buildTypes {
         release {
-
             minifyEnabled false
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

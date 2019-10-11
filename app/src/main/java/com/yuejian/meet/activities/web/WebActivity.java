@@ -42,6 +42,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
@@ -367,6 +368,14 @@ public class WebActivity extends BaseActivity {
                 upgradeVip(url);
                 return true;
             } else if (uri.getAuthority().equals("toBack")) {
+                onBackPressed();
+                return true;
+            } else if (uri.getAuthority().contains("toBackName")) {
+                String[] s=url.split("=");
+                DadanPreference.getInstance(this).setString("websurname",url.split("=")[1]);
+                BusCallEntity busCallEntity = new BusCallEntity();
+                busCallEntity.setCallType(BusEnum.toback);
+                Bus.getDefault().post(busCallEntity);
                 onBackPressed();
                 return true;
             } else if (uri.getAuthority().contains("userPay_inContribution")){//充值贡献值

@@ -65,7 +65,12 @@ public class PrecisePushAdapter extends RecyclerView.Adapter<PrecisePushAdapter.
             holder.vip_img.setVisibility(View.GONE);
         }
         holder.name.setText(dataBean.getUserName());
-        holder.content.setText(dataBean.getLastLoginCity()+"");
+        if(!CommonUtil.isNull(dataBean.getLastLoginCity())){
+            holder.content.setText(dataBean.getLastLoginCity()+"");
+            holder.content.setVisibility(View.VISIBLE);
+        }else {
+            holder.content.setVisibility(View.GONE);
+        }
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
         holder.iv_icon.setOnClickListener(v -> {
             String urlVip = "";

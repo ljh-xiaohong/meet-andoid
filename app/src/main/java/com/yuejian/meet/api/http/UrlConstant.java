@@ -1191,6 +1191,8 @@ public class UrlConstant {
     public static String GET_GETBAIJIASOURCE = apiUrl() + "api/customerRelation/getBaiJiaSource";
     //推送用户列表
     public static String GET_GETPUSHLIST = apiUrl() + "api/msg/getPushList";
+    //推送用户列表
+    public static String GET_GETPUSHPROJECT = apiUrl() + "api/msg/getPushProject";
     //获取精准推送商品列表API
     public static String GET_GETTHREEPROJECT = apiUrl() + "api/msg/getThreeProject";
     //获取消息通知详细

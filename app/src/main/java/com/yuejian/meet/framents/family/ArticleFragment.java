@@ -95,6 +95,8 @@ public class ArticleFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                isUdate=true;
+                if (mEmptyList==null)return;
                 if (dialog != null)
                     dialog.dismiss();
                 followEntitie=new Gson().fromJson(data,VideoAndArticleBean.class);
@@ -169,12 +171,16 @@ public class ArticleFragment extends BaseFragment
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
+    private boolean isUdate=true;
     String title="";
     public void update(String titles) {
-        title=titles;
-        followEntities.clear();
-        mNextPageIndex = 1;
-        loadDataFromNet("2",titles);
+        if (isUdate) {
+            title=titles;
+            followEntities.clear();
+            mNextPageIndex = 1;
+            loadDataFromNet("2",titles);
+        }
+        isUdate=false;
+
     }
 }

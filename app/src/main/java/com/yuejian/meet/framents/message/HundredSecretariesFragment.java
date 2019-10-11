@@ -22,6 +22,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.BaiJiaSourceBean;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.PersonalViewpager;
 import com.yuejian.meet.widgets.SecretaryTitleView;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     @Bind(R.id.id_stickynavlayout_indicator)
     SecretaryTitleView mSecretaryTitleView;
     @Bind(R.id.id_stickynavlayout_viewpager)
-    ViewPager mViewPager;
+    PersonalViewpager mViewPager;
     @Bind(R.id.statistics_img)
     ImageView statisticsImg;
     private FragmentPagerAdapter mAdapter;
@@ -140,6 +141,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
         setCurrentItem(0);
+        isUdate=true;
     }
 
     /**
@@ -148,6 +150,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
      * @param position 分类角标
      */
     private void setCurrentItem(int position) {
+        mViewPager.setPostion(position);
         mViewPager.setCurrentItem(position);
         mSecretaryTitleView.setSelectedTitle(position);
     }
@@ -189,9 +192,13 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     public void onPageScrollStateChanged(int state) {
 
     }
-
+    private boolean isUdate=true;
     public void update() {
-        initDatas();
+        if (isUdate) {
+            initDatas();
+        }
+        isUdate=false;
+
     }
 
 }

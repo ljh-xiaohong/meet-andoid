@@ -132,6 +132,7 @@ public class ServiceFragment extends Fragment{
             }
         });
         fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fansList.setNestedScrollingEnabled(false);
     }
     private void updateService(int position) {
         Map<String, Object> map = new HashMap<>();

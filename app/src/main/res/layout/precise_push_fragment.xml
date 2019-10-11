@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#F2F5F7"
+    android:layout_marginBottom="100dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
@@ -11,18 +13,19 @@
         android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.yuejian.meet.widgets.HeadAndFootRecyclerView
+        android:background="#FFFFFF"
+        android:id="@+id/precise_push_content_list"
+        android:layout_marginTop="5dp"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/precise_push_commodity_list"
         android:layout_marginTop="5dp"
         android:paddingRight="12dp"
         android:background="#FFFFFF"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <android.support.v7.widget.RecyclerView
-        android:background="#FFFFFF"
-        android:id="@+id/precise_push_content_list"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
         <LinearLayout

@@ -1792,6 +1792,16 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETPUSHLIST, paramMap, paramObject, paramDataIdCallback);
     }
     /**
+     * 推送用户列表
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getPushProject(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETPUSHPROJECT, paramMap, paramObject, paramDataIdCallback);
+    }
+    /**
      * 获取精准推送商品列表API（
      *
      * @param paramMap

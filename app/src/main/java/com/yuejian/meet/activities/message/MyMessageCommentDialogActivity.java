@@ -149,9 +149,9 @@ public class MyMessageCommentDialogActivity extends FragmentActivity implements 
     private void send() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        params.put("crId", getIntent().getIntExtra("crId", 0));
+        params.put("crId", getIntent().getStringExtra("crId"));
         params.put("commentContent", content.getText().toString());
-        params.put("replyCommentId", getIntent().getIntExtra("replyCommentId", 0));
+        params.put("replyCommentId", getIntent().getStringExtra("replyCommentId"));
         api.contentComent(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

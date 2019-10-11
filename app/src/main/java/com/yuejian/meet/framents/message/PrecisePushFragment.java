@@ -20,9 +20,11 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.PushCommodityBean;
 import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.bean.PushProjectBean;
 import com.yuejian.meet.bean.PushUseBean;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.utils.ViewInject;
+import com.yuejian.meet.widgets.HeadAndFootRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
     @Bind(R.id.precise_push_content_list)
-    RecyclerView precisePushContentList;
+    HeadAndFootRecyclerView precisePushContentList;
     @Bind(R.id.precise_push_list)
     RecyclerView precisePushList;
     @Bind(R.id.precise_push_commodity_list)
@@ -86,17 +88,17 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
 
     public ApiImp apiImp = new ApiImp();
     List<PushUseBean.DataBean> mList = new ArrayList<>();
-    List<PushListBean.DataBean> list = new ArrayList<>();
+    List<PushProjectBean.DataBean> list = new ArrayList<>();
     List<PushCommodityBean.DataBean> listCommodity = new ArrayList<>();
     //获取项目列表
     private void initListData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-        apiImp.getPushList(params, this, new DataIdCallback<String>() {
+        apiImp.getPushProject(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
                 list.clear();
-                PushListBean bean = new Gson().fromJson(data, PushListBean.class);
+                PushProjectBean bean = new Gson().fromJson(data, PushProjectBean.class);
                 if (bean.getCode() != 0) {
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
@@ -202,13 +204,22 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
                 getAttention(position);
             }
         });
-        precisePushContentList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity(),list);
-        precisePushContentList.setAdapter(mPrecisePushContentAdapter);
 
         precisePushCommodityList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         mPrecisePushCommodityAdapter = new PrecisePushCommodityAdapter(getActivity(),listCommodity);
         precisePushCommodityList.setAdapter(mPrecisePushCommodityAdapter);
+
+
+
+        precisePushContentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPrecisePushContentAdapter = new PrecisePushContentAdapter(getActivity(),list);
+        precisePushContentList.setAdapter(mPrecisePushContentAdapter);
+
+//        precisePushContentList.setHasFixedSize(true);
+        precisePushContentList.setNestedScrollingEnabled(false);
+//
+//        precisePushContentList.addHeaderView(precisePushList);
+//        precisePushContentList.addFooterView(precisePushCommodityList);
     }
 
     private void getAttention(int position) {

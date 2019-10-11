@@ -40,6 +40,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
@@ -89,6 +90,7 @@ public class NewBusinessFragment extends BaseFragment {
     }
     private void initView() {
         wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
+        Log.e("url","http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
@@ -429,6 +431,9 @@ public class NewBusinessFragment extends BaseFragment {
             }
             if (!CommonUtil.isNull(backType))
                 wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+        }else if(event.getCallType() == BusEnum.toback){
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+ DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
+            Log.e("asdasd","http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+ DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
         }
     }
 }

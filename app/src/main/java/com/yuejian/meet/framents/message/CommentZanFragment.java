@@ -78,7 +78,7 @@ public class CommentZanFragment extends Fragment {
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-//        params.put("customerId", "500102");
+//        params.put("customerId", "725322");
         params.put("msgType",getArguments().getInt("type"));
         apiImp.getCommentAndPraise(params, this, new DataIdCallback<String>() {
             @Override

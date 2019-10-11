@@ -8,7 +8,7 @@ import java.util.List;
  * @time : 2019/9/19 16:33
  * @desc :
  */
-public class PushUseBean {
+public class PushProjectBean {
 
     /**
      * code : 0
@@ -56,21 +56,32 @@ public class PushUseBean {
 
     public static class DataBean implements Serializable {
 
+
         /**
-         * userPhoto : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/3005411504837504687.jpg
-         * lastLoginCity : null
-         * isConcern : 0
-         * customerId : 300541
-         * vipType : 0
-         * userName : 第五个
+         * coverUrl : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/201910101047034734721.jpg
+         * userPhoto : http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/photoalbum/1505099409300670_0_shuping.jpg
+         * vipType : 1
+         * id : 113
+         * userName : 颜琦
+         * title : 爱的广告全套VI设计
+         * content : VI系统设计vi设计企业VI餐饮VIvi应用系统VI全套设\n行业：餐饮行业 \n色系：彩色系 黑白系 红色系 \n类型：VI设计（全套）}]
          */
 
+        private String coverUrl;
         private String userPhoto;
-        private String lastLoginCity;
-        private String isConcern;
-        private int customerId;
         private String vipType;
+        private int id;
         private String userName;
+        private String title;
+        private String content;
+
+        public String getCoverUrl() {
+            return coverUrl;
+        }
+
+        public void setCoverUrl(String coverUrl) {
+            this.coverUrl = coverUrl;
+        }
 
         public String getUserPhoto() {
             return userPhoto;
@@ -78,30 +89,6 @@ public class PushUseBean {
 
         public void setUserPhoto(String userPhoto) {
             this.userPhoto = userPhoto;
-        }
-
-        public String getLastLoginCity() {
-            return lastLoginCity;
-        }
-
-        public void setLastLoginCity(String lastLoginCity) {
-            this.lastLoginCity = lastLoginCity;
-        }
-
-        public String getIsConcern() {
-            return isConcern;
-        }
-
-        public void setIsConcern(String isConcern) {
-            this.isConcern = isConcern;
-        }
-
-        public int getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(int customerId) {
-            this.customerId = customerId;
         }
 
         public String getVipType() {
@@ -112,12 +99,36 @@ public class PushUseBean {
             this.vipType = vipType;
         }
 
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
         public String getUserName() {
             return userName;
         }
 
         public void setUserName(String userName) {
             this.userName = userName;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
     }
 }
