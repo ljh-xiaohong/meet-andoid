@@ -283,22 +283,22 @@ public class WebActivity extends BaseActivity {
         //For Android 3.0+
         public void openFileChooser(ValueCallback<Uri> uploadMsg) {
             mUM = uploadMsg;
-//            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
-            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
+            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
+//            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
         }
 
         // For Android 3.0+, above method not supported in some android 3+ versions, in such case we use this
         public void openFileChooser(ValueCallback uploadMsg, String acceptType) {
             mUM = uploadMsg;
-//            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
-            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
+            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
+//            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
         }
 
         //For Android 4.1+
         public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
             mUM = uploadMsg;
-//            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
-            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
+            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
+//            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
         }
 
         //For Android 5.0+
@@ -307,8 +307,8 @@ public class WebActivity extends BaseActivity {
                 mUMA.onReceiveValue(null);
             }
             mUMA = filePathCallback;
-//            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
-            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
+            Utils.pickPhotos(WebActivity.this, FCR, false, 0, 0, dismissListener);
+//            Utils.pickInfor(WebActivity.this, FCR, false, 0, 0, dismissListener);
             return true;
         }
     };
@@ -626,7 +626,6 @@ public class WebActivity extends BaseActivity {
             }
         } else if (url.contains("faxian/game_zhuangzhong.html")) {
             isShareSuccess = false;
-            return true;
         } else if (url.contains("payment/chongzhi.html")) {
             Intent intent = new Intent(this, InCashActivity.class);
             startActivity(intent);
