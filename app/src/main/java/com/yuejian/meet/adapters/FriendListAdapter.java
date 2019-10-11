@@ -125,7 +125,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
                 //VIP
                 urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
             }
-            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s", AppConfig.CustomerId, entity.getCustomerId());
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, entity.getCustomerId());
             Intent intent = new Intent(mContext, WebActivity.class);
             intent.putExtra(Constants.URL, urlVip);
             intent.putExtra("No_Title", true);

@@ -67,7 +67,7 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
     private int mNextPageIndex = 1;
     private int pageCount = 10;
     List<MessageBean.DataBean> mList =new ArrayList<>();
-
+    private boolean isUdate=true;
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         return inflater.inflate(R.layout.notification_message_fragment, container, false);
@@ -102,12 +102,15 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
     public void initDatas() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
+//        params.put("customerId", "725322");
         params.put("msgType", "4");
         params.put("pageIndex", mNextPageIndex);
         params.put("pageItemCount", pageCount);
         apiImp.getMessageList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                isUdate=true;
+                if (llFamilyFollowListEmpty==null) return;
              MessageBean bean=new Gson().fromJson(data,MessageBean.class);
                 if (bean.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),bean.getMessage());
@@ -140,6 +143,7 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
                 }
+                isUdate=true;
             }
         });
     }
@@ -176,9 +180,12 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         initDatas();
     }
     public void update() {
-        mList.clear();
-        mNextPageIndex = 1;
-        initDatas();
+        if (isUdate) {
+            mList.clear();
+            mNextPageIndex = 1;
+            initDatas();
+        }
+        isUdate=false;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

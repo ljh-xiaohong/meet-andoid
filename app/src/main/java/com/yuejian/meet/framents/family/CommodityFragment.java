@@ -85,7 +85,7 @@ public class CommodityFragment extends BaseFragment
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-        mSpringView.callFresh();
+//        mSpringView.callFresh();
     }
 
 
@@ -104,6 +104,8 @@ public class CommodityFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                isUdate=true;
+                if (mEmptyList==null)return;
                 if (dialog != null)
                     dialog.dismiss();
                 followEntitie=new Gson().fromJson(data,CommodityBean.class);
@@ -186,12 +188,15 @@ public class CommodityFragment extends BaseFragment
     }
 
 
-
+    private boolean isUdate=true;
     String title="";
     public void update(String titles) {
-        title=titles;
-        followEntities.clear();
-        mNextPageIndex = 1;
-        loadDataFromNet("6",titles);
+        if (isUdate) {
+            title=titles;
+            followEntities.clear();
+            mNextPageIndex = 1;
+            loadDataFromNet("6",titles);
+        }
+        isUdate=false;
     }
 }

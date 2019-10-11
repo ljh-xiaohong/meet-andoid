@@ -87,6 +87,7 @@ public class FriendFragment extends BaseFragment
     }
 
     private void getAttention(int position) {
+        if (mEmptyList==null)return;
         if (dialog != null&&!dialog.isShowing)
             dialog.show(getActivity().getFragmentManager(), "");
         Map<String, Object> map = new HashMap<>();
@@ -146,6 +147,7 @@ public class FriendFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                isUdate=true;
                 if (dialog != null)
                     dialog.dismiss();
                  followEntitie=new Gson().fromJson(data,NewFriendBean.class);
@@ -227,12 +229,15 @@ public class FriendFragment extends BaseFragment
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
+    private boolean isUdate=true;
     String title="";
     public void update(String titles) {
-        title=titles;
-        followEntities.clear();
-        mNextPageIndex = 1;
-        loadDataFromNet("0",titles);
+        if (isUdate) {
+            title=titles;
+            followEntities.clear();
+            mNextPageIndex = 1;
+            loadDataFromNet("0",titles);
+        }
+        isUdate=false;
     }
 }

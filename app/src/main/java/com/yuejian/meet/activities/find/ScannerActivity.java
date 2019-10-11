@@ -3,7 +3,6 @@ package com.yuejian.meet.activities.find;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -20,16 +18,15 @@ import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.mylhyl.zxing.scanner.OnScannerCompletionListener;
 import com.mylhyl.zxing.scanner.ScannerOptions;
 import com.mylhyl.zxing.scanner.ScannerView;
+import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
-import com.yuejian.meet.api.http.UrlConstant;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.BusMessage;
 import com.yuejian.meet.common.Constants;
-import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.DecodeImageCallback;
 import com.yuejian.meet.utils.DecodeImageThread;
 import com.yuejian.meet.utils.StringUtils;
-import com.yuejian.meet.utils.Utils;
 
 
 import butterknife.OnClick;
@@ -93,16 +90,37 @@ public class ScannerActivity extends BaseActivity {
         if (scannerView != null) {
             scannerView.onPause();
         }
-        findViewById(R.id.go_to_grally).setVisibility(View.GONE);
-        if (result.contains(UrlConstant.ExplainURL.QRCODE_SHARE)) {
-            String customerId = Utils.getValueByName(result, "customer_id");
-            AppUitls.goToPersonHome(this, customerId);
-        } else {
-            Intent intent = new Intent();
-            intent.putExtra("scanner_result", result);
-            setResult(RESULT_OK, intent);
+//        findViewById(R.id.go_to_grally).setVisibility(View.GONE);
+//        http://app2.yuejianchina.com/yuejian-app/shara_register.html?customerId=723495&referralMobile=13168328807&vipType=1
+        if (result.contains("shara_register")) {
+            String[] s=result.split("&");
+            String customerId=s[0].split("=")[1];
+            String referralMobile=s[1].split("=")[1];
+            String vipType=s[2].split("=")[1];
+            String urlVip = "";
+            if (vipType.equals("0")) {
+                //非VIP
+//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_UNVIP;
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            } else {
+                //VIP
+//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+            }
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, customerId);
+            Intent intent = new Intent(this, WebActivity.class);
+            intent.putExtra(Constants.URL, urlVip);
+            intent.putExtra("No_Title", true);
+            startActivity(intent);
+        }else {
+            Toast.makeText(getBaseContext(), R.string.scanner_toast, Toast.LENGTH_SHORT).show();
         }
-        finish();
+//        else {
+//            Intent intent = new Intent();
+//            intent.putExtra("scanner_result", result);
+//            setResult(RESULT_OK, intent);
+//        }
+//        finish();
     }
 
 

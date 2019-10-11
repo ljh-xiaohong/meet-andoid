@@ -66,7 +66,6 @@ public class CustomerServiceAdapter extends RecyclerView.Adapter<CustomerService
         holder.rlItem.setOnClickListener(v -> {
           Intent intent= new Intent(context, CustomerServiceDetails.class);
           intent.putExtra("messageId",dataBean.getId());
-          intent.putExtra("content",dataBean.getMsgRemark());
             context.startActivity(intent);
         });
         holder.btnDelete.setOnClickListener(v -> mOnClickListener.onDelect(position));

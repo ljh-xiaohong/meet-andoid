@@ -8,7 +8,7 @@
         android:layout_width="135dp"
         android:layout_centerHorizontal="true"
         android:text="精准推送设置"
-        android:background="#FFFFFF"
+        android:background="@drawable/line_all"
         android:textColor="#333333"
         android:gravity="center"
         android:layout_height="44dp" />
@@ -18,7 +18,7 @@
         android:layout_width="135dp"
         android:text="全部已读"
         android:layout_centerHorizontal="true"
-        android:background="#FFFFFF"
+        android:background="@drawable/line_left_right_bottom"
         android:textColor="#333333"
         android:gravity="center"
         android:layout_height="44dp" />

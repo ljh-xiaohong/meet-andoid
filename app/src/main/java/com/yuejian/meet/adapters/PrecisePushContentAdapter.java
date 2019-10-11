@@ -21,6 +21,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.bean.PushListBean;
+import com.yuejian.meet.bean.PushProjectBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.CircleImageView;
@@ -32,14 +33,14 @@ import java.util.List;
 public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushContentAdapter.MyViewHolder> {
     private Context context;
     private LayoutInflater inflater;
-    private List<PushListBean.DataBean> list ;
+    private List<PushProjectBean.DataBean> list ;
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
 
 
     private View mHeaderView;
-    public PrecisePushContentAdapter(Context context, List<PushListBean.DataBean> list) {
+    public PrecisePushContentAdapter(Context context, List<PushProjectBean.DataBean> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -55,7 +56,7 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
-        PushListBean.DataBean dataBean=list.get(position);
+        PushProjectBean.DataBean dataBean=list.get(position);
         if (!TextUtils.isEmpty(dataBean.getUserPhoto())) {
             Glide.with(context).load(dataBean.getUserPhoto()).into(holder.iv_icon);
         }

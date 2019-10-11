@@ -86,6 +86,8 @@ public class VideoFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                isUdate=true;
+                if (mEmptyList==null)return;
                 if (dialog != null)
                     dialog.dismiss();
                 mVideoAndArticleBean = new Gson().fromJson(data, VideoAndArticleBean.class);
@@ -166,11 +168,15 @@ public class VideoFragment extends BaseFragment
     }
 
     String title = "";
-
+    private boolean isUdate=true;
     public void update(String titles) {
-        title = titles;
-        creationEntities.clear();
-        mNextPageIndex = 1;
-        loadDataFromNet("4", titles);
+        if (isUdate) {
+            title = titles;
+            creationEntities.clear();
+            mNextPageIndex = 1;
+            loadDataFromNet("4", titles);
+        }
+        isUdate=false;
+
     }
 }

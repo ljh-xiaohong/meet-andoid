@@ -83,5 +83,6 @@ public class CityACtivity extends BaseActivity {
                 finish();
             }
         });
+        back.setOnClickListener(v -> finish());
     }
 }

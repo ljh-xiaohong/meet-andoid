@@ -71,7 +71,6 @@ public class ServiceFragment extends Fragment{
     private void setParam() {
         if (isInit && !isLoadOver && isVisible) {
             //加载数据
-            if(mList.size()==0)
             initData();
         }
     }
@@ -132,6 +131,7 @@ public class ServiceFragment extends Fragment{
             }
         });
         fansList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fansList.setNestedScrollingEnabled(false);
     }
     private void updateService(int position) {
         Map<String, Object> map = new HashMap<>();
