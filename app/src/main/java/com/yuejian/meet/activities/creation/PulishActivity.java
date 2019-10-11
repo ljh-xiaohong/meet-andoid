@@ -22,9 +22,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.common.utils.DensityUtil;
 import com.aliyun.svideo.editor.publish.CoverEditActivity;
+import com.aliyun.svideo.editor.util.ThreadUtil;
 import com.aliyun.svideo.sdk.external.struct.common.CropKey;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunIThumbnailFetcher;
 import com.aliyun.svideo.sdk.external.thumbnail.AliyunThumbnailFetcherFactory;
+import com.aliyun.video.common.utils.ThreadUtils;
 import com.bumptech.glide.Glide;
 import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.api.DataCallback;
@@ -130,13 +132,13 @@ public class PulishActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
-        checkShop();
         setContentView(R.layout.activity_publish);
+        initData();
+        ;
         getDataFromNet();
         initListener();
         mLoadingDialog = LoadingDialogFragment.newInstance("正在上传...", true);
-        initData();
+//        initData();
 //        initVideo();
     }
 
@@ -330,6 +332,7 @@ public class PulishActivity extends BaseActivity {
             public void onSuccess(String data, int id) {
 
                 if (checkIsLife()) return;
+                checkShop();
                 if (data != null) {
                     JSONObject jo = (JSONObject) JSON.parse(data);
                     String code = jo.getString("code");
@@ -341,7 +344,6 @@ public class PulishActivity extends BaseActivity {
                                 CheckBox checkBox = (CheckBox) LayoutInflater.from(mContext).inflate(R.layout.radiobutton_label, null);
                                 checkBox.setText(label.getTitle());
                                 ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                ;
                                 lp.leftMargin = 10;
                                 lp.topMargin = DensityUtil.dip2px(10);
                                 checkBox.setLayoutParams(lp);
@@ -359,7 +361,8 @@ public class PulishActivity extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-
+                if (checkIsLife()) return;
+                checkShop();
 
             }
         });
@@ -390,11 +393,14 @@ public class PulishActivity extends BaseActivity {
                     @Override
                     public void onFailed(String errCode, String errMsg) {
                         if (checkIsLife()) return;
-                        publish.setClickable(true);
-                        ViewInject.shortToast(mContext, errMsg);
-                        if (mLoadingDialog != null && mLoadingDialog.isShowing) {
-                            mLoadingDialog.dismiss();
-                        }
+                        ThreadUtils.runOnUiThread(() -> {
+                            publish.setClickable(true);
+                            ViewInject.shortToast(mContext, errMsg);
+                            if (mLoadingDialog != null && mLoadingDialog.isShowing) {
+                                mLoadingDialog.dismiss();
+                            }
+                        });
+
                     }
                 });
             }
@@ -402,11 +408,14 @@ public class PulishActivity extends BaseActivity {
             @Override
             public void onFailed(String errCode, String errMsg) {
                 if (checkIsLife()) return;
-                publish.setClickable(true);
-                ViewInject.shortToast(mContext, errMsg);
-                if (mLoadingDialog != null && mLoadingDialog.isShowing) {
-                    mLoadingDialog.dismiss();
-                }
+                ThreadUtils.runOnUiThread(() -> {
+                    publish.setClickable(true);
+                    ViewInject.shortToast(mContext, errMsg);
+                    if (mLoadingDialog != null && mLoadingDialog.isShowing) {
+                        mLoadingDialog.dismiss();
+                    }
+                });
+
             }
         });
     }

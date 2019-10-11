@@ -90,7 +90,7 @@ public class VideoTrimAdapterNew extends BaseAdapter {
         ViewGroup.LayoutParams lParam = holder.thumblayout.getLayoutParams();
 
         lParam.width = screenWidth / 10;
-        lParam.height = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.creation_progress_left).getHeight()-10;
+//        lParam.height = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.creation_progress_left).getHeight()-10;
 
         holder.thumblayout.setLayoutParams(lParam);
 

@@ -163,6 +163,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
         Bus.getDefault().unregister(this);
         AppManager.finishActivity(this);
         reference = null;
+        System.gc();
     }
 
     public void initBackButton(boolean isShow) {
@@ -294,7 +295,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        if (FastClickUtil.isFastClick())return;
+        if (FastClickUtil.isFastClick()) return;
 
     }
 

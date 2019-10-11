@@ -268,6 +268,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -532,6 +533,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
 //        stopRecord();
         ButterKnife.unbind(this);
         mRecorder.destroy();
+        mRecorder = null;
     }
 
     /**
@@ -1351,6 +1353,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
             public void onConfirm(TipsDialog dialog) {
                 cancelPath();
                 dialog.dismiss();
+
 
             }
 

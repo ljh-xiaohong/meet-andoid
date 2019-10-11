@@ -66,6 +66,7 @@ import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.common.SDCardConstants;
 
 import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -131,6 +132,8 @@ public class VideoCropActivity extends AppCompatActivity
     private VideoTrimAdapterNew adapter;
 
     private Handler playHandler = new Handler(this);
+
+    private WeakReference<VideoCropActivity> reference;
 
     ////////////////////// 控件start ////////////////////////////////
     /**
@@ -215,6 +218,7 @@ public class VideoCropActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        reference = new WeakReference<>(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -226,6 +230,10 @@ public class VideoCropActivity extends AppCompatActivity
         getData();
         initViews();
         initSurface();
+    }
+
+    private boolean checkIsLife() {
+        return reference == null || reference.get() == null || reference.get().isFinishing();
     }
 
 
@@ -724,6 +732,7 @@ public class VideoCropActivity extends AppCompatActivity
     private VideoSliceSeekBar.SeekBarChangeListener mSeekBarListener = new VideoSliceSeekBar.SeekBarChangeListener() {
         @Override
         public void seekBarValueChanged(float leftThumb, float rightThumb, int whitchSide) {
+            if(checkIsLife())return;
             long seekPos = 0;
             if (whitchSide == 0) {
                 seekPos = (long) (duration * leftThumb / 100);
@@ -741,11 +750,13 @@ public class VideoCropActivity extends AppCompatActivity
 
         @Override
         public void onSeekStart() {
+            if(checkIsLife())return;
             pauseVideo();
         }
 
         @Override
         public void onSeekEnd() {
+            if(checkIsLife())return;
             needPlayStart = true;
             if (playState == PAUSE_VIDEO) {
                 playVideo();
@@ -764,6 +775,7 @@ public class VideoCropActivity extends AppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(checkIsLife())return;
                 mCropProgress.setProgress(percent);
             }
         });
@@ -781,6 +793,7 @@ public class VideoCropActivity extends AppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(checkIsLife())return;
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
                 switch (code) {
@@ -814,6 +827,7 @@ public class VideoCropActivity extends AppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(checkIsLife())return;
                 mCropProgress.setVisibility(View.GONE);
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
@@ -824,7 +838,7 @@ public class VideoCropActivity extends AppCompatActivity
                 intent.putExtra(CropKey.RESULT_KEY_FILE_PATH, path);
                 //裁剪之后的跳转
                 PulishActivity.startPulishActivity(mContext, outputPath, mEndTime - mStartTime, path, getIntent().getStringExtra("project_json_path"));
-                finish();
+//                finish();
 
 //                String tagClassName = AliyunSvideoActionConfig.getInstance().getAction().getTagClassName(ActionInfo.SVideoAction.CROP_TARGET_CLASSNAME);
 //                if (tagClassName == null) {
@@ -845,10 +859,12 @@ public class VideoCropActivity extends AppCompatActivity
      */
     @Override
     public void onCancelComplete() {
+        if(checkIsLife())return;
         //取消完成
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(checkIsLife())return;
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
             }
@@ -867,6 +883,7 @@ public class VideoCropActivity extends AppCompatActivity
 
     @Override
     public void onVideoScroll(float distanceX, float distanceY) {
+        if(checkIsLife())return;
         if (isCropping) {
             //裁剪中无法操作
             return;
@@ -906,6 +923,7 @@ public class VideoCropActivity extends AppCompatActivity
 
     @Override
     public void onVideoSingleTapUp() {
+        if(checkIsLife())return;
         if (isCropping) {
             //裁剪过程中点击无效
             return;
@@ -921,6 +939,7 @@ public class VideoCropActivity extends AppCompatActivity
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int i, int i1) {
+        if(checkIsLife())return;
         if (mPlayer == null) {
             mSurface = new Surface(surface);
             mPlayer = AliyunSVideoPlayerCreator.createPlayer();
@@ -934,6 +953,7 @@ public class VideoCropActivity extends AppCompatActivity
 
                 @Override
                 public void onDataSize(int dataWidth, int dataHeight) {
+                    if(checkIsLife())return;
                     frameWidth = frame.getWidth();
                     frameHeight = frame.getHeight();
                     videoWidth = dataWidth;
@@ -960,6 +980,7 @@ public class VideoCropActivity extends AppCompatActivity
 
                 @Override
                 public void onError(int i) {
+                    if(checkIsLife())return;
                     Log.e(TAG, "错误码 : " + i);
                     ThreadUtils.runOnUiThread(new Runnable() {
                         @Override
@@ -978,6 +999,7 @@ public class VideoCropActivity extends AppCompatActivity
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int width, int height) {
+        if(checkIsLife())return;
         mPlayer.setDisplaySize(width, height);
     }
 
@@ -1021,6 +1043,7 @@ public class VideoCropActivity extends AppCompatActivity
                         } else {
                             intent.setClassName(this, tagClassName);
                             startActivity(intent);
+                            finish();
                         }
                         break;
                     default:
@@ -1029,7 +1052,7 @@ public class VideoCropActivity extends AppCompatActivity
                 break;
 
             case R.id.aliyun_back:
-                onBackPressed();
+                finish();
                 break;
 
         }
@@ -1062,6 +1085,11 @@ public class VideoCropActivity extends AppCompatActivity
         }
         if (mThumbnailFetcher != null) {
             mThumbnailFetcher.release();
+            mThumbnailFetcher = null;
+        }
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
         }
     }
 
@@ -1119,6 +1147,18 @@ public class VideoCropActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void finish() {
+
+        if (isCropping) {
+            crop.cancel();
+            crop.dispose();
+            crop = null;
+        }
+        super.finish();
+    }
+
+
     ///////////////////////////////////////////////// 回调 end /////////////////////////////////////////////////////
 
     /**
@@ -1156,6 +1196,7 @@ public class VideoCropActivity extends AppCompatActivity
 
             @Override
             public void onThumbnailReady(Bitmap frameBitmap, long l) {
+                if(checkIsLife())return;
                 if (frameBitmap != null && !frameBitmap.isRecycled()) {
 //                    Log.i(TAG, "onThumbnailReady  put: " + position + " ,l = " + l / 1000);
 

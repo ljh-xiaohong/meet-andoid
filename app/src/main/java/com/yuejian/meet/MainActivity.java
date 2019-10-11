@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -329,6 +330,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 //                startActivity(new Intent(this, NewMessageActivity.class));
                 break;
             case R.id.rlayout_creation:
+                if(FastClickUtil.isFastClick()) return;
                 if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
                     Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);

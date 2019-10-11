@@ -2863,7 +2863,7 @@ public class AlivcEditView extends RelativeLayout
                     intent.setClassName(getContext(), "com.yuejian.meet.activities.creation.PulishActivity");
                     intent.putExtra(CropKey.RESULT_KEY_CROP_PATH, mOutputPath);
                     getContext().startActivity(intent);
-                    ((Activity) getContext()).finish();
+//                    ((Activity) getContext()).finish();
                 }
             });
 
