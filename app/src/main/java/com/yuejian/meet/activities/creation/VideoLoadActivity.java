@@ -1370,7 +1370,7 @@ public class VideoLoadActivity extends FragmentActivity implements ScaleGestureD
         videoPath = "";
         //设置控件的状态
 //        setLoadingStatus(View.VISIBLE);
-        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_lvjingBtn);
+        setVisibility(View.VISIBLE, v_backBtn, v_CameraReturn, v_CountdownBtn, v_speed, v_uploadBtn, v_lvjingBtn,mPicker);
         setVisibility(View.GONE, v_nextBtn);
         zdy_loadBtn.setBaseStatus();
         zdy_loadBtn.setClickable(true);

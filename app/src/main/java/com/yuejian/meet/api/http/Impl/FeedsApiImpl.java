@@ -53,6 +53,7 @@ public class FeedsApiImpl{
                 String mImageUrl = UrlConstant.downloadObject + imageName;
                 Log.e("tag", "图片上传成功：" + mImageUrl);
                 FeedsResourceBean feedsResourceBean = new FeedsResourceBean(mImageUrl, "");
+                feedsResourceBean.setImageUrl(mImageUrl);
                 callback.onSuccess(feedsResourceBean);
             }
 
