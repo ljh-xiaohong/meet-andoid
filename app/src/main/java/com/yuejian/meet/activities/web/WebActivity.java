@@ -315,7 +315,7 @@ public class WebActivity extends BaseActivity {
 
     private String shareCustomerId = "";
     private boolean isVIP = false;
-
+    private String backType="";
     private boolean blockUrl(String url) {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
@@ -363,6 +363,13 @@ public class WebActivity extends BaseActivity {
                 buyPosterTemplate(url);
                 return true;
             } else if (uri.getAuthority().equals("createShopOrderPay")) {
+                String[] s=url.split("&");
+                String oid=s[0].split("=")[1];
+                String payType=s[1].split("=")[1];
+                if (s.length>2) {
+                    backType = s[2].split("=")[1];
+                }
+                isVIP=false;
                 //商品购买
                 createShopOrderPay(url);
                 return true;
@@ -699,7 +706,11 @@ public class WebActivity extends BaseActivity {
                                 PayResult payResult = new PayResult(result);
                                 String resultStatus = payResult.getResultStatus();
                                 if (TextUtils.equals(resultStatus, "9000")) {
-                                    webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html");
+                                    if (!CommonUtil.isNull(backType)) {
+                                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                                    }else {
+                                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                                    }
                                 }
                             });
                         }).start();
@@ -958,8 +969,12 @@ public class WebActivity extends BaseActivity {
                     if (isVIP) {
                         reloadHome();
                     }
-//                    if (!CommonUtil.isNull(backType))
-//                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                    if (!CommonUtil.isNull(backType))
+                        if (!CommonUtil.isNull(backType)) {
+                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                        }else {
+                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                        }
                 }
             }
             return false;
@@ -1106,15 +1121,7 @@ public class WebActivity extends BaseActivity {
                     finish();
                     break;
                 }
-
-
-                if (webView.canGoBack()) {
-                    webView.goBack();
-                    //mBackFinish.setVisibility(View.VISIBLE);
-                } else {
-                    webView.freeMemory();
-                    finish();
-                }
+                onBackPressed();
                 break;
             case R.id.webview_titlebar_imgBtn_finish:
                 webView.freeMemory();
@@ -1125,14 +1132,17 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
-
+        if (webView==null)return;
+        if (webView.getUrl().contains("suefulPayment")){
+            webView.loadUrl("javascript:toBack()");
+        }
         if (webView.canGoBack()) {
             webView.goBack();
-
-            // mBackFinish.setVisibility(View.VISIBLE);
+            //mBackFinish.setVisibility(View.VISIBLE);
         } else {
             webView.freeMemory();
+            Intent i = new Intent();
+            setResult(2, i);
             finish();
         }
     }
@@ -1254,7 +1264,11 @@ public class WebActivity extends BaseActivity {
                 //购买商品成功
                 case PAY_FOR_ORDER:
                     if (webView != null) {
-                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html");
+                        if (!CommonUtil.isNull(backType)) {
+                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                        }else {
+                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                        }
                     }
                     break;
             }
@@ -1275,6 +1289,20 @@ public class WebActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBusCallback(BusCallEntity event) {
+        super.onBusCallback(event);
+        if (event.getCallType() == BusEnum.payment_success){
+            if (isVIP){
+                reloadHome();
+            }
+            if (!CommonUtil.isNull(backType)) {
+                webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+            }else {
+                webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+            }
+        }
+    }
     @Override
     public void finish() {
         setResult(38);

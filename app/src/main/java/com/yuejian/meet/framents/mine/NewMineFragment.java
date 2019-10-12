@@ -275,14 +275,13 @@ public class NewMineFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra(Constants.URL, url+"&phone=true");
                 intent.putExtra("No_Title", true);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 return true;//表示我已经处理过了
             }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
     };
-
     //payType 1:支付宝，2.微信
     private void doInCashShop(String oid,String payType) {
         if (payType.equals("2")) {
@@ -556,16 +555,8 @@ public class NewMineFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==QUN_QUEST){
-            if (type.equals("1")){
-
-            }else if (type.equals("2")){
-
-            }else if (type.equals("3")){
-
-            }else if (type.equals("4")){
-
-            }
+        if (resultCode==38){
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
         }
     }
 }

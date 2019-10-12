@@ -491,7 +491,6 @@
 
         <service android:name=".service.DownloadGiftImgService" />
 
-        <activity android:name=".activities.GuideActivity" />
         <activity
             android:name=".activities.DateActivity"
             android:theme="@style/MyDialog" />

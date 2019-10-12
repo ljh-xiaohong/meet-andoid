@@ -70,8 +70,8 @@
                 android:text="深圳"
                 android:layout_marginLeft="12dp"
                 android:gravity="center"
-                android:background="#FF2D2D2D"
-                android:textColor="#ffffffff"
+                android:background="@drawable/black"
+                android:textColor="@color/black3"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/beijing"
@@ -80,8 +80,8 @@
                 android:text="北京"
                 android:layout_marginLeft="12dp"
                 android:gravity="center"
-                android:background="#FF2D2D2D"
-                android:textColor="#ffffffff"
+                android:background="@drawable/black"
+                android:textColor="@color/black3"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/shanghai"
@@ -90,8 +90,8 @@
                 android:text="上海"
                 android:layout_marginLeft="12dp"
                 android:gravity="center"
-                android:background="#FF2D2D2D"
-                android:textColor="#ffffffff"
+                android:background="@drawable/black"
+                android:textColor="@color/black3"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/guangzhou"
@@ -100,8 +100,8 @@
                 android:text="广州"
                 android:layout_marginLeft="12dp"
                 android:gravity="center"
-                android:background="#FF2D2D2D"
-                android:textColor="#ffffffff"
+                android:background="@drawable/black"
+                android:textColor="@color/black3"
                 android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>
