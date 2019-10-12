@@ -101,11 +101,11 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
                     ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
-//                if (!TextUtils.isEmpty(bean.getData().getImage())) {
-//                    Glide.with(getActivity()).load(bean.getData().getImage()).into(statisticsImg);
-//                }else {
-//                    Glide.with(getActivity()).load(R.mipmap.default_pic).into(statisticsImg);
-//                }
+                if (!TextUtils.isEmpty(bean.getData().getImage())) {
+                    Glide.with(getActivity()).load(bean.getData().getImage()).into(statisticsImg);
+                }else {
+                    Glide.with(getActivity()).load(R.mipmap.default_pic).into(statisticsImg);
+                }
             }
 
             @Override
