@@ -32,6 +32,7 @@ import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.activities.zuci.ZuciMainActivity;
+import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
 import com.yuejian.meet.adapters.RecommendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -113,7 +114,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     protected void initData() {
         super.initData();
 
-        mSpringView.setFooter(new DefaultFooter(getContext()));
+//        mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
 
@@ -141,7 +142,23 @@ public class FamilyCircleRecommendFragment extends BaseFragment
             }
 
         });
-        loadDataFromNet(1, 10);
+        //底部更新
+        recommendListAdapter.setOnBottomListener(new BaseAdapter.OnBottomListener() {
+            @Override
+            public void onBottom() {
+                //到达底部自动加载
+                onLoadmore();
+            }
+
+            @Override
+            public boolean canScroll(List list) {
+                //获取数据 如果数据被指定个数整除，则继续监听，不回调
+                if (list != null && list.size() % pageCount == 0) return true;
+                return false;
+            }
+        });
+
+//        loadDataFromNet(mNextPageIndex, pageCount);
         mSpringView.callFresh();
         setItemWidth();
     }
@@ -269,6 +286,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                             //下拉更多
                             recommendListAdapter.Loadmore(recommendEntities);
                         }
+                        mNextPageIndex++;
                     }
 
                 }
@@ -382,7 +400,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     public void onLoadmore() {
         if (checkIsLife()) return;
 //        loadDataFromNet(type, ++mNextPageIndex, pageCount, is_recommend);
-        loadDataFromNet(++mNextPageIndex, pageCount);
+        loadDataFromNet(mNextPageIndex, pageCount);
     }
 
     @Override

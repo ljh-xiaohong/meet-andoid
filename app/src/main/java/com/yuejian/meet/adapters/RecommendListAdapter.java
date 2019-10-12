@@ -3,7 +3,10 @@ package com.yuejian.meet.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +64,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
     @Override
     public void onBindViewHolder(RecommendHoldView holder, int position) {
         RecommendEntity entity = data.get(position);
-        if (entity==null) return;
+        if (entity == null) return;
         if (!(holder.itemView instanceof RecommendView)) return;
         RecommendView rv = (RecommendView) holder.itemView;
 
@@ -117,10 +120,10 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
 
                     rv.video_horizontal_video.getLayoutParams().height = itemWidth / 16 * 9;
                     rv.video_horizontal_content.setText(entity.getTitle());
-                    if (!TextUtils.isEmpty(entity.getLabelName())){
+                    if (!TextUtils.isEmpty(entity.getLabelName())) {
                         rv.video_horizontal_tag.setText(entity.getLabelName().replaceAll("#", ""));
                         rv.video_horizontal_tag.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         rv.video_horizontal_tag.setVisibility(View.GONE);
                     }
 
@@ -240,6 +243,5 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
             }
         }
     }
-
 
 }

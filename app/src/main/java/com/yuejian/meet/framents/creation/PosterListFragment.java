@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yuejian.meet.R.layout.fragment_poster_list;
 
 public class PosterListFragment extends BaseFragment implements SpringView.OnFreshListener {
 
@@ -51,7 +50,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
 
 
-        return inflater.inflate(fragment_poster_list, null);
+        return inflater.inflate(R.layout.fragment_poster_list, null);
     }
 
     @SuppressLint("ValidFragment")
