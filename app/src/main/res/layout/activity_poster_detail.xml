@@ -123,7 +123,8 @@
             <com.zhy.view.flowlayout.FlowLayout
                 android:id="@+id/activity_poster_flowlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.zhy.view.flowlayout.FlowLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"></com.zhy.view.flowlayout.FlowLayout>
 
         </LinearLayout>
 

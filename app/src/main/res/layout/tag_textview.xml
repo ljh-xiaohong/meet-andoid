@@ -7,6 +7,6 @@
     android:drawableLeft="@mipmap/icon_home_tab_article"
     android:drawablePadding="@dimen/dp_4"
     android:textColor="#507DAF"
-    android:textSize="@dimen/sp_12">
+    android:textSize="15sp">
 
 </TextView>

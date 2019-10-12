@@ -30,6 +30,7 @@ public class PosterDetailEntity implements Serializable {
     private int id;
     private int isDelete;
     private String labelId;
+    private String lableName;
     private String postersJson;
     private double postersPrice;
     private String postersTitle;
@@ -40,7 +41,14 @@ public class PosterDetailEntity implements Serializable {
     private int usenumTrue;
     private boolean templateCollection;
     private String postersDes;
-    private List<ContentLabelList> contentLabelList;
+
+    public String getLableName() {
+        return lableName;
+    }
+
+    public void setLableName(String lableName) {
+        this.lableName = lableName;
+    }
 
     public String getPostersDes() {
         return postersDes;
@@ -162,13 +170,13 @@ public class PosterDetailEntity implements Serializable {
         this.usenumTrue = usenumTrue;
     }
 
-    public List<ContentLabelList> getContentLabelList() {
-        return contentLabelList;
-    }
-
-    public void setContentLabelList(List<ContentLabelList> contentLabelList) {
-        this.contentLabelList = contentLabelList;
-    }
+//    public List<ContentLabelList> getContentLabelList() {
+//        return contentLabelList;
+//    }
+//
+//    public void setContentLabelList(List<ContentLabelList> contentLabelList) {
+//        this.contentLabelList = contentLabelList;
+//    }
 
     public static class ContentLabelList {
         /**
