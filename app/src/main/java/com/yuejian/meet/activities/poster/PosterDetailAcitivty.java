@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.activities.family.ActivityLabActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.UrlConstant;
@@ -179,7 +182,7 @@ public class PosterDetailAcitivty extends BaseActivity {
         apiImp.doCollection(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(checkIsLife())return;
+                if (checkIsLife()) return;
                 JSONObject jo = JSONObject.parseObject(data);
                 if (jo != null && jo.getString("code").equals("0")) {
                     posterInfo.setTemplateCollection(true);
@@ -189,7 +192,7 @@ public class PosterDetailAcitivty extends BaseActivity {
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                if(checkIsLife())return;
+                if (checkIsLife()) return;
                 ViewInject.shortToast(mContext, errMsg);
             }
         });
@@ -221,7 +224,7 @@ public class PosterDetailAcitivty extends BaseActivity {
         apiImp.findPostersModelById(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(checkIsLife())return;
+                if (checkIsLife()) return;
                 if (data == null || data.length() < 0 || data.equalsIgnoreCase("null")) return;
 
                 JSONObject jo = JSONObject.parseObject(data);
@@ -235,7 +238,7 @@ public class PosterDetailAcitivty extends BaseActivity {
                     Glide.with(mContext).load(posterInfo.getPreviewUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                            if(checkIsLife())return;
+                            if (checkIsLife()) return;
                             share_icon = bitmap;
                             poster_img.setImageBitmap(bitmap);
                         }
@@ -245,11 +248,24 @@ public class PosterDetailAcitivty extends BaseActivity {
                     poster_price.setText(String.format("%s贡献值", posterInfo.getPostersPrice() + ""));
                     poster_content.setText(posterInfo.getPostersDes());
                     check.setImageResource(posterInfo.isTemplateCollection() ? R.mipmap.icon_nav_collect_sel : R.mipmap.icon_nav_collect_nor);
-                    if (posterInfo.getContentLabelList() != null && posterInfo.getContentLabelList().size() > 0) {
-                        for (PosterDetailEntity.ContentLabelList labelList : posterInfo.getContentLabelList()) {
+//                    if (posterInfo.getContentLabelList() != null && posterInfo.getContentLabelList().size() > 0) {
+//                        for (PosterDetailEntity.ContentLabelList labelList : posterInfo.getContentLabelList()) {
+//                            TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tag_textview, null);
+//                            textView.setText(labelList.getTitle());
+//                            flowLayout.addView(textView);
+//                        }
+//                    }
+
+                    if (!TextUtils.isEmpty(posterInfo.getLabelId()) && !TextUtils.isEmpty(posterInfo.getLableName())) {
+                        String labName = posterInfo.getLableName().replaceAll(" ", "");
+                        labName = labName.substring(1, labName.length());
+                        String[] labs = labName.split("#");
+                        int i;
+                        for (i = 0; i < labName.length(); i++) {
                             TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tag_textview, null);
-                            textView.setText(labelList.getTitle());
+                            textView.setText(labs[i]);
                             flowLayout.addView(textView);
+
                         }
                     }
                 }
@@ -266,10 +282,12 @@ public class PosterDetailAcitivty extends BaseActivity {
         JSONObject jo = JSON.parseObject(data);
         if (jo != null) {
             posterInfo = new PosterDetailEntity();
-            List<PosterDetailEntity.ContentLabelList> contentLabelList = JSON.parseArray(jo.getString("contentLabelList"), PosterDetailEntity.ContentLabelList.class);
-            if (null != contentLabelList) {
-                posterInfo.setContentLabelList(contentLabelList);
-            }
+//            List<PosterDetailEntity.ContentLabelList> contentLabelList = JSON.parseArray(jo.getString("contentLabelList"), PosterDetailEntity.ContentLabelList.class);
+//            if (null != contentLabelList) {
+//                posterInfo.setContentLabelList(contentLabelList);
+//            }
+            posterInfo.setLableName(jo.getString("lableName"));
+            posterInfo.setLabelId(jo.getString("labelId"));
             posterInfo.setCreateTime(jo.getInteger("createTime"));
             posterInfo.setDiscountPrice(jo.getDouble("discountPrice"));
             posterInfo.setId(jo.getInteger("id"));
