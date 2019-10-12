@@ -95,7 +95,7 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         apiImp.getRelation(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                if(llFamilyFollowListEmpty=null)return;
+                if(llFamilyFollowListEmpty==null)return;
                 mList.clear();
                 NewFriendBean bean = new Gson().fromJson(data, NewFriendBean.class);
                 if (bean.getCode() != 0) {
