@@ -241,11 +241,11 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
      * @param position 分类角标
      */
     private void setCurrentItem(int position) {
-        vpFamilyCircleContent.setCurrentItem(position);
-        familyCircleTitleView.setSelectedTitle(position);
         if (!isFirst){
             searching(mCurrentSearch);
         }
+        vpFamilyCircleContent.setCurrentItem(position);
+        familyCircleTitleView.setSelectedTitle(position);
         if (position == 1) {
             //打开手势滑动
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -296,24 +296,24 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     public void onPageSelected(int position) {
         switch (position) {
             case 0:
-                setCurrentItem(0);
                 positions=0;
+                setCurrentItem(0);
                 break;
             case 1:
-                setCurrentItem(1);
                 positions=1;
+                setCurrentItem(1);
                 break;
             case 2:
-                setCurrentItem(2);
                 positions=2;
+                setCurrentItem(2);
                 break;
             case 3:
-                setCurrentItem(3);
                 positions=3;
+                setCurrentItem(3);
                 break;
             case 4:
-                setCurrentItem(4);
                 positions=4;
+                setCurrentItem(4);
                 break;
             default:
                 break;
@@ -329,24 +329,24 @@ public class SearchActivity extends BaseActivity implements TextView.OnEditorAct
     public void onTitleViewClick(int position) {
         switch (position) {
             case 0:
-                setCurrentItem(0);
                 positions=0;
+                setCurrentItem(0);
                 break;
             case 1:
-                setCurrentItem(1);
                 positions=1;
+                setCurrentItem(1);
                 break;
             case 2:
-                setCurrentItem(2);
                 positions=2;
+                setCurrentItem(2);
                 break;
             case 3:
-                setCurrentItem(3);
                 positions=3;
+                setCurrentItem(3);
                 break;
             case 4:
-                setCurrentItem(4);
                 positions=4;
+                setCurrentItem(4);
                 break;
             default:
                 break;
