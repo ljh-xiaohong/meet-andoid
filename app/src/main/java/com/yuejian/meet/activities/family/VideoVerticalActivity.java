@@ -115,10 +115,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
-                adapter = new VideoPagerAdapter(getSupportFragmentManager(), Ids);
-//                verticalViewPager.setLoop(Ids.size());
-                verticalViewPager.setAdapter(adapter);
-                verticalViewPager.setOffscreenPageLimit(1);
+
             }
         });
     }
