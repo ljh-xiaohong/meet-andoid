@@ -119,8 +119,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private NewMessageFragment messageFragment = new NewMessageFragment();
     private NewBusinessFragment businessFragment = new NewBusinessFragment();
     private NewMineFragment mineFragment = new NewMineFragment();
-    private FamilyCircleContainerFragment familyFragment;
-//    private FamilyCircleRecommendFragment familyFragment;
+//    private FamilyCircleContainerFragment familyFragment;
+    private FamilyCircleRecommendFragment familyFragment;
     private Intent intent;
     private MainMoreUi mainMoreUi;
     private mine2Entity mine2;
@@ -218,8 +218,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
-        familyFragment = new FamilyCircleContainerFragment();
-//        familyFragment = new FamilyCircleRecommendFragment();
+//        familyFragment = new FamilyCircleContainerFragment();
+        familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
         mFragmentManager = this.getSupportFragmentManager();
