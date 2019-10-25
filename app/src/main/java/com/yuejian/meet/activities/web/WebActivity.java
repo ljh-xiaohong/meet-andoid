@@ -326,7 +326,6 @@ public class WebActivity extends BaseActivity {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
         if (uri.getScheme().equals("yuejian")) {
-
             if (uri.getAuthority().equals("webapp")) { //封面人物的支付接口
                 HashMap<String, Object> params = new HashMap<>();
                 Set<String> queryNames = uri.getQueryParameterNames();
