@@ -101,7 +101,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
                     VideoPlayFragment fragment = new VideoPlayFragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("crID", datas.get(i).getId());
-                    bundle.putInt("position", i);
+//                    bundle.putInt("position", i);
                     fragment.setArguments(bundle);
                     fragment.setOnchangeDataListener(VideoVerticalActivity.this);
                     Ids.add(fragment);
@@ -172,7 +172,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
         isCancel = true;
         if (adapter.getFragmentSize() == 0) {
             if (isCancel) {
-                setResult(getIntent().getIntExtra("VideoActivity.requesCode", -1));
+                setResult(RESULT_OK);
             }
 
             finish();
