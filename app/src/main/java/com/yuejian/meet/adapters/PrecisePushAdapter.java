@@ -71,6 +71,13 @@ public class PrecisePushAdapter extends RecyclerView.Adapter<PrecisePushAdapter.
         }else {
             holder.content.setVisibility(View.GONE);
         }
+        if (dataBean.getIsConcern().equals("0")){
+            holder.attention.setBackgroundResource(R.drawable.black_bottom11);
+            holder.attention.setText("关注");
+        }else {
+            holder.attention.setBackgroundResource(R.drawable.gray_bottom11);
+            holder.attention.setText("已关注");
+        }
         holder.attention.setOnClickListener(v -> mOnClickListener.onClick(position));
         holder.iv_icon.setOnClickListener(v -> {
             String urlVip = "";
