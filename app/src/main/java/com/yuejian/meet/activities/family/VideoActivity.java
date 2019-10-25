@@ -80,6 +80,9 @@ public class VideoActivity extends AppCompatActivity {
     @Bind(R.id.activity_video_player)
     VideoPlayer player;
 
+    @Bind(R.id.activity_video_progress)
+    View progress;
+
     private String[] labelName, labelId;
 
     private List<String> moreData;
@@ -95,7 +98,6 @@ public class VideoActivity extends AppCompatActivity {
     private String url;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +108,7 @@ public class VideoActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
+        progress.setVisibility(View.GONE);
         if (!getData()) return;
         if (model != null) {
             //纯播放功能
@@ -265,8 +268,8 @@ public class VideoActivity extends AppCompatActivity {
                 if (info == null) return;
                 initData();
 //                if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
-                    initListener();
-                    initDialog();
+                initListener();
+                initDialog();
 //                }
 
             }

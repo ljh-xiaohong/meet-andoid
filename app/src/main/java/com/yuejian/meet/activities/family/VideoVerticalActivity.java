@@ -38,15 +38,9 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
 
     private Context mContext;
 
-    private Intent intent;
-
-    private int mPostion;
-
     private VideoPagerAdapter adapter;
 
     WeakReference<VideoVerticalActivity> reference;
-
-    private int fragmentPosition;
 
     private List<Fragment> Ids;
 
