@@ -134,7 +134,9 @@
         <activity
             android:name=".activities.mine.BuyAllVipPermissionActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activities.creation.VideoCropActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.StartUpActivity"
             android:exported="true"
