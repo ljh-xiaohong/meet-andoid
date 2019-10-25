@@ -15,12 +15,16 @@ import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.mcxiaoke.bus.Bus;
+import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
+import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.MyGifImageView;
+
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -202,13 +206,21 @@ public class GifActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if ((int) v.getTag() == 1) {
-                    tv2.setText("颜氏大家族");
+                    tv2.setText(AppConfig.surname +"氏大家族");
                     Combo(tv2);
                 } else if ((int) v.getTag() == 2) {
-                    tv3.setText("您是颜姓");
+                    tv3.setText("您是"+AppConfig.surname+"姓");
                     Combo(tv3);
                 } else if ((int) v.getTag() == 3) {
-                    tv4.setText("第 1567 位");
+                    Random random=new Random();
+                    int i=random.nextInt(3);
+                    String num;
+                    if(i%2==0){
+                        num=i+"3";
+                    }else {
+                        num=i+"7";
+                    }
+                    tv4.setText("第 "+num+" 位");
                     Combo(tv4);
                 } else if ((int) v.getTag() == 4) {
                     tv5.setText("回家的宗亲");

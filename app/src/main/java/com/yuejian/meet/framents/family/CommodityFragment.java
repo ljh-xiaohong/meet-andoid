@@ -93,8 +93,12 @@ public class CommodityFragment extends BaseFragment
     List<CommodityBean.DataBean> followEntities =new ArrayList<>();
     CommodityBean followEntitie;
     private void loadDataFromNet(String type,String title) {
-        if (dialog != null&&!dialog.isShowing)
-            dialog.show(getActivity().getFragmentManager(), "");
+        if (dialog==null||getActivity()==null){
+
+        }else{
+            if (dialog != null&&!dialog.isShowing)
+                dialog.show(getActivity().getFragmentManager(), "");
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("title", title);
@@ -106,8 +110,11 @@ public class CommodityFragment extends BaseFragment
             public void onSuccess(String data, int id) {
                 isUdate=true;
                 if (mEmptyList==null)return;
-                if (dialog != null)
+                if (dialog==null){
+
+                }else{
                     dialog.dismiss();
+                }
                 followEntitie=new Gson().fromJson(data,CommodityBean.class);
                 if (followEntitie.getCode()!=0) {
                     ViewInject.shortToast(getActivity(),followEntitie.getMessage());

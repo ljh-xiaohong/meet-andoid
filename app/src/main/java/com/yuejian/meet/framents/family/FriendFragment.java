@@ -136,8 +136,12 @@ public class FriendFragment extends BaseFragment
     List<NewFriendBean.DataBean> followEntities =new ArrayList<>();
     NewFriendBean followEntitie;
     private void loadDataFromNet(String type,String title) {
-        if (dialog != null&&!dialog.isShowing)
-            dialog.show(getActivity().getFragmentManager(), "");
+        if (dialog==null||getActivity()==null){
+
+        }else{
+            if (dialog != null&&!dialog.isShowing)
+                dialog.show(getActivity().getFragmentManager(), "");
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("title", title);
@@ -148,8 +152,12 @@ public class FriendFragment extends BaseFragment
             @Override
             public void onSuccess(String data, int id) {
                 isUdate=true;
-                if (dialog != null)
+                if (mEmptyList==null)return;
+                if (dialog==null){
+
+                }else{
                     dialog.dismiss();
+                }
                  followEntitie=new Gson().fromJson(data,NewFriendBean.class);
                  if (followEntitie.getCode()!=0) {
                      ViewInject.shortToast(getActivity(),followEntitie.getMessage());

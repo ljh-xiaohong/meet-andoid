@@ -54,7 +54,7 @@ public class PosterListFragment extends BaseFragment implements SpringView.OnFre
     }
 
     @SuppressLint("ValidFragment")
-    private PosterListFragment() {
+    public PosterListFragment() {
         super();
 
     }

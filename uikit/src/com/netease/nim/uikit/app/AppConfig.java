@@ -18,8 +18,8 @@ public class AppConfig {
     public static UserEntity userEntity;
     public static NewUserEntity newUerEntity;
     public static String CustomerId="";//用户id
-    public static String surname="";//用户id
-    public static String photo="";//用户id
+    public static String surname="";//用户姓氏
+    public static String photo="";//用户头像
     public static String UserSex;////用户性别
     public static String Token="";//
     public static Double moneySun=0.0;//总金额

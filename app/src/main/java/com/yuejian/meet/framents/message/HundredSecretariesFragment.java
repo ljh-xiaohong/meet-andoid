@@ -118,7 +118,6 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     {
         initImgData();
         mSecretaryTitleView.setOnTitleViewClickListener(this);
-        mSecretaryTitleView.setSelectedTitle(0);
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(new ServiceFragment());
         mFragmentList.add(new PrecisePushFragment());
@@ -140,7 +139,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
-        setCurrentItem(0);
+        setCurrentItem(1);
     }
 
     /**

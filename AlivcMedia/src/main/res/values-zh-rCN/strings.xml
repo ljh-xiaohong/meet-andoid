@@ -16,6 +16,10 @@
     <string name="resolution_3_4">540*720</string>
     <string name="resolution_9_16">540*960</string>
     <string name="video_quality">视频质量</string>
+    <string name="aliyun_video_codec">视频编码方式</string>
+    <string name="aliyun_hardware_encoder">硬编</string>
+    <string name="aliyun_openh264_encoder">OpenH264软编</string>
+    <string name="aliyun_ffmpeg_encoder">FFmpeg软编</string>
     <string name="video_quality_low">低</string>
     <string name="video_quality_meidan">中</string>
     <string name="video_quality_high">高</string>
@@ -29,4 +33,6 @@
     <string name="message_max_duration_import">视频总时长不超过5分钟，请裁剪后继续!</string>
     <string name="total_duration_label_import">总时长</string>
     <string name="please_select_video">请选择视频</string>
+    <string name="film_tail">片尾</string>
+    <string name="alivc_tip_crop_gif">暂时不支持gif文件裁剪</string>
 </resources>

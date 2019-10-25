@@ -99,8 +99,10 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 list.clear();
                 PushProjectBean bean = new Gson().fromJson(data, PushProjectBean.class);
-                if (bean.getCode() != 0&&bean.getCode()!=19986) {
-                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                if (bean.getCode() != 0) {
+                    if (bean.getCode()!=19986) {
+                        ViewInject.shortToast(getActivity(), bean.getMessage());
+                    }
                     return;
                 }
                 list.addAll(bean.getData());
@@ -132,8 +134,10 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 listCommodity.clear();
                 PushCommodityBean bean = new Gson().fromJson(data, PushCommodityBean.class);
-                if (bean.getCode() != 0&&bean.getCode()!=19986) {
-                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                if (bean.getCode() != 0) {
+                    if (bean.getCode()!=19986) {
+                        ViewInject.shortToast(getActivity(), bean.getMessage());
+                    }
                     return;
                 }
                 listCommodity.addAll(bean.getData());
@@ -165,8 +169,10 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
             public void onSuccess(String data, int id) {
                 mList.clear();
                 PushUseBean bean = new Gson().fromJson(data, PushUseBean.class);
-                if (bean.getCode() != 0&&bean.getCode()!=19986) {
-                    ViewInject.shortToast(getActivity(), bean.getMessage());
+                if (bean.getCode() != 0) {
+                    if (bean.getCode()!=19986) {
+                        ViewInject.shortToast(getActivity(), bean.getMessage());
+                    }
                     return;
                 }
                 mList.addAll(bean.getData());
