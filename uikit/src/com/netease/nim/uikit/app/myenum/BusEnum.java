@@ -59,7 +59,7 @@ public enum BusEnum {
     /**
      * 群资料activity
      */
-     GROUP_USERINFO(60),
+    GROUP_USERINFO(60),
     /**
      * 打开用户资料activity
      */
@@ -99,15 +99,15 @@ public enum BusEnum {
 
     UPDATE_CUSTOMER_INFO(70),
     /**
-     *删除 通话记录后回调
+     * 删除 通话记录后回调
      */
     DELETE_VIDEO_RECORD(71),
     /**
-     *删除 通话记录后回调
+     * 删除 通话记录后回调
      */
     ACTION_UNREAD(72),
     /**
-     *刷新群列表
+     * 刷新群列表
      */
     GROUP_UPDATE(73),
     /**
@@ -115,7 +115,7 @@ public enum BusEnum {
      */
     GROUP_UNREAD_COUNT(74),
 
-    Message_RECEIVER(80), MESSAGE_RECEIVER_DELETE(82),CLAN_LOCATION(83),
+    Message_RECEIVER(80), MESSAGE_RECEIVER_DELETE(82), CLAN_LOCATION(83),
     /**
      * 网络连接
      */
@@ -131,19 +131,31 @@ public enum BusEnum {
     /**
      * 语言切换
      */
-    Language(89)
-    ,payment_success(90),
+    Language(89), payment_success(90),
     toback(93),
     /**
      * 家圈-推荐-点赞
      */
     FAMILY_RECOMMEND_ZAN(91),
 
-    NOT_POINT(92);
+    NOT_POINT(92),
+
+    /**
+     * 推荐视频 — 删除
+     */
+    RECOMMEND_CANCEL(93),
+
+    /**
+     * 推荐视频 - 不感兴趣
+     */
+    RECOMMEND_NOT_INTERESTED(94);
+
     private int value;
-    BusEnum(int value){
-        this.value=value;
+
+    BusEnum(int value) {
+        this.value = value;
     }
+
     public int getValue() {
         return value;
     }

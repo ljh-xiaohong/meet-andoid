@@ -44,7 +44,15 @@
         <RelativeLayout
             android:id="@+id/dispatch_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></RelativeLayout>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/video_first_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center" />
+
+        </RelativeLayout>
 
         <LinearLayout
 
@@ -137,8 +145,17 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
+
+        <ImageView
+            android:id="@+id/start_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:src="@mipmap/icon_video_stop" />
+            android:src="@mipmap/icon_video_stop"
+            android:visibility="invisible" />
 
 
         <ImageView
@@ -397,7 +414,6 @@
         android:layout_height="2dp"
         android:max="100"
         android:progressDrawable="@drawable/progressbar_bg" />
-
 
 
 </FrameLayout>

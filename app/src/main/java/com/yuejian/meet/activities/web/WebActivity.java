@@ -436,7 +436,7 @@ public class WebActivity extends BaseActivity {
                 return true;
             } else if (uri.getAuthority().equals("continueWebapp")) {
                 return true;
-            } else if (uri.getAuthority().contains("gaodeMap")) {//高德地图
+            } else if (uri.getAuthority().contains("gaodeMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
                 if (CommonUtil.isInstalled(this, "com.autonavi.minimap")) {
                     String[] s = url.split("&");
@@ -450,7 +450,7 @@ public class WebActivity extends BaseActivity {
                     Toast.makeText(this, R.string.casht_text10, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            } else if (uri.getAuthority().contains("baiduMap")) {//百度地图
+            } else if (uri.getAuthority().contains("baiduMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
                 if (CommonUtil.isInstalled(this, "com.baidu.BaiduMap")) {
                     String[] s = url.split("&");
@@ -471,6 +471,7 @@ public class WebActivity extends BaseActivity {
                 return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("tel")) {//打电话
                 String[] s = url.split("=");
+                CommonUtil.call(this, s[1]);
                 return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("sharaTui")) {//分享
                 //'yuejian://sharaTui?url=http://app2.yuejianchina.com/yuejian-app/shara_register.html'+'&type='+type+'&referralMobile='+referralMobile+'&name='+name
@@ -1254,7 +1255,8 @@ public class WebActivity extends BaseActivity {
         }
         if (webView.canGoBack()) {
             webView.goBack();
-            //mBackFinish.setVisibility(View.VISIBLE);
+
+            // mBackFinish.setVisibility(View.VISIBLE);
         } else {
             webView.freeMemory();
             Intent i = new Intent();

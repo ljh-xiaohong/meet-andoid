@@ -258,8 +258,8 @@ public class PosterDetailAcitivty extends BaseActivity {
 
                     if (!TextUtils.isEmpty(posterInfo.getLableName())) {
 
-                        String[] labName = posterInfo.getLableName().replaceAll("#","").split(" ");
-                        for (String s:labName) {
+                        String[] labName = posterInfo.getLableName().replaceAll("#", "").split(" ");
+                        for (String s : labName) {
                             TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tag_textview, null);
                             textView.setText(s);
                             flowLayout.addView(textView);

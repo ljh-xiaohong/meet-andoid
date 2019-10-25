@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,10 +43,13 @@ import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.common.Constants;
+import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.dialogs.MoreDialog;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
+
+import org.apache.lucene.util.fst.BytesRefFSTEnum;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -90,11 +94,7 @@ public class VideoActivity extends AppCompatActivity {
 
     private String url;
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_MOVE) return true;
-        return super.dispatchTouchEvent(ev);
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -208,6 +208,8 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     /**
+     * 主要用于单纯的播放视频
+     *
      * @param context
      * @param url
      * @param model
@@ -262,10 +264,10 @@ public class VideoActivity extends AppCompatActivity {
                 parseJSON(data);
                 if (info == null) return;
                 initData();
-                if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
+//                if (AppConfig.CustomerId != null && AppConfig.CustomerId.length() > 0) {
                     initListener();
                     initDialog();
-                }
+//                }
 
             }
 
@@ -279,6 +281,18 @@ public class VideoActivity extends AppCompatActivity {
     private void initData() {
         if (info == null || info.getContentDetail() == null) return;
         VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
+        //上下滑动逻辑动作回调
+        player.setOnSlideListener(new VideoPlayer.OnSlideListener() {
+            @Override
+            public void slideUp() {
+
+            }
+
+            @Override
+            public void slideDown() {
+
+            }
+        });
         player.setLooping(true);
         player.setUp(detail.getCrContent(), true, "");
         player.startPlayLogic();
@@ -344,17 +358,17 @@ public class VideoActivity extends AppCompatActivity {
             if (FastClickUtil.isFastClick()) return;
             moreDialog.show(getSupportFragmentManager(), "VideoActivity.moreDialog");
         });
-
+        //名字点击
         player.getNameText().setOnClickListener(view -> {
             if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
-
+        //照片点击
         player.getHeadImagView().setOnClickListener(view -> {
             if (FastClickUtil.isFastClick()) return;
             personDetail();
         });
-
+        //商品点击
         player.getGoodsButton().setOnClickListener(view -> {
             if (FastClickUtil.isFastClick()) return;
             goodDetail();
@@ -411,7 +425,6 @@ public class VideoActivity extends AppCompatActivity {
 
                 if (resultCode == RESULT_OK) {
                     int count = Integer.valueOf(info.getContentDetail().getCommentNum());
-                    ;
                     info.getContentDetail().setCommentNum(++count + "");
                     player.getDiscussButton().setText(checkData(info.getContentDetail().getCommentNum()));
 

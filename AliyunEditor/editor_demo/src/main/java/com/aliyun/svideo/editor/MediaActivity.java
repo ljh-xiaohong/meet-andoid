@@ -293,7 +293,7 @@ public class MediaActivity extends Activity implements View.OnClickListener {
         });
         RecyclerView rvSelectedVideo = (RecyclerView) findViewById(R.id.rv_selected_video);
         mTvTotalDuration = (TextView)findViewById(R.id.tv_duration_value);
-        mSelectedVideoAdapter = new SelectedMediaAdapter(new MediaImageLoader(this), 1 * 60 * 1000);//最大时长1分钟
+        mSelectedVideoAdapter = new SelectedMediaAdapter(new MediaImageLoader(this), 1 * 60 * 1000);//最大时1分钟
         rvSelectedVideo.setAdapter(mSelectedVideoAdapter);
         rvSelectedVideo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mTvTotalDuration.setText(convertDuration2Text(0));

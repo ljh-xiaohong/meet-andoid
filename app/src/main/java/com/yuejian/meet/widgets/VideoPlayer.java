@@ -3,22 +3,40 @@ package com.yuejian.meet.widgets;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.ScreenUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 
+import org.apache.lucene.util.fst.BytesRefFSTEnum;
 import org.w3c.dom.Text;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
 
     private View back;
+
+    private View start;
+
+    private GestureDetector mGestureDetector;
+
+    private OnSlideListener slideListener;
+
+
+    /**
+     * 主要控制暂停及播放，上下滚动刷新视频操作
+     */
+    private View dispatch;
 
     public enum MODEL {
         NORMAL, MEDITATION
@@ -46,9 +64,103 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
         back = this.findViewById(R.id.back_btn);
         back.setOnClickListener(view -> {
+            if(this.cancelListener!=null){
+                this.cancelListener.finish();
+                return;
+            }
             ((Activity) getContext()).finish();
         });
+        start = this.findViewById(R.id.start_2);
+        setOnClickListener(this);
+
+        dispatch = this.findViewById(R.id.dispatch_layout);
+        dispatch.setOnTouchListener((view, motionEvent) -> {
+
+            mGestureDetector.onTouchEvent(motionEvent);
+            return true;
+        });
     }
+
+    private void initGestureDetector() {
+        mGestureDetector = new GestureDetector(getContext(), new GestureDetector.OnGestureListener() {
+
+            int FLIP_DISTANCE = ScreenUtils.getScreenHeight(getContext()) / 6;
+
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+
+                startOrPause();
+
+                return true;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+
+                //向上滑...
+                if (motionEvent.getY() - motionEvent1.getY() > FLIP_DISTANCE) {
+                    if (slideListener != null) {
+                        slideListener.slideUp();
+                    }
+//                    Log.e("touch_event", "向上滑");
+                    return false;
+                }
+                //向下滑...
+                if (motionEvent1.getY() - motionEvent.getY() > FLIP_DISTANCE) {
+                    if (slideListener != null) {
+                        slideListener.slideDown();
+                    }
+//                    Log.e("touch_event", "向下滑");
+                    return false;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    public interface OnSlideListener {
+
+        void slideUp();
+
+        void slideDown();
+
+    }
+
+    public void setOnSlideListener(OnSlideListener listener) {
+        this.slideListener = listener;
+    }
+
+    OnCancelListener cancelListener;
+
+    public interface OnCancelListener {
+        void finish();
+    }
+
+    public void setOnCancelListener(OnCancelListener listener) {
+        this.cancelListener = listener;
+    }
+
 
     public void setModel(MODEL model) {
         switch (model) {
@@ -80,6 +192,8 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
+        initGestureDetector();
+
     }
 
     public ImageView getHeadImagView() {
@@ -100,6 +214,14 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     public TextView getLikeButton() {
         return this.findViewById(R.id.video_like);
+    }
+
+    public ImageView getFirstBG() {
+        return this.findViewById(R.id.video_first_pic);
+    }
+
+    public RelativeLayout getBackGround() {
+        return this.findViewById(R.id.dispatch_layout);
     }
 
     public TextView getShareButton() {
@@ -143,6 +265,52 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
                 flowLayout.addView(item, lp);
             }
         }
+    }
+
+    public void startOrPause() {
+        if (mCurrentState == CURRENT_STATE_PAUSE) {
+            try {
+                mCurrentState = CURRENT_STATE_PLAYING;
+                getGSYVideoManager().start();
+                setViewShowState(mBottomProgressBar, VISIBLE);
+                setViewShowState(start, INVISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+            try {
+                onVideoPause();
+                setViewShowState(mBottomProgressBar, VISIBLE);
+                setViewShowState(start, VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void onClick(View v) {
+//        super.onClick(v);
+
+//            if (mCurrentState == CURRENT_STATE_PAUSE) {
+//                try {
+//                    mCurrentState = CURRENT_STATE_PLAYING;
+//                    getGSYVideoManager().start();
+//                    setViewShowState(mBottomProgressBar, VISIBLE);
+//                    setViewShowState(start, INVISIBLE);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+//                try {
+//                    onVideoPause();
+//                    setViewShowState(mBottomProgressBar, VISIBLE);
+//                    setViewShowState(start, VISIBLE);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
     }
 
     public void setLike(boolean isLike, String count) {
@@ -319,13 +487,13 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     /**
      * 拦截光亮度
+     *
      * @param percent
      */
     @Override
     protected void onBrightnessSlide(float percent) {
 
     }
-
 
 
     /**
@@ -394,6 +562,36 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
     }
 
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_UP:
+//                if (mCurrentState == CURRENT_STATE_PAUSE) {
+//                    try {
+//                        mCurrentState = CURRENT_STATE_PLAYING;
+//                        getGSYVideoManager().start();
+//                        setViewShowState(mBottomProgressBar, VISIBLE);
+//                        setViewShowState(start, INVISIBLE);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+//                    try {
+//                        onVideoPause();
+//                        setViewShowState(mBottomProgressBar, VISIBLE);
+//                        setViewShowState(start, VISIBLE);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//                break;
+//        }
+
+        return false;
+    }
 
     protected void updateStartImage() {
 
