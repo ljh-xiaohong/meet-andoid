@@ -64,7 +64,7 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
 
         back = this.findViewById(R.id.back_btn);
         back.setOnClickListener(view -> {
-            if(this.cancelListener!=null){
+            if (this.cancelListener != null) {
                 this.cancelListener.finish();
                 return;
             }
@@ -286,6 +286,34 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    @Override
+    public void startPlayLogic() {
+        super.startPlayLogic();
+        setViewShowState(start, INVISIBLE);
+    }
+
+    public void startOrPause(boolean isPlay) {
+        if (isPlay) {
+            try {
+                mCurrentState = CURRENT_STATE_PLAYING;
+                getGSYVideoManager().start();
+                setViewShowState(mBottomProgressBar, VISIBLE);
+                setViewShowState(start, INVISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                mCurrentState = CURRENT_STATE_PAUSE;
+                onVideoPause();
+                setViewShowState(mBottomProgressBar, VISIBLE);
+                setViewShowState(start, VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

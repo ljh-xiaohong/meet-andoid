@@ -83,6 +83,8 @@ public class VideoPlayFragment extends BaseFragment {
 
     private Fragment fragment;
 
+    private boolean isFirstPlay = true;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -106,7 +108,7 @@ public class VideoPlayFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         if (player != null) {
-            player.onVideoPause();
+            player.startOrPause(false);
         }
 //        Log.e("adsd", "onPause");
     }
@@ -127,7 +129,7 @@ public class VideoPlayFragment extends BaseFragment {
     public void onStop() {
         super.onStop();
         if (player != null) {
-            player.onVideoPause();
+            player.startOrPause(false);
         }
     }
 
@@ -135,7 +137,7 @@ public class VideoPlayFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         if (player != null) {
-            player.onVideoPause();
+            player.startOrPause(false);
         }
         player = null;
     }
@@ -156,6 +158,7 @@ public class VideoPlayFragment extends BaseFragment {
 //                if (detail == null) return;
                 progress.setVisibility(View.GONE);
                 player.getFirstBG().setVisibility(View.GONE);
+                isFirstPlay = false;
                 player.startPlayLogic();
             }
 
@@ -163,8 +166,10 @@ public class VideoPlayFragment extends BaseFragment {
         } else {
             //不可见时
             if (player != null) {
-                player.getFirstBG().setVisibility(View.VISIBLE);
-                player.onVideoPause();
+                if (!isFirstPlay) {
+                    player.getFirstBG().setVisibility(View.VISIBLE);
+                }
+                player.startOrPause(false);
             }
         }
     }
@@ -173,7 +178,7 @@ public class VideoPlayFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (player != null) {
-            player.onVideoPause();
+            player.startOrPause(false);
         }
         player = null;
 
