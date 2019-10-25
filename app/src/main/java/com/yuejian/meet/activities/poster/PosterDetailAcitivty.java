@@ -256,14 +256,12 @@ public class PosterDetailAcitivty extends BaseActivity {
 //                        }
 //                    }
 
-                    if (!TextUtils.isEmpty(posterInfo.getLabelId()) && !TextUtils.isEmpty(posterInfo.getLableName())) {
-                        String labName = posterInfo.getLableName().replaceAll(" ", "");
-                        labName = labName.substring(1, labName.length());
-                        String[] labs = labName.split("#");
-                        int i;
-                        for (i = 0; i < labName.length(); i++) {
+                    if (!TextUtils.isEmpty(posterInfo.getLableName())) {
+
+                        String[] labName = posterInfo.getLableName().replaceAll("#", "").split(" ");
+                        for (String s : labName) {
                             TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tag_textview, null);
-                            textView.setText(labs[i]);
+                            textView.setText(s);
                             flowLayout.addView(textView);
 
                         }

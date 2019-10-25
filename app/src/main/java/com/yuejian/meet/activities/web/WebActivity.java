@@ -381,10 +381,10 @@ public class WebActivity extends BaseActivity {
             } else if (uri.getAuthority().equals("posterSave")) {
                 //海报保存
                 savePoster(url);
-
+                return true;
             } else if (uri.getAuthority().contains("toBackName")) {
-                String[] s=url.split("=");
-                DadanPreference.getInstance(this).setString("websurname",url.split("=")[1]);
+                String[] s = url.split("=");
+                DadanPreference.getInstance(this).setString("websurname", url.split("=")[1]);
                 BusCallEntity busCallEntity = new BusCallEntity();
                 busCallEntity.setCallType(BusEnum.toback);
                 Bus.getDefault().post(busCallEntity);

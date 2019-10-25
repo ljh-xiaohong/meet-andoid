@@ -794,6 +794,7 @@ public class VideoCropActivity extends AppCompatActivity
             @Override
             public void run() {
                 if(checkIsLife())return;
+                nextBtn.setClickable(true);
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
                 switch (code) {
@@ -828,6 +829,7 @@ public class VideoCropActivity extends AppCompatActivity
             @Override
             public void run() {
                 if(checkIsLife())return;
+                nextBtn.setClickable(true);
                 mCropProgress.setVisibility(View.GONE);
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
@@ -865,6 +867,7 @@ public class VideoCropActivity extends AppCompatActivity
             @Override
             public void run() {
                 if(checkIsLife())return;
+                nextBtn.setClickable(true);
                 mCropProgressBg.setVisibility(View.GONE);
                 seekBar.setSliceBlocked(false);
             }
@@ -1026,6 +1029,7 @@ public class VideoCropActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.aliyun_next:
+                nextBtn.setClickable(false);
                 switch (mAction) {
                     case CropKey.ACTION_TRANSCODE:
                         startCrop();

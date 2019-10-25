@@ -1163,7 +1163,8 @@ public class UrlConstant {
     public static String REPLYCOMENT = apiUrl() + "api/contentComment/replyContentComment";
     //获取评论列表
     public static String GET_CONTENT_COMMENTS = apiUrl() + "api/contentComment/getContentComments";
-
+    //api/homePage/findSlideIds
+    public static String FINDSLIDEIDS=apiUrl()+"api/homePage/findSlideIds";
 
 
 

@@ -27,6 +27,7 @@ import com.yuejian.meet.activities.family.ActivityLabActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
+import com.yuejian.meet.activities.family.VideoVerticalActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
@@ -97,6 +98,8 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
     private static final int CANCEL_DELECT_POSITION = 101;
 
+    private static final int CANCEL_NOTINTERET = 102;
+
     private int mNextPageIndex = 1;
     private int pageCount = 10;
     //    private FamilyCircleRecommendListAdapter mRecommendListAdapter;
@@ -129,7 +132,9 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                     break;
                 //视频
                 case 2:
-                    VideoActivity.startActivityForResult((Activity) mContext, item.getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION, item.getCoveSizeType() == 0 ? true : false);
+//                    VideoActivity.startActivityForResult((Activity) mContext, item.getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION, item.getCoveSizeType() == 0 ? true : false);
+                    VideoVerticalActivity.startActivityForResult((Activity) mContext, item.getId() + "", AppConfig.CustomerId, CANCEL_NOTINTERET, item.getCoveSizeType() == 0 ? true : false);
+
                     break;
                 //模板
                 case 3:
@@ -166,12 +171,21 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CANCEL_DELECT_POSITION && resultCode == RESULT_OK) {
-            int position = data.getIntExtra("position", -1);
-            if (position == -1) return;
-            recommendListAdapter.getData().remove(position);
-            recommendListAdapter.notifyDataSetChanged();
+        if (resultCode != RESULT_OK) return;
+        switch (requestCode) {
+            case CANCEL_DELECT_POSITION:
+                int position = data.getIntExtra("position", -1);
+                if (position == -1) return;
+                recommendListAdapter.getData().remove(position);
+                recommendListAdapter.notifyDataSetChanged();
+                break;
+
+            case CANCEL_NOTINTERET:
+                onRefresh();
+                break;
+
         }
+
     }
 
     @OnClick({R.id.ll_family_circle_recomm_item_news, R.id.ll_family_circle_recomm_item_zupu,

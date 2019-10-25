@@ -91,4 +91,14 @@
         <attr name="broder" format="dimension"></attr>
         <attr name="progress_seconds" format="integer"></attr>
     </declare-styleable>
+
+    <declare-styleable name="CirculatoryViewPager">
+        <attr name="orientationCirculation">
+            <enum name="vertical" value="0"/>
+            <enum name="horizontal" value="1"/>
+        </attr>
+        <attr name="isCirculatory" format="boolean"/>
+        <attr name="circulationCount" format="integer"/>
+
+    </declare-styleable>
 </resources>
