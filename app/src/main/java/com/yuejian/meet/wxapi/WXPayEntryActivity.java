@@ -18,8 +18,6 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.applet.ExclusiveAppletActivity;
-import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.common.Constants;
 
 

@@ -56,7 +56,6 @@ import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
-import com.netease.nim.uikit.common.util.string.StringUtil;
 import com.netease.nim.uikit.session.constant.Extras;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -68,24 +67,17 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.FamilyTree.AddRelationActivity;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
-import com.yuejian.meet.activities.find.SurnameWikiActivity;
-import com.yuejian.meet.activities.home.ActionInfoActivity;
-import com.yuejian.meet.activities.mine.BuyAllVipPermissionActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
-import com.yuejian.meet.activities.mine.SelectGoodsActivity;
-import com.yuejian.meet.activities.mine.VerifyBusinessActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
 import com.yuejian.meet.bean.FeedsResourceBean;
 import com.yuejian.meet.bean.ShopEntity;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
-import com.yuejian.meet.framents.find.RechargeMeritsActivity;
 import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.CommonUtil;
@@ -525,8 +517,8 @@ public class WebActivity extends BaseActivity {
             }
         }
         if (url.contains("/pay/aliPayResult?") && isApplyFamilyMaster) {
-            startActivity(new Intent(getApplication(), SelectGoodsActivity.class));
-            finish();
+//            startActivity(new Intent(getApplication(), SelectGoodsActivity.class));
+//            finish();
             return true;
         } else if (url.contains("clanChatGroup.html?")) {
             String tId = Utils.getValueByName(url, "t_id");
@@ -541,12 +533,12 @@ public class WebActivity extends BaseActivity {
             AppUitls.goToPersonHome(mContext, customerId);
             return true;
         } else if (url.contains("addFriend.html?")) {
-            String op_customer_id = Utils.getValueByName(url, "op_customer_id");
-            String userName = Utils.getValueByName(url, "surname") + Utils.getValueByName(url, "name");
-            Intent intent = new Intent(this, AddRelationActivity.class);
-            intent.putExtra("op_customer_id", op_customer_id);
-            intent.putExtra("userName", userName);
-            startActivity(intent);
+//            String op_customer_id = Utils.getValueByName(url, "op_customer_id");
+//            String userName = Utils.getValueByName(url, "surname") + Utils.getValueByName(url, "name");
+//            Intent intent = new Intent(this, AddRelationActivity.class);
+//            intent.putExtra("op_customer_id", op_customer_id);
+//            intent.putExtra("userName", userName);
+//            startActivity(intent);
             return true;
         } else if (url.contains("web_share.html?")) {
             try {
@@ -572,10 +564,10 @@ public class WebActivity extends BaseActivity {
             }
             return true;
         } else if (url.contains("web_action.html?action_id=")) {
-            String action_id = Utils.getValueByName(url, "action_id");
-            Intent intent = new Intent(this, ActionInfoActivity.class);
-            intent.putExtra("action_id", action_id);
-            startActivity(intent);
+//            String action_id = Utils.getValueByName(url, "action_id");
+//            Intent intent = new Intent(this, ActionInfoActivity.class);
+//            intent.putExtra("action_id", action_id);
+//            startActivity(intent);
             return true;
         } else if (url.contains("clan_share.html?")) {
             try {
@@ -610,11 +602,11 @@ public class WebActivity extends BaseActivity {
             }
             return true;
         } else if (url.contains("to_app_business_license_certified.html")) {
-            Intent intent = new Intent(WebActivity.this, VerifyBusinessActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(WebActivity.this, VerifyBusinessActivity.class);
+//            startActivity(intent);
             return true;
         } else if (url.contains("xingshibaike.html")) {
-            startActivity(new Intent(this, SurnameWikiActivity.class));
+//            startActivity(new Intent(this, SurnameWikiActivity.class));
             return true;
         } else if (url.contains("web_chat.html?")) {
             ImUtils.toP2PCaht(this, Utils.getValueByName(url, "customer_id"));
@@ -658,8 +650,8 @@ public class WebActivity extends BaseActivity {
         } else if (url.contains("duihuangongde.html")) {
             // 点灯和放生 都 拦截 duihuangongde.html  跳转到充值功德页面
             // TODO: 2018/11/21   徐
-            Intent intent = new Intent(this, RechargeMeritsActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, RechargeMeritsActivity.class);
+//            startActivity(intent);
             return true;
         }
         return false;

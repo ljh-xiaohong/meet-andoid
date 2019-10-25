@@ -84,7 +84,6 @@ public class SelectContactActivity extends BaseActivity implements TextView.OnEd
         setTitleText(isFound?getString(R.string.A_group_chat):getString(R.string.select_contact));
         initView();
     }
-///FriendsFragment
     public void initView(){
         contactSearch= (CleanableEditText) findViewById(R.id.et_contact_search);
         release.setVisibility(View.VISIBLE);

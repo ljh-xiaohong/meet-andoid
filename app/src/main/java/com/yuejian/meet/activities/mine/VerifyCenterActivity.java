@@ -163,7 +163,7 @@ public class VerifyCenterActivity extends BaseActivity {
                 if ("1".equals(mine.is_business_license_certified) || "0".equals(mine.is_business_license_certified)) {
                     return;
                 }
-                startActivity(new Intent(this, VerifyBusinessActivity.class));
+//                startActivity(new Intent(this, VerifyBusinessActivity.class));
                 break;
 
         }

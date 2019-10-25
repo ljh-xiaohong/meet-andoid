@@ -14,8 +14,6 @@ import com.bumptech.glide.Glide;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
-import com.yuejian.meet.activities.clan.MoreClanActivity;
-import com.yuejian.meet.activities.family.MessageBoardActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.adapters.ZuciInfoBindingClanAdapter;
 import com.yuejian.meet.adapters.ZuciInfoFootprintAdapter;
@@ -106,14 +104,14 @@ public class ZuciInfoActivity extends BaseActivity {
                 postCollection();
                 return;
             case R.id.footprint_more:
-                this.intent = new Intent(this, ZuciFootprintsActivity.class);
-                this.intent.putExtra("id", this.zuciEntity.getId());
-                startActivity(this.intent);
+//                this.intent = new Intent(this, ZuciFootprintsActivity.class);
+//                this.intent.putExtra("id", this.zuciEntity.getId());
+//                startActivity(this.intent);
                 return;
             case R.id.zuci_comment:
-                this.intent = new Intent(this, MessageBoardActivity.class);
-                this.intent.putExtra("id", this.zuciEntity.getId());
-                startActivity(this.intent);
+//                this.intent = new Intent(this, MessageBoardActivity.class);
+//                this.intent.putExtra("id", this.zuciEntity.getId());
+//                startActivity(this.intent);
                 return;
             case R.id.map_link:
                 intent=new Intent(this,ZuciMapNavigationActivity.class);
@@ -125,9 +123,9 @@ public class ZuciInfoActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.clan_banding_layout:
-                intent=new Intent(this, MoreClanActivity.class);
-                intent.putExtra("zuciId",zuciEntity.getId());
-                startActivity(intent);
+//                intent=new Intent(this, MoreClanActivity.class);
+//                intent.putExtra("zuciId",zuciEntity.getId());
+//                startActivity(intent);
                 break;
         }
     }

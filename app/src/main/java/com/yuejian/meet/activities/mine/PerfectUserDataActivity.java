@@ -14,7 +14,6 @@ import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.FamilyTree.AddRelationActivity2;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.adapters.TagTypSelAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -136,7 +135,7 @@ public class PerfectUserDataActivity extends BaseActivity{
         }
         String inviteCode = PreferencesUtil.get(getApplicationContext(), AppConfig.INVITE_CODE, "");
         if (StringUtils.isNotEmpty(inviteCode)) {
-            intent = new Intent(getBaseContext(), AddRelationActivity2.class);
+//            intent = new Intent(getBaseContext(), AddRelationActivity2.class);
         }else {
             intent = new Intent(getBaseContext(), MainActivity.class);
         }

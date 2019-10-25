@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView android:textSize="15.0sp" android:textColor="@color/selector_surname_text_color" android:gravity="center" android:background="@drawable/selector_select_time_bg" android:padding="8.0dip" android:clickable="true" android:layout_width="wrap_content" android:layout_height="36.0dip" android:minWidth="107.0dip" android:text="充值记录" android:drawableRight="@mipmap/icon_xiugai"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -3,46 +3,25 @@ package com.yuejian.meet.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.adapter.ReleasePicAdapter;
 import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
 import com.yuejian.meet.activities.web.WebActivity;
-import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommodityBean;
-import com.yuejian.meet.bean.DynamicPrivatePicBean;
-import com.yuejian.meet.bean.FamilyFollowEntity;
-import com.yuejian.meet.bean.Image;
-import com.yuejian.meet.bean.ZanBean;
 import com.yuejian.meet.common.Constants;
-import com.yuejian.meet.utils.CommonUtil;
-import com.yuejian.meet.utils.FolderTextView;
 import com.yuejian.meet.utils.ScreenUtils;
-import com.yuejian.meet.utils.TimeUtils;
-import com.yuejian.meet.utils.Utils;
-import com.yuejian.meet.widgets.CircleImageView;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : g000gle

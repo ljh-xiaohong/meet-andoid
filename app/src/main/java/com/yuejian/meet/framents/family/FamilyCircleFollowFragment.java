@@ -24,7 +24,6 @@ import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
-import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.mine.MyDialogActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;

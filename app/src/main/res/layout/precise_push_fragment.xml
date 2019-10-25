@@ -13,7 +13,7 @@
         android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <com.yuejian.meet.widgets.HeadAndFootRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:background="#FFFFFF"
         android:id="@+id/precise_push_content_list"
         android:layout_marginTop="5dp"

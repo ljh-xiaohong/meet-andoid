@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#a1000000"
-    android:orientation="vertical">
-
-    <include layout="@layout/fragment_near_person_search_big" />
-</FrameLayout>

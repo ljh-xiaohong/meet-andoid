@@ -21,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.myenum.FqrEnum;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.home.ActionInfoActivity;
 import com.yuejian.meet.activities.home.ArticleInfoActivity;
 import com.yuejian.meet.activities.home.ReplyMoreActivity;
 import com.yuejian.meet.adapters.base.AdapterHolder;

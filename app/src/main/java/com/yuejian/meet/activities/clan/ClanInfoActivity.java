@@ -190,13 +190,13 @@ public class ClanInfoActivity extends BaseActivity {
     public void onClick(View paramView) {
         switch (paramView.getId()) {
             case R.id.clan_info_gonggao_layout:
-                if (this.moreClanEntity.getCustomer_type() == 0) {
-                    displDialog(null, "成为宗亲会成员，方可查看宗亲会公告。");
-                    return;
-                }
-                this.intent = new Intent(this, ClanNoticeActivity.class);
-                this.intent.putExtra("clanId", this.moreClanEntity.getAssociation_id());
-                startActivity(this.intent);
+//                if (this.moreClanEntity.getCustomer_type() == 0) {
+//                    displDialog(null, "成为宗亲会成员，方可查看宗亲会公告。");
+//                    return;
+//                }
+//                this.intent = new Intent(this, ClanNoticeActivity.class);
+//                this.intent.putExtra("clanId", this.moreClanEntity.getAssociation_id());
+//                startActivity(this.intent);
                 return;
             case R.id.clan_info_pay_button:
                 dialogPay();
@@ -207,9 +207,6 @@ public class ClanInfoActivity extends BaseActivity {
                 startActivityForResult(this.intent, 113);
                 return;
             case R.id.clan_info_houkuan:
-                this.intent = new Intent(this, ClanProceedsActivity.class);
-                this.intent.putExtra("clanId", this.moreClanEntity.getAssociation_id());
-                startActivity(this.intent);
                 return;
             case R.id.clan_info_shengpi:
                 this.intent = new Intent(this, ClanMasterApproveActivity.class);

@@ -24,9 +24,7 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.ZuciFootprintsEntity;
-import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.StringUtils;
-import com.yuejian.meet.widgets.ShakeGiftPopWindow;
 
 import java.util.List;
 

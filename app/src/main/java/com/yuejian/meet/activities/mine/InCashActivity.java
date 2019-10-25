@@ -78,7 +78,7 @@ public class InCashActivity extends BaseActivity {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     Toast.makeText(InCashActivity.this, R.string.payment_success, Toast.LENGTH_SHORT).show();
                     if ("1".equals(isUpVip)) {
-                        startActivity(new Intent(getApplicationContext(), SelectGoodsActivity.class));
+//                        startActivity(new Intent(getApplicationContext(), SelectGoodsActivity.class));
                     }
                     finish();
                 }

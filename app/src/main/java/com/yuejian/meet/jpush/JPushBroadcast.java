@@ -17,16 +17,11 @@ import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
-import com.yuejian.meet.NoNetworkActivity;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.family.MyInviteRangeActivity;
-import com.yuejian.meet.activities.home.ActionInfoActivity;
 import com.yuejian.meet.activities.home.ArticleInfoActivity;
-import com.yuejian.meet.activities.home.StoreWebActivity;
 import com.yuejian.meet.activities.mine.BillRecordActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
-import com.yuejian.meet.app.MyApplication;
 import com.yuejian.meet.bean.Article;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.StringUtils;
@@ -85,15 +80,15 @@ public class JPushBroadcast extends BroadcastReceiver {
 
                                 Intent i;
                                 if ("action".equals(clazz)) {
-                                    i = new Intent(context, ActionInfoActivity.class);
-                                    i.putExtra("action_id", id);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                                    builder.setContentIntent(pendingIntent);
-                                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                    if (manager != null && AppConfig.userEntity != null) {
-                                        manager.notify((int) System.currentTimeMillis() / 1000, builder.build());
-                                    }
+//                                    i = new Intent(context, ActionInfoActivity.class);
+//                                    i.putExtra("action_id", id);
+//                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
+//                                    builder.setContentIntent(pendingIntent);
+//                                    NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//                                    if (manager != null && AppConfig.userEntity != null) {
+//                                        manager.notify((int) System.currentTimeMillis() / 1000, builder.build());
+//                                    }
                                 } else {
                                     getArticle(id, context, title, content);
                                 }
@@ -122,11 +117,11 @@ public class JPushBroadcast extends BroadcastReceiver {
                                         .setOngoing(false);
 
                                 if (StringUtils.isNotEmpty(url)) {
-                                    i = new Intent(context, StoreWebActivity.class);
-                                    i.putExtra(Constants.URL, url);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                                    builder1.setContentIntent(pendingIntent);
+//                                    i = new Intent(context, StoreWebActivity.class);
+//                                    i.putExtra(Constants.URL, url);
+//                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
+//                                    builder1.setContentIntent(pendingIntent);
                                 }
 
                                 NotificationManager manager1 = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -139,10 +134,10 @@ public class JPushBroadcast extends BroadcastReceiver {
                                 break;
 
                             case 5:
-                                String function = jsonObject.getString("fun");
-                                intent = new Intent(context, StoreWebActivity.class);
-                                intent.putExtra("function", function);
-                                context.startActivity(intent);
+//                                String function = jsonObject.getString("fun");
+//                                intent = new Intent(context, StoreWebActivity.class);
+//                                intent.putExtra("function", function);
+//                                context.startActivity(intent);
                                 break;
                             case 7:
                                 title = jsonObject.getString("title");
@@ -159,13 +154,13 @@ public class JPushBroadcast extends BroadcastReceiver {
                                         .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                                         .setOngoing(false);
 
-                                i = new Intent(context, MyInviteRangeActivity.class);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                                builder2.setContentIntent(pendingIntent);
-                                NotificationManager manager2 = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                                if (manager2 != null && AppConfig.userEntity != null) {
-                                    manager2.notify((int) System.currentTimeMillis() / 1000, builder2.build());
-                                }
+//                                i = new Intent(context, MyInviteRangeActivity.class);
+//                                PendingIntent pendingIntent = PendingIntent.getActivity(context, 1000, i, PendingIntent.FLAG_UPDATE_CURRENT);
+//                                builder2.setContentIntent(pendingIntent);
+//                                NotificationManager manager2 = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//                                if (manager2 != null && AppConfig.userEntity != null) {
+//                                    manager2.notify((int) System.currentTimeMillis() / 1000, builder2.build());
+//                                }
 
                                 break;
                             case 8:

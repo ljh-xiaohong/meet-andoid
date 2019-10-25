@@ -209,14 +209,6 @@ public class CreateMiClanActivity extends BaseActivity implements OnItemClickLis
             }
 
             public void onSuccess(String paramAnonymousString, int paramAnonymousInt) {
-                intent = new Intent(CreateMiClanActivity.this.getApplication(), CreateClanSucceedActivity.class);
-                intent.putExtra("clanId", paramAnonymousString);
-                intent.putExtra("clanName", CreateMiClanActivity.this.mi_clan_name.getText().toString());
-                startActivityForResult(CreateMiClanActivity.this.intent, 110);
-                BusCallEntity busCallEntity = new BusCallEntity();
-                busCallEntity.setCallType(BusEnum.CLAN_UPDATE);
-                Bus.getDefault().post(busCallEntity);
-                CreateMiClanActivity.this.finish();
             }
         });
     }

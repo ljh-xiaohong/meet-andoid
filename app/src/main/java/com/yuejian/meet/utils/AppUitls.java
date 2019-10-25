@@ -1,13 +1,11 @@
 package com.yuejian.meet.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.netease.nim.uikit.app.AppConfig;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-import com.yuejian.meet.activities.mine.PersonHomeActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 
@@ -68,9 +66,9 @@ public class AppUitls {
     public static void goToPersonHome(Context context, String opCustomerId) {
 //        Intent intent = new Intent(context, WebActivity.class);
 //        intent.putExtra("url", Constants.PERSON_HOME + "&customer_id=" + opCustomerId);
-        Intent intent=new Intent(context, PersonHomeActivity.class);
-        intent.putExtra("customer_id",opCustomerId);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+//        Intent intent=new Intent(context, PersonHomeActivity.class);
+//        intent.putExtra("customer_id",opCustomerId);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(intent);
     }
 }

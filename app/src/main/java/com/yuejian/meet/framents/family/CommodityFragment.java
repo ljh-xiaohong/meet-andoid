@@ -1,38 +1,22 @@
 package com.yuejian.meet.framents.family;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
-import com.yuejian.meet.activities.find.ScannerActivity;
-import com.yuejian.meet.activities.home.ReleaseActivity;
-import com.yuejian.meet.activities.search.SearchActivity;
 import com.yuejian.meet.adapters.CommodityListAdapter;
-import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.CommodityBean;
-import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.ui.SpacesItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
@@ -47,7 +31,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author : g000gle

@@ -36,7 +36,6 @@ import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.DateActivity;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
@@ -51,7 +50,6 @@ import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.SystemTool;
-import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 
 import java.util.HashMap;
@@ -440,51 +438,6 @@ public class UserNameSelectActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 上传头像到oss
-     */
-    public void updateUserImg() {
-        if (dialog != null)
-            dialog.show(getFragmentManager(), "");
-        if (!outputPath.equals("")) {
-            String updtaImgName = OssUtils.getTimeNmaeJpg();
-            new FeedsApiImpl().upLoadImageFileToOSS(outputPath, updtaImgName, this, new DataCallback<FeedsResourceBean>() {
-                @Override
-                public void onSuccess(FeedsResourceBean data) {
-
-                    Toast.makeText(UserNameSelectActivity.this, data.imageUrl, Toast.LENGTH_LONG).show();
-                    photo = data.imageUrl;
-                }
-
-                @Override
-                public void onFailed(String errCode, String errMsg) {
-                    if (dialog != null)
-                        dialog.dismiss();
-                    ViewInject.shortToast(getApplication(), errMsg);
-                }
-            });
-        } else {
-            itnetnRegister();
-        }
-    }
-
-
-    /**
-     * 注册
-     */
-    public void itnetnRegister() {
-        intent = new Intent(getApplication(), RegisterActivity.class);
-        intent.putExtra("name", tv_given_name.getText().toString());
-        intent.putExtra("surname", tv_family_name.getText().toString());
-        intent.putExtra("mobile", mobile);
-        intent.putExtra("openId", openId);
-        intent.putExtra("flag", flag);
-        intent.putExtra("photo", photo);
-        intent.putExtra("areaCode", areaCode);
-        startActivity(intent);
-        finish();
-    }
-
     //输入监听 完成
     private class TextWatcherImpl implements TextWatcher {
         @Override
@@ -520,30 +473,6 @@ public class UserNameSelectActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
-//            //出生日期
-//            if (requestCode == 114) {
-//                tv_birthday.setText("" + data.getStringExtra("YEAR") + "-" + data.getStringExtra("MONTH") + "-" + data.getStringExtra("DAY"));
-//
-//            }
-
-            //姓氏返回
-            if (requestCode == 3) {
-                tv_family_name.setText(data.getExtras().getString("surname"));
-                surnameId = data.getExtras().getString("surnameId");
-                if (tv_family_name.getText().toString().length() >= 1 && tv_given_name.getText().toString().length() >= 1) {
-//                    bu_next.setSelected(true);
-//                    bu_next.setEnabled(true);
-//                    bu_next.setAlpha(1);
-                } else {
-//                    bu_next.setSelected(false);
-//                    bu_next.setEnabled(false);
-//                    bu_next.setAlpha(0.6f);
-                }
-//                requstCount(data.getExtras().getString("surname"));
-//                full_name.setText(surname.getText().toString() + name.getText().toString());
-            }
-
             //照片或图片返回
             switch (requestCode) {
                 case OPENPIC://相册选择照片返回
@@ -563,25 +492,6 @@ public class UserNameSelectActivity extends BaseActivity {
 
         }
     }
-
-//    public void requstCount(String surname) {
-//        Map<String, String> params = new HashMap<>();
-//        params.put("surname", surname);
-//        apiImp.getSurnameCount(params, this, new DataIdCallback<String>() {
-//            @Override
-//            public void onSuccess(String data, int id) {
-//                member_number.setText(data);
-//                member_number_layout.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onFailed(String errCode, String errMsg, int id) {
-//
-//            }
-//        });
-//    }
-
-    //完成
 
     /**
      * 底部PopupWindow
@@ -647,35 +557,6 @@ public class UserNameSelectActivity extends BaseActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
-
-
-    //完成（样式调整）
-    public void showDatePickerDialog(Context context) {
-        Intent intent = new Intent(context, DateActivity.class);
-        startActivityForResult(intent, 114);
-
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            DatePickerDialog dialog = new DatePickerDialog(context);
-//            dialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-//                @Override
-//                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-//
-//                    tv_birthday.setText("" + datePicker.getYear() + "-" + datePicker.getMonth() + "-" + datePicker.getDayOfMonth());
-//
-//                }
-//            });
-//            dialog.show();
-//        }
-
-
-    }
-
-    private void simpleDate() {
-
-
-    }
-
 
 }
 

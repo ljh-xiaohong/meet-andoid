@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:focusable="true" android:focusableInTouchMode="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="15.0sp" android:textColor="@color/selector_job_selection" android:gravity="center|left" android:id="@+id/txt_job_item" android:focusable="true" android:layout_width="wrap_content" android:layout_height="44.0dip" android:layout_marginLeft="12.0dip" android:maxWidth="150.0dip" />
-    <View android:layout_width="0.0dip" android:layout_height="1.0px" android:layout_weight="1.0" />
-    <ImageView android:id="@+id/xuanze" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="12.0dip" android:src="@mipmap/icon_xuanz" />
-</LinearLayout>

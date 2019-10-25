@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@mipmap/bg02"
+    android:background="@mipmap/icon_more"
     android:orientation="vertical">
 
     <include layout="@layout/titlebar_layout" />
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="86.0dip"
-        android:src="@mipmap/zujian" />
+        android:src="@mipmap/icon_more" />
 
     <TextView
         android:id="@+id/tips"

@@ -61,8 +61,6 @@ import com.aliyun.video.common.utils.ScreenUtils;
 import com.aliyun.video.common.utils.ThreadUtils;
 import com.duanqu.transcode.NativeParser;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.base.BaseActivity;
-import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.common.SDCardConstants;
 
 import java.lang.ref.SoftReference;

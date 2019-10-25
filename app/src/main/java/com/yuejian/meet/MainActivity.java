@@ -38,15 +38,9 @@ import com.netease.nimlib.sdk.NimIntent;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
-import com.yuejian.meet.activities.FamilyTree.AddressListActivity;
 import com.yuejian.meet.activities.base.BaseActivity;
-import com.yuejian.meet.activities.clan.ClanMemberActivity;
-import com.yuejian.meet.activities.common.SelectFamilyCityActivity;
-import com.yuejian.meet.activities.group.GroupUserinfo;
-import com.yuejian.meet.activities.home.AdvancedTeamInfoActivity;
 import com.yuejian.meet.activities.home.CreationActivity;
 import com.yuejian.meet.activities.home.InviteJoinGroupActivity;
-import com.yuejian.meet.activities.mine.BangDingWeChatActivity;
 import com.yuejian.meet.activities.mine.InCashActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.api.DataIdCallback;
@@ -54,17 +48,14 @@ import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.app.MyApplication;
 import com.yuejian.meet.bean.GetMessageBean;
 import com.yuejian.meet.bean.mine2Entity;
-import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.NewBusinessFragment;
-import com.yuejian.meet.framents.creation.CreationFragment;
+import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
 import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
-import com.yuejian.meet.framents.find.FindFragment;
 import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.NewMineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
-import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
@@ -125,15 +116,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private AMapLocationClientOption locationOption = null;
     private FragmentManager mFragmentManager;
     private BaseFragment currentFragment;
-    //    private HomeFragment homeFragment = new HomeFragment();
     private NewMessageFragment messageFragment = new NewMessageFragment();
-    private CreationFragment creationFragment = new CreationFragment();
-    private FindFragment findWebFragment = new FindFragment();
     private NewBusinessFragment businessFragment = new NewBusinessFragment();
     private NewMineFragment mineFragment = new NewMineFragment();
-    //    private CultureFragment cultureFragment = new CultureFragment();
-    private FamilyCircleRecommendFragment familyFragment;
-    //    private FamilyFragment familyFragment = new FamilyFragment();
+    private FamilyCircleContainerFragment familyFragment;
+//    private FamilyCircleRecommendFragment familyFragment;
     private Intent intent;
     private MainMoreUi mainMoreUi;
     private mine2Entity mine2;
@@ -161,26 +148,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         }
     }
 
-    private void goToGuidePage() {
-        if (AppConfig.userEntity != null) {
-            try {
-                String rewordIds = PreferencesUtil.get(MyApplication.context, Constants.HAVE_SHOW_UP_GUIDE, "");
-                if (!rewordIds.contains(AppConfig.CustomerId)) {
-                    int compare = Utils.compareVersion(Utils.getVersionName(this), "1.5.0");
-                    if (compare == 0 || (compare == 1 && getIntent().getBooleanExtra("finish_register", false))) {
-                        Intent intent = new Intent(this, SplashNewActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            } catch (ClassCastException e) {
-                PreferencesUtil.remove(MyApplication.context, Constants.HAVE_SHOW_UP_GUIDE);
-                PreferencesUtil.put(MyApplication.context, Constants.HAVE_SHOW_UP_GUIDE, "");
-            }
-            if (getIntent().getBooleanExtra("phone_register", false)) {
-                startActivity(new Intent(this, BangDingWeChatActivity.class));
-            }
-        }
-    }
 
     private void initDisplay() {
         DisplayMetrics metrics = new DisplayMetrics();
@@ -251,7 +218,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
-        familyFragment = new FamilyCircleRecommendFragment();
+        familyFragment = new FamilyCircleContainerFragment();
+//        familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
         mFragmentManager = this.getSupportFragmentManager();
@@ -299,9 +267,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
      */
     public void setSelectBut(int vId) {
         switch (vId) {
-            case R.id.address_list:
-                startActivity(new Intent(this, AddressListActivity.class));
-                break;
             case R.id.rlayout_one_to_one:///
                 rbtn_home.setSelected(false);
                 rbtn_message.setSelected(false);
@@ -419,7 +384,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                     }, 100);
                     break;
                 case Team:
-                    setSelectBut(R.id.baijiaxing);
                     Map<String, Object> pushPayload = new HashMap<>();
                     pushPayload = message.getPushPayload();
                     if (pushPayload == null || !pushPayload.containsKey("sub_type")) {
@@ -590,7 +554,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         if (event.getCallType() == BusEnum.LOGIN_UPDATE) {
             ImUtils.loginIm();//登录im
             updatePosition();
-            goToGuidePage();
         } else if (event.getCallType() == BusEnum.INVITE_JOIN_GROUP) {
             Intent intent = new Intent(this, InviteJoinGroupActivity.class);
             intent.putExtra("tid", event.getData());
@@ -599,11 +562,11 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
         } else if (event.getCallType() == BusEnum.GROUP_USERINFO) {//群资料
             if (ChatEnum.defaults == AppConfig.chatEnum) {
-                intent = new Intent(this, AdvancedTeamInfoActivity.class);
+//                intent = new Intent(this, AdvancedTeamInfoActivity.class);
             } else if (ChatEnum.CLANGROUP == AppConfig.chatEnum) {
-                intent = new Intent(this, ClanMemberActivity.class);
+//                intent = new Intent(this, ClanMemberActivity.class);
             } else {
-                intent = new Intent(this, GroupUserinfo.class);
+//                intent = new Intent(this, GroupUserinfo.class);
             }
             intent.putExtra("t_id", event.getData());
             startActivity(intent);
@@ -637,7 +600,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         } else if (event.getCallType() == BusEnum.ACTION_UNREAD) {
         } else if (event.getCallType() == BusEnum.GROUP_UNREAD_COUNT) {
         } else if (event.getCallType() == BusEnum.Bangding_Family) {
-            startActivity(new Intent(this, SelectFamilyCityActivity.class));
         }else if (event.getCallType() == BusEnum.NOT_POINT) {
             tvTitleOnePoint.setVisibility(View.GONE);
         }

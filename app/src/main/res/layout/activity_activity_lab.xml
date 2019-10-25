@@ -24,8 +24,7 @@
                     android:id="@+id/activity_activity_background_img"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/bg" />
+                    android:scaleType="centerCrop"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

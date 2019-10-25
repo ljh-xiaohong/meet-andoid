@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="horizontal" android:id="@+id/layout_job_item" android:paddingLeft="@dimen/dp_16" android:paddingTop="@dimen/padding_Top" android:paddingBottom="@dimen/padding_Bottom" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView android:id="@+id/img_job_pic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/ic_send_serve" android:scaleType="fitXY" />
-    <TextView android:textSize="@dimen/dp_16" android:textColor="@android:color/black" android:id="@+id/txt_job_item" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/dp_6" android:text="222" />
-</LinearLayout>

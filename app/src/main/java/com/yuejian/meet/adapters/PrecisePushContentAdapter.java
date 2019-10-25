@@ -35,11 +35,9 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
     private LayoutInflater inflater;
     private List<PushProjectBean.DataBean> list ;
 
-    public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
 
 
-    private View mHeaderView;
     public PrecisePushContentAdapter(Context context, List<PushProjectBean.DataBean> list) {
         this.context = context;
         this.list = list;
@@ -48,14 +46,12 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(mHeaderView != null && viewType == TYPE_HEADER) return new MyViewHolder(mHeaderView);
         View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.precise_push_content_type1_item, parent, false);
         return new MyViewHolder(layout);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        if(getItemViewType(position) == TYPE_HEADER) return;
         PushProjectBean.DataBean dataBean=list.get(position);
         if (!TextUtils.isEmpty(dataBean.getUserPhoto())) {
             Glide.with(context).load(dataBean.getUserPhoto()).into(holder.iv_icon);
@@ -82,15 +78,13 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
 
     @Override
     public int getItemViewType(int position) {
-        if(mHeaderView == null) return TYPE_NORMAL;
-        if(position == 0) return TYPE_HEADER;
         return TYPE_NORMAL;
     }
 
 
     @Override
     public int getItemCount() {
-        return mHeaderView == null ? list.size() : list.size() + 1;
+        return list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -99,7 +93,6 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
         TextView title,content,name;
         public MyViewHolder(View itemView) {
             super(itemView);
-            if(itemView == mHeaderView) return;
             iv_icon = itemView.findViewById(R.id.iv_icon);
             vip_img = itemView.findViewById(R.id.vip_img);
             msg_img = itemView.findViewById(R.id.msg_img);

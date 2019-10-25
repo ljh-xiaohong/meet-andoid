@@ -34,8 +34,6 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.family.VideoActivity;
-import com.yuejian.meet.activities.mine.InCashActivity;
-import com.yuejian.meet.activities.mine.SelectGoodsActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;

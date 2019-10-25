@@ -41,7 +41,6 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!-- 查询快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -70,19 +69,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,icon,theme,android:label">
         <activity
-            android:name=".activities.mine.InheritorEarningsActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.search.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.creation.ArticleEditActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.creation.ArticleSelectTemplateActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.creation.SuibiSelectTagActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.home.ReleaseActivity"
@@ -103,9 +93,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.family.ArticleActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.creation.DraftActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.creation.ShopActivity"
@@ -130,10 +117,6 @@
             android:name=".activities.family.VideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.creation.SuibiEditActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity
             android:name=".activities.family.ActivityLabActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -149,16 +132,7 @@
         <activity
             android:name=".activities.mine.BuyAllVipPermissionActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.mine.BuySingleVipPermissionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.mine.LightUpActivity"
-            android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".activities.creation.VideoCropActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.StartUpActivity"
             android:exported="true"
@@ -491,14 +465,10 @@
 
         <service android:name=".service.DownloadGiftImgService" />
 
-        <activity
-            android:name=".activities.DateActivity"
-            android:theme="@style/MyDialog" />
         <activity android:name=".activities.mine.LoginActivity" />
         <activity android:name=".activities.mine.UserNameSelectActivity" />
-        <activity android:name=".activities.mine.RegisterActivity" />
         <activity android:name=".activities.common.SurnameActivity" />
-        <activity android:name=".activities.common.SelectCityActivity" /> <!-- Meet Activitys -->
+        <!-- Meet Activitys -->
         <activity
             android:name=".activities.mine.SettingActivity"
             android:launchMode="singleTop" />
@@ -514,10 +484,6 @@
         <activity
             android:name=".activities.mine.AboutActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.IncomeListActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/MyDialog" />
         <activity
             android:name=".activities.mine.PrivacyActivity"
             android:launchMode="singleTop" />
@@ -537,14 +503,6 @@
             android:name=".activities.common.SelectMemberCityActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.common.ChooseIndustryActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activities.common.MemberMoreSelectActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.YourDialog" />
-        <activity
             android:name=".activities.mine.VerifyPhoneActivity"
             android:launchMode="singleTop" />
         <activity
@@ -552,9 +510,6 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activities.mine.VerifyIdCardActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.VerifyBusinessActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activities.home.ReleaseActionActivity"
@@ -566,38 +521,13 @@
             android:name=".activities.mine.InviteOriginateActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.mine.ContactActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".activities.mine.EditActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.ChooseJobActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".activities.home.ClaimStatementActivity" />
-        <activity android:name=".activities.home.ClaimCitySponsorActivity" />
         <activity android:name=".activities.home.ClaimSucceedActivity" />
-        <activity android:name=".activities.home.ParticipateInClaimingActivity" />
-        <activity
-            android:name=".activities.mine.ModifyNameActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.SelectSpecialtyActivity"
-            android:launchMode="singleTop" />
         <activity
             android:name=".activities.find.AvChatServiceInfoActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activities.home.ActionInfoActivity" />
         <activity android:name=".activities.home.ReplyMoreActivity" />
-        <activity
-            android:name=".activities.mine.SelectInterestActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.MyWalletActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.find.NotificationCenterActivity"
-            android:launchMode="singleTop" />
         <activity
             android:name=".activities.mine.BillRecordActivity"
             android:launchMode="singleTop" />
@@ -614,19 +544,7 @@
             android:name=".activities.mine.BillRecordClassifyActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.find.NotificationDetailActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.find.ManualActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".activities.mine.ModifyOutCashPWDActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.UpdateOutCashPwdActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.ResetOutCashActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activities.mine.BillDetailActivity"
@@ -638,55 +556,17 @@
         <activity
             android:name=".activities.mine.OutCashActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.MyEssayActivity"
-            android:launchMode="singleTop" />
         <activity android:name=".activities.web.WebActivity" />
         <activity
             android:name=".activities.mine.CreateArticleActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.home.FamousPersonsActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.SectionActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".activities.home.ArticleInfoActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.home.RewardListActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.FamilySourceActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.HistoryEventActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.ClanActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.GenealogyActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.FoundationActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.WalletHelperActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.WalletCashRuleActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.StoreWebActivity"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".activities.web.VideoViewActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.mine.SelectGoodsActivity"
-            android:launchMode="singleTop" /> <!-- alipay sdk begin -->
+        <!-- alipay sdk begin -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -702,80 +582,15 @@
         <activity
             android:name=".activities.home.InviteJoinGroupActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.home.AdvancedTeamInfoActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".activities.home.GroupAllMemberActivity" />
-        <activity android:name=".activities.home.GroupNoticeActivity" />
-        <activity
-            android:name=".activities.home.VideoCallInfoActivity"
-            android:label="@string/title_activity_video_call_info"
-            android:theme="@style/AppTheme" />
         <activity android:name=".framents.home.GroupChatSearchActivity" />
         <activity android:name=".bean.ClaimPactActivity" />
-        <activity android:name=".activities.home.ActionMessageActivity" />
         <activity android:name=".activities.home.GroupFootprintActivity" />
-        <activity android:name=".activities.home.ActionRewardActivity" />
         <activity android:name=".framents.home.MemberSearchActivity" /> <!-- 家族起动页 -->
-        <activity
-            android:name=".activities.startactivity.StartFamilyActivity"
-            android:exported="true"
-            android:icon="@mipmap/app_logo"
-            android:label="家族"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity> <!-- 信息起动页 -->
-        <activity
-            android:name=".activities.startactivity.StartMessageActivity"
-            android:exported="true"
-            android:icon="@mipmap/app_logo"
-            android:label="信息"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> <!-- 百家姓起动页 -->
-        <activity
-            android:name=".activities.startactivity.StartFamilyNamesActivity"
-            android:exported="true"
-            android:icon="@mipmap/app_logo"
-            android:label="百家姓"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> <!-- 发现起动页 -->
-        <activity
-            android:name=".activities.startactivity.StartFindActivity"
-            android:exported="true"
-            android:icon="@mipmap/app_logo"
-            android:label="发现"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> <!-- 我的起动页 -->
-        <activity
-            android:name=".activities.startactivity.StartMineActivity"
-            android:exported="true"
-            android:icon="@mipmap/app_logo"
-            android:label="我的"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> <!-- 格力开机引导  注册页或登录 -->
-        <activity
-            android:name=".activities.mine.GeLiLoginActivity"
-            android:exported="true"
-            android:label="格力开机引导"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".activities.gile.GeLiUserNameSelectActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activities.gile.GeLiRegisterActivity"
-            android:launchMode="singleInstance" />
+        <!-- 信息起动页 -->
+        <!-- 百家姓起动页 -->
+        <!-- 发现起动页 -->
+        <!-- 我的起动页 -->
+        <!-- 格力开机引导  注册页或登录 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -792,39 +607,13 @@
         </provider>
 
         <activity
-            android:name=".activities.common.DownlineDialogActivity"
-            android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
             android:name=".activities.group.SelectContactActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.group.GroupUserinfo"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.group.GroupNameActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.group.GroupMemberManagerActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activities.message.ServerCenterActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.group.GroupsNoticeActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.group.GroupMemberActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".activities.find.FindMemberActivity" />
-        <activity
-            android:name=".SplashNewActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".UpgradeInfoTipActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".activities.find.SurnameWikiActivity"
             android:launchMode="singleTop" />
         <activity android:name=".activities.mine.AreaCodeActivity" />
         <activity android:name=".activities.mine.PhoneCodeVerificationActivity" />
@@ -832,16 +621,8 @@
             android:name=".activities.find.ScannerActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activities.find.MyQrCodeActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".NoNetworkActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activities.family.HarbourActivity" />
-        <activity android:name=".activities.family.HistoryBulletinActivity" />
-        <activity android:name=".activities.family.AddMemberActivity" />
-        <activity android:name=".activities.family.EveryDaySignActivity" />
-        <activity android:name=".activities.family.PutSomethingActivity" />
         <activity android:name=".activities.family.BindFamilyActivity" />
         <activity
             android:name=".activities.clan.ClanInfoActivity"
@@ -862,9 +643,6 @@
             android:name=".activities.clan.ClanMemberChargeSelActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activities.clan.ClanNoticeActivity"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".activities.clan.ClanNoticeReleaseActivity"
             android:launchMode="singleTask" />
         <activity
@@ -874,34 +652,7 @@
             android:name=".activities.clan.ClanPhotoReleaseActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activities.clan.ClanProceedsActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.ClanProceedsInfoActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.CreateClanSucceedActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.MiClanAssociationActivity"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".activities.clan.CreateMiClanActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.MainClanActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.MoreClanActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.NoticeInfoActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.SearchLocationActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.clan.StartProceedsActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".activities.search.MoreSearchActivity"
@@ -919,56 +670,25 @@
             android:name=".activities.zuci.ZuciInfoActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activities.zuci.ZuciMainActivity"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".activities.zuci.ZuciNearbyActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".activities.search.MainSearchActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".activities.find.ActionActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".activities.message.VideoBookActivity"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".activities.message.GroupChatActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".activities.family.MessageBoardActivity" />
-        <activity android:name=".activities.family.FamilyMemberActivity" />
-        <activity android:name=".activities.family.InviteFamilyActivity" />
-        <activity android:name=".activities.family.MyInviteRangeActivity" />
         <activity android:name=".activities.message.NewActionActivity" />
         <activity android:name=".activities.mine.UserFeedbackActivity" />
         <activity android:name=".activities.mine.HistoryFeedbackActivity" />
         <activity android:name=".activities.mine.UserHistoryFeedbackInfoActivity" />
         <activity android:name=".activities.zuci.ZuciMapNavigationActivity" />
         <activity android:name=".activities.mine.PhoneLoginActivity" />
-        <activity android:name=".activities.mine.BangDingWeChatActivity" />
-        <activity android:name=".activities.common.SelectFamilyCityActivity" />
         <activity
             android:name=".activities.mine.LanguageSettingActivity"
             android:label="@string/title_activity_language_setting"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.home.EnjoyActivity" />
-        <activity
-            android:name=".activities.home.CreateEnjoyActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activities.home.EnjoySucceedActivity" />
-        <activity android:name=".activities.home.CreateBotActivity" />
-        <activity android:name=".activities.home.BotInfoActivity" />
-        <activity android:name=".activities.home.BotSucceedActivity" />
-        <activity android:name=".activities.home.MyBotActivity" />
         <activity android:name=".activities.mine.PerfectUserDataActivity" />
-        <activity
-            android:name=".activities.FamilyTree.TreeTagActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activities.FamilyTree.TreeAddActivity" />
-        <activity android:name=".activities.FamilyTree.AddressBooNotekActivity" />
-        <activity android:name=".activities.FamilyTree.AddRelationActivity" />
-        <activity android:name=".activities.FamilyTree.AddNewFriendActivity" />
         <activity android:name=".activities.message.CustomerServiceDetails" />
         <activity android:name=".activities.message.NewFriendActivity" />
         <activity android:name=".activities.message.CommentZanActivity" />
@@ -977,40 +697,9 @@
         <activity android:name=".activities.message.MessageSettingActivity" />
         <activity android:name=".activities.message.ProvinceActivity" />
         <activity android:name=".activities.message.NewChooseIndustryActivity" />
-        <activity
-            android:name=".activities.FamilyTree.AddressListActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activities.FamilyTree.FriendBlacklistActivity" />
-        <activity android:name=".activities.FamilyTree.AddRelationActivity2" />
-        <activity android:name=".activities.applet.MeetAppletActivity" />
-        <activity android:name=".activities.applet.AppletSeverActivity" />
-        <activity
-            android:name=".activities.applet.ExclusiveAppletActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activities.gile.PhoneCodeActivity" />
         <activity android:name=".activities.gile.BangDingPhoneActivity" />
-        <activity android:name=".activities.gile.Register2Activity" />
-        <activity android:name=".framents.find.ForHomePfracticeActivity" />
-        <activity android:name=".framents.find.RechargeMeritsActivity" />
-        <activity android:name=".activities.meritsurname.MeritRankingActivity" />
-        <activity android:name=".activities.meritsurname.SurnameRankActivity" />
-        <activity android:name=".activities.meritsurname.SurnameOriginActivity" />
-        <activity android:name=".activities.meritsurname.AddSurnameOriginActivity" />
-        <activity android:name=".activities.meritsurname.QuestRewardsActivity" />
-        <activity android:name=".activities.mine.MyVisitorActivity" />
         <activity android:name=".activities.mine.ShareCodeActivity" />
-        <activity android:name=".activities.mine.PersonHomeActivity" />
         <activity android:name=".activities.mine.OrderFormActivity" />
-        <activity android:name=".activities.mine.NewWalletActivity" />
-        <activity
-            android:name=".activities.mine.EditHomeActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activities.meritsurname.ForFreeActivity" />
-        <activity android:name=".activities.creation.MusicSelectTemplateActivity" />
-        <activity android:name=".activities.creation.SuibiPreviewActivity" />
-        <activity android:name=".activities.business.TempShowingActivity" />
-        <activity android:name=".activities.mine.VipEarningsActivity" />
-        <activity android:name=".activities.business.BusinessPublishActivity" />
         <activity android:name=".activities.creation.VideoDetailsActivity" />
         <activity android:name=".activities.creation.ArticleDetailsActivity" />
 

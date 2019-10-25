@@ -161,7 +161,6 @@ public class ReleaseActivity extends BaseActivity implements EmojiconGridFragmen
         mSelectImages.add(pb);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
         picList.setLayoutManager(layoutManager);
-//        picList.addItemDecoration(new GridSpacingItemDecoration(4, 18, false));
         picList.setAdapter(mAdapter = new PicAdapter(ReleaseActivity.this, mSelectImages, true));
         mAdapter.setClickPic(new PicAdapter.OnClickPic() {
             @Override

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@mipmap/ic_clan_gonggao_bg"
+    android:background="@mipmap/icon_more"
     android:orientation="vertical">
 
     <include layout="@layout/titlebar_layout" />

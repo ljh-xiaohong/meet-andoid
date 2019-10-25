@@ -114,8 +114,8 @@ public class ClanLocationActivity extends BaseActivity implements OnItemClickLis
     public void onClick(View paramView){
         switch (paramView.getId()){
             case R.id.titlebar_imgBtn_search:
-                startActivityIfNeeded(new Intent(this, SearchLocationActivity.class), 100);
-                finish();
+//                startActivityIfNeeded(new Intent(this, SearchLocationActivity.class), 100);
+//                finish();
                 return;
         }
     }

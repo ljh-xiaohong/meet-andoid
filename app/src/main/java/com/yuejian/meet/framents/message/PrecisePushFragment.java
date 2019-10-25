@@ -46,7 +46,7 @@ public class PrecisePushFragment extends Fragment implements FriendListAdapter.O
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
     @Bind(R.id.precise_push_content_list)
-    HeadAndFootRecyclerView precisePushContentList;
+    RecyclerView precisePushContentList;
     @Bind(R.id.precise_push_list)
     RecyclerView precisePushList;
     @Bind(R.id.precise_push_commodity_list)

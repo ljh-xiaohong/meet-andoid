@@ -1185,54 +1185,6 @@ public class Utils {
         displayImageWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.TOP | Gravity.LEFT, 0, 0);
     }
 
-    public static void displayImagesResources(final Activity activity, ArrayList<Integer> resources, int position, ViewPagerGallery.GalleryOnClickListener listener) {
-        initDisplayImageWindow(activity);
-        ViewPagerGallery gallery = (ViewPagerGallery) displayImageWindow.getContentView().findViewById(R.id.vp_gallery);
-        final View saveImageLayout = displayImageWindow.getContentView().findViewById(R.id.save_img_layout);
-        if (listener == null) {
-            listener = new ViewPagerGallery.GalleryOnClickListener() {
-                @Override
-                public void onClick(int position) {
-                    if (saveImageLayout != null && saveImageLayout.getVisibility() != View.VISIBLE) {
-                        displayImageWindow.dismiss();
-                    }
-                }
-            };
-        }
-        gallery.setOnClickListener(listener);
-        gallery.setGalleryOnLongClickListener(new ViewPagerGallery.GalleryOnLongClickListener() {
-            @Override
-            public void onLongClick(View view) {
-                final View target = view;
-                saveImageLayout.setVisibility(View.VISIBLE);
-                saveImageLayout.findViewById(R.id.save_in_local).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (target instanceof ImageView) {
-                            ImageView img = (ImageView) target;
-                            img.setDrawingCacheEnabled(true);
-//                            Bitmap bitmap = img.getDrawingCache();
-                            Bitmap bitmap = convertViewToBitmap(img);
-                            Utils.saveImageToGallery(activity, bitmap, String.valueOf(System.currentTimeMillis()));
-                            img.setDrawingCacheEnabled(false);
-                        } else {
-                            Utils.saveImageToGallery(activity, convertViewToBitmap(target), String.valueOf(System.currentTimeMillis()));
-                        }
-                        saveImageLayout.setVisibility(View.GONE);
-                    }
-                });
-                saveImageLayout.findViewById(R.id.quxiao).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        saveImageLayout.setVisibility(View.GONE);
-                    }
-                });
-            }
-        });
-        gallery.setImgResources(resources, position);
-        displayImageWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.TOP | Gravity.LEFT, 0, 0);
-    }
-
     public static void initDisplayImageWindow(final Activity activity) {
         if (displayImageWindow == null) {
             displayImageWindow = new PopupWindow(activity);

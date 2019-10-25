@@ -29,12 +29,12 @@ public class PersonalViewpager extends ViewPager {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int height = 0;
         for (int i = 0; i < getChildCount(); i++) {
-            if (postion==0){
+            if (postion==1){
                 View child = getChildAt(0);
                 child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 int h = child.getMeasuredHeight();
                 if (h > height) height = h;
-            }else if (postion==1){
+            }else if (postion==0){
                 View child = getChildAt(1);
                 child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 int h = child.getMeasuredHeight();

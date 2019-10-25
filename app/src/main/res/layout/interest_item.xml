@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="@color/color_white" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView android:textSize="16.0sp" android:textStyle="bold" android:textColor="#ff666666" android:id="@+id/header" android:background="#fff6f6f6" android:paddingLeft="@dimen/px_24" android:paddingTop="16.0dip" android:paddingRight="@dimen/px_24" android:paddingBottom="8.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    <android.support.v7.widget.GridLayout android:id="@+id/interest_grid_view" android:background="@color/color_white" android:paddingTop="@dimen/px_24" android:paddingBottom="@dimen/px_24" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="@dimen/px_24" android:layout_marginRight="@dimen/px_24" android:columnWidth="@dimen/px_20" app:orientation="horizontal" app:columnCount="3" />
-</LinearLayout>

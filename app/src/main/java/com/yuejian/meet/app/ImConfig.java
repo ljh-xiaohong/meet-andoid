@@ -21,16 +21,12 @@ import com.netease.nimlib.sdk.msg.MessageNotifierCustomization;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
-import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.StartUpActivity;
-import com.yuejian.meet.activities.startactivity.StartMessageActivity;
 import com.yuejian.meet.session.DemoCache;
 import com.yuejian.meet.session.avchat.AVChatProfile;
 import com.yuejian.meet.session.avchat.activity.AVChatActivity;
-import com.yuejian.meet.session.avchat.receiver.PhoneCallStateObserver;
 import com.yuejian.meet.session.config.preference.UserPreferences;
-import com.yuejian.meet.session.team.TeamAVChatHelper;
 import com.yuejian.meet.utils.DensityUtils;
 
 /**

@@ -17,7 +17,6 @@ import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.creation.DraftActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -190,21 +189,12 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
 
                 //视频
                 case 2:
-//                        if (position == 0) {
-//                            DraftActivity.startActivity(mContext, type);
-//                            return;
-//                        }
                     VideoActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, false);
 
                     break;
 
                 //文章
                 case 1:
-//                        if (position == 0) {
-//                            DraftActivity.startActivity(mContext, type);
-//                            return;
-//                        }
-
                     ArticleActivity.startActivityForResult((Activity) mContext, adapter.getData().get(position).getContentId() + "", AppConfig.CustomerId, position, CANCEL_DELECT);
                     break;
 

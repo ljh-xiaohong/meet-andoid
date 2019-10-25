@@ -15,7 +15,6 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.clan.ClanInfoActivity;
-import com.yuejian.meet.adapters.clan.MiClanAdapter;
 import com.yuejian.meet.bean.MoreClanEntity;
 import com.yuejian.meet.bean.ZuciFootprintsEntity;
 import com.yuejian.meet.utils.ImUtils;

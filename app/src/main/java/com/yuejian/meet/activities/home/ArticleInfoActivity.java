@@ -512,10 +512,10 @@ public class ArticleInfoActivity extends BaseActivity {
     }
 
     public void goToRewardList(View view) {
-        Intent intent = new Intent(this, RewardListActivity.class);
-        intent.putExtra("articleId", article.article_id);
-        intent.putExtra("customer_id", article.customer_id);
-        startActivity(intent);
+//        Intent intent = new Intent(this, RewardListActivity.class);
+//        intent.putExtra("articleId", article.article_id);
+//        intent.putExtra("customer_id", article.customer_id);
+//        startActivity(intent);
     }
 
     @SuppressLint("AddJavascriptInterface")

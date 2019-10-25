@@ -23,13 +23,12 @@ public class UrlApi {
 
 
     //本地
-//  public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
-  public static String mHttpUrl = "http://192.168.0.178:81/yuejian-app/";
+  public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
+//  public static String mHttpUrl = "http://192.168.0.178:81/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.189:8080//yuejian-app/";
 
 
 //    public static String mHttpUrl = "http://192.168.0.177:81/yuejian_app_war/";
-
     //  public static String mHttpUrl = "http://192.168.0.139:8087/yuejian-app/";
     public static String mWXhttpUrl = "http://wx.yuejianchina.com/";
 //  public static String mHttpUrl = "http://192.168.0.145:8087/yuejian-app/";

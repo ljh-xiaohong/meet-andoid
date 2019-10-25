@@ -2,7 +2,6 @@ package com.yuejian.meet.framents.family;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,34 +14,23 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
-import com.netease.nim.uikit.common.util.string.StringUtil;
 import com.yuejian.meet.R;
-import com.yuejian.meet.activities.clan.MainClanActivity;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.ActivityLabActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
-import com.yuejian.meet.activities.family.FamilyMemberActivity;
 import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
-import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.search.SearchActivity;
-import com.yuejian.meet.activities.web.WebActivity;
-import com.yuejian.meet.activities.zuci.ZuciMainActivity;
 import com.yuejian.meet.adapters.BaseAdapter;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
 import com.yuejian.meet.adapters.RecommendListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
-import com.yuejian.meet.api.http.UrlConstant;
 import com.yuejian.meet.bean.FamilyRecommendEntity;
 import com.yuejian.meet.bean.RecommendEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.utils.ScreenUtils;
-import com.yuejian.meet.utils.ViewInject;
-import com.yuejian.meet.widgets.springview.DefaultFooter;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
 
@@ -56,7 +44,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * @author : g000gle
@@ -65,29 +52,12 @@ import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
  */
 public class FamilyCircleRecommendFragment extends BaseFragment
         implements SpringView.OnFreshListener, FamilyCircleRecommendListAdapter.OnListItemClickListener {
-
-    @Bind(R.id.ll_family_circle_recomm_item_zongxianquan)
-    LinearLayout mItemZongxianquan;
-    @Bind(R.id.ll_family_circle_recomm_item_news)
-    LinearLayout mItemNews;
-    @Bind(R.id.ll_family_circle_recomm_item_zupu)
-    LinearLayout mItemZupu;
-    @Bind(R.id.ll_family_circle_recomm_item_jiaci)
-    LinearLayout mItemJiaci;
-    @Bind(R.id.ll_family_circle_recomm_item_zongqinhui)
-    LinearLayout mItemZongqinhui;
-    @Bind(R.id.ll_family_circle_recomm_item_xiuxing)
-    LinearLayout mItemXiuxing;
-    @Bind(R.id.ll_family_circle_recomm_item_college)
-    LinearLayout mItemCollega;
     @Bind(R.id.rv_family_circle_recommend_list)
     RecyclerView mRecommendListView;
     @Bind(R.id.spring_family_recommend_list)
     SpringView mSpringView;
     @Bind(R.id.ll_family_recommend_list_empty)
     LinearLayout mEmptyList;
-    @Bind(R.id.ll_family_circle_recomm_item_layout)
-    LinearLayout ll_title;
     @Bind(R.id.search_all)
     ImageView searchAll;
     @Bind(R.id.sweep_code)
@@ -160,7 +130,6 @@ public class FamilyCircleRecommendFragment extends BaseFragment
 
 //        loadDataFromNet(mNextPageIndex, pageCount);
         mSpringView.callFresh();
-        setItemWidth();
     }
 
     @Override
@@ -174,10 +143,7 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         }
     }
 
-    @OnClick({R.id.ll_family_circle_recomm_item_news, R.id.ll_family_circle_recomm_item_zupu,
-            R.id.ll_family_circle_recomm_item_jiaci, R.id.ll_family_circle_recomm_item_zongqinhui,
-            R.id.ll_family_circle_recomm_item_xiuxing, R.id.ll_family_circle_recomm_item_college,
-            R.id.ll_family_circle_recomm_item_zongxianquan, R.id.search_all, R.id.sweep_code, R.id.et_search_all})
+    @OnClick({R.id.search_all, R.id.sweep_code, R.id.et_search_all})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -187,64 +153,6 @@ public class FamilyCircleRecommendFragment extends BaseFragment
                 break;
             case R.id.sweep_code://扫码
                 getActivity().startActivity(new Intent(getActivity(), ScannerActivity.class));
-                break;
-            case R.id.ll_family_circle_recomm_item_news: // 新闻动态
-                Intent newsIntent = new Intent(getActivity(), WebActivity.class);
-                // String newsUrl = UrlConstant.apiUrl().replace("yuejian-app", "yuejian-minih") + "weixin/genyuan.html?customerId=" + user.customer_id + "&surname=" + user.getSurname() +"&family_id=";
-                String newsUrl = UrlApi.GET_NEWS + "?customerId=" + user.customer_id + "&surname=" + user.getSurname() + "&family_id=" + user.family_id;
-
-                newsIntent.putExtra("url", newsUrl);
-                newsIntent.putExtra("No_Title", true);
-                startActivity(newsIntent);
-                break;
-            case R.id.ll_family_circle_recomm_item_zupu: //我的族谱
-                if (this.user == null) {
-                    Intent intent = new Intent(getApplication(), LoginActivity.class);
-                    intent.putExtra("mine_login", true);
-                    startActivity(intent);
-                } else {
-                    Intent intent1 = new Intent(getActivity(), WebActivity.class);
-                    intent1.putExtra("No_Title", true);
-                    String url = UrlConstant.ExplainURL.STAR_ZPU + "?customer_id=" + AppConfig.CustomerId + "&surname=" + this.user.getSurname();
-                    intent1.putExtra("url", url);
-                    startActivity(intent1);
-                }
-                break;
-            case R.id.ll_family_circle_recomm_item_jiaci:
-                startActivity(new Intent(getContext(), ZuciMainActivity.class));
-                break;
-            case R.id.ll_family_circle_recomm_item_zongqinhui: //  宗亲会
-                if (StringUtil.isEmpty(AppConfig.slongitude)) {
-                    ViewInject.toast(getContext(), "请打开定位权限");
-                    startActivity(new Intent("android.settings.APPLICATION_DETAILS_SETTINGS",
-                            Uri.parse("package:com.yuejian.meet")));
-                } else {
-                    startActivity(new Intent(getContext(), MainClanActivity.class));
-                }
-                break;
-            case R.id.ll_family_circle_recomm_item_xiuxing: // 为家修行
-                if (this.user == null) {
-                    Intent intent = new Intent(getApplication(), LoginActivity.class);
-                    intent.putExtra("mine_login", true);
-                    startActivity(intent);
-                } else {
-                    // startActivity(new Intent(getActivity(), ForHomePfracticeActivity.class));
-                    Intent activityIntent = new Intent(getActivity(), WebActivity.class);
-                    String params = String.format("?customer_id=%s", user.customer_id);
-                    String url = UrlConstant.apiUrl() + "faxian/xiuxing.html" + params;
-                    activityIntent.putExtra("url", url);
-                    activityIntent.putExtra("No_Title", true);
-                    startActivity(activityIntent);
-                }
-                break;
-            case R.id.ll_family_circle_recomm_item_college: // 家族学院
-                Intent intent2 = new Intent(getActivity(), WebActivity.class);
-                intent2.putExtra("No_Title", true);
-                intent2.putExtra("url", UrlConstant.ExplainURL.FAXIAN_SCHOOL + "?customer_id=" + AppConfig.CustomerId);
-                startActivity(intent2);
-                break;
-            case R.id.ll_family_circle_recomm_item_zongxianquan:  //宗贤圈
-                startActivity(new Intent(getActivity(), FamilyMemberActivity.class));
                 break;
         }
 
@@ -308,71 +216,6 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         });
     }
 
-//    public void loadDataFromNet(Type type, int page, int count, boolean is_recommend) {
-//        this.is_recommend = is_recommend;
-//        Map<String, Object> map = new HashMap<>();
-//        this.type = type;
-//        map.put("type", type.getType());
-//        map.put("is_recommend", is_recommend ? "true" : "false");
-//        map.put("customer_id", AppConfig.CustomerId);
-//        map.put("pageIndex", String.valueOf(page));
-//        map.put("pageItemCount", count + "");
-//
-//
-//        apiImp.getRecommendFamilyCricleDo(map, this, new DataIdCallback<String>() {
-//            //2-video,4-article;
-//
-//
-//            @Override
-//            public void onSuccess(String data, int id) {
-//
-//                List<FamilyRecommendEntity> recommendEntities = toEntity(data);
-//
-//                switch (type) {
-//                    case article:
-//
-//
-//                        break;
-//
-//
-//                    case video:
-//
-//
-//                        break;
-//
-//                }
-//
-//                if (recommendEntities.size() > 0 && firstLoad) {
-//                    mEmptyList.setVisibility(View.GONE);
-//                    firstLoad = false;
-//                }
-//
-//                if (page <= 1) {
-//                    //上拉最新
-//                    mRecommendListAdapter.refresh(null);
-//
-//                } else {
-//                    //下拉更多
-//                    mRecommendListAdapter.Loadmore(null);
-//                }
-//
-//
-//                if (mSpringView != null) {
-//                    mSpringView.onFinishFreshAndLoad();
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailed(String errCode, String errMsg, int id) {
-//                if (mSpringView != null) {
-//                    mSpringView.onFinishFreshAndLoad();
-//
-//                }
-//            }
-//        });
-//    }
 
 
     @Override
@@ -521,18 +364,4 @@ public class FamilyCircleRecommendFragment extends BaseFragment
         }
     }
 
-    private void setItemWidth() {
-
-        int width = ScreenUtils.getScreenWidth(getContext());
-
-        for (int i = 0; i < ll_title.getChildCount(); i++) {
-
-            View child = ll_title.getChildAt(i);
-            ViewGroup.LayoutParams params = child.getLayoutParams();
-            params.width = (int) (width / 4.5);
-            child.setLayoutParams(params);
-
-        }
-
-    }
 }

@@ -24,8 +24,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         renderscriptTargetApi 25
-        versionCode 24
-        versionName '5.0.00'
+        versionCode 25
+        versionName '5.1.0'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "BUILD_LOG", "${isLog()}"
@@ -239,6 +239,8 @@ dependencies {
     compile 'com.shuyu:gsyVideoPlayer-java:6.0.3'
     compile 'com.github.maning0303:MNImageBrowser:V1.2.4'
     compile files('libs/umeng-share-QQ-simplify-6.9.6.jar')
+
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }
 
 allprojects {

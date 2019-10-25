@@ -24,8 +24,7 @@
                 android:id="@+id/iv_family_follow_item_img"
                 android:layout_width="231dp"
                 android:layout_height="309dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/bg"/>
+                android:scaleType="fitXY"/>
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="wrap_content"
@@ -83,8 +82,7 @@
                 android:layout_margin="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_height="80dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/bg"/>
+                android:scaleType="fitXY"/>
         </RelativeLayout>
     </LinearLayout>
     <RelativeLayout
