@@ -114,6 +114,9 @@ public class ScannerActivity extends BaseActivity {
             startActivity(intent);
         }else {
             Toast.makeText(getBaseContext(), R.string.scanner_toast, Toast.LENGTH_SHORT).show();
+            if (scannerView != null) {
+                scannerView.onResume();
+            }
         }
 //        else {
 //            Intent intent = new Intent();
