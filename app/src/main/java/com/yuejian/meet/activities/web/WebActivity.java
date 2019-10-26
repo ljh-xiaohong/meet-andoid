@@ -383,7 +383,10 @@ public class WebActivity extends BaseActivity {
                 upgradeVip(url);
                 return true;
             } else if (uri.getAuthority().equals("toBack")) {
-                onBackPressed();
+                webView.freeMemory();
+                Intent i = new Intent();
+                setResult(2, i);
+                finish();
                 return true;
             } else if (uri.getAuthority().equals("meditaVideo")) {
                 //冥想寻根
