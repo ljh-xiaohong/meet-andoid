@@ -1,19 +1,28 @@
 package com.yuejian.meet;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,16 +56,18 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.app.MyApplication;
 import com.yuejian.meet.bean.GetMessageBean;
+import com.yuejian.meet.bean.UpdateBean;
 import com.yuejian.meet.bean.mine2Entity;
+import com.yuejian.meet.dialogs.TipsDialog;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.NewBusinessFragment;
 import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
-import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.NewMineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.DadanPreference;
+import com.yuejian.meet.utils.DownLoadUtils;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -65,6 +76,7 @@ import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.utils.tinkerutil.SampleApplicationContext;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,8 +131,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
     private NewMessageFragment messageFragment = new NewMessageFragment();
     private NewBusinessFragment businessFragment = new NewBusinessFragment();
     private NewMineFragment mineFragment = new NewMineFragment();
-//    private FamilyCircleContainerFragment familyFragment;
-    private FamilyCircleRecommendFragment familyFragment;
+    private FamilyCircleContainerFragment familyFragment;
+//    private FamilyCircleRecommendFragment familyFragment;
     private Intent intent;
     private MainMoreUi mainMoreUi;
     private mine2Entity mine2;
@@ -145,6 +157,139 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         quitGroup();
         if (AppConfig.isGeliPhone) {
             ImUtils.loginIm();//登录im
+        }
+        initCheck();
+    }
+
+    private void initCheck() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", 2);
+        apiImp.getLastVersionByType(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                UpdateBean loginBean=new Gson().fromJson(data, UpdateBean.class);
+                if (loginBean.getData()==null) return;
+                versions=loginBean.getData().getVersionName();
+                isForcedUpdating=loginBean.getData().getIsForced()==0?true:false;
+                versionsInfo=loginBean.getData().getContent();
+                andriodDownloadURL=loginBean.getData().getAppUrl();
+                checkUpdate();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+
+    String versions;
+    boolean  isForcedUpdating;
+    String versionsInfo;
+    String andriodDownloadURL;
+    private void checkUpdate() {
+        boolean isUpdate;
+        if (versions.equals(BuildConfig.VERSION_NAME)){
+            isUpdate = false;
+        }else {
+            isUpdate = true;
+        }
+        if (isUpdate) {
+            if (isForcedUpdating) {
+                showForcedUpdatingDialog();
+            } else {
+                showNoForcedUpdatingDialog();
+            }
+        }
+    }
+    //强制更新
+    private void showForcedUpdatingDialog() {
+        LayoutInflater inflater = (LayoutInflater)this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
+        message = (TextView) layout.findViewById(R.id.message);
+        positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
+        ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
+        cancel_img.setVisibility(View.GONE);
+        tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
+        positiveButton.setOnClickListener(v -> {
+            int isPermission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (isPermission2 == PackageManager.PERMISSION_GRANTED) {
+                download();
+            } else {
+                //申请权限
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+        Dialog dialog = new Dialog(this);// 创建自定义样式dialog
+        dialog.setCancelable(false);// 可以用“返回键”取消
+        dialog.setCanceledOnTouchOutside(false);//
+        dialog.setContentView(layout);// 设置布局
+        dialog.show();
+    }
+    private static final int PERMISSION_REQUEST_CODE = 0;
+    //非强制更新
+    private void showNoForcedUpdatingDialog() {
+        LayoutInflater inflater = (LayoutInflater)this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
+        tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
+        message = (TextView) layout.findViewById(R.id.message);
+        positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
+        ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
+        cancel_img.setVisibility(View.VISIBLE);
+        Dialog dialog = new Dialog(this);// 创建自定义样式dialog
+        dialog.setCancelable(true);// 可以用“返回键”取消
+        dialog.setCanceledOnTouchOutside(true);//
+        dialog.setContentView(layout);// 设置布局
+        dialog.show();
+        cancel_img.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        positiveButton.setOnClickListener(v -> {
+            int isPermission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (isPermission2 == PackageManager.PERMISSION_GRANTED) {
+                download();
+            } else {
+                //申请权限
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+    }
+
+    private ProgressBar tv_download_progressBar;
+    private TextView message;
+    private TextView positiveButton;
+    //下载
+    private void download() {
+        String fileDownloadPath = "yuejian/";
+        String fileName = "";//文件名
+        String fileRootPath = Environment.getExternalStorageDirectory() + File.separator;
+        /*文件名*/
+        fileName = andriodDownloadURL.substring(andriodDownloadURL.lastIndexOf("/") + 1);
+        /*下载目录*/
+        File downloadfile = new File(fileRootPath + fileDownloadPath + fileName);
+        tv_download_progressBar.setMax(100);
+        if (downloadfile.exists()) {
+            if (positiveButton != null) {
+                if (message != null) {
+                    message.setText("下载完成");
+                }
+                tv_download_progressBar.setProgress(100);
+                tv_download_progressBar.setVisibility(View.VISIBLE);
+                positiveButton.setEnabled(true);
+                positiveButton.setText("点击安装");
+            }
+            DownLoadUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
+        } else {
+            positiveButton.setEnabled(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DownLoadUtils.DownloadFile(andriodDownloadURL, MainActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
+                }
+            }).start();
         }
     }
 
@@ -218,8 +363,8 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 
     public void initView() {
         // TODO: 2018/11/16   徐 家族改版
-//        familyFragment = new FamilyCircleContainerFragment();
-        familyFragment = new FamilyCircleRecommendFragment();
+        familyFragment = new FamilyCircleContainerFragment();
+//        familyFragment = new FamilyCircleRecommendFragment();
         initLocationMap();
         startLocation();
         mFragmentManager = this.getSupportFragmentManager();
@@ -460,6 +605,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 AppConfig.city = amapLocation.getCity();//城市信息
                 AppConfig.province = amapLocation.getProvince();//省
                 AppConfig.district = amapLocation.getDistrict();//区
+                Log.e("slatitude","已经更新经纬度");
                 PreferencesUtil.put(this, PreferencesUtil.LATITUDE, amapLocation.getLatitude() + "");
                 PreferencesUtil.put(this, PreferencesUtil.LONGITUDE, amapLocation.getLongitude() + "");
                 PreferencesUtil.put(this, PreferencesUtil.CITY, amapLocation.getCity() + "");

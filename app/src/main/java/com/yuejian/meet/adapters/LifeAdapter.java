@@ -55,9 +55,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
 
         if (!(holder.itemView instanceof RecommendView)) return;
         RecommendView rv = (RecommendView) holder.itemView;
-
         switch (entity.getType()) {
-
             //文章
             case 2:
                 rv.setViewStatus(RecommendView.ViewType.ARTICLE, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -65,12 +63,10 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                 rv.article_content.setText(entity.getTitle());
                 rv.article_tag.setVisibility(View.INVISIBLE);
                 rv.setLike(RecommendView.ViewType.ARTICLE, false, entity.getFabulousNum() + "");
-
                 break;
 
             //视频
             case 4:
-
                 if (entity.getCoveSizeType() == 0) {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                     Glide.with(context).load(entity.getPhotoAndVideoUrl()).into(rv.video_vertical_img);
@@ -92,8 +88,6 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                         }
                     });
                 }
-
-
                 break;
         }
 

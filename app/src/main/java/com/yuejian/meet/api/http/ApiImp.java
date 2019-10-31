@@ -2206,6 +2206,10 @@ public class ApiImp {
     public void getMessage(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_GETMESSAGE, paramMap, paramObject, callback);
     }
+    //检测客户端版本信息API
+    public void getLastVersionByType(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETLASTVERSIONBYTYPE, paramMap, paramObject, callback);
+    }
 
     //设置通知消息全部为已读API
     public void doSettingRead(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {

@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.family;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +22,8 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
+import com.yuejian.meet.activities.family.VideoVerticalActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
@@ -47,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
@@ -86,7 +90,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mFollowListAdapter = new FamilyCircleFollowListAdapter(getActivity(), this, apiImp, getActivity());
+        mFollowListAdapter = new FamilyCircleFollowListAdapter(getActivity(),apiImp, getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mFollowListAdapter);
         mFollowListAdapter.setOnClickListener(new FamilyCircleFollowListAdapter.onClickListener() {
@@ -96,10 +100,21 @@ public class FamilyCircleFollowFragment extends BaseFragment
             }
 
             @Override
+            public void onItemClick(int position, int type) {
+                switch (Integer.parseInt(followEntities.get(position).getType())) {
+                    //文章
+                    case 2:
+                        ArticleActivity.startActivityForResult((Activity) mContext, followEntities.get(position).getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION);
+                        break;
+                    //视频
+                    case 4:
+                        VideoVerticalActivity.startActivityForResult((Activity) mContext, followEntities.get(position).getId() + "", AppConfig.CustomerId, CANCEL_NOTINTERET, followEntities.get(position).getCoveSizeType() == 0 ? true : false);
+                        break;
+                }
+            }
+
+            @Override
             public void onComment(int position) {
-//                Intent intent = new Intent(getActivity(), MyDialogActivity.class);
-//                intent.putExtra("crId", followEntities.get(position).getId() + "");
-//                startActivityForResult(intent, 1);
                 MyDialogActivity.startActivityForResult(getActivity(), followEntities.get(position).getId() + "", MyDialogActivity.StyleType.NORMAL, 1);
             }
         });
@@ -301,12 +316,29 @@ public class FamilyCircleFollowFragment extends BaseFragment
                 break;
         }
     }
+    private static final int CANCEL_DELECT_POSITION = 101;
+
+    private static final int CANCEL_NOTINTERET = 102;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 7) {
             onRefresh();
+        }
+        if (resultCode != RESULT_OK) return;
+        switch (requestCode) {
+            case CANCEL_DELECT_POSITION:
+                int position = data.getIntExtra("position", -1);
+                if (position == -1) return;
+                followEntities.remove(position);
+                mFollowListAdapter.notifyDataSetChanged();
+                break;
+
+            case CANCEL_NOTINTERET:
+                onRefresh();
+                break;
+
         }
     }
 }

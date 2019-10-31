@@ -21,16 +21,10 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
-import com.yuejian.meet.activities.find.ScannerActivity;
-import com.yuejian.meet.activities.home.ReleaseActivity;
-import com.yuejian.meet.activities.search.SearchActivity;
-import com.yuejian.meet.adapters.FamilyCircleFollowListAdapter;
 import com.yuejian.meet.adapters.ProjectListAdapter;
 import com.yuejian.meet.api.DataIdCallback;
-import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.ProjectBean;
 import com.yuejian.meet.framents.base.BaseFragment;
-import com.yuejian.meet.ui.SingleLineItemDecoration;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.springview.DefaultFooter;
@@ -44,7 +38,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author : g000gle
