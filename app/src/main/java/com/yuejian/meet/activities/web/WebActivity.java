@@ -808,6 +808,8 @@ public class WebActivity extends BaseActivity {
             } else {
                 showNoForcedUpdatingDialog();
             }
+        }else {
+            Toast.makeText(this,"已经是最新版本！",Toast.LENGTH_LONG).show();
         }
     }
     //强制更新
