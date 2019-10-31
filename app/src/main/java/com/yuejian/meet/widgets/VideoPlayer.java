@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yuejian.meet.R;
 import com.yuejian.meet.utils.CommonUtil;
@@ -79,6 +81,18 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
             mGestureDetector.onTouchEvent(motionEvent);
             return true;
         });
+
+        initSize();
+    }
+
+    private void initSize() {
+        int width = (int) (ScreenUtil.getDisplayWidth() * 0.8);
+        ViewGroup.LayoutParams contentParams = getContenText().getLayoutParams();
+        if (contentParams == null) return;
+        contentParams.width = width;
+        getContenText().setLayoutParams(contentParams);
+
+        getGoodsButton().setMaxWidth((int) (ScreenUtil.getDisplayWidth() * 0.8));
     }
 
     private void initGestureDetector() {
@@ -416,6 +430,20 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         super.changeUiToPlayingShow();
         setViewShowState(mTopContainer, GONE);
         setViewShowState(mBottomContainer, GONE);
+        if (playStateListener != null) {
+            playStateListener.changeUiToPlayingShow();
+        }
+
+    }
+
+    PlayStateListener playStateListener;
+
+    public void setPlayStateListener(PlayStateListener playStateListener) {
+        this.playStateListener = playStateListener;
+    }
+
+    public interface PlayStateListener {
+        void changeUiToPlayingShow();
     }
 
     /**

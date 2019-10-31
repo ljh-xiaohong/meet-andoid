@@ -50,7 +50,8 @@
                 android:id="@+id/video_first_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="center" />
+                android:animateLayoutChanges="true"
+                android:scaleType="centerCrop" />
 
         </RelativeLayout>
 
@@ -259,11 +260,11 @@
             android:layout_marginTop="9dp"
             android:drawableLeft="@mipmap/icon_video_goods"
             android:drawableRight="@mipmap/video_view_more_tag"
-            android:drawablePadding="3dp"
-            android:gravity="center"
+            android:gravity="center|left"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_13"
-            android:visibility="invisible"
+            android:visibility="gone"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 

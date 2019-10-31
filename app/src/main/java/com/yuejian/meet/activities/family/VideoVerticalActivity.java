@@ -104,7 +104,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
                 adapter = new VideoPagerAdapter(getSupportFragmentManager(), Ids);
 //                verticalViewPager.setLoop(Ids.size());
                 verticalViewPager.setAdapter(adapter);
-                verticalViewPager.setOffscreenPageLimit(2);
+                verticalViewPager.setOffscreenPageLimit(5);
             }
 
             @Override
@@ -159,8 +159,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
     public void notInterested(Fragment fragment) {
         if(checkIsLife())return;
         adapter.removeFragment(fragment);
-        adapter.notifyDataSetChanged();
-        isCancel = true;
+         isCancel = true;
         if (adapter.getFragmentSize() == 0) {
             if (isCancel) {
                 setResult(RESULT_OK);
@@ -174,7 +173,6 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
     public void cancel(Fragment fragment) {
         if(checkIsLife())return;
         adapter.removeFragment(fragment);
-        adapter.notifyDataSetChanged();
         isCancel = true;
         if (adapter.getFragmentSize() == 0) {
             if (isCancel) {
@@ -209,6 +207,7 @@ public class VideoVerticalActivity extends AppCompatActivity implements VideoPla
 
         public void removeFragment(Object postion) {
             videos.remove(postion);
+            notifyDataSetChanged();
         }
 
         public int getFragmentSize() {

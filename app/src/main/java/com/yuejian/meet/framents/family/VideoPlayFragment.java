@@ -5,16 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.media.MediaMetadataRetriever;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +34,8 @@ import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
+import com.netease.nim.uikit.common.util.sys.ScreenUtil;
+import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.family.ActivityLabActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
@@ -36,6 +45,7 @@ import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.CommentBean;
+import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.bean.PraiseEntity;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.VideoAndContentEntiy;
@@ -98,11 +108,30 @@ public class VideoPlayFragment extends BaseFragment {
         player.setOnCancelListener(() -> {
             if (onchangeDataListener != null) onchangeDataListener.finishFragment();
         });
+
         getDataFromNet();
 //        if (getUserVisibleHint() && !isInitData) {
 //            player.startPlayLogic();
 //        }
     }
+
+    public Bitmap getNetVideoBitmap(String videoUrl) {
+        Bitmap bitmap = null;
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            //根据url获取缩略图
+            retriever.setDataSource(videoUrl, new HashMap());
+            //获得第一帧图片
+            bitmap = retriever.getFrameAtTime(0);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } finally {
+            retriever.release();
+        }
+        return bitmap;
+    }
+
 
     @Override
     public void onPause() {
@@ -150,14 +179,14 @@ public class VideoPlayFragment extends BaseFragment {
 //        if (isFirstLoad) {
 //            getDataFromNet();
 //        }
-
+        if (checkIsLife()) return;
         if (isVisibleToUser) {
             //可见时
             if (player != null) {
 //                VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
 //                if (detail == null) return;
                 progress.setVisibility(View.GONE);
-                player.getFirstBG().setVisibility(View.GONE);
+//                player.getFirstBG().setVisibility(View.GONE);
                 isFirstPlay = false;
                 player.startPlayLogic();
             }
@@ -204,7 +233,7 @@ public class VideoPlayFragment extends BaseFragment {
                 initDialog();
                 if (getUserVisibleHint()) {
                     progress.setVisibility(View.GONE);
-                    player.getFirstBG().setVisibility(View.GONE);
+//                    player.getFirstBG().setVisibility(View.GONE);
                     player.startPlayLogic();
                 }
             }
@@ -311,8 +340,25 @@ public class VideoPlayFragment extends BaseFragment {
 
             }
         });
-        //
-        Glide.with(mContext).load(checkData(detail.getPhotoAndVideoUrl())).into(player.getFirstBG());
+        player.setPlayStateListener(new VideoPlayer.PlayStateListener() {
+            @Override
+            public void changeUiToPlayingShow() {
+                AlphaAnimation alphaAnimation = new AlphaAnimation(1f, 0.5f);
+                alphaAnimation.setDuration(500);
+                player.getFirstBG().startAnimation(alphaAnimation);
+                player.getFirstBG().setVisibility(View.GONE);
+            }
+        });
+
+//        Bitmap bg = getNetVideoBitmap(checkData(detail.getCrContent()));
+//        if (bg != null) {
+//            player.getFirstBG().setImageBitmap(bg);
+//        } else {
+//            Glide.with(mContext).load(checkData(detail.getPhotoAndVideoUrl())).into(player.getFirstBG());
+//        }
+
+        new FirstAsyncTask(this, checkData(detail.getCrContent())).execute();
+
         player.setUp(detail.getCrContent(), true, "");
         Glide.with(mContext).load(checkData(detail.getUserPhoto())).into(player.getHeadImagView());
         player.getNameText().setText(checkData(detail.getUserName()));
@@ -342,6 +388,41 @@ public class VideoPlayFragment extends BaseFragment {
 
 
     }
+
+    private class FirstAsyncTask extends AsyncTask<Void, Void, Bitmap> {
+
+        WeakReference<VideoPlayFragment> reference;
+
+        private String url;
+
+        FirstAsyncTask(VideoPlayFragment fragment, String url) {
+            reference = new WeakReference<>(fragment);
+            this.url = url;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            if (reference != null && reference.get() != null) {
+                return reference.get().getNetVideoBitmap(url);
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (reference == null || reference.get() == null || reference.get().player == null)
+                return;
+            if (bitmap != null) {
+                reference.get().player.getFirstBG().setImageBitmap(bitmap);
+            } else {
+                Glide.with(mContext).load(checkData(info.getContentDetail().getPhotoAndVideoUrl())).into(reference.get().player.getFirstBG());
+            }
+        }
+    }
+
 
     /**
      * 商品详情页
@@ -454,7 +535,6 @@ public class VideoPlayFragment extends BaseFragment {
     /**
      * 点赞
      */
-    //todo 点赞处理
     private void like() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
