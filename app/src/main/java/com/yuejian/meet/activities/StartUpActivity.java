@@ -16,6 +16,7 @@ import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nimlib.sdk.NimIntent;
+import com.yuejian.meet.BuildConfig;
 import com.yuejian.meet.MainActivity;
 //import com.yuejian.meet.NewMainActivity;
 import com.yuejian.meet.R;

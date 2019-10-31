@@ -17,10 +17,8 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.creation.ArticleEditActivity;
 import com.yuejian.meet.activities.creation.VideoLoadActivity;
 import com.yuejian.meet.adapters.MyFragmentPagerAdapter;
-import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.framents.creation.MyCreationFragment;
 import com.yuejian.meet.framents.creation.PosterFragment;
-import com.yuejian.meet.framents.family.VideoTemplate;
 import com.yuejian.meet.widgets.CreationTitleView;
 
 import java.util.ArrayList;

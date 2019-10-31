@@ -84,7 +84,16 @@ public class FamilyFollowEntity implements Serializable{
         private String content;
         private String title;
         private String isPraise;
+        private int CoveSizeType;
         private boolean isMe;
+
+        public int getCoveSizeType() {
+            return CoveSizeType;
+        }
+
+        public void setCoveSizeType(int coveSizeType) {
+            CoveSizeType = coveSizeType;
+        }
 
         public String getTitle() {
             return title;

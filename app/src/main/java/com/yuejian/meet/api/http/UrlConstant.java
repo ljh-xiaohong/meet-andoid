@@ -1104,9 +1104,6 @@ public class UrlConstant {
     // 发布视频 发布
     public static String PUBLISHED_VIDEO = apiUrl() + "api/video/publishedVideo";
 
-    // 首页 推荐
-    public static String RECOMMEND_FAMILY_CRICLE = apiUrl() + "api/familyCircle/getRecommendFamilyCricle.do";
-
     // 首页推荐 RSV 1.0
     public static String RECOMMEND_FIND = apiUrl() + "api/homePage/findRecommend";
 
@@ -1126,9 +1123,6 @@ public class UrlConstant {
 
     //活动标签获取
     public static String CONTENTLABEL = apiUrl() + "api/contentRelease/getContentLabel";
-
-    //首页 同城
-    public static String ICITYFAMILYCRICLE = apiUrl() + "api/familyCircle/getIcityFamilyCricle.do";
 
     public static String RECOMMEND_LIFE = apiUrl() + "api/contentRelease/getLiveList";
 
@@ -1206,6 +1200,8 @@ public class UrlConstant {
     public static String GET_GETMESSAGE = apiUrl() + "api/msg/getMessage";
     //设置通知消息全部为已读API
     public static String GET_DOSETTINGREAD = apiUrl() + "api/msg/doSettingRead";
+    //检测客户端版本信息API
+    public static String GET_GETLASTVERSIONBYTYPE = apiUrl() + "api/version/getLastVersionByType";
 
 
 

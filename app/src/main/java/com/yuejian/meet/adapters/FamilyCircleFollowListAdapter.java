@@ -2,6 +2,7 @@ package com.yuejian.meet.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,12 +22,14 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.adapter.ReleasePicAdapter;
 import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
+import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.DynamicPrivatePicBean;
 import com.yuejian.meet.bean.FamilyFollowEntity;
 import com.yuejian.meet.bean.Image;
 import com.yuejian.meet.bean.ZanBean;
+import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.FolderTextView;
 import com.yuejian.meet.utils.TimeUtils;
@@ -49,7 +52,6 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
     private List<FamilyFollowEntity.DataBean> mFollowEntities;
     private Context mContext;
     private Activity mActivity;
-    private OnFollowListItemClickListener mListItemClickListener;
     private ApiImp apiImp;
     public String article_photo="http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/2019062821201820186833.png";
     private int check_num=0;
@@ -63,12 +65,12 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
 
     public interface onClickListener {
         void onClick(int position, boolean me);
+        void onItemClick(int position,int type);
         void onComment(int position);
     }
-    public FamilyCircleFollowListAdapter(Context context, OnFollowListItemClickListener listItemClickListener, ApiImp apiImp, Activity activity) {
+    public FamilyCircleFollowListAdapter(Context context, ApiImp apiImp, Activity activity) {
         mContext = context;
         mActivity =activity;
-        mListItemClickListener = listItemClickListener;
         this.apiImp = apiImp;
     }
 
@@ -84,7 +86,24 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         String headUrl = entity.getPhoto();
         if (!TextUtils.isEmpty(headUrl)) {
             Glide.with(mContext).load(headUrl).into(holder.headImageView);
+        }else {
+            Glide.with(mContext).load(R.mipmap.user_account_pictures).into(holder.headImageView);
         }
+        holder.headImageView.setOnClickListener(v -> {
+            String urlVip = "";
+            if (entity.getVipType().equals("0")) {
+                //非VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            } else {
+                //VIP
+                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+            }
+            urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, entity.getCustomerId());
+            Intent intent = new Intent(mContext, WebActivity.class);
+            intent.putExtra(Constants.URL, urlVip);
+            intent.putExtra("No_Title", true);
+            mContext.startActivity(intent);
+        });
         holder.nameTextView.setText(String.format("%s", entity.getName()));
 
         Date date = new Date(Long.parseLong(entity.getCreateTime())*1000);
@@ -100,7 +119,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         holder.more_operation.setOnClickListener(v -> {
               mOnClickListener.onClick(position,entity.isMe());
         });
-
+        //动态图文
         if (Integer.parseInt(entity.getType())==1) {
             holder.img.setVisibility(View.GONE);
             holder.contentImgView.setVisibility(View.GONE);
@@ -156,6 +175,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
             holder.contentTextView.setVisibility(View.VISIBLE);
             holder.contentImgView.setVisibility(View.GONE);
             holder.img.setVisibility(View.GONE);
+            //动态文章
         }else if (Integer.parseInt(entity.getType())==2){
             holder.article_lay.setVisibility(View.VISIBLE);
             holder.contentTextView.setVisibility(View.GONE);
@@ -168,6 +188,8 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
             if (!TextUtils.isEmpty(entity.getPhotoAndVideoUrl())) {
                 Glide.with(mContext).load(entity.getPhotoAndVideoUrl()).into(holder.article_img);
             }
+            holder.article_lay.setOnClickListener(v -> mOnClickListener.onItemClick(position,2));
+            //动态视频
         }else if (Integer.parseInt(entity.getType())==4){
             holder.article_lay.setVisibility(View.GONE);
             holder.iv_family_follow_item_list_lay.setVisibility(View.VISIBLE);
@@ -183,6 +205,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
             }else {
                 holder.contentTextView.setText("");
             }
+            holder.iv_family_follow_item_list_lay.setOnClickListener(v -> mOnClickListener.onItemClick(position,4));
         }
 
 

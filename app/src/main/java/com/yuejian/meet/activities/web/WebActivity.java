@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -15,10 +16,13 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,7 +40,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +52,7 @@ import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.mcxiaoke.bus.Bus;
@@ -66,6 +73,8 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.yuejian.meet.BuildConfig;
+import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
@@ -76,6 +85,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
 import com.yuejian.meet.bean.FeedsResourceBean;
 import com.yuejian.meet.bean.ShopEntity;
+import com.yuejian.meet.bean.UpdateBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.AppManager;
@@ -83,6 +93,7 @@ import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
+import com.yuejian.meet.utils.DownLoadUtils;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
@@ -383,7 +394,10 @@ public class WebActivity extends BaseActivity {
                 upgradeVip(url);
                 return true;
             } else if (uri.getAuthority().equals("toBack")) {
-                onBackPressed();
+                webView.freeMemory();
+                Intent i = new Intent();
+                setResult(2, i);
+                finish();
                 return true;
             } else if (uri.getAuthority().equals("meditaVideo")) {
                 //冥想寻根
@@ -432,6 +446,9 @@ public class WebActivity extends BaseActivity {
                 }
 //                Toast.makeText(mContext, id + ":" + type, Toast.LENGTH_SHORT).show();
 
+                return true;
+            } else if (uri.getAuthority().contains("updateApp")) {
+                initCheck();
                 return true;
             } else if (uri.getAuthority().equals("continueWebapp")) {
                 return true;
@@ -753,7 +770,137 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+    private void initCheck() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", 2);
+        apiImp.getLastVersionByType(map, this, new DataIdCallback<String>() {
+            @Override
+            public void onSuccess(String data, int id) {
+                UpdateBean loginBean=new Gson().fromJson(data, UpdateBean.class);
+                if (loginBean.getData()==null) return;
+                versions=loginBean.getData().getVersionName();
+                isForcedUpdating=loginBean.getData().getIsForced()==0?true:false;
+                versionsInfo=loginBean.getData().getContent();
+                andriodDownloadURL=loginBean.getData().getAppUrl();
+                checkUpdate();
+            }
 
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+            }
+        });
+    }
+
+    String versions;
+    boolean  isForcedUpdating;
+    String versionsInfo;
+    String andriodDownloadURL;
+    private void checkUpdate() {
+        boolean isUpdate;
+        if (versions.equals(BuildConfig.VERSION_NAME)){
+            isUpdate = false;
+        }else {
+            isUpdate = true;
+        }
+        if (isUpdate) {
+            if (isForcedUpdating) {
+                showForcedUpdatingDialog();
+            } else {
+                showNoForcedUpdatingDialog();
+            }
+        }
+    }
+    //强制更新
+    private void showForcedUpdatingDialog() {
+        LayoutInflater inflater = (LayoutInflater)this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
+        message = (TextView) layout.findViewById(R.id.message);
+        positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
+        ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
+        cancel_img.setVisibility(View.GONE);
+        tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
+        positiveButton.setOnClickListener(v -> {
+            int isPermission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (isPermission2 == PackageManager.PERMISSION_GRANTED) {
+                download();
+            } else {
+                //申请权限
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+        Dialog dialog = new Dialog(this);// 创建自定义样式dialog
+        dialog.setCancelable(false);// 可以用“返回键”取消
+        dialog.setCanceledOnTouchOutside(false);//
+        dialog.setContentView(layout);// 设置布局
+        dialog.show();
+    }
+    private static final int PERMISSION_REQUEST_CODE = 0;
+    //非强制更新
+    private void showNoForcedUpdatingDialog() {
+        LayoutInflater inflater = (LayoutInflater)this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
+        tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
+        message = (TextView) layout.findViewById(R.id.message);
+        positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
+        ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
+        cancel_img.setVisibility(View.VISIBLE);
+        Dialog dialog = new Dialog(this);// 创建自定义样式dialog
+        dialog.setCancelable(true);// 可以用“返回键”取消
+        dialog.setCanceledOnTouchOutside(true);//
+        dialog.setContentView(layout);// 设置布局
+        dialog.show();
+        cancel_img.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        positiveButton.setOnClickListener(v -> {
+            int isPermission2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (isPermission2 == PackageManager.PERMISSION_GRANTED) {
+                download();
+            } else {
+                //申请权限
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+    }
+
+    private ProgressBar tv_download_progressBar;
+    private TextView message;
+    private TextView positiveButton;
+    //下载
+    private void download() {
+        String fileDownloadPath = "yuejian/";
+        String fileName = "";//文件名
+        String fileRootPath = Environment.getExternalStorageDirectory() + File.separator;
+        /*文件名*/
+        fileName = andriodDownloadURL.substring(andriodDownloadURL.lastIndexOf("/") + 1);
+        /*下载目录*/
+        File downloadfile = new File(fileRootPath + fileDownloadPath + fileName);
+        tv_download_progressBar.setMax(100);
+        if (downloadfile.exists()) {
+            if (positiveButton != null) {
+                if (message != null) {
+                    message.setText("下载完成");
+                }
+                tv_download_progressBar.setProgress(100);
+                tv_download_progressBar.setVisibility(View.VISIBLE);
+                positiveButton.setEnabled(true);
+                positiveButton.setText("点击安装");
+            }
+            DownLoadUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
+        } else {
+            positiveButton.setEnabled(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DownLoadUtils.DownloadFile(andriodDownloadURL, WebActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
+                }
+            }).start();
+        }
+    }
 
     /**
      * 购买VIP

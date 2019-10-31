@@ -57,6 +57,15 @@ public class DadanPreference {
 	public float getFloat(String key) {
 		return sharedPreference.getFloat(key, 0.0f);
 	}
+	public void setInt(String key, int value) {
+		Editor editor = sharedPreference.edit();
+		editor.putInt(key, value);
+		editor.commit();
+	}
+
+	public int getInt(String key) {
+		return sharedPreference.getInt(key, 0);
+	}
 	public void setLong(String key, long value) {
 		Editor editor = sharedPreference.edit();
 		editor.putLong(key, value);

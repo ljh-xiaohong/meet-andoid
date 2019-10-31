@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.family;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
+import com.yuejian.meet.activities.family.ArticleActivity;
+import com.yuejian.meet.activities.family.VideoVerticalActivity;
 import com.yuejian.meet.adapters.FamilyCircleRecommendListAdapter;
 import com.yuejian.meet.adapters.FamilyCircleSameCityListAdapter;
 import com.yuejian.meet.adapters.LifeAdapter;
@@ -23,6 +26,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.FamilySameCityEntity;
 import com.yuejian.meet.bean.LifeEntity;
 import com.yuejian.meet.bean.PositionInfo;
+import com.yuejian.meet.bean.RecommendEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.ui.SpacesItemDecoration;
 import com.yuejian.meet.utils.TextUtil;
@@ -36,13 +40,15 @@ import java.util.Map;
 
 import butterknife.Bind;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * @author : g000gle
  * @time : 2019/5/23 09:50
  * @desc : 首页 - 家圈 - 生活Fragment
  */
 public class FamilyCircleSameCityFragment extends BaseFragment
-        implements SpringView.OnFreshListener, FamilyCircleSameCityListAdapter.OnListItemClickListener {
+        implements SpringView.OnFreshListener{
 
     @Bind(R.id.rv_family_circle_same_city_list)
     RecyclerView mRecyclerView;
@@ -53,7 +59,6 @@ public class FamilyCircleSameCityFragment extends BaseFragment
 
     private int mNextPageIndex = 1;
     private int pageCount = 10;
-    private FamilyCircleSameCityListAdapter mSameCityListAdapter;
     private LifeAdapter adapter;
 
     private String province = "",
@@ -81,30 +86,24 @@ public class FamilyCircleSameCityFragment extends BaseFragment
 //        mRecyclerView.addItemDecoration(decoration);
 //        mRecyclerView.setAdapter(mSameCityListAdapter);
         adapter = new LifeAdapter(mRecyclerView, getContext());
+        adapter.setOnItemClickListener((view, position) -> {
+            switch (lifeEntities.get(position).getType()) {
+                //文章
+                case 1:
+                    ArticleActivity.startActivityForResult((Activity) mContext, lifeEntities.get(position).getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION);
+                    break;
+                //视频
+                case 2:
+                    VideoVerticalActivity.startActivityForResult((Activity) mContext, lifeEntities.get(position).getId() + "", AppConfig.CustomerId, CANCEL_NOTINTERET, lifeEntities.get(position).getCoveSizeType() == 0 ? true : false);
+                    break;
+            }
 
+        });
         loadDataFromNet(mNextPageIndex, pageCount);
-//        initDatas("0", mNextPageIndex, pageCount, city);
 
     }
 
-    private void initDatas(String type, int page, int count, String City) {
-        if (TextUtils.isEmpty(City)) {
-            getPosition(new DataIdCallback<PositionInfo>() {
-                @Override
-                public void onSuccess(PositionInfo data, int id) {
-                    province = data.getProvince();
-                    city = data.getCity();
-//                    loadDataFromNet(type, page, count, city);
-                }
-
-                @Override
-                public void onFailed(String errCode, String errMsg, int id) {
-
-                }
-            });
-        }
-    }
-
+    List<LifeEntity> lifeEntities;
     private void loadDataFromNet(int page, int count) {
         Map<String, Object> map = new HashMap<>();
         map.put("longitude", AppConfig.slongitude);
@@ -113,8 +112,6 @@ public class FamilyCircleSameCityFragment extends BaseFragment
         map.put("pageItemCount", count);
         map.put("customerId", AppConfig.CustomerId);
         apiImp.getIcityFamilyCricleDo(map, this, new DataIdCallback<String>() {
-            List<LifeEntity> lifeEntities;
-
             @Override
             public void onSuccess(String data, int id) {
 
@@ -155,51 +152,6 @@ public class FamilyCircleSameCityFragment extends BaseFragment
 
     }
 
-    private void loadDataFromNet(String type, int page, int count, String city) {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("customer_id", user.customer_id);
-        map.put("city_name", city);
-        map.put("pageIndex", String.valueOf(page));
-        map.put("pageItemCount", String.valueOf(count));
-        apiImp.getIcityFamilyCricleDo(map, this, new DataIdCallback<String>() {
-            @Override
-            public void onSuccess(String data, int id) {
-                List<FamilySameCityEntity> sameCityEntities = JSON.parseArray(data, FamilySameCityEntity.class);
-                if (sameCityEntities.size() > 0 && firstLoad) {
-                    mEmptyList.setVisibility(View.GONE);
-                    firstLoad = false;
-                }
-
-                if (page <= 1) {
-                    mSameCityListAdapter.refresh(sameCityEntities);
-                } else {
-                    mSameCityListAdapter.Loadmore(sameCityEntities);
-                }
-
-//                if (sameCityEntities.size() > 0) {
-//                    mEmptyList.setVisibility(View.GONE);
-//                } else {
-//                    mEmptyList.setVisibility(View.VISIBLE);
-//                }
-
-
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-                }
-            }
-
-            @Override
-            public void onFailed(String errCode, String errMsg, int id) {
-                if (mSpringView != null) {
-                    mSpringView.onFinishFreshAndLoad();
-                }
-            }
-        });
-
-
-    }
-
     @Override
     public void onRefresh() {
         mNextPageIndex = 1;
@@ -211,16 +163,31 @@ public class FamilyCircleSameCityFragment extends BaseFragment
         loadDataFromNet(++mNextPageIndex, pageCount);
     }
 
+    private static final int CANCEL_DELECT_POSITION = 101;
+
+    private static final int CANCEL_NOTINTERET = 102;
+
     @Override
-    public void onItemClick(int type, int id) {
-        //类型：1-随笔，2-文章，3-相册，4-视频
-        Intent intent = null;
-        if (type == 4) {
-            intent = new Intent(getActivity(), VideoDetailsActivity.class);
-        } else {
-            intent = new Intent(getActivity(), ArticleDetailsActivity.class);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        switch (requestCode) {
+            case CANCEL_DELECT_POSITION:
+                int position = data.getIntExtra("position", -1);
+                if (position == -1) return;
+                if(adapter==null) {
+                  return;
+                }else {
+                    adapter.getData().remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+
+            case CANCEL_NOTINTERET:
+                onRefresh();
+                break;
+
         }
-        intent.putExtra("id", id);
-        startActivity(intent);
+
     }
 }
