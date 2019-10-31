@@ -170,7 +170,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 UpdateBean loginBean=new Gson().fromJson(data, UpdateBean.class);
                 if (loginBean.getData()==null) return;
                 versions=loginBean.getData().getVersionName();
-                isForcedUpdating=loginBean.getData().getIsForced()==0?true:false;
+                isForcedUpdating=loginBean.getData().getIsForced()==1?true:false;
                 versionsInfo=loginBean.getData().getContent();
                 andriodDownloadURL=loginBean.getData().getAppUrl();
                 checkUpdate();
