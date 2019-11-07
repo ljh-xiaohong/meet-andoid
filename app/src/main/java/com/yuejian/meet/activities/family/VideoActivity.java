@@ -45,6 +45,7 @@ import com.yuejian.meet.bean.VideoAndContentEntiy;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.dialogs.MoreDialog;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.VideoPlayer;
@@ -517,6 +518,12 @@ public class VideoActivity extends AppCompatActivity {
                         info.getContentDetail().setFabulousNum(count + "");
                         player.setLike(info.getContentDetail().getIsPraise().equals("1") ? true : false, count + "");
                         ViewInject.shortToast(mContext, praise.getMessage());
+                        Intent intent = new Intent();
+                        int position = getIntent().getIntExtra("VideoActivity.position", -1);
+                        intent.putExtra("position", position);
+                        intent.putExtra("likeCount", CommonUtil.changeNum(count + ""));
+                        intent.putExtra("isPraise", info.getContentDetail().getIsPraise());
+                        setResult(1, intent);
                         break;
 
                     //拉黑

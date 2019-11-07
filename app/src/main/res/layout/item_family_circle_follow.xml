@@ -107,7 +107,6 @@
         <TextView
             android:id="@+id/zan_check_num"
             android:textColor="#000000"
-            android:text="99"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/zan_check"
             android:textSize="10sp"
@@ -213,7 +212,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="姓名"
         android:textColor="#333333"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"
@@ -233,7 +231,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="on hour ago"
         android:textColor="#999999"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/iv_family_follow_item_head"

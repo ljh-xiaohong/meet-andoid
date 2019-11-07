@@ -86,14 +86,10 @@ public class FamilyCircleRecommendFragment extends BaseFragment
     @Override
     protected void initData() {
         super.initData();
-
-//        mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
         mSpringView.setListener(this);
-
         recommendListAdapter = new RecommendListAdapter(mRecommendListView, getContext());
         recommendListAdapter.setOnItemClickListener((view, position) -> {
-
             RecommendEntity item = recommendListAdapter.getData().get(position);
             switch (item.getType()) {
                 //文章

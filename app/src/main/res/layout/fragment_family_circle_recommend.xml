@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:text="推荐"
     android:gravity="center"
+    android:visibility="gone"
     android:background="#FFFFFF"
     android:textColor="#ff333333"
     android:textSize="16sp"

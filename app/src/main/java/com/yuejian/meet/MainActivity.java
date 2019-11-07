@@ -62,12 +62,14 @@ import com.yuejian.meet.dialogs.TipsDialog;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.framents.business.NewBusinessFragment;
 import com.yuejian.meet.framents.family.FamilyCircleContainerFragment;
+import com.yuejian.meet.framents.family.FamilyCircleRecommendFragment;
 import com.yuejian.meet.framents.message.NewMessageFragment;
 import com.yuejian.meet.framents.mine.NewMineFragment;
 import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DownLoadUtils;
+import com.yuejian.meet.utils.DownUtils;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -281,13 +283,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 positiveButton.setEnabled(true);
                 positiveButton.setText("点击安装");
             }
-            DownLoadUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
+            DownUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
         } else {
             positiveButton.setEnabled(false);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    DownLoadUtils.DownloadFile(andriodDownloadURL, MainActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
+                    DownUtils.DownloadFile(andriodDownloadURL, MainActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
                 }
             }).start();
         }
@@ -388,6 +390,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 transaction.show(targetFragment);
                 targetFragment.onUserVisible();
             }
+
             if (this.currentFragment != null && this.currentFragment.isVisible()) {
                 transaction.hide(this.currentFragment);
                 currentFragment.onUserInvisible();

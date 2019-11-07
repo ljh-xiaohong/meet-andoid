@@ -28,6 +28,8 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
     public void refresh(List<LifeEntity> recommendEntities) {
         if (data == null) {
             data = new ArrayList<>();
+        }else {
+            data.clear();
         }
         data = recommendEntities;
         notifyDataSetChanged();
@@ -55,6 +57,9 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
 
         if (!(holder.itemView instanceof RecommendView)) return;
         RecommendView rv = (RecommendView) holder.itemView;
+        holder.itemView.setOnClickListener(v ->
+                listener.onItemClick(holder.itemView,position))
+        ;
         switch (entity.getType()) {
             //文章
             case 2:
@@ -64,7 +69,6 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                 rv.article_tag.setVisibility(View.INVISIBLE);
                 rv.setLike(RecommendView.ViewType.ARTICLE, false, entity.getFabulousNum() + "");
                 break;
-
             //视频
             case 4:
                 if (entity.getCoveSizeType() == 0) {

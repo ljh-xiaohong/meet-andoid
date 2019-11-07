@@ -24,8 +24,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         renderscriptTargetApi 25
-        versionCode 25
-        versionName '5.1.0'
+        versionCode 26
+        versionName '5.1.1'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "BUILD_LOG", "${isLog()}"

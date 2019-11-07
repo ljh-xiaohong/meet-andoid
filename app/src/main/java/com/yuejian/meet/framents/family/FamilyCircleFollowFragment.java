@@ -17,13 +17,14 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliyun.video.common.utils.FastClickUtil;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.creation.ArticleDetailsActivity;
 import com.yuejian.meet.activities.creation.VideoDetailsActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
-import com.yuejian.meet.activities.family.VideoVerticalActivity;
+import com.yuejian.meet.activities.family.VideoActivity;
 import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.home.ReleaseActivity;
 import com.yuejian.meet.activities.home.ReportActivity;
@@ -101,14 +102,17 @@ public class FamilyCircleFollowFragment extends BaseFragment
 
             @Override
             public void onItemClick(int position, int type) {
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
                 switch (Integer.parseInt(followEntities.get(position).getType())) {
                     //文章
                     case 2:
                         ArticleActivity.startActivityForResult((Activity) mContext, followEntities.get(position).getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT_POSITION);
                         break;
                     //视频
-                    case 4:
-                        VideoVerticalActivity.startActivityForResult((Activity) mContext, followEntities.get(position).getId() + "", AppConfig.CustomerId, CANCEL_NOTINTERET, followEntities.get(position).getCoveSizeType() == 0 ? true : false);
+                    case 3:
+                        VideoActivity.startActivityForResult((Activity) mContext, followEntities.get(position).getId() + "", AppConfig.CustomerId, position, CANCEL_DELECT, followEntities.get(position).getCoveSizeType() == 0 ? true : false);
                         break;
                 }
             }
@@ -127,6 +131,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
             return;
         }
         mSpringView.callFresh();
+        btnRelease.setFocusable(true);
     }
 
     private View popupView;
@@ -162,7 +167,13 @@ public class FamilyCircleFollowFragment extends BaseFragment
         } else {
             delect.setVisibility(View.GONE);
             uninterested.setVisibility(View.VISIBLE);
-            uninterested.setOnClickListener(v -> notInterested(followEntities.get(position).getId()));
+            uninterested.setOnClickListener(v -> {
+                if (followEntities.get(position).getType().equals("5")){
+                    notInterested(followEntities.get(position).getId(),"2");
+                }else {
+                    notInterested(followEntities.get(position).getId(),"1");
+                }
+            });
             report.setVisibility(View.VISIBLE);
             report.setOnClickListener(v -> {
 //                Intent intent = new Intent(getActivity(), ReportActivity.class);
@@ -182,6 +193,7 @@ public class FamilyCircleFollowFragment extends BaseFragment
         apiImp.postDelectAction(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                window.dismiss();
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 onRefresh();
@@ -194,14 +206,15 @@ public class FamilyCircleFollowFragment extends BaseFragment
     }
 
     //不感兴趣
-    private void notInterested(int id) {
+    private void notInterested(int id, String type) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
-        map.put("type", "1");
+        map.put("type", type);
         map.put("id", id);
         apiImp.postLoseInterest(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
+                window.dismiss();
                 ResultBean loginBean = new Gson().fromJson(data, ResultBean.class);
                 ViewInject.shortToast(getApplication(), loginBean.getMessage());
                 onRefresh();
@@ -318,27 +331,40 @@ public class FamilyCircleFollowFragment extends BaseFragment
     }
     private static final int CANCEL_DELECT_POSITION = 101;
 
-    private static final int CANCEL_NOTINTERET = 102;
+    private static final int CANCEL_DELECT = 102;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 7) {
+            if (window==null)return;
+            window.dismiss();
             onRefresh();
         }
-        if (resultCode != RESULT_OK) return;
-        switch (requestCode) {
-            case CANCEL_DELECT_POSITION:
-                int position = data.getIntExtra("position", -1);
-                if (position == -1) return;
-                followEntities.remove(position);
-                mFollowListAdapter.notifyDataSetChanged();
-                break;
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case CANCEL_DELECT_POSITION:
+                    int position = data.getIntExtra("position", -1);
+                    if (position == -1) return;
+                    followEntities.remove(position);
+                    mFollowListAdapter.notifyDataSetChanged();
+                    break;
 
-            case CANCEL_NOTINTERET:
-                onRefresh();
-                break;
-
+                case CANCEL_DELECT:
+                    onRefresh();
+                    break;
+            }
+        }else if (resultCode==1){
+            int position = data.getIntExtra("position", -1);
+            if (position == -1) return;
+            FamilyFollowEntity.DataBean dataBean=followEntities.get(position);
+            if (data.getStringExtra("likeCount").equals("1")){
+                dataBean.setIsPraise("1");
+            }else {
+                dataBean.setIsPraise("0");
+            }
+            dataBean.setFabulousNum(data.getStringExtra("likeCount"));
+            mFollowListAdapter.notifyItemChanged(position);
         }
     }
 }

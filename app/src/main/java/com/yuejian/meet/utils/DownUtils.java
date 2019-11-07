@@ -35,7 +35,9 @@ import static com.umeng.socialize.utils.ContextUtil.getPackageName;
  * Created by fs-ljh on 2017/5/26.
  */
 
-public class DownLoadUtils {
+public class DownUtils {
+    private static long cachSize=0;
+    private static RandomAccessFile rwd;
     /**
      * Download Signature
      *
@@ -67,6 +69,8 @@ public class DownLoadUtils {
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(downloadfiletemp);
+//                cachSize = fis.available();
+                cachSize = getFileLength(context);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -74,6 +78,9 @@ public class DownLoadUtils {
             }
         }else{
 //            DadanPreference.getInstance(context).setInt("bytes",0);
+            //保存下载的位置到SharedPreferences,下次下载的时候拿值写入设置字符编码
+            saveFileLength(context , (long) 0);
+            cachSize = getFileLength(context);
             progressBar.setProgress(0);
             positiveButton.setText("下载");
         }
@@ -83,98 +90,74 @@ public class DownLoadUtils {
         }
         /*否则下载文件*/
         else {
-            //downloadfile
             new AsyncTask<String, Integer, String>() {
                 @Override
                 protected void onPreExecute() {
+//                    mBuilder.setTicker("下载富商美食").setProgress(100, 0, false);
+//                    mNotifyManager.notify(notifiID, mBuilder.build());
                     super.onPreExecute();
                 }
+
                 @Override
                 protected void onProgressUpdate(Integer... values) {
+//                    Log.e(TAG, "---下载缓存" + values[0] + "---");
                     super.onProgressUpdate(values);
-                    switch (values[0]){
-                        case UPDATE:
-                            progressBar.setVisibility(View.VISIBLE);
-                            progressBar.setProgress(values[1]);
-                            //文件大小形式
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(values[0]);
+                    //文件大小形式
 //                            String i=bytes2kb(progressBar.getProgress())+"/"+bytes2kb(fileSzie);
-                            //百分比形式
+                    //百分比形式
 //                            double b= (double)progressBar.getProgress()*(double)100/(double)progressBar.getMax();
-                            title.setText("下载进度为："+values[1]+"%");
-                            break;
-                    }
+                    title.setText("下载进度为："+values[0]+"%");
                 }
 
                 @Override
                 protected String doInBackground(String... params) {
+                    fileName = params[0].substring(params[0].lastIndexOf("/") + 1);
+                    getLength(context,params[0]);
                     try {
-                        RandomAccessFile accessFile = new RandomAccessFile(downloadfiletemp, "rwd");
-                        int bytes = (int) accessFile.getFilePointer();
-//                        int bytes = DadanPreference.getInstance(context).getInt("bytes");
-                        if (bytes <= 0) {                                                    //第一次下载
-                            URL url = new URL(params[0]);
-                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            urlConnection.setRequestMethod("GET");
-                            urlConnection.setDoInput(true);
-                            urlConnection.setRequestProperty("Accept-Encoding", "identity"); //设置请求参数
-                            urlConnection.setConnectTimeout(1000*10);
-                            Log.e("code", urlConnection.getResponseCode() + "");
-                            if (urlConnection.getResponseCode() == 200) {
-                                long total = urlConnection.getContentLength();                //获取网络资源大小
-                                accessFile.setLength(total);
-                                long lastIndex = (int) downloadfiletemp.length();
-                                InputStream inputStream = urlConnection.getInputStream();
-                                long i, count = 0;
-                                byte buffer[] = new byte[1024];
-                                while ((i = inputStream.read(buffer)) != -1) {
-                                    count += i;
-                                    int progress = (int) (count * 100.0 / total);
-                                    accessFile.write(buffer, 0, (int) i);
-                                    publishProgress(UPDATE,progress);
-//                                    DadanPreference.getInstance(context).setInt("bytes",(int) accessFile.getFilePointer());
-                                }
-                                if (count == lastIndex){           //删除计数文件
-                                    File file3= new File("/data/data/" + getPackageName() + "/shared_prefs","index.xml");
-                                    if (file3.exists())
-                                        file3.delete();
-                                }
-                            }
-                        } else {                                                             //断点下载
-                            // Log.e("index内容", index_str);
-                            // int index = Integer.parseInt(index_str);
-                            long lastIndex = (int) downloadfiletemp.length();                             //获取原始资源长度
-                            accessFile.seek(bytes);
-                            URL url = new URL(params[0]);
-                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            urlConnection.setRequestMethod("GET");
-                            urlConnection.setDoInput(true);
-                            urlConnection.setRequestProperty("Accept-Encoding", "identity"); //设置请求参数
-                            urlConnection.setRequestProperty("Range", "bytes=" + bytes + "-" + lastIndex);  //设置分段下载的头信息。  Range:做分段数据请求用的。
-                            urlConnection.setConnectTimeout(1000*10);
-                            Log.e("code---", urlConnection.getResponseCode() + "");
-                            if (urlConnection.getResponseCode() == 206) {                         //200：请求全部资源成功， 206代表部分资源请求成功
-                                InputStream inputStream = urlConnection.getInputStream();
-                                long i, count = bytes;
-                                byte buffer[] = new byte[1024];
-                                while ((i = inputStream.read(buffer)) != -1) {
-                                    accessFile.write(buffer, 0, (int) i);
-                                    count += i;
-                                    int progress = (int) (count * 100.0 / lastIndex);
-                                    publishProgress(UPDATE,progress);
-//                                    DadanPreference.getInstance(context).setInt("bytes",(int) accessFile.getFilePointer());
-                                }
-                                if (count == lastIndex){           //删除计数文件
-                                    File file3= new File("/data/data/" + getPackageName() + "/shared_prefs","index.xml");
-                                    if (file3.exists())
-                                        file3.delete();
-                                }
-                            }
+                        //获取文件名
+                        URL myURL = new URL(params[0]);
+                        HttpURLConnection conn = (HttpURLConnection) myURL.openConnection();
+                        conn.setRequestMethod("GET");
+                        conn.setConnectTimeout(3000);
+                        conn.setRequestProperty("Range" , "bytes=" + cachSize + "-");
+//                        conn.setRequestProperty("Range", "bytes=" + cachSize + "-" +fileSzie);//设置下载范围
+                        InputStream is = conn.getInputStream();
+                        if (is == null) throw new RuntimeException("stream is null");
+                        /*下载目录*/
+                        if (!downloaddir.exists()) {
+                            downloaddir.mkdirs();
                         }
-                    } catch (Exception e) {
+                        //把数据存入 路径+文件名
+//                        FileOutputStream fos = new FileOutputStream(downloadfiletemp);
+                        rwd = new RandomAccessFile(downloadfiletemp, "rwd");
+                        //从文件的某一位置开始写入
+                        rwd.seek(cachSize);
+                        byte buf[] = new byte[1024*4];
+                        do {
+                            //循环读取
+                            int numread = is.read(buf);
+                            if (numread == -1) {
+                                break;
+                            }
+                            rwd.write(buf, 0, numread);
+                            cachSize += numread;
+                            int progress = (int) (cachSize * 100.0 / fileSzie);
+                            this.publishProgress(progress);
+                            //保存下载的位置到SharedPreferences,下次下载的时候拿值写入设置字符编码
+                            saveFileLength(context , cachSize);
+                        } while (true);
+                        try {
+                            is.close();
+                        } catch (Exception ex) {
+                            Log.e("tag", "error: " + ex.getMessage());
+                        }
+                        return "下载成功";
+                    } catch (IOException e) {
                         e.printStackTrace();
-                        return "";
                     }
-                    return "下载成功";
+                    return null;
                 }
 
                 @Override
@@ -185,8 +168,6 @@ public class DownLoadUtils {
                             downloadfiletemp.renameTo(downloadfile);
                         }
                         if (positiveButton!=null) {
-                            title.setText("下载完成");
-                            progressBar.setProgress(100);
                             positiveButton.setEnabled(true);
                             positiveButton.setText("点击安装");
                         }else {
@@ -214,7 +195,51 @@ public class DownLoadUtils {
                     }
                 }
             }.execute(downloadUrl);
+
         }
+    }
+
+    /**
+     * 保存文件长度
+     * @param context
+     * @param fileLength
+     */
+    private static void saveFileLength(Context context ,Long fileLength ){
+        SharedPreferences sp = context.getSharedPreferences("My_SP" , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putLong("File_startOffset" , fileLength);
+        editor.commit();
+    }
+    /**
+     * 获取文件长度
+     * @param context
+     * @return
+     */
+    private static Long getFileLength(Context context){
+        SharedPreferences sp = context.getSharedPreferences("My_SP" , Context.MODE_PRIVATE);
+        return sp.getLong("File_startOffset" , 0);
+    }
+
+    private static void getLength(Context context,String fileName) {
+        URL myURL = null;
+        HttpURLConnection conn = null;
+        try {
+            myURL = new URL(fileName);
+            conn = (HttpURLConnection) myURL.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(3000);
+            if (conn.getResponseCode() == 200) {//网络连接成功
+                fileSzie = conn.getContentLength();//根据响应获取文件大小
+            }
+            if (fileSzie <= 0) {
+                throw new RuntimeException("无法获知文件大小 ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            conn.disconnect();
+        }
+
     }
     /**
      * byte(字节)根据长度转成kb(千字节)和mb(兆字节)

@@ -593,6 +593,13 @@ public class ArticleActivity extends BaseActivity {
                         info.getContentDetail().setFabulousNum(count + "");
                         like_img.setImageResource(info.getContentDetail().getIsPraise().equals("1") ? R.mipmap.icon_home_zan_sel : R.mipmap.icon_home_zan_nor);
                         like_count.setText(CommonUtil.changeNum(count + ""));
+                        Intent intent = new Intent();
+                        int position = getIntent().getIntExtra("ArticleActivity.position", -1);
+                        intent.putExtra("position", position);
+                        intent.putExtra("likeCount", CommonUtil.changeNum(count + ""));
+                        intent.putExtra("isPraise", info.getContentDetail().getIsPraise());
+                        setResult(1, intent);
+//                        finish();
                         break;
 
                     //拉黑
