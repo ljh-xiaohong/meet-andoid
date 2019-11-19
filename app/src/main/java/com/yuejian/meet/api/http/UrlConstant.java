@@ -64,6 +64,8 @@ public class UrlConstant {
 
     //首页 动态 搜索
     public static String GETDOSEARCH = apiUrl() + "api/dynamic/doSearch";
+    //首页 获取搜索热门搜索标签
+    public static String GETKEYWORDORLABELBYTYPE = apiUrl() + "api/demand/getKeywordOrlabelByType";
 
     //分享链接
     public static String SHARE = apiUrl() + "release/blank.html";

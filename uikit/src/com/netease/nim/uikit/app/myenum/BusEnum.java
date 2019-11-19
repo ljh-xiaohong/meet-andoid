@@ -132,7 +132,7 @@ public enum BusEnum {
      * 语言切换
      */
     Language(89), payment_success(90),
-    toback(93),
+    toback(95),toproject(96),
     /**
      * 家圈-推荐-点赞
      */

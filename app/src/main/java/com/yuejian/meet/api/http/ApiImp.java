@@ -113,6 +113,13 @@ public class ApiImp {
         this.mHttpRequst.postRequst(UrlConstant.GETDOSEARCH, paramMap, paramObject, callback);
     }
 
+    /**
+     * 首页 获取搜索热门搜索标签
+     */
+    public void getKeywordOrlabelByType(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GETKEYWORDORLABELBYTYPE, paramMap, paramObject, callback);
+    }
+
 
     /**
      * 第三方是否注册

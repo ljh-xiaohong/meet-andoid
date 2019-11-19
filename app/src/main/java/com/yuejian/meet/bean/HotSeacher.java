@@ -14,7 +14,7 @@ public class HotSeacher implements Serializable {
      */
 
     private boolean IsCompany;
-    private String Keyword;
+    private String title;
 
 
 
@@ -26,11 +26,11 @@ public class HotSeacher implements Serializable {
         IsCompany = company;
     }
 
-    public String getKeyword() {
-        return Keyword;
+    public String getTitle() {
+        return title;
     }
 
-    public void setKeyword(String keyword) {
-        Keyword = keyword;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

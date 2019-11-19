@@ -89,7 +89,12 @@ public class NewBusinessFragment extends BaseFragment {
 
     }
     private void initView() {
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
+        if (!CommonUtil.isNull(AppConfig.city)){
+            AppConfig.city="珠海市";
+        }
+        DadanPreference.getInstance(getActivity()).setString("webcity",AppConfig.city);
+        DadanPreference.getInstance(getActivity()).setString("websurname",AppConfig.surname);
+        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname+"&city="+AppConfig.city);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
@@ -443,7 +448,11 @@ public class NewBusinessFragment extends BaseFragment {
             if (!CommonUtil.isNull(backType))
                 wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId="+AppConfig.CustomerId);
         }else if (event.getCallType() == BusEnum.toback){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId="+AppConfig.CustomerId+"&surnameList="
+                    +DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname+"&city="+DadanPreference.getInstance(getActivity()).getString("webcity"));
+        }else if (event.getCallType() == BusEnum.toproject){
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/familyTab.html?customerId="+AppConfig.CustomerId
+                    +"&surname="+AppConfig.surname+"&industry="+DadanPreference.getInstance(getActivity()).getString("industry"));
         }
     }
 }

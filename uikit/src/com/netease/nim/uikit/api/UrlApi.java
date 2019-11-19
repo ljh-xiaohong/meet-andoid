@@ -24,6 +24,7 @@ public class UrlApi {
 
     //本地
   public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
+//  public static String mHttpUrl = "http://192.168.0.191:8099/";
 //  public static String mHttpUrl = "http://192.168.0.178:81/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.189:8080//yuejian-app/";
 

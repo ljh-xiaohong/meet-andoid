@@ -69,7 +69,6 @@ import com.yuejian.meet.ui.MainMoreUi;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DownLoadUtils;
-import com.yuejian.meet.utils.DownUtils;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -283,13 +282,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 positiveButton.setEnabled(true);
                 positiveButton.setText("点击安装");
             }
-            DownUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
+            DownLoadUtils.installApp(this, fileRootPath + fileDownloadPath + fileName);
         } else {
             positiveButton.setEnabled(false);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    DownUtils.DownloadFile(andriodDownloadURL, MainActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
+                    DownLoadUtils.DownloadFile(andriodDownloadURL, MainActivity.this, tv_download_progressBar, null, null, null, message, positiveButton);
                 }
             }).start();
         }

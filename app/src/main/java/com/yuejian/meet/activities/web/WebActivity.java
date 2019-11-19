@@ -407,12 +407,38 @@ public class WebActivity extends BaseActivity {
             } else if (uri.getAuthority().equals("posterSave")) {
                 //海报保存
                 savePoster(url);
-    return true;
+                return true;
+            } else if (uri.getAuthority().contains("qCode")) {
+                String[] s=url.split("=");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DownLoadUtils.DownloadIMG(WebActivity.this,url.split("=")[1]);
+                    }
+                }).start();
+                Toast.makeText(WebActivity.this,"下载成功",Toast.LENGTH_LONG).show();
+                return true;
+            } else if (uri.getAuthority().contains("toBackCity")) {
+                String[] s=url.split("=");
+                DadanPreference.getInstance(this).setString("webcity",url.split("=")[1]);
+                BusCallEntity busCallEntity = new BusCallEntity();
+                busCallEntity.setCallType(BusEnum.toback);
+                Bus.getDefault().post(busCallEntity);
+                finish();
+                return true;
             } else if (uri.getAuthority().contains("toBackName")) {
                 String[] s=url.split("=");
                 DadanPreference.getInstance(this).setString("websurname",url.split("=")[1]);
                 BusCallEntity busCallEntity = new BusCallEntity();
                 busCallEntity.setCallType(BusEnum.toback);
+                Bus.getDefault().post(busCallEntity);
+                onBackPressed();
+                return true;
+            } else if (uri.getAuthority().contains("toBackIndustry")) {
+                String[] s=url.split("=");
+                DadanPreference.getInstance(this).setString("industry",url.split("=")[1]);
+                BusCallEntity busCallEntity = new BusCallEntity();
+                busCallEntity.setCallType(BusEnum.toproject);
                 Bus.getDefault().post(busCallEntity);
                 onBackPressed();
                 return true;
