@@ -3,11 +3,16 @@ package com.yuejian.meet.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,9 +22,11 @@ import android.widget.Toast;
 
 import com.zhy.autolayout.AutoRelativeLayout;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -48,6 +55,81 @@ public class DownLoadUtils {
     public static final String fileRootPath = Environment.getExternalStorageDirectory() + File.separator;
     public static final String fileDownloadPath = "yuejian/";
     public static int fileSzie;//文件大小
+    public static void DownloadIMG(Context context,String downloadUrl){
+        try {
+            byte[] bitmapArray = Base64.decode(downloadUrl.split(",")[1], Base64.DEFAULT);
+            downloaddir = new File(fileRootPath + fileDownloadPath);
+            if (!downloaddir.exists()) {
+                downloaddir.mkdirs();
+            }
+            fileName="code.jpg";
+            downloadfile = new File(fileRootPath + fileDownloadPath + fileName);
+            // 创建FileOutputStream对象
+            FileOutputStream outputStream = null;
+            // 创建BufferedOutputStream对象
+            BufferedOutputStream bufferedOutputStream = null;
+            try {
+                // 如果文件存在则删除
+                if (downloadfile.exists()) {
+                    downloadfile.delete();
+                }
+                // 在文件系统中根据路径创建一个新的空文件
+                downloadfile.createNewFile();
+                // 获取FileOutputStream对象
+                outputStream = new FileOutputStream(downloadfile);
+                // 获取BufferedOutputStream对象
+                bufferedOutputStream = new BufferedOutputStream(outputStream);
+                // 往文件所在的缓冲输出流中写byte数据
+                bufferedOutputStream.write(bitmapArray);
+                // 刷出缓冲输出流，该步很关键，要是不执行flush()方法，那么文件的内容是空的。
+                bufferedOutputStream.flush();
+            } catch (Exception e) {
+                // 打印异常信息
+                e.printStackTrace();
+            } finally {
+                // 关闭创建的流对象
+                if (outputStream != null) {
+                    try {
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (bufferedOutputStream != null) {
+                    try {
+                        bufferedOutputStream.close();
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    downloadfile.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 通知图库更新
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            MediaScannerConnection.scanFile(context, new String[]{downloadfile.getAbsolutePath()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            mediaScanIntent.setData(uri);
+                            context.sendBroadcast(mediaScanIntent);
+                        }
+                    });
+        } else {
+            String relationDir = downloadfile.getParent();
+            File file1 = new File(relationDir);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(file1.getAbsoluteFile())));
+        }
+    }
+
     public static void DownloadFile(String downloadUrl, final Context context, final ProgressBar progressBar,
                                     final TextView tvNewest, final ImageView imgNew, final AutoRelativeLayout layCheckVersion, final TextView title, final TextView positiveButton) {
         /*文件名*/
@@ -67,9 +149,7 @@ public class DownLoadUtils {
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(downloadfiletemp);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }else{
@@ -257,5 +337,4 @@ public class DownLoadUtils {
         _Intent.setDataAndType(_uri, "application/vnd.android.package-archive");
         pContext.startActivity(_Intent);
     }
-
 }
