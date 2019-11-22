@@ -18,7 +18,6 @@ import com.yuejian.meet.R;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.ProjectBean;
-import com.yuejian.meet.bean.VideoAndArticleBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.widgets.CircleImageView;
 

@@ -75,7 +75,33 @@ public class VideoAndArticleBean {
         private String title;
         private String labelName;
         private String coverSizeType;
+        private int sex;
+        private String photo;
+        private String name;
 
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
 
         public String getCoverSizeType() {

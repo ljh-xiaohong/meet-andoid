@@ -112,6 +112,9 @@ public class VideoFragment extends BaseFragment
                     entity.setContentId(mVideoAndArticleBean.getData().get(i).getId());
                     entity.setPraise(mVideoAndArticleBean.getData().get(i).isIsPraise());
                     entity.setCoverSizeType(mVideoAndArticleBean.getData().get(i).getCoverSizeType());
+                    entity.setName(mVideoAndArticleBean.getData().get(i).getName());
+                    entity.setSex(mVideoAndArticleBean.getData().get(i).getSex());
+                    entity.setPhoto(mVideoAndArticleBean.getData().get(i).getPhoto());
                     creationEntities.add(entity);
                 }
                 if (creationEntities.size() > 0) {

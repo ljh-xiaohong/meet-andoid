@@ -15,6 +15,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.yuejian.meet.R;
 import com.yuejian.meet.bean.CreationEntity;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.RecommendView;
 
 import java.util.ArrayList;
@@ -108,6 +109,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                         rv.video_vertical_tag.setVisibility(View.GONE);
                     }
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), entity.getFabulousNum() + "");
+                    if (CommonUtil.isNull(entity.getName())||CommonUtil.isNull(entity.getPhoto())) return;
                     if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 } else {
                     //横屏
@@ -130,6 +132,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                     }
 
                     rv.setLike(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.isPraise(), entity.getFabulousNum() + "");
+                    if (CommonUtil.isNull(entity.getName())||CommonUtil.isNull(entity.getPhoto())) return;
                     if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
 
@@ -146,6 +149,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
                 rv.article_content.setText(entity.getContentTitle());
                 rv.article_tag.setText(entity.getLabelName());
+                if (CommonUtil.isNull(entity.getName())||CommonUtil.isNull(entity.getPhoto())) return;
                 if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.ARTICLE, entity.getSex(), entity.getPhoto(), entity.getName());
                 break;
         }

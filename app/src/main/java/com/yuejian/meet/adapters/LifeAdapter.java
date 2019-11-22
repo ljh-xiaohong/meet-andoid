@@ -12,6 +12,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.yuejian.meet.bean.LifeEntity;
 import com.yuejian.meet.utils.BlurUtils;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.widgets.RecommendView;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                     rv.video_vertical_content.setText(entity.getTitle());
                     rv.video_vertical_tag.setVisibility(View.INVISIBLE);
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, false, entity.getFabulousNum() + "");
+                    if (CommonUtil.isNull(entity.getName())||CommonUtil.isNull(entity.getPhoto())) return;
                     rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
@@ -93,6 +95,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                             rv.video_horizontal_blur.setBackground(new BitmapDrawable(BlurUtils.rsBlur(context, resource, 30)));
                         }
                     });
+                    if (CommonUtil.isNull(entity.getName())||CommonUtil.isNull(entity.getPhoto())) return;
                     rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
                 break;
