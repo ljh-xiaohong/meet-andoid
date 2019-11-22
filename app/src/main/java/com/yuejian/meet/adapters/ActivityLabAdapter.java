@@ -68,6 +68,8 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
                 rv.article_tag.setText(entity.getLabelName());
                 rv.article_content.setText(entity.getTitle());
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isIsPraise(), entity.getFabulousNum() + "");
+                rv.setLike(RecommendView.ViewType.ARTICLE, entity.isIsPraise(), entity.getFabulousNum() + "");
+                rv.setPersonInfo(RecommendView.ViewType.ARTICLE, entity.getSex(), entity.getPhoto(), entity.getName());
 
 
                 break;
@@ -81,6 +83,8 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
                     rv.video_vertical_content.setText(entity.getTitle());
                     rv.video_vertical_tag.setText(entity.getLabelName());
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isIsPraise(), entity.getFabulousNum() + "");
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
+
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
                     Glide.with(context).load(entity.getCoverPhoto()).bitmapTransform(new BlurTransformation(context, 30)).into(new SimpleTarget<GlideDrawable>() {
@@ -95,6 +99,7 @@ public class ActivityLabAdapter extends BaseAdapter<ActivityLabAdapter.ActivityL
                     rv.video_horizontal_content.setText(entity.getTitle());
                     rv.video_horizontal_tag.setText(entity.getLabelName());
                     rv.setLike(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.isIsPraise(), entity.getFabulousNum() + "");
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
 
 
