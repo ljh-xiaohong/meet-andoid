@@ -97,6 +97,9 @@ public class ActivityLabEntity implements Serializable {
          * coveSizeType: 竖屏-0 横屏-1
          * isPraise : false
          * labelName : 测试活动标签10
+         * name:姓名
+         * sex:性别（0：女，1：男）
+         * photo:头像
          */
 
         private int createTime;
@@ -108,6 +111,33 @@ public class ActivityLabEntity implements Serializable {
         private boolean isPraise;
         private String labelName;
         private int coveSizeType;
+        private String name;
+        private String photo;
+        private int sex;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
+
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
 
         public boolean isPraise() {
             return isPraise;
