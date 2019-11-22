@@ -13,6 +13,9 @@ public class LifeEntity implements Serializable {
      * type : 2
      * coveSizeType:
      * title :
+     * sex:1  0:女，1：男
+     * name:姓名
+     * photo: "https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png",
      */
 
     private String photoAndVideoUrl;
@@ -22,6 +25,33 @@ public class LifeEntity implements Serializable {
     private int coveSizeType;
     private int type;
     private String title;
+    private int sex;
+    private String photo;
+    private String name;
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPhotoAndVideoUrl() {
         return photoAndVideoUrl;

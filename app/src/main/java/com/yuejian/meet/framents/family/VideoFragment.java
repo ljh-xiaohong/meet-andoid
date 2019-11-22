@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * @desc : 搜索 视频
  */
 public class VideoFragment extends BaseFragment
-        implements SpringView.OnFreshListener{
+        implements SpringView.OnFreshListener {
 
 
     @Bind(R.id.rv_family_circle_follow_list)
@@ -59,9 +59,9 @@ public class VideoFragment extends BaseFragment
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-        adapter = new CreationAdapter(mRecyclerView, getContext(), 2,false);
+        adapter = new CreationAdapter(mRecyclerView, getContext(), 2, false, true);
         adapter.setOnItemClickListener((view, position) -> {
-                VideoActivity.startActivity(mContext, creationEntities.get(position).getContentId() + "", AppConfig.CustomerId, Integer.parseInt(creationEntities.get(position).getCoverSizeType()) == 0 ? true : false);
+            VideoActivity.startActivity(mContext, creationEntities.get(position).getContentId() + "", AppConfig.CustomerId, Integer.parseInt(creationEntities.get(position).getCoverSizeType()) == 0 ? true : false);
         });
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
@@ -75,10 +75,10 @@ public class VideoFragment extends BaseFragment
     VideoAndArticleBean mVideoAndArticleBean;
 
     private void loadDataFromNet(String type, String title) {
-        if (dialog==null||getActivity()==null){
+        if (dialog == null || getActivity() == null) {
 
-        }else{
-            if (dialog != null&&!dialog.isShowing)
+        } else {
+            if (dialog != null && !dialog.isShowing)
                 dialog.show(getActivity().getFragmentManager(), "");
         }
         Map<String, Object> map = new HashMap<>();
@@ -90,11 +90,11 @@ public class VideoFragment extends BaseFragment
         apiImp.getDoSearch(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                isUdate=true;
-                if (mEmptyList==null)return;
-                if (dialog==null){
+                isUdate = true;
+                if (mEmptyList == null) return;
+                if (dialog == null) {
 
-                }else{
+                } else {
                     dialog.dismiss();
                 }
                 mVideoAndArticleBean = new Gson().fromJson(data, VideoAndArticleBean.class);
@@ -102,7 +102,7 @@ public class VideoFragment extends BaseFragment
                     ViewInject.shortToast(getActivity(), mVideoAndArticleBean.getMessage());
                     return;
                 }
-                for (int i=0;i<mVideoAndArticleBean.getData().size();i++){
+                for (int i = 0; i < mVideoAndArticleBean.getData().size(); i++) {
                     CreationEntity entity = new CreationEntity();
                     entity.setLabelId(mVideoAndArticleBean.getData().get(i).getLabelId());
                     entity.setLabelName(mVideoAndArticleBean.getData().get(i).getLabelName());
@@ -175,7 +175,8 @@ public class VideoFragment extends BaseFragment
     }
 
     String title = "";
-    private boolean isUdate=true;
+    private boolean isUdate = true;
+
     public void update(String titles) {
         if (isUdate) {
             title = titles;
@@ -183,7 +184,7 @@ public class VideoFragment extends BaseFragment
             mNextPageIndex = 1;
             loadDataFromNet("4", titles);
         }
-        isUdate=false;
+        isUdate = false;
 
     }
 }

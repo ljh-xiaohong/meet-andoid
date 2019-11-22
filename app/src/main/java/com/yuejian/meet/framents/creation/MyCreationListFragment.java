@@ -75,7 +75,7 @@ public class MyCreationListFragment extends BaseFragment implements SpringView.O
         springView.setHeader(new DefaultHeader(mContext));
         springView.setListener(this);
         if (!getData()) return;
-        adapter = new CreationAdapter(recyclerView, getContext(), type, false);
+        adapter = new CreationAdapter(recyclerView, getContext(), type, false,false);
         setListener();
         getDataFromNet();
     }

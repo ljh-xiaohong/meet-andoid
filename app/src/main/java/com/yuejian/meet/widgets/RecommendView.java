@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.utils.CommonUtil;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -18,13 +19,13 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class RecommendView extends LinearLayout {
 
-    public View article, video_vertical, video_horizontal, mould, activity, poster, draft;
+    public View article, article_person_info, video_vertical, video_vertical_person_info, video_horizontal, video_horizontal_person_info, mould, activity, poster, draft;
 
-    public ImageView article_img, video_vertical_img, video_horizontal_blur, video_horizontal_video, mould_img, activity_img_blur, poster_img;
+    public ImageView article_img, article_head_img, video_vertical_img, video_vertical_head_img, video_horizontal_blur, video_horizontal_head_img, video_horizontal_video, mould_img, activity_img_blur, poster_img;
 
-    public TextView article_content, article_tag, article_like,
-            video_vertical_content, video_vertical_tag, video_vertical_like,
-            video_horizontal_content, video_horizontal_tag, video_horizontal_like,
+    public TextView article_content, article_tag, article_like, article_name,
+            video_vertical_content, video_vertical_tag, video_vertical_like, video_vertical_name,
+            video_horizontal_content, video_horizontal_tag, video_horizontal_like, video_horizontal_name,
             mould_content,
             activity_title,
             poster_content;
@@ -63,8 +64,11 @@ public class RecommendView extends LinearLayout {
 
     private void initViews() {
         article = this.findViewById(R.id.item_recommend_article_layout);
+        article_person_info = this.findViewById(R.id.item_recommend_article_person_info);
         video_vertical = this.findViewById(R.id.item_recommend_videos_vertical_layout);
+        video_vertical_person_info = this.findViewById(R.id.item_recommend_videos_vertical_person_info);
         video_horizontal = this.findViewById(R.id.item_recommend_video_horizontal_layout);
+        video_horizontal_person_info = this.findViewById(R.id.item_recommend_videos_horizontal_person_info);
         mould = this.findViewById(R.id.item_recommend_mould_layout);
         activity = this.findViewById(R.id.item_recommend_activity_layout);
         poster = this.findViewById(R.id.item_recommend_poster_layout);
@@ -74,12 +78,16 @@ public class RecommendView extends LinearLayout {
         article_content = this.findViewById(R.id.item_recommend_article_content);
         article_tag = this.findViewById(R.id.item_recommend_article_tag);
         article_like = this.findViewById(R.id.item_recommend_article_like);
+        article_head_img = this.findViewById(R.id.item_recommend_article_head_img);
+        article_name = this.findViewById(R.id.item_recommend_article_name_tv);
 
         //视频（竖屏）
         video_vertical_img = this.findViewById(R.id.item_recommend_video_vertical_img);
         video_vertical_content = this.findViewById(R.id.item_recommend_video_vertical_content);
         video_vertical_tag = this.findViewById(R.id.item_recommend_video_vertical_tag);
         video_vertical_like = this.findViewById(R.id.item_recommend_video_vertical_like);
+        video_vertical_head_img = this.findViewById(R.id.item_recommend_videos_vertical_head_img);
+        video_vertical_name = this.findViewById(R.id.item_recommend_videos_vertical_name_tv);
 
         //视频（横屏）
         //设置背景
@@ -88,6 +96,8 @@ public class RecommendView extends LinearLayout {
         video_horizontal_content = this.findViewById(R.id.item_recommend_video_horizontal_content);
         video_horizontal_tag = this.findViewById(R.id.item_recommend_video_horizontal_tag);
         video_horizontal_like = this.findViewById(R.id.item_recommend_video_horizontal_like);
+        video_horizontal_head_img = this.findViewById(R.id.item_recommend_video_horizontal_head_img);
+        video_horizontal_name = this.findViewById(R.id.item_recommend_video_horizontal_name_tv);
 
         //模板
         mould_img = this.findViewById(R.id.item_recommend_mould_img);
@@ -121,6 +131,41 @@ public class RecommendView extends LinearLayout {
             view.setVisibility(VISIBLE_or_Not);
         }
 
+    }
+
+    public void setPersonInfo(ViewType type, int sex, String head, String name) {
+        if (name.length() > 5) {
+            name = name.substring(0, 5);
+        }
+
+        switch (type) {
+
+            case VIDEO_HORIZONTAL:
+//                if (!isShow) video_horizontal_person_info.setVisibility(GONE);
+                video_horizontal_person_info.setVisibility(VISIBLE);
+                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                video_horizontal_name.setText(name);
+                video_horizontal_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
+                break;
+
+            case VIDEO_VERTICAL:
+//                if (!isShow) video_vertical_person_info.setVisibility(GONE);
+                video_vertical_person_info.setVisibility(VISIBLE);
+                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                video_vertical_name.setText(name);
+                video_vertical_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
+                break;
+
+            case ARTICLE:
+//                if (!isShow) article_person_info.setVisibility(GONE);
+                article_person_info.setVisibility(VISIBLE);
+                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                article_name.setText(name);
+                article_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
+                break;
+
+
+        }
     }
 
 

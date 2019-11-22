@@ -68,6 +68,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                 rv.article_content.setText(entity.getTitle());
                 rv.article_tag.setVisibility(View.INVISIBLE);
                 rv.setLike(RecommendView.ViewType.ARTICLE, false, entity.getFabulousNum() + "");
+                rv.setPersonInfo(RecommendView.ViewType.ARTICLE, entity.getSex(), entity.getPhoto(), entity.getName());
                 break;
             //视频
             case 4:
@@ -77,6 +78,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                     rv.video_vertical_content.setText(entity.getTitle());
                     rv.video_vertical_tag.setVisibility(View.INVISIBLE);
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, false, entity.getFabulousNum() + "");
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 } else {
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
                     rv.video_horizontal_video.getLayoutParams().height = itemWidth / 16 * 9;
@@ -91,6 +93,7 @@ public class LifeAdapter extends BaseAdapter<LifeAdapter.ViewHolder, LifeEntity>
                             rv.video_horizontal_blur.setBackground(new BitmapDrawable(BlurUtils.rsBlur(context, resource, 30)));
                         }
                     });
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
                 break;
         }

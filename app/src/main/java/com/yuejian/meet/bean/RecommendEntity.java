@@ -21,6 +21,9 @@ public class RecommendEntity implements Serializable {
      * joinnumTrue : 0
      * coveSizeType: 竖屏-0 横屏-1
      * joinnumFalse : 0
+     * sex:1  0:女，1：男
+     * name:姓名
+     * photo: "https://yuejian-app.oss-cn-shenzhen.aliyuncs.com/bg/default.png",
      */
 
     private String coverUrl;
@@ -36,6 +39,33 @@ public class RecommendEntity implements Serializable {
     private int joinnumFalse;
     private int coveSizeType;
     private List<String> customerPhoto;
+    private int sex;
+    private String photo;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public boolean isPraise() {
         return isPraise;

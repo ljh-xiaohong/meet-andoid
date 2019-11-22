@@ -331,8 +331,9 @@ public class WebActivity extends BaseActivity {
 
     private String shareCustomerId = "";
     private boolean isVIP = false;
-    private String backType="";
-    private String updateType="";
+    private String backType = "";
+    private String updateType = "";
+
     private boolean blockUrl(String url) {
         Log.d("pay", url);
         Uri uri = Uri.parse(url);
@@ -379,13 +380,13 @@ public class WebActivity extends BaseActivity {
                 buyPosterTemplate(url);
                 return true;
             } else if (uri.getAuthority().equals("createShopOrderPay")) {
-                String[] s=url.split("&");
-                String oid=s[0].split("=")[1];
-                String payType=s[1].split("=")[1];
-                if (s.length>2) {
+                String[] s = url.split("&");
+                String oid = s[0].split("=")[1];
+                String payType = s[1].split("=")[1];
+                if (s.length > 2) {
                     backType = s[2].split("=")[1];
                 }
-                isVIP=false;
+                isVIP = false;
                 //商品购买
                 createShopOrderPay(url);
                 return true;
@@ -407,10 +408,10 @@ public class WebActivity extends BaseActivity {
             } else if (uri.getAuthority().equals("posterSave")) {
                 //海报保存
                 savePoster(url);
-    return true;
+                return true;
             } else if (uri.getAuthority().contains("toBackName")) {
-                String[] s=url.split("=");
-                DadanPreference.getInstance(this).setString("websurname",url.split("=")[1]);
+                String[] s = url.split("=");
+                DadanPreference.getInstance(this).setString("websurname", url.split("=")[1]);
                 BusCallEntity busCallEntity = new BusCallEntity();
                 busCallEntity.setCallType(BusEnum.toback);
                 Bus.getDefault().post(busCallEntity);
@@ -482,7 +483,7 @@ public class WebActivity extends BaseActivity {
                 return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("updateImage")) {//图片上传
                 String[] s = url.split("=");
-                updateType=s[1];
+                updateType = s[1];
                 showBottomPopupWindow();
                 return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("tel")) {//打电话
@@ -530,6 +531,9 @@ public class WebActivity extends BaseActivity {
                         AppManager.finishAllActivity();
                     }
                 });
+                return true;//表示我已经处理过了
+            } else if (uri.getAuthority().contains("shareShop")) {
+                shareShop(url);
                 return true;//表示我已经处理过了
             }
         }
@@ -671,6 +675,8 @@ public class WebActivity extends BaseActivity {
 //            startActivity(intent);
             return true;
         }
+
+
         return false;
     }
 
@@ -689,6 +695,33 @@ public class WebActivity extends BaseActivity {
             onBackPressed();
         } else {
             Bus.getDefault().getDefault().post(new ShopEntity());
+        }
+
+    }
+
+    /**
+     * 分享商品
+     */
+    private void shareShop(final String url) {
+        try {
+            String gPhoto = Utils.getValueByName(url, "gPhoto");
+            String customerId = Utils.getValueByName(url, "customerId");
+            String gID = Utils.getValueByName(url, "gId");
+            String  gName = URLDecoder.decode(Utils.getValueByName(url, "gName"),"UTF-8");
+            Glide.with(this).load(gPhoto).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    Utils.umengShareByList(WebActivity.this, resource, gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                }
+
+                @Override
+                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                    super.onLoadFailed(e, errorDrawable);
+                    Utils.umengShareByList(WebActivity.this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }
@@ -735,7 +768,7 @@ public class WebActivity extends BaseActivity {
                                 if (TextUtils.equals(resultStatus, "9000")) {
                                     if (!CommonUtil.isNull(backType)) {
                                         webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
-                                    }else {
+                                    } else {
                                         webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                                     }
                                 }
@@ -770,18 +803,19 @@ public class WebActivity extends BaseActivity {
             }
         });
     }
+
     private void initCheck() {
         Map<String, Object> map = new HashMap<>();
         map.put("type", 2);
         apiImp.getLastVersionByType(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                UpdateBean loginBean=new Gson().fromJson(data, UpdateBean.class);
-                if (loginBean.getData()==null) return;
-                versions=loginBean.getData().getVersionName();
-                isForcedUpdating=loginBean.getData().getIsForced()==1?true:false;
-                versionsInfo=loginBean.getData().getContent();
-                andriodDownloadURL=loginBean.getData().getAppUrl();
+                UpdateBean loginBean = new Gson().fromJson(data, UpdateBean.class);
+                if (loginBean.getData() == null) return;
+                versions = loginBean.getData().getVersionName();
+                isForcedUpdating = loginBean.getData().getIsForced() == 1 ? true : false;
+                versionsInfo = loginBean.getData().getContent();
+                andriodDownloadURL = loginBean.getData().getAppUrl();
                 checkUpdate();
             }
 
@@ -792,14 +826,15 @@ public class WebActivity extends BaseActivity {
     }
 
     String versions;
-    boolean  isForcedUpdating;
+    boolean isForcedUpdating;
     String versionsInfo;
     String andriodDownloadURL;
+
     private void checkUpdate() {
         boolean isUpdate;
-        if (versions.equals(BuildConfig.VERSION_NAME)){
+        if (versions.equals(BuildConfig.VERSION_NAME)) {
             isUpdate = false;
-        }else {
+        } else {
             isUpdate = true;
         }
         if (isUpdate) {
@@ -808,13 +843,14 @@ public class WebActivity extends BaseActivity {
             } else {
                 showNoForcedUpdatingDialog();
             }
-        }else {
-            Toast.makeText(this,"已经是最新版本！",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "已经是最新版本！", Toast.LENGTH_LONG).show();
         }
     }
+
     //强制更新
     private void showForcedUpdatingDialog() {
-        LayoutInflater inflater = (LayoutInflater)this
+        LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         message = (TextView) layout.findViewById(R.id.message);
@@ -838,10 +874,12 @@ public class WebActivity extends BaseActivity {
         dialog.setContentView(layout);// 设置布局
         dialog.show();
     }
+
     private static final int PERMISSION_REQUEST_CODE = 0;
+
     //非强制更新
     private void showNoForcedUpdatingDialog() {
-        LayoutInflater inflater = (LayoutInflater)this
+        LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
@@ -872,6 +910,7 @@ public class WebActivity extends BaseActivity {
     private ProgressBar tv_download_progressBar;
     private TextView message;
     private TextView positiveButton;
+
     //下载
     private void download() {
         String fileDownloadPath = "yuejian/";
@@ -1131,7 +1170,7 @@ public class WebActivity extends BaseActivity {
                     if (!CommonUtil.isNull(backType))
                         if (!CommonUtil.isNull(backType)) {
                             webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
-                        }else {
+                        } else {
                             webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                         }
                 }
@@ -1161,6 +1200,7 @@ public class WebActivity extends BaseActivity {
 
         }
     }
+
     public void getImg() {
         try {
             webView.post(new Runnable() {
@@ -1182,9 +1222,11 @@ public class WebActivity extends BaseActivity {
 
         }
     }
+
     private View mPoupView = null;
     protected LayoutInflater mInflater;
     private PopupWindow mPoupWindow = null;
+
     /**
      * 底部PopupWindow
      */
@@ -1227,6 +1269,7 @@ public class WebActivity extends BaseActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
     /**
      * 实例化底部pop菜单项
      *
@@ -1239,18 +1282,22 @@ public class WebActivity extends BaseActivity {
         TextView txtCancel = (TextView) view.findViewById(R.id.txt_dialog_cancel);
         txtToPhoto.setOnClickListener(v -> {
             showSelector(false);
-            mPoupWindow.dismiss();});
+            mPoupWindow.dismiss();
+        });
         txtSavePic.setOnClickListener(this);
         txtSavePic.setVisibility(View.GONE);
         txtToAlbum.setOnClickListener(v -> {
-             showSelector(true);
-             mPoupWindow.dismiss();});
+            showSelector(true);
+            mPoupWindow.dismiss();
+        });
         txtCancel.setOnClickListener(v -> mPoupWindow.dismiss());
     }
+
     private static final int PORTRAIT_IMAGE_WIDTH = 720;
     String outputPath = "";
     private static final int OPENPIC = 11;
     private static final int OPENCAM = 12;
+
     /**
      * 打开图片/拍照选择器（完成）
      */
@@ -1397,8 +1444,8 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (webView==null)return;
-        if (webView.getUrl().contains("suefulPayment")){
+        if (webView == null) return;
+        if (webView.getUrl().contains("suefulPayment")) {
             webView.loadUrl("javascript:toBack()");
         }
         if (webView.canGoBack()) {
@@ -1411,11 +1458,11 @@ public class WebActivity extends BaseActivity {
             setResult(2, i);
             finish();
         }
-            if(mPoupWindow==null)return;
-            if (mPoupWindow.isShowing()){
-                mPoupWindow.dismiss();
-                backgroundAlpha(1f);
-            }
+        if (mPoupWindow == null) return;
+        if (mPoupWindow.isShowing()) {
+            mPoupWindow.dismiss();
+            backgroundAlpha(1f);
+        }
     }
 
     @Override
@@ -1478,12 +1525,12 @@ public class WebActivity extends BaseActivity {
                     mUM.onReceiveValue(uri);
                     mUM = null;
                 }
-            }else if (requestCode == OPENPIC) {
+            } else if (requestCode == OPENPIC) {
                 if (resultCode == RESULT_OK) {
                     updateUserImg();
                     return;
                 }
-            }  else if (requestCode == OPENCAM) {
+            } else if (requestCode == OPENCAM) {
                 if (resultCode == RESULT_OK) {//outputPath
                     updateUserImg();
                     return;
@@ -1494,7 +1541,7 @@ public class WebActivity extends BaseActivity {
             isShareSuccess = true;
         } else if (requestCode == 100) {
 
-        }  else {
+        } else {
             if (mUMA != null) {
                 mUMA.onReceiveValue(null);
                 mUMA = null;
@@ -1504,7 +1551,9 @@ public class WebActivity extends BaseActivity {
             }
         }
     }
+
     LoadingDialogFragment dialog;
+
     public void updateUserImg() {
         if (dialog != null)
             dialog.show(getFragmentManager(), "");
@@ -1514,11 +1563,11 @@ public class WebActivity extends BaseActivity {
                 @Override
                 public void onSuccess(FeedsResourceBean data) {
                     if (dialog != null)
-                    dialog.dismiss();
+                        dialog.dismiss();
 //                    Toast.makeText(WebActivity.this, data.imageUrl, Toast.LENGTH_LONG).show();
 //                    getImg("");
-                    Log.e("asfsaf",data.getImageUrl());
-                    if (updateType.equals("1")){
+                    Log.e("asfsaf", data.getImageUrl());
+                    if (updateType.equals("1")) {
                         try {
                             webView.post(new Runnable() {
                                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -1530,16 +1579,16 @@ public class WebActivity extends BaseActivity {
                                         @Override
                                         public void onReceiveValue(String value) {
                                             //此处为 js 返回的结果
-                                            Log.e("asfsaf",data.getImageUrl());
+                                            Log.e("asfsaf", data.getImageUrl());
                                             Log.e("value", value);
                                         }
                                     });
                                 }
                             });
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
-                    }else if (updateType.equals("2")){
+                    } else if (updateType.equals("2")) {
 //                        webView.loadUrl("javascript:updateCover(" + data.getImageUrl() + ")");
                         try {
                             webView.post(new Runnable() {
@@ -1552,16 +1601,16 @@ public class WebActivity extends BaseActivity {
                                         @Override
                                         public void onReceiveValue(String value) {
                                             //此处为 js 返回的结果
-                                            Log.e("asfsaf",data.getImageUrl());
+                                            Log.e("asfsaf", data.getImageUrl());
                                             Log.e("value", value);
                                         }
                                     });
                                 }
                             });
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
-                    }else if (updateType.equals("3")){
+                    } else if (updateType.equals("3")) {
 //                        webView.loadUrl("javascript:proNewImage(" +data.getImageUrl() + ")");
                         try {
                             webView.post(new Runnable() {
@@ -1574,16 +1623,16 @@ public class WebActivity extends BaseActivity {
                                         @Override
                                         public void onReceiveValue(String value) {
                                             //此处为 js 返回的结果
-                                            Log.e("asfsaf",data.getImageUrl());
+                                            Log.e("asfsaf", data.getImageUrl());
                                             Log.e("value", value);
                                         }
                                     });
                                 }
                             });
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
-                    }else if (updateType.equals("4")){
+                    } else if (updateType.equals("4")) {
 //                        webView.loadUrl("javascript:updateOldImage(" + data.getImageUrl() + ")");
                         try {
                             webView.post(new Runnable() {
@@ -1596,13 +1645,13 @@ public class WebActivity extends BaseActivity {
                                         @Override
                                         public void onReceiveValue(String value) {
                                             //此处为 js 返回的结果
-                                            Log.e("asfsaf",data.getImageUrl());
+                                            Log.e("asfsaf", data.getImageUrl());
                                             Log.e("value", value);
                                         }
                                     });
                                 }
                             });
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
                     }
@@ -1617,6 +1666,7 @@ public class WebActivity extends BaseActivity {
             });
         }
     }
+
     @Override
     public void onClick(View v) {
 
@@ -1657,7 +1707,7 @@ public class WebActivity extends BaseActivity {
                     if (webView != null) {
                         if (!CommonUtil.isNull(backType)) {
                             webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
-                        }else {
+                        } else {
                             webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                         }
                     }
@@ -1683,17 +1733,18 @@ public class WebActivity extends BaseActivity {
     @Override
     public void onBusCallback(BusCallEntity event) {
         super.onBusCallback(event);
-        if (event.getCallType() == BusEnum.payment_success){
-            if (isVIP){
+        if (event.getCallType() == BusEnum.payment_success) {
+            if (isVIP) {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType)) {
                 webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
-            }else {
+            } else {
                 webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
             }
         }
     }
+
     @Override
     public void finish() {
         setResult(38);

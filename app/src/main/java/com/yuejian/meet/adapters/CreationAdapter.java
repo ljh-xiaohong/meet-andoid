@@ -26,11 +26,13 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
 
     private int type;
     private boolean hasDraftBox;  //是否显示草稿箱
+    private boolean showInfo;//是否显示个人详情
 
-    public CreationAdapter(RecyclerView recyclerView, Context context, int type, boolean hasDraftBox) {
+    public CreationAdapter(RecyclerView recyclerView, Context context, int type, boolean hasDraftBox, boolean showInfo) {
         super(recyclerView, context);
         this.type = type;
         this.hasDraftBox = hasDraftBox;
+        this.showInfo = showInfo;
     }
 
     @Override
@@ -106,6 +108,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                         rv.video_vertical_tag.setVisibility(View.GONE);
                     }
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isPraise(), entity.getFabulousNum() + "");
+                    if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 } else {
                     //横屏
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
@@ -127,6 +130,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                     }
 
                     rv.setLike(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.isPraise(), entity.getFabulousNum() + "");
+                    if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
 
                 break;
@@ -142,6 +146,7 @@ public class CreationAdapter extends BaseAdapter<CreationAdapter.ViewHolder, Cre
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isPraise(), entity.getFabulousNum() + "");
                 rv.article_content.setText(entity.getContentTitle());
                 rv.article_tag.setText(entity.getLabelName());
+                if(this.showInfo)rv.setPersonInfo(RecommendView.ViewType.ARTICLE, entity.getSex(), entity.getPhoto(), entity.getName());
                 break;
         }
 

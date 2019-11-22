@@ -83,14 +83,14 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                 }
                 rv.article_content.setText(entity.getTitle());
                 rv.setLike(RecommendView.ViewType.ARTICLE, entity.isIsPraise(), entity.getFabulousNum() + "");
-
-
+                rv.setPersonInfo(RecommendView.ViewType.ARTICLE, entity.getSex(), entity.getPhoto(), entity.getName());
                 break;
 
             //视频
             case 2:
 
                 if (entity.getCoveSizeType() == 0) {
+                    //竖视频
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_VERTICAL, itemHeight);
                     Glide.with(context).load(entity.getCoverUrl()).into(rv.video_vertical_img);
                     rv.video_vertical_content.setText(entity.getTitle());
@@ -101,15 +101,10 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                         rv.video_vertical_tag.setVisibility(View.GONE);
                     }
                     rv.setLike(RecommendView.ViewType.VIDEO_VERTICAL, entity.isIsPraise(), entity.getFabulousNum() + "");
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_VERTICAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 } else {
+                    //横视频
                     rv.setViewStatus(RecommendView.ViewType.VIDEO_HORIZONTAL, itemHeight);
-//                    Glide.with(context).load(entity.getCoverUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
-//                        @Override
-//                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                            rv.video_horizontal_blur.setBackground(new BitmapDrawable(BlurUtils.doBlur(resource, 30, false)));
-//                            rv.video_horizontal_video.setImageBitmap(resource);
-//                        }
-//                    });
                     Glide.with(context).load(entity.getCoverUrl()).bitmapTransform(new BlurTransformation(context, 30)).into(new SimpleTarget<GlideDrawable>() {
                         @Override
                         public void onResourceReady(GlideDrawable glideDrawable, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -128,6 +123,7 @@ public class RecommendListAdapter extends BaseAdapter<RecommendListAdapter.Recom
                     }
 
                     rv.setLike(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.isIsPraise(), entity.getFabulousNum() + "");
+                    rv.setPersonInfo(RecommendView.ViewType.VIDEO_HORIZONTAL, entity.getSex(), entity.getPhoto(), entity.getName());
                 }
 
 

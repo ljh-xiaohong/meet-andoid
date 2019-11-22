@@ -3,6 +3,8 @@ package com.yuejian.meet.framents.business;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,9 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
 import com.amap.api.maps.model.LatLng;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
@@ -48,6 +53,8 @@ import com.yuejian.meet.widgets.VideoPlayer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,18 +89,21 @@ public class NewBusinessFragment extends BaseFragment {
         initView();
         initWxPayApi();
     }
-    public void update(){
-        if (wxWebview==null) return;
+
+    public void update() {
+        if (wxWebview == null) return;
         setws();
         initView();
 
     }
+
     private void initView() {
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname);
+        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId=" + AppConfig.CustomerId + "&surname=" + AppConfig.surname);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
     }
+
     @SuppressWarnings("unused")
     public class JSInterface extends Object {
         //微信分享
@@ -102,11 +112,12 @@ public class NewBusinessFragment extends BaseFragment {
             if (!Utils.isWeixinAvilible(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
-            }else {
+            } else {
 //                initShareSelectPopupwindow(url, description);
             }
         }
     }
+
     private void setws() {
         // TODO Auto-generated method stub
         ws = wxWebview.getSettings();
@@ -132,9 +143,11 @@ public class NewBusinessFragment extends BaseFragment {
         ws.setBuiltInZoomControls(false);
         ws.setSupportZoom(true);
     }
+
     private IWXAPI iwxapi;
     private final static String APP_ID = Constants.WX_APP_ID;
     private final static String PARTNER_ID = Constants.WX_PARTNER_ID;
+
     public void reloadHome() {
         try {
             wxWebview.post(new Runnable() {
@@ -152,13 +165,15 @@ public class NewBusinessFragment extends BaseFragment {
                     });
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     private void initWxPayApi() {
         iwxapi = WXAPIFactory.createWXAPI(getActivity(), APP_ID);
     }
+
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -168,17 +183,17 @@ public class NewBusinessFragment extends BaseFragment {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     Toast.makeText(getActivity(), R.string.payment_success, Toast.LENGTH_SHORT).show();
                 }
-                if (isVIP){
+                if (isVIP) {
                     reloadHome();
                 }
                 if (!CommonUtil.isNull(backType))
-                    wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                    wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId" + AppConfig.CustomerId);
             }
             return false;
         }
     });
-    private String backType="";
-    private boolean isVIP=false;
+    private String backType = "";
+    private boolean isVIP = false;
     //WebViewClient主要帮助WebView处理各种通知、请求事件
     private WebViewClient webViewClient = new WebViewClient() {
         @Override
@@ -192,58 +207,58 @@ public class NewBusinessFragment extends BaseFragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.e("ansen", "拦截url:" + url);
-          if (url.contains("yuejian://createShopOrderPay")){
-               //yuejian://createShopOrderPay?oid=28&payType=3
-               String[] s=url.split("&");
-               String oid=s[0].split("=")[1];
-               String payType=s[1].split("=")[1];
-                if (s.length>2) {
+            if (url.contains("yuejian://createShopOrderPay")) {
+                //yuejian://createShopOrderPay?oid=28&payType=3
+                String[] s = url.split("&");
+                String oid = s[0].split("=")[1];
+                String payType = s[1].split("=")[1];
+                if (s.length > 2) {
                     backType = s[2].split("=")[1];
                 }
-                doInCash(oid,payType);
+                doInCash(oid, payType);
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://upgradeVip")){ //vip升级
-                String[] s=url.split("&");
-                String customerId=s[0].split("=")[1];
-                String payType=s[1].split("=")[1];
-                String outCashPassword="";
-                if (s[2].split("=").length>1){
-                    outCashPassword=s[2].split("=")[1];
+            } else if (url.contains("yuejian://upgradeVip")) { //vip升级
+                String[] s = url.split("&");
+                String customerId = s[0].split("=")[1];
+                String payType = s[1].split("=")[1];
+                String outCashPassword = "";
+                if (s[2].split("=").length > 1) {
+                    outCashPassword = s[2].split("=")[1];
                 }
-                isVIP=true;
-                doInCashVip(customerId,payType,outCashPassword);
+                isVIP = true;
+                doInCashVip(customerId, payType, outCashPassword);
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://gaodeMap")){
+            } else if (url.contains("yuejian://gaodeMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
-                if (CommonUtil.isInstalled(getActivity(),"com.autonavi.minimap")){
-                    String[] s=url.split("&");
-                    String end=s[1].split("=")[1];
-                    String dlat=end.split(",")[0];
-                    String dlon=end.split(",")[1];
+                if (CommonUtil.isInstalled(getActivity(), "com.autonavi.minimap")) {
+                    String[] s = url.split("&");
+                    String end = s[1].split("=")[1];
+                    String dlat = end.split(",")[0];
+                    String dlon = end.split(",")[1];
                     Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("amapuri://route/plan/?sid=&slat=&slon=&sname=&did=&dlat="
-                            + dlat+"&dlon=" +dlon+ "&dname=&dev=0&t=0&sourceApplication="+ getActivity().getPackageName()));
+                            + dlat + "&dlon=" + dlon + "&dname=&dev=0&t=0&sourceApplication=" + getActivity().getPackageName()));
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(getActivity(), R.string.casht_text10, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://baiduMap")){
+            } else if (url.contains("yuejian://baiduMap")) {
                 //yuejian://createShopOrderPay?oid=28&payType=3
-                if (CommonUtil.isInstalled(getActivity(),"com.baidu.BaiduMap")){
-                    String[] s=url.split("&");
-                    String str=s[0].split("=")[1];
-                    String end=s[1].split("=")[1];
+                if (CommonUtil.isInstalled(getActivity(), "com.baidu.BaiduMap")) {
+                    String[] s = url.split("&");
+                    String str = s[0].split("=")[1];
+                    String end = s[1].split("=")[1];
                     Intent intent = new Intent();
                     intent.setData(Uri.parse("baidumap://map/direction?destination=name=|latlng:"
-                            + end +"&coord_type=gcj02"+ "&src=" + getActivity().getPackageName()));
+                            + end + "&coord_type=gcj02" + "&src=" + getActivity().getPackageName()));
                     startActivity(intent); // 启动调用
-                }else {
+                } else {
                     Toast.makeText(getActivity(), R.string.casht_text11, Toast.LENGTH_SHORT).show();
                 }
                 return true;//表示我已经处理过了
-            }else if (url.contains("yuejian://tel")){//打电话
-                    String[] s=url.split("=");
-                    CommonUtil.call(getActivity(),s[1]);
+            } else if (url.contains("yuejian://tel")) {//打电话
+                String[] s = url.split("=");
+                CommonUtil.call(getActivity(), s[1]);
                 return true;//表示我已经处理过了
             } else if (url.contains("yuejian://meditaVideo")) {
                 meditation(url);
@@ -254,6 +269,10 @@ public class NewBusinessFragment extends BaseFragment {
                 intent.putExtra("No_Title", true);
                 startActivity(intent);
                 return true;//表示我已经处理过了
+            } else if (url.contains("yuejian://shareShop")) {
+                //分享商品
+                shareShop(url);
+                return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -267,14 +286,14 @@ public class NewBusinessFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else if (payType.equals("1")){
+        } else if (payType.equals("1")) {
             if (!Utils.isAliPayInstalled(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text9, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId",customerId);
+        params.put("customerId", customerId);
         params.put("payType", payType);
         params.put("outCashPassword", outCashPassword);
         apiImp.upgradeVip(params, this, new DataIdCallback<String>() {
@@ -283,7 +302,7 @@ public class NewBusinessFragment extends BaseFragment {
                 if (payType.equals("1")) {
                     try {
                         JSONObject oo = new JSONObject(data);
-                        final String orderInfo =oo.getString("data");
+                        final String orderInfo = oo.getString("data");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -300,9 +319,9 @@ public class NewBusinessFragment extends BaseFragment {
                     }
                 } else if (payType.equals("2")) {
                     try {
-                        JSONObject  oo = new JSONObject(data);
-                        if (oo==null) return;
-                        final String data1 =oo.getString("data");
+                        JSONObject oo = new JSONObject(data);
+                        if (oo == null) return;
+                        final String data1 = oo.getString("data");
                         final WxPayOrderInfo orderInfo = JSON.parseObject(data1, WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = APP_ID;
@@ -324,21 +343,22 @@ public class NewBusinessFragment extends BaseFragment {
             }
         });
     }
+
     //sourceType 1:支付宝，2.微信，3.银联方式
-    private void doInCash(String oid,String payType) {
+    private void doInCash(String oid, String payType) {
         if (payType.equals("2")) {
             if (!Utils.isWeixinAvilible(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else if (payType.equals("1")){
+        } else if (payType.equals("1")) {
             if (!Utils.isAliPayInstalled(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text9, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("oid",oid);
+        params.put("oid", oid);
         params.put("payType", payType);
         params.put("outCashPassword", "");
         apiImp.createShopOrderPay(params, this, new DataIdCallback<String>() {
@@ -347,7 +367,7 @@ public class NewBusinessFragment extends BaseFragment {
                 if (payType.equals("1")) {
                     try {
                         JSONObject oo = new JSONObject(data);
-                        final String orderInfo =oo.getString("data");
+                        final String orderInfo = oo.getString("data");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -364,8 +384,8 @@ public class NewBusinessFragment extends BaseFragment {
                     }
                 } else if (payType.equals("2")) {
                     try {
-                        JSONObject  oo = new JSONObject(data);
-                        final String data1 =oo.getString("data");
+                        JSONObject oo = new JSONObject(data);
+                        final String data1 = oo.getString("data");
                         final WxPayOrderInfo orderInfo = JSON.parseObject(data1, WxPayOrderInfo.class);
                         PayReq request = new PayReq();
                         request.appId = APP_ID;
@@ -396,6 +416,33 @@ public class NewBusinessFragment extends BaseFragment {
         VideoActivity.startActivity(mContext, Utils.getValueByName(url, "url"), VideoPlayer.MODEL.MEDITATION, false);
     }
 
+    /**
+     * 分享商品
+     */
+    private void shareShop(final String url) {
+
+        try {
+            String gPhoto = Utils.getValueByName(url, "gPhoto");
+            String customerId = Utils.getValueByName(url, "customerId");
+            String gID = Utils.getValueByName(url, "gId");
+            String  gName = URLDecoder.decode(Utils.getValueByName(url, "gName"),"UTF-8");
+            Glide.with(this).load(gPhoto).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    Utils.umengShareByList(getActivity(), resource, gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                }
+
+                @Override
+                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                    super.onLoadFailed(e, errorDrawable);
+                    Utils.umengShareByList(getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String url;
     //WebChromeClient主要辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等
     private WebChromeClient webChromeClient = new WebChromeClient() {
@@ -411,6 +458,7 @@ public class NewBusinessFragment extends BaseFragment {
         public void onProgressChanged(WebView view, int newProgress) {
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -427,23 +475,24 @@ public class NewBusinessFragment extends BaseFragment {
 
     @Override
     public boolean onBackPressed() {
-        if (wxWebview.canGoBack()){
+        if (wxWebview.canGoBack()) {
             wxWebview.goBack();
             return true;
         }
         return super.onBackPressed();
     }
+
     @Override
     public void onBusCallback(BusCallEntity event) {
         super.onBusCallback(event);
-        if (event.getCallType() == BusEnum.payment_success){
-            if (isVIP){
+        if (event.getCallType() == BusEnum.payment_success) {
+            if (isVIP) {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType))
-                wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId="+AppConfig.CustomerId);
-        }else if (event.getCallType() == BusEnum.toback){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList="+DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname);
+                wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+        } else if (event.getCallType() == BusEnum.toback) {
+            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId=723495&surnameList=" + DadanPreference.getInstance(getActivity()).getString("websurname") + "&surname=" + AppConfig.surname);
         }
     }
 }
