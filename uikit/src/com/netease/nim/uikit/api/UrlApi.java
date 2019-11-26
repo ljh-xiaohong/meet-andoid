@@ -15,15 +15,15 @@ public class UrlApi {
 
 //    商域测试 http://ha.yuejianchina.com/yuejian-app/
 
-    //
+    //线上
 
-//    public static String mHttpUrl = "https://app2.yuejianchina.com/yuejian-app/";
+    public static String mHttpUrl = "https://app2.yuejianchina.com/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.196:8089/yuejian_app_war/";
 //  public static String mHttpUrl ="http://192.168.0.181:81/yuejian_app_war/";
 
 
     //本地
-  public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
+//  public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.178:81/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.189:8080//yuejian-app/";
 
