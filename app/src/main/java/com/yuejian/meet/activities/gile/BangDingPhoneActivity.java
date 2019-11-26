@@ -31,11 +31,13 @@ import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.mine.GifActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.activities.mine.UserNameSelectActivity;
 import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.api.http.UrlConstant;
+import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.utils.CommonUtil;
@@ -269,9 +271,22 @@ public class BangDingPhoneActivity extends BaseActivity {
 //                intent = new Intent(getBaseContext(), AreaCodeActivity.class);
 //                startActivityForResult(intent, 12);
                 break;
-            case R.id.login_tips_tv://电话代码 +86
-                Dialog dialog = DialogUtils.createOneBtnDialog(BangDingPhoneActivity.this, "联系客服", "400 000 000","呼叫");
-                dialog.show();
+            case R.id.login_tips_tv:
+//                Dialog dialog = DialogUtils.createOneBtnDialog(BangDingPhoneActivity.this, "联系客服", "400 000 000","呼叫");
+//                dialog.show();
+                Map<String, Object> params = new HashMap<>();
+                apiImp.getQrCode(params, this, new DataIdCallback<String>() {
+                    @Override
+                    public void onSuccess(String data, int id) {
+                        ResultBean resultBean=new Gson().fromJson(data,ResultBean.class);
+                        CommonUtil.wxCode(BangDingPhoneActivity.this,"微信客服","保存或截图后，微信扫描二维码添加客服", (String) resultBean.getData(),"保存");
+                    }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+                        ViewInject.shortToast(BangDingPhoneActivity.this, errMsg);
+                    }
+                });
                 break;
             case R.id.back:
                 finish();

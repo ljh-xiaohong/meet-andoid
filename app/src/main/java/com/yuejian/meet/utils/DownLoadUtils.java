@@ -55,9 +55,70 @@ public class DownLoadUtils {
     public static final String fileRootPath = Environment.getExternalStorageDirectory() + File.separator;
     public static final String fileDownloadPath = "yuejian/";
     public static int fileSzie;//文件大小
-    public static void DownloadIMG(Context context,String downloadUrl){
+    public static void DownloadUrlIMG(Context context, Bitmap bmp){
         try {
-            byte[] bitmapArray = Base64.decode(downloadUrl.split(",")[1], Base64.DEFAULT);
+            downloaddir = new File(fileRootPath + fileDownloadPath);
+            if (!downloaddir.exists()) {
+                downloaddir.mkdirs();
+            }
+            fileName="wx_code.jpg";
+            downloadfile = new File(fileRootPath + fileDownloadPath + fileName);
+            // 创建FileOutputStream对象
+            FileOutputStream outputStream = null;
+            try {
+                // 如果文件存在则删除
+                if (downloadfile.exists()) {
+                    downloadfile.delete();
+                }
+                // 在文件系统中根据路径创建一个新的空文件
+                downloadfile.createNewFile();
+                // 获取FileOutputStream对象
+                outputStream = new FileOutputStream(downloadfile);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                outputStream.flush();
+                outputStream.close();
+            } catch (Exception e) {
+                // 打印异常信息
+                e.printStackTrace();
+            } finally {
+                // 关闭创建的流对象
+                if (outputStream != null) {
+                    try {
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    downloadfile.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 通知图库更新
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            MediaScannerConnection.scanFile(context, new String[]{downloadfile.getAbsolutePath()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            mediaScanIntent.setData(uri);
+                            context.sendBroadcast(mediaScanIntent);
+                        }
+                    });
+        } else {
+            String relationDir = downloadfile.getParent();
+            File file1 = new File(relationDir);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(file1.getAbsoluteFile())));
+        }
+    }
+    public static void DownloadCode(Context context,String code){
+        try {
+            byte[] bitmapArray = Base64.decode(code.split(",")[1], Base64.DEFAULT);
             downloaddir = new File(fileRootPath + fileDownloadPath);
             if (!downloaddir.exists()) {
                 downloaddir.mkdirs();

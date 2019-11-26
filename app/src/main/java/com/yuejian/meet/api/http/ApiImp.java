@@ -1772,6 +1772,16 @@ public class ApiImp {
     public void acquireCity(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
         this.mHttpRequst.postRequst(UrlConstant.GET_ACQUIRECITY, paramMap, paramObject, paramDataIdCallback);
     }
+    /**
+     * 获取二维码接口
+     *
+     * @param paramMap
+     * @param paramObject
+     * @param paramDataIdCallback
+     */
+    public void getQrCode(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> paramDataIdCallback) {
+        this.mHttpRequst.getRequst(UrlConstant.GET_GETQRCODE, paramMap, paramObject, paramDataIdCallback);
+    }
 
     /**
      * 通讯录

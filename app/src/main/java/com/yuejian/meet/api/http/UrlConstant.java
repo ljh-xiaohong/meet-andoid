@@ -1180,6 +1180,8 @@ public class UrlConstant {
     public static String GET_MEESSAGESETTING = apiUrl() + "api/msg/meessageSetting";
     //获取某省的所有市
     public static String GET_ACQUIRECITY = apiUrl() + "api/provinceCityArea/acquireCity";
+    //获取二维码接口
+    public static String GET_GETQRCODE = apiUrl() + "api/customer/getQrCode";
     //通讯录
     public static String GET_GETRELATION = apiUrl() + "api/customerRelation/getRelation";
     //获取百家秘书服务用户列表API

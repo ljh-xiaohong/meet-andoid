@@ -2,6 +2,7 @@ package com.yuejian.meet.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -12,15 +13,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
+import com.yuejian.meet.R;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.GetMessageBean;
@@ -687,5 +699,45 @@ public class CommonUtil {
             e.printStackTrace();
             return num;
         }
+    }
+
+    //客服二维码
+    public static void wxCode(Activity context, String titles, String messages,String url,String btns){
+        LayoutInflater inflater = (LayoutInflater)context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_service_wx_update, null);
+        ImageView cancel_img = layout.findViewById(R.id.cancel_img);
+        TextView title= layout.findViewById(R.id.title);
+        TextView message= layout.findViewById(R.id.message);
+        ImageView wx_code= layout.findViewById(R.id.wx_code);
+        Button btn= layout.findViewById(R.id.btn);
+        Dialog dialog = new Dialog(context);// 创建自定义样式dialog
+        dialog.setCancelable(false);// 可以用“返回键”取消
+        dialog.setCanceledOnTouchOutside(false);//
+        dialog.setContentView(layout);// 设置布局
+        dialog.show();
+        cancel_img.setOnClickListener(v -> dialog.dismiss());
+        title.setText(titles);
+        message.setText(messages);
+        GlideUtils.display(wx_code,url);
+        btn.setText(btns);
+        btn.setOnClickListener(v -> {
+            Glide.with(context)
+                    .load(url)
+                    .asBitmap() //必须
+                    .centerCrop()
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DownLoadUtils.DownloadUrlIMG(context,bitmap);
+                                }
+                            }).start();
+                            Toast.makeText(context,"保存成功",Toast.LENGTH_LONG).show();
+                        }
+                    });
+        });
     }
 }

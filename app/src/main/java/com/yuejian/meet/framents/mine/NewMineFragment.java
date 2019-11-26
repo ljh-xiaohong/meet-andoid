@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.sdk.app.PayTask;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
@@ -46,6 +49,7 @@ import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
+import com.yuejian.meet.utils.DownLoadUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
@@ -225,6 +229,26 @@ public class NewMineFragment extends BaseFragment {
                 isVIP=true;
                 doInCashVip(customerId,payType,outCashPassword);
                 return true;//表示我已经处理过了
+            } else if (url.contains("serviceQcode")) {
+                //客服微信二维码
+                String[] s=url.split("=");
+                Glide.with(getActivity())
+                        .load(s[1])
+                        .asBitmap() //必须
+                        .centerCrop()
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DownLoadUtils.DownloadUrlIMG(getActivity(),bitmap);
+                                    }
+                                }).start();
+                                Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                return true;
             }else if (url.contains("yuejian://toBackLoad")){//退出
                 Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
                 dialog.show();

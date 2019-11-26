@@ -47,6 +47,7 @@ import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.QqLoginBean;
+import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.UpdateBean;
 import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.common.Constants;
@@ -159,6 +160,7 @@ public class LoginActivity extends BaseActivity {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         message = (TextView) layout.findViewById(R.id.message);
+        message.setText(versionsInfo);
         positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
         ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
         cancel_img.setVisibility(View.GONE);
@@ -187,6 +189,7 @@ public class LoginActivity extends BaseActivity {
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
         message = (TextView) layout.findViewById(R.id.message);
+        message.setText(versionsInfo);
         positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
         ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
         cancel_img.setVisibility(View.VISIBLE);
@@ -322,8 +325,21 @@ public class LoginActivity extends BaseActivity {
                 umShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
                 break;
             case R.id.login_privacy:///约见用户使用协议
-                Dialog dialog = DialogUtils.createOneBtnDialog(LoginActivity.this, "联系客服", "400 000 000","呼叫");
-                dialog.show();
+//                Dialog dialog = DialogUtils.createOneBtnDialog(LoginActivity.this, "联系客服", "400 000 000","呼叫");
+//                dialog.show();
+                Map<String, Object> params = new HashMap<>();
+                apiImp.getQrCode(params, this, new DataIdCallback<String>() {
+                    @Override
+                    public void onSuccess(String data, int id) {
+                        ResultBean resultBean=new Gson().fromJson(data,ResultBean.class);
+                        CommonUtil.wxCode(LoginActivity.this,"微信客服","保存或截图后，微信扫描二维码添加客服", (String) resultBean.getData(),"保存");
+                    }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+                        ViewInject.shortToast(LoginActivity.this, errMsg);
+                    }
+                });
                 break;
             case R.id.phone_login:
                 startActivity(new Intent(this, PhoneLoginActivity.class));

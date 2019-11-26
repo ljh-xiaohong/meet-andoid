@@ -45,6 +45,7 @@ import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
+import com.yuejian.meet.utils.DownLoadUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
@@ -257,6 +258,26 @@ public class NewBusinessFragment extends BaseFragment {
                     String[] s=url.split("=");
                     CommonUtil.call(getActivity(),s[1]);
                 return true;//表示我已经处理过了
+          } else if (url.contains("serviceQcode")) {
+              //客服微信二维码
+              String[] s=url.split("=");
+              Glide.with(getActivity())
+                      .load(s[1])
+                      .asBitmap() //必须
+                      .centerCrop()
+                      .into(new SimpleTarget<Bitmap>() {
+                          @Override
+                          public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                              new Thread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      DownLoadUtils.DownloadUrlIMG(getActivity(),bitmap);
+                                  }
+                              }).start();
+                              Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_LONG).show();
+                          }
+                      });
+              return true;
             } else if (url.contains("yuejian://meditaVideo")) {
                 meditation(url);
                 return true;//表示我已经处理过了

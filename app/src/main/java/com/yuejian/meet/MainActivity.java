@@ -208,6 +208,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         message = (TextView) layout.findViewById(R.id.message);
+        message.setText(versionsInfo);
         positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
         ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
         cancel_img.setVisibility(View.GONE);
@@ -236,6 +237,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         View layout = inflater.inflate(R.layout.dialog_tips_layout_update, null);
         tv_download_progressBar = (ProgressBar) layout.findViewById(R.id.download_progressBar);
         message = (TextView) layout.findViewById(R.id.message);
+        message.setText(versionsInfo);
         positiveButton = (TextView) layout.findViewById(R.id.positiveButton);
         ImageView cancel_img = (ImageView) layout.findViewById(R.id.cancel_img);
         cancel_img.setVisibility(View.VISIBLE);
