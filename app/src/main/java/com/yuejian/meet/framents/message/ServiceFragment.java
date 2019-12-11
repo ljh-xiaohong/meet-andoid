@@ -69,7 +69,7 @@ public class ServiceFragment extends Fragment{
      * isVisible = true：此Fragment可见
      */
     private void setParam() {
-        if (isInit && !isLoadOver && isVisible) {
+        if (isVisible) {
             //加载数据
             initData();
         }

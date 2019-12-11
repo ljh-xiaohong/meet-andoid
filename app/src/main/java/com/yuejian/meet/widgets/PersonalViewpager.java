@@ -3,6 +3,7 @@ package com.yuejian.meet.widgets;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,9 +14,8 @@ import android.view.View;
  */
 public class PersonalViewpager extends ViewPager {
 
-    //是否可以进行滑动
-    private boolean canScroll = false;//默认可以滑动
-    private int postion = 0;//默认可以滑动
+    private boolean isFrist = true;
+    private int postion = 0;
 
     public PersonalViewpager(Context context) {
         super(context);
@@ -28,36 +28,54 @@ public class PersonalViewpager extends ViewPager {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int height = 0;
-        for (int i = 0; i < getChildCount(); i++) {
+        if (getChildCount()>0){
             if (postion==1){
-                View child = getChildAt(0);
+                View child;
+                if (isFrist){
+                    child = getChildAt(0);
+                }else {
+                    child = getChildAt(1);
+                }
                 child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 int h = child.getMeasuredHeight();
                 if (h > height) height = h;
+                Log.e("asdasd","postion="+postion+"height"+height);
             }else if (postion==0){
-                View child = getChildAt(1);
+                View child;
+                if (isFrist){
+                    child = getChildAt(1);
+                }else {
+                    child = getChildAt(0);
+                }
                 child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 int h = child.getMeasuredHeight();
                 if (h > height) height = h;
+                Log.e("asdasd","postion="+postion+"height"+height);
             }
-//            View child = getChildAt(i);
-//            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-//            int h = child.getMeasuredHeight();
-//            if (h > height) height = h;
         }
+//        for (int i = 0; i < getChildCount(); i++) {
+//            if (postion==1){
+//                View child = getChildAt(i);
+//                child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+//                int h = child.getMeasuredHeight();
+//                if (h > height) height = h;
+//                Log.e("asdasd","postion="+postion+"height"+height);
+//            }else if (postion==0){
+//                View child = getChildAt(0);
+//                child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+//                int h = child.getMeasuredHeight();
+//                if (h > height) height = h;
+//                Log.e("asdasd","postion="+postion+"height"+height);
+//            }
+//        }
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    public void setCanScroll(boolean canScroll) {
-        this.canScroll = canScroll;
+    public void setIsFrist(boolean isFrist) {
+        this.isFrist = isFrist;
     }
     public void setPostion(int postion) {
         this.postion = postion;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return canScroll;
     }
 }

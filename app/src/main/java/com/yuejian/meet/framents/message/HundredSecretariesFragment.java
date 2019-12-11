@@ -89,6 +89,16 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
         ButterKnife.bind(this, view);
         return view;
     }
+    public boolean isFrist = true;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFrist) {
+            initDatas();
+            isFrist=false;
+        }
+    }
+
     //获取统计图
     private void initImgData() {
         Map<String, Object> params = new HashMap<>();
@@ -143,7 +153,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
     }
 
     /**
-     * 切换页面
+     *
      *
      * @param position 分类角标
      */
@@ -191,6 +201,7 @@ public class HundredSecretariesFragment extends Fragment implements SecretaryTit
 
     }
     public void update() {
+            mViewPager.setIsFrist(false);
             initDatas();
     }
 

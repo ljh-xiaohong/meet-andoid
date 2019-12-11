@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,12 +46,12 @@ import butterknife.ButterKnife;
  */
 
 
-public class NewMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, MessageTitleView.OnTitleViewClickListener {
+public class NewMessageFragment extends BaseFragment implements MessageTitleView.OnTitleViewClickListener {
 
     @Bind(R.id.family_circle_title_view)
     MessageTitleView mFamilyCircleTitleView;
     @Bind(R.id.vp_family_circle_content)
-    ViewPager mContentPager;
+    FrameLayout mContentPager;
     private NotificationMessageFragment mNotificationMessageFragment;
     private HundredSecretariesFragment mHundredSecretariesFragment;
     private View view;// 需要返回的布局
@@ -74,18 +76,56 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
     // 布局管理器
 
     private void initView() {
-        ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(mNotificationMessageFragment = new NotificationMessageFragment());
-        mFragmentList.add(mHundredSecretariesFragment = new HundredSecretariesFragment());
-        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getFragmentManager(), mFragmentList);
-        mContentPager.setAdapter(adapter);
-        mContentPager.setOffscreenPageLimit(1);
-        mContentPager.addOnPageChangeListener(this);
+//        ArrayList<Fragment> mFragmentList = new ArrayList<>();
+//        mFragmentList.add(mNotificationMessageFragment = new NotificationMessageFragment());
+//        mFragmentList.add(mHundredSecretariesFragment = new HundredSecretariesFragment());
+//        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getFragmentManager(), mFragmentList);
+//        mContentPager.setAdapter(adapter);
+//        mContentPager.setOffscreenPageLimit(1);
+//        mContentPager.addOnPageChangeListener(this);
         setCurrentItem(0);
         mFamilyCircleTitleView.setOnTitleViewClickListener(this);
         mFamilyCircleTitleView.setImageBtnClick(view -> startActivityForResult(new Intent(getActivity(), ContactActivity.class),1),
                 view -> initPopwindow(view));
         readPoint();
+    }
+
+
+    /**
+     * 设置Fragment
+     * @param vID
+     */
+    private void setFragment(int vID) {
+        FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+        if(mNotificationMessageFragment!=null){
+            trans.hide(mNotificationMessageFragment);
+        }
+        if(mHundredSecretariesFragment!=null){
+            trans.hide(mHundredSecretariesFragment);
+        }
+        switch (vID) {
+            case 0:
+                if(mNotificationMessageFragment==null){
+                    mNotificationMessageFragment = new NotificationMessageFragment();
+                    trans.add(R.id.vp_family_circle_content,mNotificationMessageFragment);
+                }else{
+                    trans.show(mNotificationMessageFragment);
+                }
+                mNotificationMessageFragment.update();
+                break;
+            case 1:
+                if(mHundredSecretariesFragment==null){
+                    mHundredSecretariesFragment = new HundredSecretariesFragment();
+                    trans.add(R.id.vp_family_circle_content,mHundredSecretariesFragment);
+                }else{
+                    trans.show(mHundredSecretariesFragment);
+                    mHundredSecretariesFragment.update();
+                }
+                break;
+            default:
+                break;
+        }
+        trans.commit();
     }
     public void readPoint(){
         Map<String, Object> map = new HashMap<>();
@@ -174,13 +214,8 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
      */
 
     private void setCurrentItem(int position) {
-            if (position == 0) {
-                mNotificationMessageFragment.update();
-            } else {
-                mHundredSecretariesFragment.update();
-            }
-           mContentPager.setCurrentItem(position);
-           mFamilyCircleTitleView.setSelectedTitle(position);
+        mFamilyCircleTitleView.setSelectedTitle(position);
+        setFragment(position);
     }
 
     @Override
@@ -189,33 +224,6 @@ public class NewMessageFragment extends BaseFragment implements ViewPager.OnPage
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        switch (position) {
-            case 0:
-//                if (!isClick) {
-                    setCurrentItem(0);
-//                }
-                break;
-            case 1:
-//                if (!isClick) {
-                    setCurrentItem(1);
-//                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

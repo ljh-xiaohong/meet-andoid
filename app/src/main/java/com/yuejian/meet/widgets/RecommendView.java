@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yuejian.meet.R;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.GlideUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -143,7 +144,8 @@ public class RecommendView extends LinearLayout {
             case VIDEO_HORIZONTAL:
 //                if (!isShow) video_horizontal_person_info.setVisibility(GONE);
                 video_horizontal_person_info.setVisibility(VISIBLE);
-                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                GlideUtils.display(video_horizontal_head_img,head);
+//                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
                 video_horizontal_name.setText(name);
                 video_horizontal_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
                 break;
@@ -151,7 +153,8 @@ public class RecommendView extends LinearLayout {
             case VIDEO_VERTICAL:
 //                if (!isShow) video_vertical_person_info.setVisibility(GONE);
                 video_vertical_person_info.setVisibility(VISIBLE);
-                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                GlideUtils.display(video_vertical_head_img,head);
+//                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
                 video_vertical_name.setText(name);
                 video_vertical_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
                 break;
@@ -159,7 +162,8 @@ public class RecommendView extends LinearLayout {
             case ARTICLE:
 //                if (!isShow) article_person_info.setVisibility(GONE);
                 article_person_info.setVisibility(VISIBLE);
-                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
+                GlideUtils.display(article_head_img,head);
+//                Glide.with(getContext()).load(head).placeholder(R.mipmap.ic_default).error(R.mipmap.ic_default).fallback(R.mipmap.ic_default).into(article_head_img);
                 article_name.setText(name);
                 article_name.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(sex == 0 ? R.mipmap.icon_tab_woman : R.mipmap.icon_tab_man), null);
                 break;

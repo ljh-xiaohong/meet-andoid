@@ -26,6 +26,7 @@ import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
@@ -100,7 +101,7 @@ public class NewMineFragment extends BaseFragment {
     private void initView() {
         initWxPayApi();
 
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
+        wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/user.html?customerId="+ AppConfig.CustomerId);
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/daiyan.html?userPosterType=false&id=118&customerId=723495");
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=500102&gId=6");
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
@@ -519,7 +520,7 @@ public class NewMineFragment extends BaseFragment {
                         reloadHome();
                     }
                     if (!CommonUtil.isNull(backType))
-                    wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                    wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
                 }
             }
             return false;
@@ -572,7 +573,7 @@ public class NewMineFragment extends BaseFragment {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType))
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+            wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
         }
     }
 
@@ -580,7 +581,7 @@ public class NewMineFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode==38){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/user.html?customerId="+ AppConfig.CustomerId);
+            wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/user.html?customerId="+ AppConfig.CustomerId);
         }
     }
 }

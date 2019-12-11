@@ -58,6 +58,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.mcxiaoke.bus.Bus;
 import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.netease.nim.uikit.api.DataCallback;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
@@ -366,7 +367,7 @@ public class WebActivity extends BaseActivity {
                     Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                            Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                            Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format(UrlApi.h5HttpUrl+"canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
                         }
                     });
                 } catch (UnsupportedEncodingException e) {
@@ -755,13 +756,13 @@ public class WebActivity extends BaseActivity {
             Glide.with(this).load(gPhoto).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                    Utils.umengShareByList(WebActivity.this, resource, gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                    Utils.umengShareByList(WebActivity.this, resource, gName, "", String.format(UrlApi.h5HttpUrl+"personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
                 }
 
                 @Override
                 public void onLoadFailed(Exception e, Drawable errorDrawable) {
                     super.onLoadFailed(e, errorDrawable);
-                    Utils.umengShareByList(WebActivity.this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                    Utils.umengShareByList(WebActivity.this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format(UrlApi.h5HttpUrl+"personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
                 }
             });
         } catch (UnsupportedEncodingException e) {
@@ -811,9 +812,9 @@ public class WebActivity extends BaseActivity {
                                 String resultStatus = payResult.getResultStatus();
                                 if (TextUtils.equals(resultStatus, "9000")) {
                                     if (!CommonUtil.isNull(backType)) {
-                                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                                        webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
                                     }else {
-                                        webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                                        webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                                     }
                                 }
                             });
@@ -911,7 +912,7 @@ public class WebActivity extends BaseActivity {
             }
         });
         Dialog dialog = new Dialog(this);// 创建自定义样式dialog
-        dialog.setCancelable(false);// 可以用“返回键”取消
+        dialog.setCancelable(false);// 不可以用“返回键”取消
         dialog.setCanceledOnTouchOutside(false);//
         dialog.setContentView(layout);// 设置布局
         dialog.show();
@@ -1090,7 +1091,7 @@ public class WebActivity extends BaseActivity {
                                         Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
                                             @Override
                                             public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                                                Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                                                Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format(UrlApi.h5HttpUrl+"canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
                                             }
                                         });
                                     } catch (UnsupportedEncodingException e) {
@@ -1209,9 +1210,9 @@ public class WebActivity extends BaseActivity {
                     }
                     if (!CommonUtil.isNull(backType))
                         if (!CommonUtil.isNull(backType)) {
-                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                            webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
                         }else {
-                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                            webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                         }
                 }
             }
@@ -1717,7 +1718,7 @@ public class WebActivity extends BaseActivity {
                             Glide.with(mContext).load(shareUrl).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
+                                    Utils.umengShareByList(WebActivity.this, bitmap, title, " ", String.format(UrlApi.h5HttpUrl+"canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", shareUrl, title));
                                 }
                             });
                         } catch (UnsupportedEncodingException e) {
@@ -1735,9 +1736,9 @@ public class WebActivity extends BaseActivity {
                 case PAY_FOR_ORDER:
                     if (webView != null) {
                         if (!CommonUtil.isNull(backType)) {
-                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                            webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
                         }else {
-                            webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                            webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
                         }
                     }
                     break;
@@ -1767,9 +1768,9 @@ public class WebActivity extends BaseActivity {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType)) {
-                webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
+                webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType=" + backType + "&customerId=" + AppConfig.CustomerId);
             }else {
-                webView.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
+                webView.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?customerId=" + AppConfig.CustomerId);
             }
         }
     }

@@ -26,6 +26,7 @@ import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
@@ -102,7 +103,7 @@ public class NewBusinessFragment extends BaseFragment {
         }
         DadanPreference.getInstance(getActivity()).setString("webcity",AppConfig.city);
         DadanPreference.getInstance(getActivity()).setString("websurname",AppConfig.surname);
-        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname+"&city="+AppConfig.city);
+        wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/family/index.html?customerId="+AppConfig.CustomerId+"&surname="+AppConfig.surname+"&city="+AppConfig.city);
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
         wxWebview.setWebChromeClient(webChromeClient);
         wxWebview.setWebViewClient(webViewClient);
@@ -185,11 +186,13 @@ public class NewBusinessFragment extends BaseFragment {
                     reloadHome();
                 }
                 if (!CommonUtil.isNull(backType))
-                    wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
+                    wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId"+AppConfig.CustomerId);
             }
             return false;
         }
     });
+
+
     private String backType="";
     private boolean isVIP=false;
     //WebViewClient主要帮助WebView处理各种通知、请求事件
@@ -446,13 +449,13 @@ public class NewBusinessFragment extends BaseFragment {
             Glide.with(this).load(gPhoto).asBitmap().error(R.mipmap.app_logo).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                    Utils.umengShareByList(getActivity(), resource, gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                    Utils.umengShareByList(getActivity(), resource, gName, "", String.format(UrlApi.h5HttpUrl+"personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
                 }
 
                 @Override
                 public void onLoadFailed(Exception e, Drawable errorDrawable) {
                     super.onLoadFailed(e, errorDrawable);
-                    Utils.umengShareByList(getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
+                    Utils.umengShareByList(getActivity(), BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), gName, "", String.format(UrlApi.h5HttpUrl+"personal_center/shop/item_share.html?customerId=%s&gId=%s", customerId, gID));
                 }
             });
         } catch (UnsupportedEncodingException e) {
@@ -505,12 +508,12 @@ public class NewBusinessFragment extends BaseFragment {
                 reloadHome();
             }
             if (!CommonUtil.isNull(backType))
-                wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId="+AppConfig.CustomerId);
+                wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/order/suefulPayment.html?backType="+backType+"&customerId="+AppConfig.CustomerId);
         }else if (event.getCallType() == BusEnum.toback){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/clan.html?customerId="+AppConfig.CustomerId+"&surnameList="
+            wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/family/clan.html?customerId="+AppConfig.CustomerId+"&surnameList="
                     +DadanPreference.getInstance(getActivity()).getString("websurname")+"&surname="+AppConfig.surname+"&city="+DadanPreference.getInstance(getActivity()).getString("webcity"));
         }else if (event.getCallType() == BusEnum.toproject){
-            wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/family/familyTab.html?customerId="+AppConfig.CustomerId
+            wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/shop/pages/family/familyTab.html?customerId="+AppConfig.CustomerId
                     +"&surname="+AppConfig.surname+"&industry="+DadanPreference.getInstance(getActivity()).getString("industry"));
         }
     }

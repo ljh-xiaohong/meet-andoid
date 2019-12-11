@@ -338,6 +338,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             @Override
             public void onSuccess(String data, int id) {
                 GetMessageBean loginBean=new Gson().fromJson(data, GetMessageBean.class);
+                if (tvTitleOnePoint==null) return;
                 if (loginBean.getData().isReadFlag()){
                     tvTitleOnePoint.setVisibility(View.VISIBLE);
                 }else {

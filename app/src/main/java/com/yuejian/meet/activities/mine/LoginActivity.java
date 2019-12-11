@@ -450,6 +450,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
     /**
      * 第三方登录  已经注册成功，如果第一次注册跳转选取性别
      *
