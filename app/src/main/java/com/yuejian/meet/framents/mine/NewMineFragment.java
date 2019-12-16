@@ -100,8 +100,10 @@ public class NewMineFragment extends BaseFragment {
     }
     private void initView() {
         initWxPayApi();
-
-        wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/user.html?customerId="+ AppConfig.CustomerId);
+        if (!CommonUtil.isNull(AppConfig.city)){
+            AppConfig.city="珠海市";
+        }
+        wxWebview.loadUrl(UrlApi.h5HttpUrl+"personal_center/user.html?customerId="+ AppConfig.CustomerId+"&city="+AppConfig.city);
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/daiyan.html?userPosterType=false&id=118&customerId=723495");
 //        wxWebview.loadUrl("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=500102&gId=6");
         wxWebview.addJavascriptInterface(new JSInterface(), "webJs");//添加js监听 这样html就能调用客户端
@@ -227,8 +229,12 @@ public class NewMineFragment extends BaseFragment {
                 if (s[2].split("=").length>1){
                     outCashPassword=s[2].split("=")[1];
                 }
+                String vgsName=s[3].split("=")[1];
+                String vgsMobile=s[4].split("=")[1];
+                String vgsAddress=s[5].split("=")[1];
+                String gId=s[6].split("=")[1];
                 isVIP=true;
-                doInCashVip(customerId,payType,outCashPassword);
+                doInCashVip(customerId,payType,outCashPassword,vgsName,vgsMobile,vgsAddress,gId);
                 return true;//表示我已经处理过了
             } else if (url.contains("serviceQcode")) {
                 //客服微信二维码
@@ -371,7 +377,7 @@ public class NewMineFragment extends BaseFragment {
         });
     }
 
-    private void doInCashVip(String customerId, String payType, String outCashPassword) {
+    private void doInCashVip(String customerId, String payType, String outCashPassword, String vgsName, String vgsMobile, String vgsAddress, String gId) {
         if (payType.equals("2")) {
             if (!Utils.isWeixinAvilible(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
@@ -387,6 +393,10 @@ public class NewMineFragment extends BaseFragment {
         params.put("customerId",customerId);
         params.put("payType", payType);
         params.put("outCashPassword", outCashPassword);
+        params.put("vgsName", vgsName);
+        params.put("vgsMobile", vgsMobile);
+        params.put("vgsAddress", vgsAddress);
+        params.put("gId", gId);
         apiImp.upgradeVip(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
