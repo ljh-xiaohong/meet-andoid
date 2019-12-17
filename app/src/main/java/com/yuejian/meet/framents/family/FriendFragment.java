@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.family;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
@@ -76,8 +80,44 @@ public class FriendFragment extends BaseFragment
                     startActivity(intent);
                     return;
                 }
-                 //关注
-                getAttention(position);
+                if (followEntities.get(position).getRelationType() == 2 || followEntities.get(position).getRelationType() == 3) {
+                    /*
+                     * 获得view填充器对象
+                     */
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    /*
+                     * 得到加载view
+                     */
+                    View v = inflater.inflate(R.layout.dialog_tips_layout_one, null);
+                    TextView message = v.findViewById(R.id.message);// 提示内容
+                    TextView title = v.findViewById(R.id.title);// 提示标题
+                    ImageView cancel_img = v.findViewById(R.id.cancel_img);// 提示标题
+                    Button negativeButton = v.findViewById(R.id.negativeButton);// 提示文字
+                    message.setText("确定不再关注？");// 设置内容
+                    title.setText("");// 设置标题
+
+                    Dialog loadingDialog = new Dialog(getActivity());// 创建自定义样式dialog
+                    loadingDialog.setCancelable(true);// 可以用“返回键”取消
+                    loadingDialog.setCanceledOnTouchOutside(true);//
+                    loadingDialog.setContentView(v);// 设置布局
+                    cancel_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadingDialog.dismiss();
+                        }
+                    });
+                    negativeButton.setText("确定");
+                    negativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadingDialog.dismiss();
+                            getAttention(position);
+                        }
+                    });
+                    loadingDialog.show();
+                }else{
+                    getAttention(position);
+                }
             }
         });
         mSpringView.setFooter(new DefaultFooter(getContext()));
@@ -95,12 +135,11 @@ public class FriendFragment extends BaseFragment
         map.put("opCustomerId", followEntities.get(position).getCustomerId());
         if (followEntities.get(position).getRelationType()==1){
             map.put("type", "1");
-        }else if (followEntities.get(position).getRelationType()==2){
+        }else if (followEntities.get(position).getRelationType()==2||followEntities.get(position).getRelationType()==3){
             map.put("type", "2");
-        }else if (followEntities.get(position).getRelationType()==3){
+        }else if (followEntities.get(position).getRelationType()==4){
             map.put("type", "4");
         }
-
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

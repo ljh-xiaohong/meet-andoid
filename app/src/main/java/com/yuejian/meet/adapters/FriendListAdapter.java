@@ -3,6 +3,7 @@ package com.yuejian.meet.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -92,16 +93,30 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
         }
         if (tyep==1){
             if (entity.getRelationType()==1){
-                holder.attention.setText("关注");
+                holder.attention.setText("加关注");
+                holder.attention.setTextColor(mContext.getResources().getColor(R.color.write));
                 holder.attention.setVisibility(View.VISIBLE);
                 holder.attention.setBackgroundResource(R.drawable.black11);
             }else if (entity.getRelationType()==2){
                 holder.attention.setText("已关注");
+                holder.attention.setTextColor(mContext.getResources().getColor(R.color.write));
                 holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setCompoundDrawables(null, null, null, null);
                 holder.attention.setVisibility(View.VISIBLE);
             }else if (entity.getRelationType()==3){
-                holder.attention.setText("已拉黑");
+                holder.attention.setText("互相关注");
+                holder.attention.setTextColor(mContext.getResources().getColor(R.color.write_tx));
+                Drawable drawableLeft = mContext.getResources().getDrawable(
+                        R.mipmap.icon_message_eachother);
+                drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+                holder.attention.setCompoundDrawables(drawableLeft, null, null, null);
+                holder.attention.setCompoundDrawablePadding(15);
                 holder.attention.setBackgroundResource(R.drawable.gray11);
+                holder.attention.setVisibility(View.VISIBLE);
+            }else if (entity.getRelationType()==4){
+                holder.attention.setText("取消拉黑");
+                holder.attention.setTextColor(mContext.getResources().getColor(R.color.black3));
+                holder.attention.setBackgroundResource(R.drawable.black13);
                 holder.attention.setVisibility(View.VISIBLE);
             }
         }else {

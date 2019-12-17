@@ -604,6 +604,7 @@ public class SpringView extends ViewGroup{
             });
             contentView.startAnimation(animation);
             contentView.layout(mRect.left, mRect.top, mRect.right, mRect.bottom);
+            invalidate();
         }else if(type==Type.FOLLOW){
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY(),MOVE_TIME);
             invalidate();

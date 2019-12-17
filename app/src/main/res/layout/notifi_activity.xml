@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#F2F5F7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:layout_height="44dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_nav_return"
+            android:padding="12dp"
+            android:id="@+id/back"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:text="评论和赞"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.yuejian.meet.widgets.springview.SpringView
+            android:id="@+id/spring_family_follow_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_white">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:background="#FFFFFF"
+            android:layout_height="wrap_content"/>
+        </com.yuejian.meet.widgets.springview.SpringView>
+        <LinearLayout
+            android:id="@+id/ll_family_follow_list_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/default_none"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="内容为空"
+                android:textColor="#666666"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

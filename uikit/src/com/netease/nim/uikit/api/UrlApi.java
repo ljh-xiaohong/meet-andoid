@@ -17,7 +17,7 @@ public class UrlApi {
 
     //
 
-    public static String mHttpUrl = "https://app2.yuejianchina.com/yuejian-app/";
+//    public static String mHttpUrl = "https://app2.yuejianchina.com/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.196:8089/yuejian_app_war/";
 //  public static String mHttpUrl ="http://192.168.0.181:81/yuejian_app_war/";
 
@@ -26,6 +26,8 @@ public class UrlApi {
 //  public static String mHttpUrl = "http://192.168.0.134:8087/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.178:81/yuejian-app/";
 //  public static String mHttpUrl = "http://192.168.0.189:8080//yuejian-app/";
+    public static String mHttpUrl = "http://192.168.0.191:8099/";
+
 //H5本地
 //    public static String h5HttpUrl = "http://192.168.0.254:8080/yuejian-app/";
     //H5正式

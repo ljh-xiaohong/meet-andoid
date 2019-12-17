@@ -50,19 +50,19 @@ public class ContactActivity extends BaseActivity implements ViewPager.OnPageCha
 
         mFriendFragment = new FansFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type",0);
+        bundle.putInt("type",1);
         mFriendFragment.setArguments(bundle);
         mFragmentList.add(mFriendFragment);
 
         attentionFragment = new FansFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("type",1);
+        bundle1.putInt("type",0);
         attentionFragment.setArguments(bundle1);
         mFragmentList.add(attentionFragment);
 
         mutualPowderFragment = new FansFragment();
         Bundle bundle2 = new Bundle();
-        bundle2.putInt("type",2);
+        bundle2.putInt("type",3);
         mutualPowderFragment.setArguments(bundle2);
         mFragmentList.add(mutualPowderFragment);
 

@@ -2,7 +2,6 @@ package com.yuejian.meet.framents.message;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,8 @@ import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.CommentZanActivity;
-import com.yuejian.meet.activities.message.NewFriendActivity;
+import com.yuejian.meet.activities.message.ContactActivity;
+import com.yuejian.meet.activities.message.NotificationActivity;
 import com.yuejian.meet.adapters.CustomerServiceAdapter;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 
 /**
  * 系统消息
+ *
  * @author : ljh
  * @time : 2019/9/8 11:10
  * @desc :
@@ -53,6 +54,8 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
     SpringView mSpringView;
     @Bind(R.id.ll_family_follow_list_empty)
     LinearLayout llFamilyFollowListEmpty;
+    @Bind(R.id.notifi)
+    TextView notifi;
     private CustomerServiceAdapter adapter;
     public ApiImp apiImp = new ApiImp();
     //是否可见
@@ -66,8 +69,9 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
 
     private int mNextPageIndex = 1;
     private int pageCount = 10;
-    List<MessageBean.DataBean> mList =new ArrayList<>();
-    private boolean isUdate=true;
+    List<MessageBean.DataBean> mList = new ArrayList<>();
+    private boolean isUdate = true;
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         return inflater.inflate(R.layout.notification_message_fragment, container, false);
@@ -78,10 +82,11 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         super.initWidget(parentView);
         initView();
     }
+
     private void delect(int id) {
         Map<String, Object> params = new HashMap<>();
 //        params.put("customerId", AppConfig.CustomerId);
-        params.put("id",id);
+        params.put("id", id);
         apiImp.getDelMessage(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -99,6 +104,7 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
             }
         });
     }
+
     public void initDatas() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
@@ -109,17 +115,17 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
         apiImp.getMessageList(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
-                isUdate=true;
-                if (llFamilyFollowListEmpty==null) return;
-             MessageBean bean=new Gson().fromJson(data,MessageBean.class);
-                if (bean.getCode()!=0) {
-                    ViewInject.shortToast(getActivity(),bean.getMessage());
+                isUdate = true;
+                if (llFamilyFollowListEmpty == null) return;
+                MessageBean bean = new Gson().fromJson(data, MessageBean.class);
+                if (bean.getCode() != 0) {
+                    ViewInject.shortToast(getActivity(), bean.getMessage());
                     return;
                 }
                 mList.addAll(bean.getData());
                 if (mList.size() > 0) {
                     llFamilyFollowListEmpty.setVisibility(View.GONE);
-                }else{
+                } else {
                     llFamilyFollowListEmpty.setVisibility(View.VISIBLE);
                 }
                 if (mNextPageIndex <= 1) {
@@ -127,9 +133,9 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
                     adapter.refresh(mList);
                 } else {
                     //下拉更多
-                    if (bean.getData().size()!=pageCount){
-                        ViewInject.shortToast(getActivity(),"已经是最后一页");
-                    }else {
+                    if (bean.getData().size() != pageCount) {
+                        ViewInject.shortToast(getActivity(), "已经是最后一页");
+                    } else {
                         adapter.Loadmore(mList);
                     }
                 }
@@ -143,7 +149,7 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
                 if (mSpringView != null) {
                     mSpringView.onFinishFreshAndLoad();
                 }
-                isUdate=true;
+                isUdate = true;
             }
         });
     }
@@ -159,7 +165,8 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newFirent.setOnClickListener(v -> startActivity(new Intent(getActivity(), NewFriendActivity.class)));
+        newFirent.setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactActivity.class)));
+        notifi.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationActivity.class)));
         commentAndZan.setOnClickListener(v -> startActivity(new Intent(getActivity(), CommentZanActivity.class)));
         mSpringView.setFooter(new DefaultFooter(getContext()));
         mSpringView.setHeader(new DefaultHeader(getContext()));
@@ -176,17 +183,19 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
 
     @Override
     public void onLoadmore() {
-         ++mNextPageIndex;
+        ++mNextPageIndex;
         initDatas();
     }
+
     public void update() {
         if (isUdate) {
             mList.clear();
             mNextPageIndex = 1;
             initDatas();
         }
-        isUdate=false;
+        isUdate = false;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view

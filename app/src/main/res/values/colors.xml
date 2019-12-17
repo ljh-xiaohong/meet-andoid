@@ -232,6 +232,7 @@
     <color name="phone_bg">#E5FFFFFF</color>
     <color name="phone_tv">#2D2D2D</color>
     <color name="write">#FFFFFF</color>
+    <color name="write_tx">#FF6F7172</color>
     <color name="line">#E6E6E6</color>
     <color name="black3">#333333</color>
     <color name="black6">#666666</color>

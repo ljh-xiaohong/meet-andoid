@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.message;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.netease.nim.uikit.app.AppConfig;
@@ -17,6 +21,7 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.NewFriendBean;
 import com.yuejian.meet.bean.ResultBean;
+import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.letterList.FirstLetterUtil;
 import com.yuejian.meet.widgets.letterList.LetterComparator;
@@ -85,12 +90,13 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
+//        params.put("customerId", "301491");
         if (getArguments().getInt("type") == 0) {
             params.put("type", 0);
         } else if (getArguments().getInt("type") == 1) {
             params.put("type", 1);
         } else {
-            params.put("type", 2);
+            params.put("type", 3);
         }
         apiImp.getRelation(params, this, new DataIdCallback<String>() {
             @Override
@@ -140,13 +146,49 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
         } else {
             isNew = false;
         }
-        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp, 0);
+        mFansAdapter = new FriendListAdapter(getActivity(), this, apiImp, 1);
         fansList.setAdapter(mFansAdapter);
         mFansAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
-                //关注
-                getAttention(position);
+                if (mList.get(position).getRelationType() == 2 || mList.get(position).getRelationType() == 3) {
+                    /*
+                     * 获得view填充器对象
+                     */
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    /*
+                     * 得到加载view
+                     */
+                    View v = inflater.inflate(R.layout.dialog_tips_layout_one, null);
+                    TextView message = v.findViewById(R.id.message);// 提示内容
+                    TextView title = v.findViewById(R.id.title);// 提示标题
+                    ImageView cancel_img = v.findViewById(R.id.cancel_img);// 提示标题
+                    Button negativeButton = v.findViewById(R.id.negativeButton);// 提示文字
+                    message.setText("确定不再关注？");// 设置内容
+                    title.setText("");// 设置标题
+
+                    Dialog loadingDialog = new Dialog(getActivity());// 创建自定义样式dialog
+                    loadingDialog.setCancelable(true);// 可以用“返回键”取消
+                    loadingDialog.setCanceledOnTouchOutside(true);//
+                    loadingDialog.setContentView(v);// 设置布局
+                    cancel_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadingDialog.dismiss();
+                        }
+                    });
+                    negativeButton.setText("确定");
+                    negativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadingDialog.dismiss();
+                            getAttention(position);
+                        }
+                    });
+                    loadingDialog.show();
+                }else{
+                    getAttention(position);
+                }
             }
         });
         llm= new LinearLayoutManager(getActivity());
@@ -186,12 +228,18 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
             }
         });
     }
-
+    //关注拉黑操作
     private void getAttention(int position) {
         Map<String, Object> map = new HashMap<>();
         map.put("customerId", AppConfig.CustomerId);
         map.put("opCustomerId", mList.get(position).getCustomerId());
-        map.put("type", "1");
+        if (mList.get(position).getRelationType()==1){
+            map.put("type", "1");
+        }else if (mList.get(position).getRelationType()==2||mList.get(position).getRelationType()==3){
+            map.put("type", "2");
+        }else if (mList.get(position).getRelationType()==4){
+            map.put("type", "4");
+        }
         apiImp.bindRelation(map, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {

@@ -97,6 +97,9 @@
             android:name=".activities.creation.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activities.message.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.mine.MyDialogActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogTheme" />

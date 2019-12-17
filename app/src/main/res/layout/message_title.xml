@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:visibility="gone"
         android:layout_centerVertical="true"
         android:src="@mipmap/icon_nav_addressbook" />
     <View
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:text="通知消息"
+            android:text="消息"
             android:textColor="#333333"
             android:textSize="16sp"/>
     <View
@@ -58,7 +59,7 @@
             android:id="@+id/title_underline_red_one"
             android:layout_width="20dp"
             android:layout_height="3dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="2dp"
             android:layout_below="@+id/tv_title_one"
             android:background="#AB3A34"/>
@@ -81,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:drawableLeft="@mipmap/icon_nav_service"
+        android:drawableLeft="@mipmap/icon_nav_add"
         android:padding="4dp" />
 
 
