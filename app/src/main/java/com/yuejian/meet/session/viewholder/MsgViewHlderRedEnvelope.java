@@ -152,8 +152,18 @@ public class MsgViewHlderRedEnvelope extends MsgViewHolderBase {
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 if (dialog!=null)dialog.dismiss();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }
@@ -172,8 +182,18 @@ public class MsgViewHlderRedEnvelope extends MsgViewHolderBase {
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 if (dialog!=null)dialog.dismiss();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }
@@ -232,9 +252,20 @@ public class MsgViewHlderRedEnvelope extends MsgViewHolderBase {
                         context.startActivity(intent);
                         if (dialog!=null)dialog.dismiss();
                     }
+
+                    @Override
+                    public void onSuccess(String data, int id) {
+
+                    }
+
                     @Override
                     public void onFailed(String errCode, String errMsg) {
                         if (dialog!=null)dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+
                     }
                 });
 //            }

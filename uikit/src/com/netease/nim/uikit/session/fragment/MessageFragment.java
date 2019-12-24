@@ -1,42 +1,30 @@
 package com.netease.nim.uikit.session.fragment;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import com.mcxiaoke.bus.Bus;
 import com.netease.nim.uikit.CustomPushContentProvider;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.api.NetApi;
-import com.netease.nim.uikit.api.utils.PreferencesIm;
 import com.netease.nim.uikit.api.utils.PreferencesMessage;
-import com.netease.nim.uikit.api.utils.Utils;
-import com.netease.nim.uikit.api.utils.UtilsIm;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.ChatFeeType;
 import com.netease.nim.uikit.app.SendMessageEnum;
 import com.netease.nim.uikit.app.entity.ExpenseEntity;
-import com.netease.nim.uikit.app.entity.MonyEntity;
 import com.netease.nim.uikit.app.extension.ChatGiftAttachment;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
-import com.netease.nim.uikit.cache.NimUserInfoCache;
 import com.netease.nim.uikit.common.fragment.TFragment;
 import com.netease.nim.uikit.session.SessionCustomization;
 import com.netease.nim.uikit.session.actions.BaseAction;
 import com.netease.nim.uikit.session.actions.ImageAction;
-import com.netease.nim.uikit.session.actions.LocationAction;
 import com.netease.nim.uikit.session.actions.VideoAction;
 import com.netease.nim.uikit.session.constant.Extras;
 import com.netease.nim.uikit.session.module.Container;
@@ -49,18 +37,12 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
-import com.netease.nimlib.sdk.msg.attachment.AudioAttachment;
-import com.netease.nimlib.sdk.msg.constant.MsgTypeEnum;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
-import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.MessageReceipt;
 import com.netease.nimlib.sdk.team.model.TeamMember;
-import com.netease.nimlib.sdk.uinfo.constant.GenderEnum;
-import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
-
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -212,14 +194,14 @@ public class MessageFragment extends TFragment implements ModuleProxy {
             }
 //            if (AppConfig.videoToCustomerId.equals(sessionId)&&messages.get(0).getMsgType()!= MsgTypeEnum.avchat){return;}
             messageListPanel.onIncomingMessage(messages);
-            sendMsgReceipt(); // 发送已读回执
+//            sendMsgReceipt(); // 发送已读回执
         }
     };
 
     private Observer<List<MessageReceipt>> messageReceiptObserver = new Observer<List<MessageReceipt>>() {
         @Override
         public void onEvent(List<MessageReceipt> messageReceipts) {
-            receiveReceipt();
+//            receiveReceipt();
         }
     };
 
@@ -227,7 +209,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
      * ********************** implements ModuleProxy *********************
      */
     @Override
-    public boolean sendMessage(IMMessage message) {
+    public boolean sendMessage(final IMMessage message) {
 //群聊判断是否禁言
         if (message.getSessionType()==SessionTypeEnum.Team){
             isGroupCaht(message);
@@ -296,18 +278,53 @@ public class MessageFragment extends TFragment implements ModuleProxy {
                 }
             }
         }
+
         Map<String, Object> pushPayload=new HashMap<>();
         pushPayload.put("my_customer_id",message.getFromAccount());
         pushPayload.put("op_customer_id",message.getSessionId());
         pushPayload.put("type","1");
         message.setPushPayload(pushPayload);
-
         appendPushConfig(message);
-        // send message to server and save to db
-        NIMClient.getService(MsgService.class).sendMessage(message, false);
-//
-        messageListPanel.onMsgSend(message);
 
+        Map<String,Object> params=new HashMap<>();
+        params.put("fromCustomerId",message.getFromAccount());
+        params.put("toCustomerId",message.getSessionId());
+        params.put("type","1");
+        params.put("body","这是一条新信息");
+        api.getSendImMessage(params, this, new DataCallback<String>() {
+            @Override
+            public void onSuccess(String data) {
+
+            }
+
+            @Override
+            public void onSuccess(String data, int id) {
+                Log.e("data",data);
+                try {
+                    JSONObject object = new JSONObject(data);
+                    if (object.getInt("code")==0){
+                        // send message to server and save to db
+                        NIMClient.getService(MsgService.class).sendMessage(message, false);
+                        messageListPanel.onMsgSend(message);
+                    }else {
+                        Toast.makeText(getActivity(),object.getString("data"),Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg) {
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
+        });
         return true;
     }
 
@@ -336,8 +353,19 @@ public class MessageFragment extends TFragment implements ModuleProxy {
 //
                 messageListPanel.onMsgSend(message);
             }
+
+            @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
             @Override
             public void onFailed(String errCode, String errMsg) {
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }
@@ -384,7 +412,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
     protected List<BaseAction> getActionList() {
         List<BaseAction> actions = new ArrayList<>();
         actions.add(new ImageAction());
-        actions.add(new VideoAction());
+//        actions.add(new VideoAction());
 //        actions.add(new LocationAction());
         if (customization != null && customization.actions != null && !AppConfig.isShopP2PChat) {
 //            if (!AppConfig.isVideo){

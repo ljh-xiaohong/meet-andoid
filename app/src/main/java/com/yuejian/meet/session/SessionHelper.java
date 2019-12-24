@@ -163,7 +163,7 @@ public class SessionHelper {
 //            actions.add(new ImageAction());
 //            actions.add(new VideoAction());
 //            actions.add(new SnapChatAction());
-            actions.add(new AVChatAction(AVChatType.VIDEO));
+//            actions.add(new AVChatAction(AVChatType.VIDEO));
             p2pCustomization.actions = actions;
             p2pCustomization.withSticker = true;
 

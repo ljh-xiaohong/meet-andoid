@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.custom.view.RoundAngleImageView;
@@ -81,7 +82,7 @@ public class CommodityListAdapter extends RecyclerView.Adapter<CommodityListAdap
         }
         holder.original_money.setText(entity.getGPriceOriginal()+"");
         holder.itemView.setOnClickListener(v -> {
-            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, entity.getGId());
+            String  urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, entity.getGId());
             Intent intent = new Intent(mContext, WebActivity.class);
             intent.putExtra(Constants.URL, urlShop);
             intent.putExtra("No_Title", true);

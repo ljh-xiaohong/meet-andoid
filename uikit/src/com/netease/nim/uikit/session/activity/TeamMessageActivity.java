@@ -190,7 +190,17 @@ public class TeamMessageActivity extends BaseMessageActivity {
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

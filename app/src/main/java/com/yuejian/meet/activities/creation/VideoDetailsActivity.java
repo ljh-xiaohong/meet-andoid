@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.entity.BusCallEntity;
 import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.yuejian.meet.R;
@@ -141,7 +142,7 @@ public class VideoDetailsActivity extends BaseActivity {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             String title = contentEntity.creation.title;
-                            String shareUrl = "http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=4&id=" + contentEntity.creation.id;
+                            String shareUrl = UrlApi.h5HttpUrl+"release/blank.html?type=4&id=" + contentEntity.creation.id;
                             Utils.umengShareByList(VideoDetailsActivity.this, resource, title, "来自 约见·百家姓", shareUrl);
                         }
                     });

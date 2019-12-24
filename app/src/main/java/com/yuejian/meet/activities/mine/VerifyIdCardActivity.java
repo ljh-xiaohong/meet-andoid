@@ -219,11 +219,21 @@ public class VerifyIdCardActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     uploadIndex++;
                     if (uploadIndex == uploadPaths.size()) {
                         dialog.dismiss();
                     }
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

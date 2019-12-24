@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -68,7 +69,7 @@ public class PrecisePushContentAdapter extends RecyclerView.Adapter<PrecisePushC
         holder.content.setText(dataBean.getContent()+"");
         holder.title.setText(dataBean.getTitle()+"");
         holder.itemView.setOnClickListener(v -> {
-            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, dataBean.getId());
+            String  urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, dataBean.getId());
             Intent intent = new Intent(context, WebActivity.class);
             intent.putExtra(Constants.URL, urlShop);
             intent.putExtra("No_Title", true);

@@ -43,6 +43,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.api.NetApi;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.api.utils.UtilsIm;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.ExpenseEntity;
@@ -393,7 +394,7 @@ public class ArticleInfoActivity extends BaseActivity {
                         } else {
                             title = article.article_title;
                         }
-                        String shareUrl = "http://app2.yuejianchina.com/yuejian-app/article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
+                        String shareUrl = UrlApi.h5HttpUrl+"article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
                         Utils.umengShareByList(ArticleInfoActivity.this, resource, title, "来自 约见·百家姓 的文章", shareUrl);
                     }
                 });
@@ -453,7 +454,7 @@ public class ArticleInfoActivity extends BaseActivity {
                         } else {
                             title = article.article_title;
                         }
-                        String shareUrl = "http://app2.yuejianchina.com/yuejian-app/article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
+                        String shareUrl = UrlApi.h5HttpUrl+"article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
                         Utils.umengShareForPhatForm(
                                 SHARE_MEDIA.WEIXIN,
                                 ArticleInfoActivity.this, resource,
@@ -472,7 +473,7 @@ public class ArticleInfoActivity extends BaseActivity {
                         } else {
                             title = article.article_title;
                         }
-                        String shareUrl = "http://app2.yuejianchina.com/yuejian-app/article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
+                        String shareUrl = UrlApi.h5HttpUrl+"article_share/iframe.html?url=http://app2.yuejianchina.com/yuejian-app/article.html?article_id=" + article.article_id;
                         Utils.umengShareForPhatForm(
                                 SHARE_MEDIA.WEIXIN_CIRCLE,
                                 ArticleInfoActivity.this, resource,
@@ -916,8 +917,18 @@ public class ArticleInfoActivity extends BaseActivity {
                     }
 
                     @Override
+                    public void onSuccess(String data, int id) {
+
+                    }
+
+                    @Override
                     public void onFailed(String errCode, String errMsg) {
                         Toast.makeText(mContext, errMsg, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+
                     }
                 });
             }

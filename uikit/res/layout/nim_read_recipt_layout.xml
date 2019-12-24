@@ -6,7 +6,6 @@
     android:layout_gravity="bottom"
     android:layout_marginBottom="3dip"
     android:background="@color/transparent"
-    android:text="@string/readed"
     android:textColor="#666666"
     android:textSize="12sp"
-    android:visibility="visible"/>
+    android:visibility="gone"/>

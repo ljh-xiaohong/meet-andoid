@@ -15,6 +15,7 @@ import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.message.CommentZanActivity;
 import com.yuejian.meet.activities.message.ContactActivity;
+import com.yuejian.meet.activities.message.NewFriendActivity;
 import com.yuejian.meet.activities.message.NotificationActivity;
 import com.yuejian.meet.adapters.CustomerServiceAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -165,7 +166,7 @@ public class NotificationMessageFragment extends BaseFragment implements SpringV
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newFirent.setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactActivity.class)));
+        newFirent.setOnClickListener(v -> startActivity(new Intent(getActivity(), NewFriendActivity.class)));
         notifi.setOnClickListener(v -> startActivity(new Intent(getActivity(), NotificationActivity.class)));
         commentAndZan.setOnClickListener(v -> startActivity(new Intent(getActivity(), CommentZanActivity.class)));
         mSpringView.setFooter(new DefaultFooter(getContext()));

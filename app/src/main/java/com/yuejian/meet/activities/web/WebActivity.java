@@ -65,6 +65,8 @@ import com.netease.nim.uikit.app.myenum.BusEnum;
 import com.netease.nim.uikit.app.myenum.ChatEnum;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
 import com.netease.nim.uikit.session.constant.Extras;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.avchat.constant.AVChatType;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -99,6 +101,7 @@ import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.PayResult;
+import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
@@ -394,6 +397,11 @@ public class WebActivity extends BaseActivity {
                 //VIP购买
                 upgradeVip(url);
                 return true;
+            }else if (url.contains("yuejian://privateLetter")){ //私信
+                String[] s=url.split("=");
+                String customerId=s[1];
+                ImUtils.toP2PCaht(this,customerId);
+                return true;
             } else if (uri.getAuthority().equals("toBack")) {
                 webView.freeMemory();
                 Intent i = new Intent();
@@ -403,7 +411,6 @@ public class WebActivity extends BaseActivity {
             } else if (uri.getAuthority().equals("meditaVideo")) {
                 //冥想寻根
                 meditation(url);
-
                 return true;
             } else if (uri.getAuthority().equals("posterSave")) {
                 //海报保存
@@ -537,12 +544,21 @@ public class WebActivity extends BaseActivity {
                 String[] s = url.split("=");
                 CommonUtil.call(this, s[1]);
                 return true;//表示我已经处理过了
+            } else if (uri.getAuthority().contains("shareInfo")) {//分享个人主页
+                String[] s = url.split("url=");
+                String shareUrl =  s[1];
+                String[] s1 = shareUrl.split("&");
+                String type = s1[2].split("=")[1];
+                String name = s1[3].split("=")[1];
+                name = URLDecoder.decode(name);
+                Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name, " ", shareUrl);
+                return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("sharaTui")) {//分享
                 //'yuejian://sharaTui?url=http://app2.yuejianchina.com/yuejian-app/shara_register.html'+'&type='+type+'&referralMobile='+referralMobile+'&name='+name
                 String[] s = url.split("&");
                 String shareUrl = s[0].split("url=")[1];
-                String type = s[1].split("=")[1];
-                String name = s[2].split("=")[1];
+                String name = s[1].split("=")[1];
+                String type = s[2].split("=")[1];
                 name = URLDecoder.decode(name);
                 if (type.equals("1")) {
                     Utils.umengShareForPhatForm(SHARE_MEDIA.WEIXIN_CIRCLE, this, BitmapFactory.decodeResource(getResources(), R.mipmap.app_logo), name + "邀请您注册《百家姓氏》", " ", shareUrl);
@@ -570,6 +586,25 @@ public class WebActivity extends BaseActivity {
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
                     @Override
                     public void onTitleViewClick() {
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("customer_id", user.customer_id);
+                        apiImp.logout(params, this, new DataIdCallback<String>() {
+                            @Override
+                            public void onSuccess(String data, int id) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String errCode, String errMsg, int id) {
+
+                            }
+                        });
+                        NIMClient.getService(AuthService.class).logout();
+                        BusCallEntity bus = new BusCallEntity();
+                        bus.setCallType(BusEnum.LOGOUT);
+                        Bus.getDefault().post(bus);
+                        startActivity(new Intent(getBaseContext(),LoginActivity.class));
+                        finish();
                         DadanPreference.getInstance(WebActivity.this).setBoolean("isLogin", false);
                         DadanPreference.getInstance(WebActivity.this).setString("CustomerId", "");
                         DadanPreference.getInstance(WebActivity.this).setString("photo", "");
@@ -990,10 +1025,27 @@ public class WebActivity extends BaseActivity {
      * @param url
      */
     private void upgradeVip(final String url) {
+        String[] s=url.split("&");
+        String customerId=s[0].split("=")[1];
+        String payType=s[1].split("=")[1];
+        String outCashPassword="";
+        if (s[2].split("=").length>1){
+            outCashPassword=s[2].split("=")[1];
+        }
+        String vsgName=s[3].split("=")[1];
+        vsgName= URLDecoder.decode(vsgName);
+        String vsgMobile=s[4].split("=")[1];
+        String vsgAddress=s[5].split("=")[1];
+        vsgAddress= URLDecoder.decode(vsgAddress);
+        String gId=s[6].split("=")[1];
         Map<String, Object> params = new HashMap<>();
-        params.put("customerId", AppConfig.CustomerId);
-        params.put("payType", Utils.getValueByName(url, "payType"));
-        params.put("outCashPassword", Utils.getValueByName(url, "outCashPassword"));
+        params.put("customerId",customerId);
+        params.put("payType", payType);
+        params.put("outCashPassword", outCashPassword);
+        params.put("vsgName", vsgName);
+        params.put("vsgMobile", vsgMobile);
+        params.put("vsgAddress", vsgAddress);
+        params.put("gId", gId);
         apiImp.upgradeVip(params, this, new DataIdCallback<String>() {
             @Override
             public void onSuccess(String data, int id) {
@@ -1689,10 +1741,20 @@ public class WebActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     if (dialog != null)
                         dialog.dismiss();
                     ViewInject.shortToast(getApplication(), errMsg);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
@@ -123,7 +124,7 @@ public class PosterDetailAcitivty extends BaseActivity {
             case R.id.activity_poster_experience:
                 Intent publishIntent = new Intent(this, WebActivity.class);
 
-                String url = "http://app2.yuejianchina.com/yuejian-app/canvas_haibao/daiyan.html?"
+                String url = UrlApi.h5HttpUrl+"canvas_haibao/daiyan.html?"
                         + "userPosterType=" + false + "&"
                         + "id=" + id + "&"
                         + "customerId=" + customerId;
@@ -143,7 +144,7 @@ public class PosterDetailAcitivty extends BaseActivity {
                         share_icon,
                         posterInfo.getPostersTitle(),
                         " ",
-                        String.format("http://app2.yuejianchina.com/yuejian-app/canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", posterInfo.getPreviewUrl(), posterInfo.getPostersTitle())
+                        String.format(UrlApi.h5HttpUrl+"canvas_haibao/poster_share.html?previewUrl=%s&postersTitle=%s", posterInfo.getPreviewUrl(), posterInfo.getPostersTitle())
                 );
                 break;
             //收藏
@@ -164,7 +165,7 @@ public class PosterDetailAcitivty extends BaseActivity {
     private void openVip() {
         String urlVip = "";
 //        urlVip = String.format(UrlConstant.ExplainURL.OPEN_VIP + "?customerId=%s&phone=true", AppConfig.CustomerId);
-        urlVip = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/pages/vip/vip.html?customerId=%s&phone=true", AppConfig.CustomerId);
+        urlVip = String.format(UrlApi.h5HttpUrl+"personal_center/shop/pages/vip/vip.html?customerId=%s&phone=true", AppConfig.CustomerId);
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(Constants.URL, urlVip);
         intent.putExtra("No_Title", true);

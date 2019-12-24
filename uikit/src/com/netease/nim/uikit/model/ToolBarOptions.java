@@ -22,7 +22,7 @@ public class ToolBarOptions {
     /**
      * toolbar的返回按钮资源id，默认开启的资源nim_actionbar_dark_back_icon
      */
-    public int navigateId = R.mipmap.ic_titlebar_back;
+    public int navigateId = R.drawable.nim_actionbar_dark_back_icon;
     /**
      * toolbar的返回按钮，默认开启
      */

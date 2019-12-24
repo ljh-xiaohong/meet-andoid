@@ -171,8 +171,18 @@ public class MsgViewHolderSnapChat extends MsgViewHolderBase {
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 Toast.makeText(view.getContext(),errMsg+"",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

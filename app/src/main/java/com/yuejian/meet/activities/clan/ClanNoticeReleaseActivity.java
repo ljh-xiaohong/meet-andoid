@@ -219,6 +219,11 @@ public class ClanNoticeReleaseActivity extends BaseActivity implements OnItemCli
                     ViewInject.shortToast(ClanNoticeReleaseActivity.this.getApplication(), paramAnonymousString2);
                 }
 
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
+                }
+
                 public void onSuccess(FeedsResourceBean paramAnonymousFeedsResourceBean) {
                     if (ClanNoticeReleaseActivity.this.photosList.size() > 0) {
 //                        paramAnonymousFeedsResourceBean = ClanNoticeReleaseActivity.this;
@@ -227,6 +232,11 @@ public class ClanNoticeReleaseActivity extends BaseActivity implements OnItemCli
                             ClanNoticeReleaseActivity.this.posetRequst();
                         }
                     }
+                }
+
+                @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
                 }
             });
         }

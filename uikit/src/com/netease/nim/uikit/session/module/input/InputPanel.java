@@ -894,9 +894,20 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
                     restoreText(true);
                 }
             }
+
+            @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
             @Override
             public void onFailed(String errCode, String errMsg) {
                 Toast.makeText(view.getContext(),errMsg,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

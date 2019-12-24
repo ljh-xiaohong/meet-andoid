@@ -160,11 +160,22 @@ public class CreateZuciActivity extends BaseActivity implements AdapterView.OnIt
                         }
                     }
                 }
+
+                @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
                 public void onFailed(String paramAnonymousString1, String paramAnonymousString2) {
                     if (dialog != null) {
                         dialog.dismiss();
                     }
                     ViewInject.shortToast(getApplication(), paramAnonymousString2);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

@@ -29,10 +29,13 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
+import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.common.util.string.StringUtil;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareConfig;
@@ -46,16 +49,21 @@ import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.api.http.UrlConstant;
+import com.yuejian.meet.app.ImConfig;
 import com.yuejian.meet.bean.CityBean;
 import com.yuejian.meet.bean.QqLoginBean;
 import com.yuejian.meet.bean.ResultBean;
 import com.yuejian.meet.bean.WxLoginBean;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
+import com.yuejian.meet.session.DemoCache;
+import com.yuejian.meet.session.SessionHelper;
+import com.yuejian.meet.session.config.preference.UserPreferences;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.FCLoger;
+import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StatusBarUtils;
 import com.yuejian.meet.utils.SystemTool;
@@ -570,12 +578,31 @@ public class PhoneLoginActivity extends BaseActivity {
         });
     }
 
+    // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
+    private LoginInfo loginInfo() {
+        LoginInfo loginInfo = null;
+        if (AppConfig.userEntity != null) {
+            DemoCache.setAccount(AppConfig.userEntity.getCustomer_id());
+            loginInfo = new LoginInfo(AppConfig.userEntity.getCustomer_id(), AppConfig.userEntity.getToken());
+        }
+        return loginInfo;
+    }
     /**
      * 保存用户信息
      *
      * @param data
      */
     public void upadate(String data) {
+        NIMClient.init(this, loginInfo(), new ImConfig().getOptions(this));
+        NimUIKit.init(this);
+        // 会话窗口的定制初始化。
+        SessionHelper.init();
+        // 注册网络通话来电
+        new ImConfig().registerAVChatIncomingCallObserver(true);
+        ImUtils.monitorLoginType();//监听用户登录情况
+        new ImUtils().loginIm();//登录im
+        // 初始化消息提醒
+        NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据

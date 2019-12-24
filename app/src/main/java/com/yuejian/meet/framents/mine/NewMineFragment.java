@@ -207,6 +207,10 @@ public class NewMineFragment extends BaseFragment {
                 isVIP=false;
                 doInCash(customerId,silverIngot,amount,payType);
                 return true;//表示我已经处理过了
+            }else if (url.contains("yuejian://privateLetter")){ //私信
+                String[] s=url.split("=");
+                String customerId=s[1];
+
             }else if (url.contains("yuejian://articleVideo")){ //视频文章跳转
                 String[] s=url.split("&");
                 String id=s[0].split("=")[1];
@@ -229,12 +233,13 @@ public class NewMineFragment extends BaseFragment {
                 if (s[2].split("=").length>1){
                     outCashPassword=s[2].split("=")[1];
                 }
-                String vgsName=s[3].split("=")[1];
-                String vgsMobile=s[4].split("=")[1];
-                String vgsAddress=s[5].split("=")[1];
+                String vsgName=s[3].split("=")[1];
+                vsgName= URLDecoder.decode(vsgName);
+                String vsgMobile=s[4].split("=")[1];
+                String vsgAddress=s[5].split("=")[1];
                 String gId=s[6].split("=")[1];
                 isVIP=true;
-                doInCashVip(customerId,payType,outCashPassword,vgsName,vgsMobile,vgsAddress,gId);
+                doInCashVip(customerId,payType,outCashPassword,vsgName,vsgMobile,vsgAddress,gId);
                 return true;//表示我已经处理过了
             } else if (url.contains("serviceQcode")) {
                 //客服微信二维码
@@ -377,7 +382,7 @@ public class NewMineFragment extends BaseFragment {
         });
     }
 
-    private void doInCashVip(String customerId, String payType, String outCashPassword, String vgsName, String vgsMobile, String vgsAddress, String gId) {
+    private void doInCashVip(String customerId, String payType, String outCashPassword, String vsgName, String vsgMobile, String vsgAddress, String gId) {
         if (payType.equals("2")) {
             if (!Utils.isWeixinAvilible(getActivity())) {
                 Toast.makeText(getActivity(), R.string.casht_text7, Toast.LENGTH_SHORT).show();
@@ -393,9 +398,9 @@ public class NewMineFragment extends BaseFragment {
         params.put("customerId",customerId);
         params.put("payType", payType);
         params.put("outCashPassword", outCashPassword);
-        params.put("vgsName", vgsName);
-        params.put("vgsMobile", vgsMobile);
-        params.put("vgsAddress", vgsAddress);
+        params.put("vsgName", vsgName);
+        params.put("vsgMobile", vsgMobile);
+        params.put("vsgAddress", vsgAddress);
         params.put("gId", gId);
         apiImp.upgradeVip(params, this, new DataIdCallback<String>() {
             @Override

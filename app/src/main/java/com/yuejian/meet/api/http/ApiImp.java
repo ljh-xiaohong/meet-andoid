@@ -2249,4 +2249,10 @@ public class ApiImp {
     public void findCustomerBaseInfo(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
         this.mHttpRequst.postRequst(UrlConstant.FIND_CUSTOMER_BASE_INFO, paramMap, paramObject, callback);
     }
+    /**
+     * 根据用户id获取批量用户
+     */
+    public void getBatchUsers(Map<String, Object> paramMap, Object paramObject, DataIdCallback<String> callback) {
+        this.mHttpRequst.postRequst(UrlConstant.GET_GETBATCHUSERS, paramMap, paramObject, callback);
+    }
 }

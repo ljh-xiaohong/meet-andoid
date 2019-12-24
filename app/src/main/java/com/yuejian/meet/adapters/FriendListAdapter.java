@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -133,12 +134,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fa
 
         holder.shop_img.setOnClickListener(v -> {
             String urlVip = "";
-            if (entity.getVipType().equals("0")) {
-                //非VIP
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            if (AppConfig.CustomerId.equals(entity.getCustomerId())) {
+                //个人页面（自我）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/userHomeNew.html";
             } else {
-                //VIP
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+                //个人页面（他人）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/personHomeNew.html";
             }
             urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, entity.getCustomerId());
             Intent intent = new Intent(mContext, WebActivity.class);

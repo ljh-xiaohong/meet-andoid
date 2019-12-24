@@ -230,7 +230,7 @@ public class UrlConstant {
     //查询我的信息
     public static String POST_FIND_MY_INFO = apiUrl() + "api/customer/findMyInfo";
     public static String POST_SEND_SMS_CODE_TO_MODIFY_PHONE = apiUrl() + "api/customer/sendSmsCode";
-    public static String POST_LOGOUT = apiUrl() + "api/customer/logout";
+    public static String POST_LOGOUT = apiUrl() + "api/user/loginOut";
     //绑定手机
     public static String POST_BIND_MOBILE = apiUrl() + "api/customer/bindMobile";
 
@@ -1111,6 +1111,9 @@ public class UrlConstant {
 
     //个人中心 - 获取用户基本信息API（测试通过）
     public static String FIND_CUSTOMER_BASE_INFO = apiUrl() + "api/customer/findCustomerBaseInfo";
+
+    //根据用户id获取批量用户
+    public static String GET_GETBATCHUSERS = apiUrl() + "api/customer/getBatchUsers";
 
     public static String MY_CREAT_CONTENT_LIST = apiUrl() + "api/contentRelease/getContentList";
 

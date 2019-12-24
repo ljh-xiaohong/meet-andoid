@@ -167,4 +167,8 @@ public class NetApi {
         params.put("customer_id",AppConfig.CustomerId);
         requst.postRequest(UrlApi.GET_GROUP_SYNCHRO_RELATION(),params,tag,scall);
     }
+
+    public void getSendImMessage(Map<String, Object> params, Object tag, DataCallback<String> call) {
+        requst.postRequst(UrlApi.GET_SENDIMMESSAGE(), params, tag, call);
+    }
 }

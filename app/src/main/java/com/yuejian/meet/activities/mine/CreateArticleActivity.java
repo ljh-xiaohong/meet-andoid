@@ -421,10 +421,20 @@ public class CreateArticleActivity extends BaseActivity {
             }
 
             @Override
+            public void onSuccess(FeedsResourceBean data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 Toast.makeText(mContext, "上传图片失败", Toast.LENGTH_SHORT).show();
                 loadingDialogFragment.dismiss();
                 findViewById(R.id.create_essay).setEnabled(true);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

@@ -346,10 +346,20 @@ public class ReleaseActionActivity extends BaseActivity implements AdapterView.O
                 }
 
                 @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     if (dialog != null)
                         dialog.dismiss();
                     ViewInject.shortToast(getApplication(), errMsg);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

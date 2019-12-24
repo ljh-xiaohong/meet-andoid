@@ -429,8 +429,18 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
                     }
 
                     @Override
+                    public void onSuccess(String data, int id) {
+
+                    }
+
+                    @Override
                     public void onFailed(String errCode, String errMsg) {
                         avChatUI.hangUp(AVChatExitCode.HANGUP);
+                    }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+
                     }
                 });
                 if (AppConfig.avChatPrice > 0)
@@ -506,7 +516,17 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
                 }
 
                 @Override
+                public void onSuccess(String data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
             AVChatSoundPlayer.instance().stop();
@@ -929,7 +949,17 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
                 }
 
                 @Override
+                public void onSuccess(String data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
+
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
 
                 }
             });
@@ -953,7 +983,17 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
                 }
 
                 @Override
+                public void onSuccess(String data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
+
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
 
                 }
             });
@@ -1006,8 +1046,18 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 ViewInject.shortToast(getApplication(), errMsg);
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }
@@ -1094,8 +1144,18 @@ public class AVChatActivity extends UI implements AVChatUI.AVChatListener, AVCha
                 }
 
                 @Override
+                public void onSuccess(String data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     avChatUI.hangUp(AVChatExitCode.HANGUP);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

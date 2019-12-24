@@ -198,8 +198,18 @@ public class GiftGroupActivity extends Activity implements View.OnClickListener{
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 if (wait!=null)wait.dismiss();
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
 //        groupGiftSendEntity.se
@@ -214,7 +224,17 @@ public class GiftGroupActivity extends Activity implements View.OnClickListener{
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
 
             }
         });

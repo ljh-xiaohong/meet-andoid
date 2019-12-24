@@ -29,9 +29,9 @@ public class UrlApi {
     public static String mHttpUrl = "http://192.168.0.191:8099/";
 
 //H5本地
-//    public static String h5HttpUrl = "http://192.168.0.254:8080/yuejian-app/";
+    public static String h5HttpUrl = "http://192.168.0.254:8080/yuejian-app/";
     //H5正式
-    public static String h5HttpUrl = "http://app2.yuejianchina.com/yuejian-app/";
+//    public static String h5HttpUrl = "http://app2.yuejianchina.com/yuejian-app/";
 
 //    public static String mHttpUrl = "http://192.168.0.177:81/yuejian_app_war/";
     //  public static String mHttpUrl = "http://192.168.0.139:8087/yuejian-app/";
@@ -238,5 +238,15 @@ public class UrlApi {
      */
     public static String GET_GROUP_SYNCHRO_RELATION() {
         return mHttpUrl + "api/customChatGroup/synchroRelation";
+    }
+
+    /**
+     * 同步群成员和群的关系（我在群里，而发不出消息）
+     * customerId
+     *
+     * @return
+     */
+    public static String GET_SENDIMMESSAGE() {
+        return mHttpUrl + "api/customerCnt/sendImMessage.do";
     }
 }

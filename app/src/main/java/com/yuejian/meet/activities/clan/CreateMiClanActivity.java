@@ -563,6 +563,11 @@ public class CreateMiClanActivity extends BaseActivity implements OnItemClickLis
                     ViewInject.shortToast(CreateMiClanActivity.this.getApplication(), paramAnonymousString2);
                 }
 
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
+                }
+
                 public void onSuccess(FeedsResourceBean paramAnonymousFeedsResourceBean) {
                     if (!StringUtil.isEmpty(CreateMiClanActivity.this.clanId)) {
                         CreateMiClanActivity.this.saveClan();
@@ -572,6 +577,11 @@ public class CreateMiClanActivity extends BaseActivity implements OnItemClickLis
 
                     };
                     CreateMiClanActivity.this.PostData();
+                }
+
+                @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
                 }
             });
         }

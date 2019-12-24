@@ -57,7 +57,7 @@ public class ImUtils {
         if (AppConfig.userEntity == null) {
             return;
         }
-        LoginInfo info = new LoginInfo(AppConfig.CustomerId, AppConfig.Token);
+        LoginInfo info = new LoginInfo(AppConfig.CustomerId, AppConfig.userEntity.getToken());
         NIMClient.getService(AuthService.class).login(info).setCallback(callback);
     }
 
@@ -182,7 +182,17 @@ public class ImUtils {
             }
 
             @Override
+            public void onSuccess(String data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

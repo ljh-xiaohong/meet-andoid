@@ -27,6 +27,8 @@ import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.bean.GetMessageBean;
 import com.yuejian.meet.framents.base.BaseFragment;
 import com.yuejian.meet.widgets.MessageTitleView;
+import com.yuejian.meet.widgets.NewMessageTitleView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,13 +48,13 @@ import butterknife.ButterKnife;
  */
 
 
-public class NewMessageFragment extends BaseFragment implements MessageTitleView.OnTitleViewClickListener {
+public class NewMessageFragment extends BaseFragment implements NewMessageTitleView.OnTitleViewClickListener {
 
     @Bind(R.id.family_circle_title_view)
-    MessageTitleView mFamilyCircleTitleView;
+    NewMessageTitleView mFamilyCircleTitleView;
     @Bind(R.id.vp_family_circle_content)
     FrameLayout mContentPager;
-    private NotificationMessageFragment mNotificationMessageFragment;
+    private NewNotificationMessageFragment mNotificationMessageFragment;
     private HundredSecretariesFragment mHundredSecretariesFragment;
     private View view;// 需要返回的布局
 
@@ -106,7 +108,7 @@ public class NewMessageFragment extends BaseFragment implements MessageTitleView
         switch (vID) {
             case 0:
                 if(mNotificationMessageFragment==null){
-                    mNotificationMessageFragment = new NotificationMessageFragment();
+                    mNotificationMessageFragment = new NewNotificationMessageFragment();
                     trans.add(R.id.vp_family_circle_content,mNotificationMessageFragment);
                 }else{
                     trans.show(mNotificationMessageFragment);
@@ -190,6 +192,7 @@ public class NewMessageFragment extends BaseFragment implements MessageTitleView
 
             @Override
             public void onFailed(String errCode, String errMsg, int id) {
+
             }
         });
     }

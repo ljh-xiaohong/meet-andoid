@@ -549,10 +549,20 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                 }
 
                 @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     if (mLoadingDialog != null)
                         mLoadingDialog.dismiss();
                     ViewInject.shortToast(getApplication(), errMsg);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }
@@ -613,10 +623,20 @@ public class ArticleEditActivity extends BaseActivity implements MediaItemView.O
                 }
 
                 @Override
+                public void onSuccess(FeedsResourceBean data, int id) {
+
+                }
+
+                @Override
                 public void onFailed(String errCode, String errMsg) {
                     if (mLoadingDialog != null)
                         mLoadingDialog.dismiss();
                     ViewInject.shortToast(getApplication(), errMsg);
+                }
+
+                @Override
+                public void onFailed(String errCode, String errMsg, int id) {
+
                 }
             });
         }

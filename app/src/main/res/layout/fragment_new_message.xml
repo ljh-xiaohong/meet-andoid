@@ -8,7 +8,7 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.yuejian.meet.widgets.MessageTitleView
+        <com.yuejian.meet.widgets.NewMessageTitleView
             android:id="@+id/family_circle_title_view"
             android:layout_width="match_parent"
             android:layout_height="44dp" />

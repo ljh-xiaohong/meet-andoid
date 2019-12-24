@@ -90,7 +90,6 @@ public class FansFragment extends Fragment implements FriendListAdapter.OnFollow
     private void initData() {
         Map<String, Object> params = new HashMap<>();
         params.put("customerId", AppConfig.CustomerId);
-//        params.put("customerId", "301491");
         if (getArguments().getInt("type") == 0) {
             params.put("type", 0);
         } else if (getArguments().getInt("type") == 1) {

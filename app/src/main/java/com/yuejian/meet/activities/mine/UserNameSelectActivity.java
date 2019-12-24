@@ -30,21 +30,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.api.DataCallback;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.app.entity.NewUserEntity;
 import com.netease.nim.uikit.app.entity.UserEntity;
 import com.netease.nim.uikit.common.media.picker.activity.PickImageActivity;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.api.http.Impl.FeedsApiImpl;
+import com.yuejian.meet.app.ImConfig;
 import com.yuejian.meet.bean.FeedsResourceBean;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
+import com.yuejian.meet.session.DemoCache;
+import com.yuejian.meet.session.SessionHelper;
+import com.yuejian.meet.session.config.preference.UserPreferences;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
+import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
@@ -296,16 +304,34 @@ public class UserNameSelectActivity extends BaseActivity {
             }
 
             @Override
+            public void onSuccess(FeedsResourceBean data, int id) {
+
+            }
+
+            @Override
             public void onFailed(String errCode, String errMsg) {
                 if (dialog != null)
                     dialog.dismiss();
                 ViewInject.shortToast(getApplication(), errMsg);
             }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
+
+            }
         });
 
 
     }
-
+    // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
+    private LoginInfo loginInfo() {
+        LoginInfo loginInfo = null;
+        if (AppConfig.userEntity != null) {
+            DemoCache.setAccount(AppConfig.userEntity.getCustomer_id());
+            loginInfo = new LoginInfo(AppConfig.userEntity.getCustomer_id(), AppConfig.userEntity.getToken());
+        }
+        return loginInfo;
+    }
 
     /**
      * 保存用户信息
@@ -313,6 +339,17 @@ public class UserNameSelectActivity extends BaseActivity {
      * @param data
      */
     public void updateCustomerData(String data) {
+        NIMClient.init(this, loginInfo(), new ImConfig().getOptions(this));
+        NimUIKit.init(this);
+        // 会话窗口的定制初始化。
+        SessionHelper.init();
+        // 注册网络通话来电
+        new ImConfig().registerAVChatIncomingCallObserver(true);
+        ImUtils.monitorLoginType();//监听用户登录情况
+        new ImUtils().loginIm();//登录im
+        // 初始化消息提醒
+        NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
+
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
         AppConfig.userEntity = entity;

@@ -31,6 +31,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.maning.imagebrowserlibrary.MNImageBrowser;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.yuejian.meet.R;
@@ -777,7 +778,7 @@ public class ArticleActivity extends BaseActivity {
                         bitmap,
                         info.getContentDetail().getContentTitle(),
                         mContext.getResources().getString(R.string.share_description),
-                        String.format("http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=%s&id=%s", info.getContentDetail().getContentType(), info.getContentDetail().getId()));
+                        String.format(UrlApi.h5HttpUrl+"release/blank.html?type=%s&id=%s", info.getContentDetail().getContentType(), info.getContentDetail().getId()));
             }
         });
 
@@ -872,14 +873,12 @@ public class ArticleActivity extends BaseActivity {
                 if (info == null || info.getContentDetail() == null) return;
                 VideoAndContentEntiy.ContentDetail detail = info.getContentDetail();
                 String urlVip = "";
-                if (checkData(detail.getUserVipType()).equals("0")) {
-                    //非VIP
-//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_UNVIP;
-                    urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+                if (AppConfig.CustomerId.equals(info.getContentDetail().getCustomerId())) {
+                    //个人页面（自我）
+                    urlVip = UrlApi.h5HttpUrl+"personal_center/userHomeNew.html";
                 } else {
-                    //VIP
-//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
-                    urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+                    //个人页面（他人）
+                    urlVip = UrlApi.h5HttpUrl+"personal_center/personHomeNew.html";
                 }
                 urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getCustomerId());
 
@@ -893,7 +892,7 @@ public class ArticleActivity extends BaseActivity {
                     return;
                 String urlShop = "";
 //                urlShop = String.format(UrlConstant.ExplainURL.SHOP_DETAIL + "?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
-                urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
+                urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
                 intent = new Intent(this, WebActivity.class);
                 intent.putExtra(Constants.URL, urlShop);
                 intent.putExtra("No_Title", true);

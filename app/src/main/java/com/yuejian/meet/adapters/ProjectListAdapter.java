@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.web.WebActivity;
@@ -79,7 +80,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.name.setText(entity.getUserName());
         holder.content.setText(entity.getContent());
         holder.itemView.setOnClickListener(v -> {
-            String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, entity.getId());
+            String  urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, entity.getId());
             Intent intent = new Intent(mContext, WebActivity.class);
             intent.putExtra(Constants.URL, urlShop);
             intent.putExtra("No_Title", true);

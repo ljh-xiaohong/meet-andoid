@@ -391,6 +391,11 @@ public class PulishActivity extends BaseActivity {
                     }
 
                     @Override
+                    public void onSuccess(FeedsResourceBean data, int id) {
+
+                    }
+
+                    @Override
                     public void onFailed(String errCode, String errMsg) {
                         if (checkIsLife()) return;
                         ThreadUtils.runOnUiThread(() -> {
@@ -402,7 +407,17 @@ public class PulishActivity extends BaseActivity {
                         });
 
                     }
+
+                    @Override
+                    public void onFailed(String errCode, String errMsg, int id) {
+
+                    }
                 });
+            }
+
+            @Override
+            public void onSuccess(FeedsResourceBean data, int id) {
+
             }
 
             @Override
@@ -415,6 +430,11 @@ public class PulishActivity extends BaseActivity {
                         mLoadingDialog.dismiss();
                     }
                 });
+
+            }
+
+            @Override
+            public void onFailed(String errCode, String errMsg, int id) {
 
             }
         });

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.adapter.ReleasePicAdapter;
@@ -91,12 +92,12 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
         }
         holder.headImageView.setOnClickListener(v -> {
             String urlVip = "";
-            if (entity.getVipType().equals("0")) {
-                //非VIP
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            if (AppConfig.CustomerId.equals(entity.getCustomerId())) {
+                //个人页面（自我）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/userHomeNew.html";
             } else {
-                //VIP
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+                //个人页面（他人）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/personHomeNew.html";
             }
             urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, entity.getCustomerId());
             Intent intent = new Intent(mContext, WebActivity.class);
@@ -287,7 +288,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
             holder.article_lay.setOnClickListener(v -> {
                 String urlShop = "";
 //                urlShop = String.format(UrlConstant.ExplainURL.SHOP_DETAIL + "?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, info.getContentDetail().getShopList().getShopId());
-                urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, entity.getId());
+                urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/shop/item.html?customerId=%s&gId=%s&phone=true", AppConfig.CustomerId, entity.getId());
                 Intent intent = new Intent(mContext, WebActivity.class);
                 intent.putExtra(Constants.URL, urlShop);
                 intent.putExtra("No_Title", true);
@@ -311,7 +312,7 @@ public class FamilyCircleFollowListAdapter extends RecyclerView.Adapter<FamilyCi
                 Glide.with(mContext).load(entity.getPhotoAndVideoUrl()).into(holder.article_img);
             }
             holder.article_lay.setOnClickListener(v -> {
-                String  urlShop = String.format("http://app2.yuejianchina.com/yuejian-app/personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, entity.getId());
+                String  urlShop = String.format(UrlApi.h5HttpUrl+"personal_center/projectDetail.html?customerId=%s&id=%s&phone=true", AppConfig.CustomerId, entity.getId());
                 Intent intent = new Intent(mContext, WebActivity.class);
                 intent.putExtra(Constants.URL, urlShop);
                 intent.putExtra("No_Title", true);

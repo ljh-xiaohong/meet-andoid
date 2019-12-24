@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.umeng.socialize.utils.Log;
 import com.yuejian.meet.R;
@@ -228,7 +229,7 @@ public class BusinessDemandFragment extends BaseFragment implements SpringView.O
         Glide.with(mContext).load("http://yuejian-app.oss-cn-shenzhen.aliyuncs.com/genealogy/2019062821201820186833.png").asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                String shareUrl = "http://app2.yuejianchina.com/yuejian-app/release/blank.html?type=4&id=" + entity.customer_id;
+                String shareUrl = UrlApi.h5HttpUrl+"release/blank.html?type=4&id=" + entity.customer_id;
                 Utils.umengShareByList(getActivity(), resource, "", "来自 约见·百家姓", shareUrl);
             }
         });

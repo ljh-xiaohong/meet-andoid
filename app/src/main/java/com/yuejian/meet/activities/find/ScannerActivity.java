@@ -18,6 +18,7 @@ import com.mcxiaoke.bus.annotation.BusReceiver;
 import com.mylhyl.zxing.scanner.OnScannerCompletionListener;
 import com.mylhyl.zxing.scanner.ScannerOptions;
 import com.mylhyl.zxing.scanner.ScannerView;
+import com.netease.nim.uikit.api.UrlApi;
 import com.netease.nim.uikit.app.AppConfig;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
@@ -98,14 +99,12 @@ public class ScannerActivity extends BaseActivity {
             String referralMobile=s[1].split("=")[1];
             String vipType=s[2].split("=")[1];
             String urlVip = "";
-            if (vipType.equals("0")) {
-                //非VIP
-//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_UNVIP;
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/userHome3.html";
+            if (AppConfig.CustomerId.equals(customerId)) {
+                //个人页面（自我）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/userHomeNew.html";
             } else {
-                //VIP
-//                    url = UrlConstant.ExplainURL.PERSON_INFORMATION_VIP;
-                urlVip = "http://app2.yuejianchina.com/yuejian-app/personal_center/personHome2.html";
+                //个人页面（他人）
+                urlVip = UrlApi.h5HttpUrl+"personal_center/personHomeNew.html";
             }
             urlVip = String.format(urlVip + "?customerId=%s&opCustomerId=%s&phone=true", AppConfig.CustomerId, customerId);
             Intent intent = new Intent(this, WebActivity.class);
