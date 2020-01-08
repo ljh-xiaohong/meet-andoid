@@ -31,6 +31,7 @@ import com.yuejian.meet.bean.GroupChatEntity;
 import com.yuejian.meet.bean.GroupEntity;
 import com.yuejian.meet.bean.GroupSeedEntity;
 import com.yuejian.meet.framents.home.GroupChatSearchActivity;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.ImMesssageRedDot;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
 import com.yuejian.meet.widgets.springview.SpringView;
@@ -256,6 +257,7 @@ public class GroupChatActivity extends BaseActivity implements SpringView.OnFres
                 break;
             case R.id.chat_group_login_btn:
                 startActivity(new Intent(this, LoginActivity.class));
+                AppManager.finishAllActivity();
                 break;
             case R.id.group_feet:
                 startActivity(new Intent(this, GroupFootprintActivity.class));

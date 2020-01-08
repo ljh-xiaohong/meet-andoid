@@ -268,16 +268,16 @@ public class MessageFragment extends TFragment implements ModuleProxy {
                 break;
         }
 
-        if (!AppConfig.isShopP2PChat && !(message.getAttachment() instanceof ChatGiftAttachment)){
-            if (!PreferencesMessage.readBoolean(getContext(),PreferencesMessage.isChat+sessionId)){
-                if (PreferencesMessage.readInt(getContext(),sessionId)<3){
-                    PreferencesMessage.write(getContext(),sessionId,(PreferencesMessage.readInt(getContext(),sessionId)+1));
-                }else {//私聊消息限制
-                    Toast.makeText(getContext(),R.string.message_Reply_before,Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            }
-        }
+//        if (!AppConfig.isShopP2PChat && !(message.getAttachment() instanceof ChatGiftAttachment)){
+//            if (!PreferencesMessage.readBoolean(getContext(),PreferencesMessage.isChat+sessionId)){
+//                if (PreferencesMessage.readInt(getContext(),sessionId)<3){
+//                    PreferencesMessage.write(getContext(),sessionId,(PreferencesMessage.readInt(getContext(),sessionId)+1));
+//                }else {//私聊消息限制
+//                    Toast.makeText(getContext(),R.string.message_Reply_before,Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+//            }
+//        }
 
         Map<String, Object> pushPayload=new HashMap<>();
         pushPayload.put("my_customer_id",message.getFromAccount());

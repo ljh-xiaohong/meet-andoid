@@ -38,7 +38,9 @@ import com.yuejian.meet.bean.GroupChatEntity;
 import com.yuejian.meet.bean.GroupEntity;
 import com.yuejian.meet.bean.GroupSeedEntity;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.ImMesssageRedDot;
+import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.ViewInject;
 import com.yuejian.meet.widgets.InnerListView;
 import com.yuejian.meet.widgets.springview.DefaultHeader;
@@ -268,7 +270,9 @@ public class GroupChatFragment extends BaseFragment implements SpringView.OnFres
                 startActivity(new Intent(getContext(), GroupChatSearchActivity.class));
                 break;
             case R.id.chat_group_login_btn:
+                ImUtils.isLoginIm=false;
                 startActivity(new Intent(getContext(), LoginActivity.class));
+                AppManager.finishAllActivity();
                 break;
             case R.id.group_feet:
                 startActivity(new Intent(getContext(), GroupFootprintActivity.class));

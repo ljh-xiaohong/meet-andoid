@@ -21,6 +21,8 @@ import com.yuejian.meet.activities.find.ScannerActivity;
 import com.yuejian.meet.activities.group.SelectContactActivity;
 import com.yuejian.meet.activities.mine.CreateArticleActivity;
 import com.yuejian.meet.activities.mine.LoginActivity;
+import com.yuejian.meet.utils.AppManager;
+import com.yuejian.meet.utils.ImUtils;
 
 public class MainMoreUi {
     Activity context;
@@ -37,7 +39,9 @@ public class MainMoreUi {
             public void onClick(View paramAnonymousView) {
                 MainMoreUi.this.mPoupWindow.dismiss();
                 if (StringUtil.isEmpty(AppConfig.CustomerId)) {
+                    ImUtils.isLoginIm=false;
                     MainMoreUi.this.context.startActivity(new Intent(MainMoreUi.this.context, LoginActivity.class));
+                    AppManager.finishAllActivity();
                     return;
                 }
                 Intent intent = new Intent(context, SelectContactActivity.class);
@@ -56,7 +60,9 @@ public class MainMoreUi {
             public void onClick(View paramAnonymousView) {
                 MainMoreUi.this.mPoupWindow.dismiss();
                 if (StringUtil.isEmpty(AppConfig.CustomerId)) {
+                    ImUtils.isLoginIm=false;
                     MainMoreUi.this.context.startActivity(new Intent(MainMoreUi.this.context, LoginActivity.class));
+                    AppManager.finishAllActivity();
                     return;
                 }
                 MainMoreUi.this.showMenuListDialog();

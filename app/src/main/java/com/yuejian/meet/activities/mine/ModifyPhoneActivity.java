@@ -18,6 +18,7 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.Mine;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.StringUtils;
 
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class ModifyPhoneActivity extends BaseActivity {
         setContentView(R.layout.activity_modify_phone);
         if (user == null) {
             startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            AppManager.finishAllActivity();
         }
         findMyInfo(user.customer_id);
         setTitleText(getString(R.string.change_mobile_phone_number2));

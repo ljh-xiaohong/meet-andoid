@@ -1,5 +1,6 @@
 package com.yuejian.meet.framents.message;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,10 @@ import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
+import com.netease.nimlib.sdk.StatusCode;
+import com.netease.nimlib.sdk.auth.AuthService;
+import com.netease.nimlib.sdk.auth.AuthServiceObserver;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
@@ -32,6 +37,7 @@ import com.yuejian.meet.activities.message.CommentZanActivity;
 import com.yuejian.meet.activities.message.ContactActivity;
 import com.yuejian.meet.activities.message.NotificationActivity;
 import com.yuejian.meet.activities.message.ServerCenterActivity;
+import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.adapters.CustomerServiceAdapter;
 import com.yuejian.meet.adapters.MessagePrivateChatAdapter;
 import com.yuejian.meet.api.DataIdCallback;
@@ -41,7 +47,10 @@ import com.yuejian.meet.bean.MessageCommentBean;
 import com.yuejian.meet.bean.Server;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.CommonUtil;
+import com.yuejian.meet.utils.DadanPreference;
+import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StringUtils;
@@ -114,10 +123,37 @@ public class NewNotificationMessageFragment extends BaseFragment implements Adap
         mAdapter = new MessagePrivateChatAdapter(listView, mListDatan, R.layout.layout_message_private_chat_live_item, this,mData);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
-        loadRecentMessage();
         //注册/注销观察者
         NIMClient.getService(MsgServiceObserve.class).observeRecentContact(messageObserver, true);
+        try{
+            NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(
+                    new Observer<StatusCode>() {
+                        public void onEvent(StatusCode status) {
+                            if (status.wontAutoLogin()) {
+                                // 被踢出、账号被禁用、密码错误等情况，自动登录失败，需要返回到登录界面进行重新登录操作
+//                            Toast.makeText(LoginActivity.this,
+//                                    "Customer——————"+AppConfig.userEntity.getCustomer_id()+"Token——————"+ AppConfig.userEntity.getToken(),Toast.LENGTH_LONG).show();
+                                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "IM登录异常，如需使用IM功能，请重新登录！","取消","确定", false);
+                                dialog.show();
+                                DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
+                                    @Override
+                                    public void onTitleViewClick() {
+                                        ImUtils.isLoginIm=false;
+                                        DadanPreference.getInstance(getActivity()).setBoolean("isLogin",false);
+                                        DadanPreference.getInstance(getActivity()).setString("CustomerId","");
+                                        DadanPreference.getInstance(getActivity()).setString("photo","");
+                                        DadanPreference.getInstance(getActivity()).setString("surname","");
+                                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                                        AppManager.finishAllActivity();
+                                    }
+                                });
+                            }
+                        }
+                    }, true);
+            loadRecentMessage();
+        }catch (Exception e){
 
+        }
     }
     @Override
     public void onUserVisible() {
@@ -125,6 +161,7 @@ public class NewNotificationMessageFragment extends BaseFragment implements Adap
         getrequstCount();
 //        mineFragmentBC.getUnReadMsgCount();
         actionReadNum();
+        loadRecentMessage();
     }
 
     public void actionReadNum() {
@@ -157,22 +194,71 @@ public class NewNotificationMessageFragment extends BaseFragment implements Adap
                 totalMessageCount=0;
                 if (code != ResponseCode.RES_SUCCESS || recents == null) {
                     mAdapter.refresh(mListDatan);
-                    return;
-                }
-                for (int i = 0; i < recents.size(); i++) {
+                    if (AppConfig.userEntity == null) {
+                        return;
+                    }
+                    LoginInfo info = new LoginInfo(AppConfig.CustomerId, AppConfig.userEntity.getToken());
+                    NIMClient.getService(AuthService.class).login(info).setCallback(new RequestCallback() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            for (int i = 0; i < recents.size(); i++) {
 //                    if (!(recents.get(i).getSessionType() == SessionTypeEnum.Team)) {
-                    RecentContact contact = recents.get(i);
-                    totalMessageCount += contact.getUnreadCount();
-                    recentContacts.add(contact);
-                    allID=allID+contact.getContactId()+",";
+                                RecentContact contact = recents.get(i);
+                                totalMessageCount += contact.getUnreadCount();
+                                recentContacts.add(contact);
+                                allID=allID+contact.getContactId()+",";
 //                    }
+                            }
+                            BusCallEntity entity = new BusCallEntity();
+                            entity.setData(String.valueOf(totalMessageCount));
+                            entity.setCallType(BusEnum.Message_RECEIVER);
+                            Bus.getDefault().post(entity);
+                            msgLoaded = true;
+                            getServerList(allID);
+                        }
+
+                        @Override
+                        public void onFailed(int i) {
+                            if (!ImUtils.isLoginIm){
+                                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "IM登录异常，如需使用IM功能，请重新登录！","取消","确定", false);
+                                dialog.show();
+                                DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
+                                    @Override
+                                    public void onTitleViewClick() {
+                                        ImUtils.isLoginIm=false;
+                                        DadanPreference.getInstance(getActivity()).setBoolean("isLogin",false);
+                                        DadanPreference.getInstance(getActivity()).setString("CustomerId","");
+                                        DadanPreference.getInstance(getActivity()).setString("photo","");
+                                        DadanPreference.getInstance(getActivity()).setString("surname","");
+                                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                                        AppManager.finishAllActivity();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onException(Throwable throwable) {
+
+                        }
+                    });
+                }else {
+                    for (int i = 0; i < recents.size(); i++) {
+//                    if (!(recents.get(i).getSessionType() == SessionTypeEnum.Team)) {
+                        RecentContact contact = recents.get(i);
+                        totalMessageCount += contact.getUnreadCount();
+                        recentContacts.add(contact);
+                        allID=allID+contact.getContactId()+",";
+//                    }
+                    }
+                    BusCallEntity entity = new BusCallEntity();
+                    entity.setData(String.valueOf(totalMessageCount));
+                    entity.setCallType(BusEnum.Message_RECEIVER);
+                    Bus.getDefault().post(entity);
+                    msgLoaded = true;
+                    getServerList(allID);
                 }
-                BusCallEntity entity = new BusCallEntity();
-                entity.setData(String.valueOf(totalMessageCount));
-                entity.setCallType(BusEnum.Message_RECEIVER);
-                Bus.getDefault().post(entity);
-                msgLoaded = true;
-                getServerList(allID);
+
             }
         });
 

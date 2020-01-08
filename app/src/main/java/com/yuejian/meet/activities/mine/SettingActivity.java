@@ -21,6 +21,7 @@ import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.bean.Mine;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.PreferencesUtil;
 
@@ -98,7 +99,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.modify_phone:
                 if (user == null) {
                     startActivity(new Intent(this, LoginActivity.class));
-                    finish();
+                    AppManager.finishAllActivity();
                 } else {
                     intent = new Intent(this, ModifyPhoneActivity.class);
                     intent.putExtra("mine", mine);
@@ -130,6 +131,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.renzheng_setting:
                 if (user == null) {
                     startActivity(new Intent(this, LoginActivity.class));
+                    AppManager.finishAllActivity();
                 } else {
                     startActivity(new Intent(this, VerifyCenterActivity.class));
                 }
@@ -157,7 +159,7 @@ public class SettingActivity extends BaseActivity {
                 bus.setCallType(BusEnum.LOGOUT);
                 Bus.getDefault().post(bus);
                 startActivity(new Intent(getBaseContext(),LoginActivity.class));
-                finish();
+                AppManager.finishAllActivity();
             }
 
             @Override

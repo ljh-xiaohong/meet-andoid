@@ -75,11 +75,6 @@ public class FriendFragment extends BaseFragment
         mFollowListAdapter.setOnClickListener(new FriendListAdapter.onClickListener() {
             @Override
             public void onClick(int position) {
-                if (!DadanPreference.getInstance(getActivity()).getBoolean("isLogin")) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
                 if (followEntities.get(position).getRelationType() == 2 || followEntities.get(position).getRelationType() == 3) {
                     /*
                      * 获得view填充器对象

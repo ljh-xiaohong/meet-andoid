@@ -30,6 +30,7 @@ import com.yuejian.meet.bean.ClanMiAllEntity;
 import com.yuejian.meet.bean.ClanPhotosEntity;
 import com.yuejian.meet.bean.MoreClanEntity;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
@@ -106,6 +107,7 @@ public class ClanInfoActivity extends BaseActivity {
         this.dialog = LoadingDialogFragment.newInstance("正在加载..");
         if (user==null){
             startActivity(new Intent(this, LoginActivity.class));
+            AppManager.finishAllActivity();
             return;
         }
         initData();

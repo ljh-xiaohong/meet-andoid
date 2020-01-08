@@ -92,7 +92,7 @@ public class NewMessageTitleView extends LinearLayout {
     }
     public void setPoint(boolean a,boolean b){
         if (a){
-            ivFamilyCircleTitleLeftBtnPoint.setVisibility(VISIBLE);
+            ivFamilyCircleTitleLeftBtnPoint.setVisibility(GONE);
         }else {
             ivFamilyCircleTitleLeftBtnPoint.setVisibility(GONE);
         }

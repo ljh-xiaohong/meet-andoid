@@ -57,7 +57,7 @@ public class PerfectUserDataActivity extends BaseActivity{
         initData();
     }
     public void initData(){
-        ImUtils.loginIm();//登录im
+//        ImUtils.loginIm();//登录im
         setTitleText("完善资料");
         mAdapter=new TagTypSelAdapter(gridView,listData,R.layout.item_tag_type_sel_layout);
         gridView.setAdapter(mAdapter);

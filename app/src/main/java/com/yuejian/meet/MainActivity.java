@@ -156,9 +156,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
         Utils.versionUpdate(this);
         onParseIntent(getIntent());
         quitGroup();
-        if (AppConfig.isGeliPhone) {
-            ImUtils.loginIm();//登录im
-        }
         initCheck();
     }
 
@@ -427,11 +424,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 changeFragment(familyFragment);
                 break;
             case R.id.rlayout_msg:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
                 rbtn_home.setSelected(false);
                 rbtn_message.setSelected(false);
                 rbtn_creation.setSelected(false);
@@ -446,11 +438,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 break;
             case R.id.rlayout_creation:
                 if(FastClickUtil.isFastClick()) return;
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
                 startActivity(new Intent(this, CreationActivity.class));
 //                rbtn_creation.setSelected(true);
 //                changeFragment(creationFragment);
@@ -459,11 +446,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
 //                address_list.setVisibility(View.GONE);
                 break;
             case R.id.rlayout_business:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
                 rbtn_home.setSelected(false);
                 rbtn_message.setSelected(false);
                 rbtn_creation.setSelected(false);
@@ -487,11 +469,6 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
                 break;
 
             case R.id.rlayout_mine:
-                if (!DadanPreference.getInstance(this).getBoolean("isLogin")) {
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    return;
-                }
                 rbtn_home.setSelected(false);
                 rbtn_message.setSelected(false);
                 rbtn_creation.setSelected(false);
@@ -713,7 +690,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener {
             startLocation();
         }
         if (event.getCallType() == BusEnum.LOGIN_UPDATE) {
-            ImUtils.loginIm();//登录im
+//            ImUtils.loginIm();//登录im
             updatePosition();
         } else if (event.getCallType() == BusEnum.INVITE_JOIN_GROUP) {
             Intent intent = new Intent(this, InviteJoinGroupActivity.class);

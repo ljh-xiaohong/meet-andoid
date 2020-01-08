@@ -47,10 +47,12 @@ import com.yuejian.meet.activities.web.WebActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.framents.base.BaseFragment;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.CommonUtil;
 import com.yuejian.meet.utils.DadanPreference;
 import com.yuejian.meet.utils.DialogUtils;
 import com.yuejian.meet.utils.DownLoadUtils;
+import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PayResult;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.WxPayOrderInfo;
@@ -262,17 +264,18 @@ public class NewMineFragment extends BaseFragment {
                         });
                 return true;
             }else if (url.contains("yuejian://toBackLoad")){//退出
-                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定");
+                Dialog dialog = DialogUtils.createTwoBtnDialog(getActivity(), "提示", "是否退出登录","取消","确定",true);
                 dialog.show();
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
                     @Override
                     public void onTitleViewClick() {
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().finish();
+                        ImUtils.isLoginIm=false;
                         DadanPreference.getInstance(getActivity()).setBoolean("isLogin",false);
                         DadanPreference.getInstance(getActivity()).setString("CustomerId","");
                         DadanPreference.getInstance(getActivity()).setString("photo","");
                         DadanPreference.getInstance(getActivity()).setString("surname","");
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        AppManager.finishAllActivity();
                     }
                 });
                 return true;//表示我已经处理过了

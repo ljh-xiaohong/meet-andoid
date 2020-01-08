@@ -578,31 +578,12 @@ public class PhoneLoginActivity extends BaseActivity {
         });
     }
 
-    // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
-    private LoginInfo loginInfo() {
-        LoginInfo loginInfo = null;
-        if (AppConfig.userEntity != null) {
-            DemoCache.setAccount(AppConfig.userEntity.getCustomer_id());
-            loginInfo = new LoginInfo(AppConfig.userEntity.getCustomer_id(), AppConfig.userEntity.getToken());
-        }
-        return loginInfo;
-    }
     /**
      * 保存用户信息
      *
      * @param data
      */
     public void upadate(String data) {
-        NIMClient.init(this, loginInfo(), new ImConfig().getOptions(this));
-        NimUIKit.init(this);
-        // 会话窗口的定制初始化。
-        SessionHelper.init();
-        // 注册网络通话来电
-        new ImConfig().registerAVChatIncomingCallObserver(true);
-        ImUtils.monitorLoginType();//监听用户登录情况
-        new ImUtils().loginIm();//登录im
-        // 初始化消息提醒
-        NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         UserEntity entity =new Gson().fromJson(data, UserEntity.class);
 //        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
         PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
@@ -617,20 +598,7 @@ public class PhoneLoginActivity extends BaseActivity {
         DadanPreference.getInstance(this).setString("surname",entity.getSurname());
         AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
         AppConfig.surname=DadanPreference.getInstance(this).getString("surname");
-//        UserEntity userBean = JSON.parseObject(data, UserEntity.class);
-//        PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
-//        AppConfig.userEntity = userBean;
-//        DadanPreference.getInstance(this).setString("CustomerId",data);
-//        CommonUtil.saveBean2Sp(this,AppConfig.newUerEntity,"userData","userBean");
-//        AppConfig.CustomerId = data;
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                BusCallEntity entity = new BusCallEntity();
-//                entity.setCallType(BusEnum.LOGIN_UPDATE);
-//                Bus.getDefault().post(entity);
-//            }
-//        }, 500);
+
     }
 
     ///获取验证码

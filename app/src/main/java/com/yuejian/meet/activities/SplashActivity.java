@@ -20,6 +20,7 @@ import com.yuejian.meet.activities.mine.LoginActivity;
 import com.yuejian.meet.api.DataIdCallback;
 import com.yuejian.meet.api.http.ApiImp;
 import com.yuejian.meet.common.Constants;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.PreferencesUtil;
 
@@ -146,7 +147,6 @@ public class SplashActivity extends Activity {
 //                intent.setClass(getBaseContext(), MainActivity.class);
 //                intent.putExtra("mine_login", false);
             } else {
-                ImUtils.loginIm();//登录im
                 intent.setClass(getBaseContext(), MainActivity.class);
             }
             startActivity(intent);

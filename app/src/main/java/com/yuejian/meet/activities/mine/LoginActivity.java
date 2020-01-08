@@ -530,41 +530,12 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
-    private LoginInfo loginInfo() {
-        LoginInfo loginInfo = null;
-        if (AppConfig.userEntity != null) {
-            DemoCache.setAccount(AppConfig.userEntity.getCustomer_id());
-            loginInfo = new LoginInfo(AppConfig.userEntity.getCustomer_id(), AppConfig.userEntity.getToken());
-        }
-        return loginInfo;
-    }
     /**
      * 保存用户信息
      *
      * @param data
      */
     public void upadate(String data) {
-        NIMClient.init(this, loginInfo(), new ImConfig().getOptions(this));
-        NimUIKit.init(this);
-        // 会话窗口的定制初始化。
-        SessionHelper.init();
-        // 注册网络通话来电
-        new ImConfig().registerAVChatIncomingCallObserver(true);
-        ImUtils.monitorLoginType();//监听用户登录情况
-        new ImUtils().loginIm();//登录im
-        NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(
-                new Observer<StatusCode>() {
-                    public void onEvent(StatusCode status) {
-                        if (status.wontAutoLogin()) {
-                            // 被踢出、账号被禁用、密码错误等情况，自动登录失败，需要返回到登录界面进行重新登录操作
-                            Toast.makeText(LoginActivity.this,
-                                    "Customer——————"+AppConfig.userEntity.getCustomer_id()+"Token——————"+ AppConfig.userEntity.getToken(),Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, true);
-        // 初始化消息提醒
-        NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
         try {
             PreferencesUtil.put(getApplicationContext(), PreferencesUtil.KEY_USER_INFO, data);  //存储个人信息数据
             UserEntity entity =new Gson().fromJson(data, UserEntity.class);
@@ -588,6 +559,7 @@ public class LoginActivity extends BaseActivity {
         DadanPreference.getInstance(this).setString("CustomerId",AppConfig.CustomerId);
         AppConfig.photo=DadanPreference.getInstance(this).getString("photo");
         AppConfig.surname=DadanPreference.getInstance(this).getString("surname");
+
     }
 
     @Override

@@ -66,6 +66,7 @@ import com.yuejian.meet.bean.PraiseState;
 import com.yuejian.meet.bean.Reward;
 import com.yuejian.meet.common.Constants;
 import com.yuejian.meet.dialogs.LoadingDialogFragment;
+import com.yuejian.meet.utils.AppManager;
 import com.yuejian.meet.utils.AppUitls;
 import com.yuejian.meet.utils.ArticleCommentFactory;
 import com.yuejian.meet.utils.DensityUtils;
@@ -887,6 +888,7 @@ public class ArticleInfoActivity extends BaseActivity {
     private void sendGift() {
         if (user == null) {
             startActivity(new Intent(this, LoginActivity.class));
+            AppManager.finishAllActivity();
             return;
         }
 

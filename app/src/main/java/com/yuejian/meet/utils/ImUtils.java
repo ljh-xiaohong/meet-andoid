@@ -61,7 +61,7 @@ public class ImUtils {
         NIMClient.getService(AuthService.class).login(info).setCallback(callback);
     }
 
-   private static RequestCallback<LoginInfo> callback = new RequestCallback<LoginInfo>() {
+   public static RequestCallback<LoginInfo> callback = new RequestCallback<LoginInfo>() {
         @Override
         public void onSuccess(LoginInfo param) {
             isLoginIm = true;
@@ -80,7 +80,7 @@ public class ImUtils {
                 public void run() {
                     logingCum += 1;
                     if (logingCum < 3) {
-                        loginIm();
+//                        loginIm();
                     }
                 }
             }, 4000);
@@ -207,8 +207,10 @@ public class ImUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                ImUtils.isLoginIm=false;
                 Intent intent = new Intent(context, LoginActivity.class);
                 context.startActivity(intent);
+                AppManager.finishAllActivity();
             }
         });
         builder.show();

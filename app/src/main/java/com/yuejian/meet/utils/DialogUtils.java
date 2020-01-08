@@ -2,6 +2,7 @@ package com.yuejian.meet.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -75,9 +76,10 @@ public class DialogUtils {
      *
      * @param context 上下文
      * @param msg     文字说明
+     * @param b
      * @return 对话框的对象
      */
-    public static Dialog createTwoBtnDialog(Activity context, String titles, String msg,String negativeButtonTv,String positiveButtonTv) {
+    public static Dialog createTwoBtnDialog(Context context, String titles, String msg, String negativeButtonTv, String positiveButtonTv, boolean isCancel) {
 		/*
          * 获得view填充器对象
 		 */
@@ -99,8 +101,8 @@ public class DialogUtils {
         }
 
         Dialog loadingDialog = new Dialog(context);// 创建自定义样式dialog
-        loadingDialog.setCancelable(true);// 可以用“返回键”取消
-        loadingDialog.setCanceledOnTouchOutside(true);//
+        loadingDialog.setCancelable(isCancel);// 可以用“返回键”取消
+        loadingDialog.setCanceledOnTouchOutside(isCancel);//
         loadingDialog.setContentView(v);// 设置布局
         cancel_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +117,13 @@ public class DialogUtils {
                 loadingDialog.dismiss();
             }
         });
+        if (isCancel){
+            negativeButton.setVisibility(View.VISIBLE);
+            cancel_img.setVisibility(View.VISIBLE);
+        }else {
+            negativeButton.setVisibility(View.GONE);
+            cancel_img.setVisibility(View.GONE);
+        }
         positiveButton.setText(positiveButtonTv);
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override

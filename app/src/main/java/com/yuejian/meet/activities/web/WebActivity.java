@@ -77,7 +77,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.yuejian.meet.BuildConfig;
-import com.yuejian.meet.MainActivity;
 import com.yuejian.meet.R;
 import com.yuejian.meet.activities.base.BaseActivity;
 import com.yuejian.meet.activities.family.ArticleActivity;
@@ -101,7 +100,6 @@ import com.yuejian.meet.utils.ImUtils;
 import com.yuejian.meet.utils.ImgUtils;
 import com.yuejian.meet.utils.OssUtils;
 import com.yuejian.meet.utils.PayResult;
-import com.yuejian.meet.utils.PreferencesUtil;
 import com.yuejian.meet.utils.StringUtils;
 import com.yuejian.meet.utils.Utils;
 import com.yuejian.meet.utils.ViewInject;
@@ -581,7 +579,7 @@ public class WebActivity extends BaseActivity {
                 }
                 return true;//表示我已经处理过了
             } else if (uri.getAuthority().contains("toBackLoad")) {//退出
-                Dialog dialog = DialogUtils.createTwoBtnDialog(WebActivity.this, "提示", "是否退出登录", "取消", "确定");
+                Dialog dialog = DialogUtils.createTwoBtnDialog(WebActivity.this, "提示", "是否退出登录", "取消", "确定", true);
                 dialog.show();
                 DialogUtils.setOnTitleViewClickListener(new DialogUtils.OnTitleViewClickListener() {
                     @Override
@@ -602,9 +600,8 @@ public class WebActivity extends BaseActivity {
                         NIMClient.getService(AuthService.class).logout();
                         BusCallEntity bus = new BusCallEntity();
                         bus.setCallType(BusEnum.LOGOUT);
+                        ImUtils.isLoginIm=false;
                         Bus.getDefault().post(bus);
-                        startActivity(new Intent(getBaseContext(),LoginActivity.class));
-                        finish();
                         DadanPreference.getInstance(WebActivity.this).setBoolean("isLogin", false);
                         DadanPreference.getInstance(WebActivity.this).setString("CustomerId", "");
                         DadanPreference.getInstance(WebActivity.this).setString("photo", "");
